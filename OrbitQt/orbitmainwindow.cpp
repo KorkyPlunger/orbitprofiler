@@ -324,7 +324,7 @@ void OrbitMainWindow::OnReceiveMessage( const std::wstring & a_Message )
         pixMap.save( &file, "PNG" );
 
         std::wstring fileName = file.fileName().toStdWString();
-        ShellExecute(0, 0, fileName.c_str(), 0, 0 , SW_SHOW );
+        ShellExecute(0, 0, ws2s(fileName).c_str(), 0, 0 , SW_SHOW );
     }
     else if( StartsWith( a_Message, L"code" ) )
     {
@@ -565,7 +565,7 @@ void OrbitMainWindow::on_actionLaunch_Process_triggered()
     QStringList list = QFileDialog::getOpenFileNames( this, "Select an executable to launch...", "", "*.exe" );
     for( auto & file : list )
     {
-        GOrbitApp->OnLaunchProcess( file.toStdWString(), TEXT(""), TEXT("") );
+        GOrbitApp->OnLaunchProcess( file.toStdWString(), L"", L"" );
         break;
     }
 }

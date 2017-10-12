@@ -12,7 +12,7 @@ void UserPlugin::Draw( ImGuiContext* a_ImguiContext, int a_Width, int a_Height  
 
     if( ImGui::Button( "Plugin Test Button!!" ) )
     {
-        OutputDebugString("Plugin button!\n");
+        OutputDebugString(L"Plugin button!\n");
     }
 }
 

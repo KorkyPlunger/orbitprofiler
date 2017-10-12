@@ -49,7 +49,8 @@ std::wstring LogDataView::GetValue( int a_Row, int a_Column )
         auto micros = PerfCounter::get_microseconds(Capture::GCaptureTimer.m_PerfCounter.get_start(), entry.m_Time);
         std::chrono::system_clock::time_point sysTime = Capture::GCaptureTimePoint + std::chrono::microseconds(micros);
         std::time_t now_c = std::chrono::system_clock::to_time_t(sysTime);
-        std::tm now_tm = *std::localtime(&now_c);
+        std::tm now_tm;
+        localtime_s(&now_tm, &now_c);
         TCHAR buffer[256];
         wcsftime( buffer, sizeof( buffer ), L"%H:%M:%S", &now_tm );
 

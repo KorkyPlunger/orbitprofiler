@@ -75,7 +75,9 @@ QVariant OrbitTableModel::data(const QModelIndex &index, int role) const
 {
     if (role == Qt::DisplayRole)
     {
-        return QVariant( QString::fromStdWString( m_DataViewModel->GetValue(index.row(), index.column()).c_str() ) );
+        std::wstring  val = m_DataViewModel->GetValue(index.row(), index.column());
+        QString qstr = QString::fromStdWString(val);
+        return QVariant( qstr );
     }
     else if (role == Qt::BackgroundRole)
     {

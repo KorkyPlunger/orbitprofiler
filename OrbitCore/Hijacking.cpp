@@ -19,6 +19,8 @@
 #include "../external/minhook/src/buffer.h"
 #include "../external/minhook/src/trampoline.h"
 
+#include <intrin.h>
+
 using namespace std;
 
 const unsigned int MAX_DEPTH = 64;
