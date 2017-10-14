@@ -39,6 +39,7 @@
     <Import Project="..\PropSheets\ReleaseCommon.props" />
     <Import Project="..\PropSheets\GlRelease.props" />
     <Import Project="..\PropSheets\QtRelease.props" />
+    <Import Project="..\PropSheets\CurlRelease.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
@@ -46,6 +47,7 @@
     <Import Project="..\PropSheets\DebugCommon.props" />
     <Import Project="..\PropSheets\GlDebug.props" />
     <Import Project="..\PropSheets\QtDebug.props" />
+    <Import Project="..\PropSheets\CurlDebug.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

@@ -7,7 +7,7 @@
   <PropertyGroup />
   <ItemDefinitionGroup>
     <Link>
-      <AdditionalLibraryDirectories>..\external\curl-7.52.1\lib;..\external\minhook\lib\release;..\external\breakpad\src\client\windows\x64\Release\lib;..\external\capstone\msvc\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\external\minhook\lib\release;..\external\breakpad\src\client\windows\x64\Release\lib;..\external\capstone\msvc\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ClCompile>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
