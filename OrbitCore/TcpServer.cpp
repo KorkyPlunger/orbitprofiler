@@ -16,6 +16,8 @@
 #include "SamplingProfiler.h"
 #include "OrbitUnreal.h"
 
+using namespace std;
+
 TcpServer* GTcpServer;
 
 //-----------------------------------------------------------------------------
@@ -51,7 +53,7 @@ void TcpServer::Start( unsigned short a_Port )
 
     PRINT_VAR(a_Port);
 
-    std::thread t([&](){ this->ServerThread(); });
+    thread t([&]() { this->ServerThread(); });
     t.detach();
 
     m_StatTimer.Start();
@@ -65,15 +67,15 @@ void TcpServer::ResetStats()
 }
 
 //-----------------------------------------------------------------------------
-std::vector<std::string> TcpServer::GetStats()
+vector<string> TcpServer::GetStats()
 {
-    std::vector<std::string> stats;
+    vector<string> stats;
     stats.push_back( VAR_TO_ANSI( m_NumReceivedMessages ) );
     stats.push_back( VAR_TO_ANSI( m_NumMessagesPerSecond ) );
 
-    std::string bytesRcv = "Capture::GNumBytesReceiced = " + ws2s( GetPrettySize( m_TcpServer->GetNumBytesReceived() ) ) + "\n";
+    string bytesRcv = "Capture::GNumBytesReceiced = " + ws2s( GetPrettySize( m_TcpServer->GetNumBytesReceived() ) ) + "\n";
         stats.push_back( bytesRcv );
-        std::string bitRate = "Capture::Bitrate = "
+        string bitRate = "Capture::Bitrate = "
             + ws2s( GetPrettySize( (ULONG64)m_BytesPerSecond ) )
             + "/s"
             + " ( " + GetPrettyBitRate( (ULONG64)m_BytesPerSecond ) + " )\n";
@@ -182,7 +184,7 @@ void TcpServer::Receive( const Message & a_Message )
 }
 
 //-----------------------------------------------------------------------------
-void TcpServer::SendToUiAsync( const std::wstring & a_Message )
+void TcpServer::SendToUiAsync( const wstring & a_Message )
 {
     if( m_UiCallback )
     {
@@ -191,7 +193,7 @@ void TcpServer::SendToUiAsync( const std::wstring & a_Message )
 }
 
 //-----------------------------------------------------------------------------
-void TcpServer::SendToUiNow( const std::wstring & a_Message )
+void TcpServer::SendToUiNow( const wstring & a_Message )
 {
     if( m_UiCallback )
     {
@@ -202,7 +204,7 @@ void TcpServer::SendToUiNow( const std::wstring & a_Message )
 //-----------------------------------------------------------------------------
 void TcpServer::MainThreadTick()
 {
-    std::wstring msg;
+    wstring msg;
     while( m_UiLockFreeQueue.try_dequeue( msg ) )
     {
         m_UiCallback( msg );
@@ -237,7 +239,7 @@ bool TcpServer::IsLocalConnection()
     TcpSocket* socket = GetSocket();
     if( socket != nullptr && socket->m_Socket )
     {
-        std::string endPoint = socket->m_Socket->remote_endpoint().address().to_string();
+        string endPoint = socket->m_Socket->remote_endpoint().address().to_string();
         if( endPoint == "127.0.0.1" || ToLower( endPoint ) == "localhost" )
         {
             return true;

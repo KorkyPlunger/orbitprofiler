@@ -11,23 +11,25 @@
 #include "Log.h"
 #include <thread>
 
-std::unique_ptr<TcpClient> GTcpClient;
+using namespace std;
+
+unique_ptr<TcpClient> GTcpClient;
 
 //-----------------------------------------------------------------------------
-TcpClient::TcpClient( const std::string & a_Host )
+TcpClient::TcpClient( const string & a_Host )
 {
     PRINT_FUNC;
     PRINT_VAR( a_Host );
-    std::vector< std::string > vec = Tokenize( a_Host, ":" );
-    std::string & host = vec[0];
-    std::string & port = vec[1];
+    vector< string > vec = Tokenize( a_Host, ":" );
+    string & host = vec[0];
+    string & port = vec[1];
 
     m_TcpService->m_IoService = new asio::io_service();
-    m_TcpSocket->m_Socket = new tcp::socket( *m_TcpService->m_IoService );
+    m_TcpSocket->m_Socket = new asio::ip::tcp::socket( *m_TcpService->m_IoService );
 
     asio::ip::tcp::socket & socket = *m_TcpSocket->m_Socket;
     asio::ip::tcp::resolver resolver( *m_TcpService->m_IoService );
-    asio::ip::tcp::resolver::query query( host, port, tcp::resolver::query::canonical_name );
+    asio::ip::tcp::resolver::query query( host, port, asio::ip::tcp::resolver::query::canonical_name );
     asio::ip::tcp::resolver::iterator endpoint_iterator = resolver.resolve( query );
     asio::ip::tcp::resolver::iterator end;
 
@@ -62,10 +64,10 @@ void TcpClient::Start()
 
     PRINT_FUNC;
     OutputDebugString(L"TcpClient::Start()\n");
-    std::thread t( [&](){ this->ClientThread(); } );
+    thread t([&]() { this->ClientThread(); });
     t.detach();
 
-    this->Send( std::string("Hello from TcpClient") );
+    this->Send( string("Hello from TcpClient") );
 
     ReadMessage();
 }
@@ -86,7 +88,7 @@ void TcpClient::ReadMessage()
     OutputDebugString(L"ReadMessage\n");
     asio::async_read ( *m_TcpSocket->m_Socket, asio::buffer( &m_Message, sizeof(Message) ), 
         
-        [this](const asio::error_code& ec, std::size_t ReadMessageLength)
+        [this](const asio::error_code& ec, size_t )//ReadMessageLength)
         {
             if(!ec)
             {
@@ -112,7 +114,7 @@ void TcpClient::ReadPayload()
         m_Payload.resize(m_Message.m_Size);
         asio::async_read( *m_TcpSocket->m_Socket, asio::buffer(m_Payload.data(), m_Message.m_Size),
 
-        [this](asio::error_code ec, std::size_t /*length*/)
+        [this](asio::error_code ec, size_t /*length*/)
         {
             if (!ec)
             {
@@ -139,7 +141,7 @@ void TcpClient::ReadFooter()
 }
 
 //-----------------------------------------------------------------------------
-void TcpClient::OnError( const std::error_code& ec)
+void TcpClient::OnError( const error_code& ec)
 {
     if ( ( ec == asio::error::eof) || ( ec == asio::error::connection_reset ) )
     {
@@ -207,7 +209,7 @@ void TcpClient::DecodeMessage( Message & a_Message )
         for( int i = 0; i < numAddresses; ++i )
         {
             void* address = (void*)addresses[i];
-            std::wstring dbgMsg = s2ws( Format( "Hooking function at address: %p\n", address ) );
+            wstring dbgMsg = s2ws( Format( "Hooking function at address: %p\n", address ) );
             OutputDebugString(dbgMsg.c_str());
             Hijacking::CreateHook( address );
             GTcpClient->Send( Msg_NumInstalledHooks, i+1 );
@@ -224,7 +226,7 @@ void TcpClient::DecodeMessage( Message & a_Message )
         for( int i = 0; i < numAddresses; ++i )
         {
             void* address = (void*)addresses[i];
-            std::string dbgMsg = Format( "Hooking zone function at address: %p\n", address );
+            string dbgMsg = Format( "Hooking zone function at address: %p\n", address );
             OutputDebugStringA( dbgMsg.c_str() );
             Hijacking::CreateZoneStartHook( address );
         }
@@ -240,7 +242,7 @@ void TcpClient::DecodeMessage( Message & a_Message )
         for( int i = 0; i < numAddresses; ++i )
         {
             void* address = (void*)addresses[i];
-            std::string dbgMsg = Format( "Hooking zone function at address: %p\n", address );
+            string dbgMsg = Format( "Hooking zone function at address: %p\n", address );
             OutputDebugStringA( dbgMsg.c_str() );
             Hijacking::CreateZoneStopHook( address );
         }
@@ -256,7 +258,7 @@ void TcpClient::DecodeMessage( Message & a_Message )
         for( int i = 0; i < numAddresses; ++i )
         {
             void* address = (void*)addresses[i];
-            std::string dbgMsg = Format( "Hooking OutputDebugString function at address: %p\n", address );
+            string dbgMsg = Format( "Hooking OutputDebugString function at address: %p\n", address );
             OutputDebugStringA( dbgMsg.c_str() );
             Hijacking::CreateOutputDebugStringHook( address );
         }
@@ -272,7 +274,7 @@ void TcpClient::DecodeMessage( Message & a_Message )
         for( int i = 0; i < numAddresses; ++i )
         {
             void* address = (void*)addresses[i];
-            std::string dbgMsg = Format( "Hooking Unreal Actor function at address: %p\n", address );
+            string dbgMsg = Format( "Hooking Unreal Actor function at address: %p\n", address );
             OutputDebugStringA( dbgMsg.c_str() );
             Hijacking::CreateUnrealActorHook( address );
         }
@@ -288,7 +290,7 @@ void TcpClient::DecodeMessage( Message & a_Message )
         for( int i = 0; i < numAddresses; ++i )
         {
             void* address = (void*)addresses[i];
-            std::string dbgMsg = Format( "Hooking OrbitSendData function at address: %p\n", address );
+            string dbgMsg = Format( "Hooking OrbitSendData function at address: %p\n", address );
             OutputDebugStringA( dbgMsg.c_str() );
             Hijacking::CreateSendDataHook( address );
         }
@@ -304,7 +306,7 @@ void TcpClient::DecodeMessage( Message & a_Message )
         for( int i = 0; i < numAddresses; ++i )
         {
             void* address = (void*)addresses[i];
-            std::string dbgMsg = Format( "Hooking Alloc function at address: %p\n", address );
+            string dbgMsg = Format( "Hooking Alloc function at address: %p\n", address );
             OutputDebugStringA( dbgMsg.c_str() );
             Hijacking::CreateAllocHook( address );
         }
@@ -320,7 +322,7 @@ void TcpClient::DecodeMessage( Message & a_Message )
         for( int i = 0; i < numAddresses; ++i )
         {
             void* address = (void*)addresses[i];
-            std::string dbgMsg = Format( "Hooking Free function at address: %p\n", address );
+            string dbgMsg = Format( "Hooking Free function at address: %p\n", address );
             OutputDebugStringA( dbgMsg.c_str() );
             Hijacking::CreateFreeHook( address );
         }
@@ -336,7 +338,7 @@ void TcpClient::DecodeMessage( Message & a_Message )
         //for( int i = 0; i < numAddresses; ++i )
         //{
         //    void* address = (void*)addresses[i];
-        //    std::string dbgMsg = Format( "Hooking Realloc function at address: %p\n", address );
+        //    string dbgMsg = Format( "Hooking Realloc function at address: %p\n", address );
         //    OutputDebugStringA( dbgMsg.c_str() );
         //    //Hijacking::CreateReallocHook( address ); TODO
         //}
@@ -363,7 +365,7 @@ void TcpClient::DecodeMessage( Message & a_Message )
         for( int i = 0; i < numAddresses; ++i )
         {
             void* address = (void*)addresses[i];
-            std::wstring dbgMsg = s2ws( Format( "Callstack tracking for address: %p\n", address ) );
+            wstring dbgMsg = s2ws( Format( "Callstack tracking for address: %p\n", address ) );
             OutputDebugString( dbgMsg.c_str() );
             Hijacking::TrackCallstack( addresses[i] );
         }

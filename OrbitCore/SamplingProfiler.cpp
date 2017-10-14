@@ -15,10 +15,12 @@
 #include "Serialization.h"
 #include "OrbitModule.h"
 
+using namespace std;
+
 double GThreadUsageSamplePeriodMs = 200.0;
 
 //-----------------------------------------------------------------------------
-SamplingProfiler::SamplingProfiler( const std::shared_ptr<Process> & a_Process, bool a_ETW )
+SamplingProfiler::SamplingProfiler( const shared_ptr<Process> & a_Process, bool a_ETW )
     : m_Process(a_Process)
     , m_PeriodMs(1)
     , m_State(Idle)
@@ -59,7 +61,7 @@ void SamplingProfiler::StartCapture()
     {
         m_Process->EnumerateThreads();
         m_Process->SortThreadsByUsage();
-        m_SamplingThread = std::make_unique<std::thread>( &SamplingProfiler::SampleThreadsAsync, this);
+        m_SamplingThread = make_unique<thread>( &SamplingProfiler::SampleThreadsAsync, this);
         m_SamplingThread->detach();
     }
 
@@ -153,17 +155,17 @@ void SamplingProfiler::FireDoneProcessingCallbacks()
 }
 
 //-----------------------------------------------------------------------------
-std::multimap<int, CallstackID> SamplingProfiler::GetCallStacksFromAddress( DWORD64 a_Addr, ThreadID a_TID, int & o_NumCallstacks )
+multimap<int, CallstackID> SamplingProfiler::GetCallStacksFromAddress( DWORD64 a_Addr, ThreadID a_TID, int & o_NumCallstacks )
 {
-    std::set<CallstackID> & callstacks = m_FunctionToCallstacks[a_Addr];
+    set<CallstackID> & callstacks = m_FunctionToCallstacks[a_Addr];
     return m_ThreadSampleData[a_TID].SortCallstacks( callstacks, o_NumCallstacks );
 }
 
 //-----------------------------------------------------------------------------
-std::shared_ptr< SortedCallstackReport > SamplingProfiler::GetSortedCallstacksFromAddress( DWORD64 a_Addr, ThreadID a_TID )
+shared_ptr< SortedCallstackReport > SamplingProfiler::GetSortedCallstacksFromAddress( DWORD64 a_Addr, ThreadID a_TID )
 {
-    std::shared_ptr<SortedCallstackReport> report = make_shared<SortedCallstackReport>();
-    std::multimap<int, CallstackID> multiMap = GetCallStacksFromAddress( a_Addr, a_TID, report->m_NumCallStacksTotal );
+    shared_ptr<SortedCallstackReport> report = make_shared<SortedCallstackReport>();
+    multimap<int, CallstackID> multiMap = GetCallStacksFromAddress( a_Addr, a_TID, report->m_NumCallStacksTotal );
     int numUniqueCallstacks = (int)multiMap.size();
     report->m_CallStacks.resize( numUniqueCallstacks );
     int index = numUniqueCallstacks;
@@ -239,7 +241,7 @@ void SamplingProfiler::Print()
 {
 	for( auto & pair : m_UniqueCallstacks )
 	{
-		std::shared_ptr<CallStack> callstack = pair.second;
+		shared_ptr<CallStack> callstack = pair.second;
         if( callstack )
         {
             PRINT_VAR( (void*)callstack->m_Hash );
@@ -255,7 +257,7 @@ void SamplingProfiler::Print()
 //-----------------------------------------------------------------------------
 void SamplingProfiler::ProcessSamplesAsync()
 {
-    m_SamplingThread = std::make_unique<std::thread>(&SamplingProfiler::ProcessSamples, this);
+    m_SamplingThread = make_unique<thread>(&SamplingProfiler::ProcessSamples, this);
     m_SamplingThread->detach();
 }
 
@@ -274,7 +276,7 @@ void SamplingProfiler::ProcessSamples()
         auto it = m_UniqueCallstacks.find( callstack.m_Hash );
         if( it == m_UniqueCallstacks.end() )
         {
-            m_UniqueCallstacks[callstack.m_Hash] = std::make_shared<CallStack>(callstack);
+            m_UniqueCallstacks[callstack.m_Hash] = make_shared<CallStack>(callstack);
         }
 
         ThreadSampleData & threadSampleData = m_ThreadSampleData[callstack.m_ThreadId];
@@ -294,7 +296,7 @@ void SamplingProfiler::ProcessSamples()
 
     for( auto & dataIt : m_ThreadSampleData )
     {
-        ThreadID threadID = dataIt.first;
+        //ThreadID threadID = dataIt.first;
         ThreadSampleData & threadSampleData = dataIt.second;
         
         threadSampleData.ComputeAverageThreadUsage();
@@ -306,12 +308,12 @@ void SamplingProfiler::ProcessSamples()
             const unsigned int callstackCount = stackCountIt.second;
 
             CallstackID resolvedCallstackID = m_RawToResolvedMap[callstackID];
-            std::shared_ptr<CallStack> & callstack = m_UniqueResolvedCallstacks[resolvedCallstackID];
+            shared_ptr<CallStack> & callstack = m_UniqueResolvedCallstacks[resolvedCallstackID];
 
             // exclusive stat
             threadSampleData.m_ExclusiveCount[ callstack->m_Data[0] ] += callstackCount;
 
-            std::set<DWORD64> uniqueAddresses;
+            set<DWORD64> uniqueAddresses;
             for( int i = 0; i < callstack->m_Depth; ++i )
             {
                 uniqueAddresses.insert(callstack->m_Data[i]);
@@ -328,7 +330,7 @@ void SamplingProfiler::ProcessSamples()
         {
             const DWORD64 address = addressCountIt.first;
             const unsigned int count = addressCountIt.second;
-            threadSampleData.m_AddressCountSorted.insert( std::make_pair(count, address) );
+            threadSampleData.m_AddressCountSorted.insert( make_pair(count, address) );
         }
     }
 
@@ -358,9 +360,9 @@ void ThreadSampleData::ComputeAverageThreadUsage()
 }
 
 //-----------------------------------------------------------------------------
-std::multimap< int, CallstackID > ThreadSampleData::SortCallstacks( const std::set<CallstackID>& a_CallStacks, int & o_TotalCallStacks )
+multimap< int, CallstackID > ThreadSampleData::SortCallstacks( const set<CallstackID>& a_CallStacks, int & o_TotalCallStacks )
 {
-    std::multimap< int, CallstackID > sortedCallstacks;
+    multimap< int, CallstackID > sortedCallstacks;
     int numCallstacks = 0;
     for( CallstackID id : a_CallStacks )
     {
@@ -368,7 +370,7 @@ std::multimap< int, CallstackID > ThreadSampleData::SortCallstacks( const std::s
         if( it != m_CallstackCount.end() )
         {
             int count = it->second;
-            sortedCallstacks.insert( std::make_pair( count, id ) );
+            sortedCallstacks.insert( make_pair( count, id ) );
             numCallstacks += count;
         }
     }
@@ -383,7 +385,7 @@ void SamplingProfiler::ProcessAddresses()
     for( const auto & it : m_UniqueCallstacks )
     {
         CallstackID rawCallstackId = it.first;
-        const std::shared_ptr<CallStack> callstack = it.second;
+        const shared_ptr<CallStack> callstack = it.second;
         CallStack ResolvedCallstack = *callstack;
 
         for( int i = 0; i < callstack->m_Depth; ++i )
@@ -407,7 +409,7 @@ void SamplingProfiler::ProcessAddresses()
         CallstackID resolvedCallstackId = ResolvedCallstack.Hash();
         if( m_UniqueResolvedCallstacks.find( resolvedCallstackId ) == m_UniqueResolvedCallstacks.end() )
         {
-            m_UniqueResolvedCallstacks[resolvedCallstackId] = std::make_shared<CallStack>(ResolvedCallstack);
+            m_UniqueResolvedCallstacks[resolvedCallstackId] = make_shared<CallStack>(ResolvedCallstack);
         }
 
         m_RawToResolvedMap[rawCallstackId] = resolvedCallstackId;
@@ -424,10 +426,10 @@ void SamplingProfiler::AddAddress( DWORD64 a_Address )
     SYMBOL_INFOW* symbol_info = (SYMBOL_INFOW*)buffer;
     symbol_info->SizeOfStruct = sizeof( SYMBOL_INFOW );
     symbol_info->MaxNameLen = ( ( sizeof( buffer ) - sizeof( SYMBOL_INFOW ) ) / sizeof( WCHAR ) ) - 1;
-    DWORD64 displacement = 0;
-    BOOL result = m_Process ? SymFromAddrW( m_Process->GetHandle(), (DWORD64)a_Address, &displacement, symbol_info ) : false;
+    //DWORD64 displacement = 0;
+    //BOOL result = m_Process ? SymFromAddrW( m_Process->GetHandle(), (DWORD64)a_Address, &displacement, symbol_info ) : false;
 
-    std::wstring symName = symbol_info->Name;
+    wstring symName = symbol_info->Name;
     if( symName == L"" )
     {
         symName = Format( L"%I64x", a_Address );
@@ -467,7 +469,7 @@ void SamplingProfiler::OutputStats()
     {
         ThreadID threadID = dataIt.first;
         ThreadSampleData & threadSampleData = dataIt.second;
-        std::vector< SampledFunction > & sampleReport = threadSampleData.m_SampleReport;
+        vector< SampledFunction > & sampleReport = threadSampleData.m_SampleReport;
 
         ORBIT_LOGV(threadID);
         ORBIT_LOGV(threadSampleData.m_NumSamples);
@@ -490,7 +492,7 @@ void SamplingProfiler::OutputStats()
             }
             function.m_Address = address;
 
-            std::shared_ptr<Module> module = m_Process->GetModuleFromAddress(address);
+            shared_ptr<Module> module = m_Process->GetModuleFromAddress(address);
             function.m_Module = module ? module->m_Name : L"unknown module";
             
             const LineInfo & lineInfo = m_AddressToLineInfo[address];
@@ -531,7 +533,7 @@ void SamplingProfiler::GetThreadCallstack( Thread* a_Thread )
 }
 
 //-----------------------------------------------------------------------------
-std::wstring SamplingProfiler::GetSymbolFromAddress( DWORD64 a_Address )
+wstring SamplingProfiler::GetSymbolFromAddress( DWORD64 a_Address )
 {
     ScopeLock lock( m_SymbolMutex );
 

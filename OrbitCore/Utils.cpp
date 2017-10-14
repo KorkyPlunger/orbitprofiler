@@ -11,8 +11,10 @@
 #include <atlconv.h>
 #include <time.h>
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
-std::string GetLastErrorAsString()
+string GetLastErrorAsString()
 {
     //Get the error message, if any.
     DWORD errorMessageID = ::GetLastError();
@@ -23,7 +25,7 @@ std::string GetLastErrorAsString()
     size_t size = FormatMessageA( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
         NULL, errorMessageID, MAKELANGID( LANG_NEUTRAL, SUBLANG_DEFAULT ), (LPSTR)&messageBuffer, 0, NULL );
 
-    std::string message( messageBuffer, size );
+    string message( messageBuffer, size );
 
     //Free the buffer.
     LocalFree( messageBuffer );
@@ -32,7 +34,7 @@ std::string GetLastErrorAsString()
 }
 
 //-----------------------------------------------------------------------------
-std::string GuidToString(GUID a_Guid)
+string GuidToString(GUID a_Guid)
 {
     string guidStr;
     LPOLESTR wszCLSID = NULL;
@@ -47,14 +49,14 @@ std::string GuidToString(GUID a_Guid)
         {
             guidStr = guidStr.substr(1, len - 2);
         }
-        guidStr.erase( std::remove( guidStr.begin(), guidStr.end(), '-' ), guidStr.end() );
+        guidStr.erase( remove( guidStr.begin(), guidStr.end(), '-' ), guidStr.end() );
     }
 
     return guidStr;
 }
 
 //-----------------------------------------------------------------------------
-std::wstring GuidToStringW( GUID a_Guid )
+wstring GuidToStringW( GUID a_Guid )
 {
     return s2ws( GuidToString( a_Guid ) );
 }
@@ -254,7 +256,7 @@ static const AFX_MAP_MESSAGE allMessages[] =
     DEFINE_MESSAGE(WM_PRINTCLIENT),
     { 0, NULL, }    // end of message list
 };
-std::string CWindowsMessageToString::GetStringFromMsg(DWORD dwMessage, bool bShowFrequentMessages)
+string CWindowsMessageToString::GetStringFromMsg(DWORD dwMessage, bool bShowFrequentMessages)
 {
     if (!bShowFrequentMessages &&
         (dwMessage == WM_MOUSEMOVE ||
@@ -288,7 +290,7 @@ std::string CWindowsMessageToString::GetStringFromMsg(DWORD dwMessage, bool bSho
 }
 
 //-----------------------------------------------------------------------------
-std::string OrbitUtils::GetTimeStamp()
+string OrbitUtils::GetTimeStamp()
 {
     time_t rawtime;
     struct tm timeinfo;
@@ -299,5 +301,5 @@ std::string OrbitUtils::GetTimeStamp()
 
     strftime(buffer, 80, "%Y_%m_%d_%H_%M_%S", &timeinfo);
 
-    return std::string(buffer);
+    return string(buffer);
 }

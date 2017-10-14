@@ -12,6 +12,8 @@
 #include "App.h"
 #include "Params.h"
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 typedef struct
 {
@@ -57,7 +59,7 @@ void TextRenderer::Init()
     string vertShaderFileName = exePath + "../../../external/freetype-gl/shaders/v3f-t2f-c4f.vert";
     string fragShaderFileName = exePath + "../../../external/freetype-gl/shaders/v3f-t2f-c4f.frag";
 
-    wchar_t *text = L"A Quick Brown Fox Jumps Over The Lazy Dog 0123456789";
+    //wchar_t *text = L"A Quick Brown Fox Jumps Over The Lazy Dog 0123456789";
     
     m_Buffer = vertex_buffer_new("vertex:3f,tex_coord:2f,color:4f");    
     
@@ -141,7 +143,7 @@ void TextRenderer::DrawOutline( vertex_buffer_t* a_Buffer )
 {
     glBegin(GL_LINES);
 
-    vector_t* id = a_Buffer->indices;
+    //vector_t* id = a_Buffer->indices;
     for( int i = 0; i < (int)a_Buffer->indices->size; i+=3 )
     {   
         GLuint i0 = *(GLuint*)vector_get(a_Buffer->indices, i+0);
@@ -282,8 +284,8 @@ void TextRenderer::GetStringSize( const char* a_Text, int & a_Width, int & a_Hei
     float stringWidth = 0;
     float stringHeight = 0;
 
-    std::size_t len = strlen( a_Text );
-    for( std::size_t i = 0; i < len; ++i )
+    size_t len = strlen( a_Text );
+    for( size_t i = 0; i < len; ++i )
     {
         texture_glyph_t *glyph = texture_font_get_glyph( m_Font, a_Text + i );
         if( glyph != NULL )

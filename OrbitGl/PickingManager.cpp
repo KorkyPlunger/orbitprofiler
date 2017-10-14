@@ -5,6 +5,8 @@
 #include "PickingManager.h"
 #include "OpenGl.h"
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 PickingID PickingManager::CreatePickableId( Pickable* a_Pickable )
 {

@@ -10,14 +10,16 @@
 #include <fstream>
 #include <Shellapi.h>
 
-//-----------------------------------------------------------------------------
-void Diff::Exec( const std::string & a_A, const std::string & a_B )
-{
-    std::wstring fileNameA = Path::GetTmpPath() + L"A.txt";
-    std::wstring fileNameB = Path::GetTmpPath() + L"B.txt";
+using namespace std;
 
-    std::ofstream fileA;
-    std::ofstream fileB;
+//-----------------------------------------------------------------------------
+void Diff::Exec( const string & a_A, const string & a_B )
+{
+    wstring fileNameA = Path::GetTmpPath() + L"A.txt";
+    wstring fileNameB = Path::GetTmpPath() + L"B.txt";
+
+    ofstream fileA;
+    ofstream fileB;
 
     fileA.open( fileNameA );
     fileB.open( fileNameB );
@@ -35,7 +37,7 @@ void Diff::Exec( const std::string & a_A, const std::string & a_B )
     fileA.close();
     fileB.close();
 
-    std::wstring args = s2ws(GParams.m_DiffArgs);
+    wstring args = s2ws(GParams.m_DiffArgs);
     ReplaceStringInPlace( args, L"%1", fileNameA );
     ReplaceStringInPlace( args, L"%2", fileNameB );
 

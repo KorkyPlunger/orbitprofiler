@@ -8,6 +8,8 @@
 #include "ui_orbitsamplingreport.h"
 #include "../OrbitGl/SamplingReport.h"
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 OrbitSamplingReport::OrbitSamplingReport(QWidget *parent) : QWidget(parent)
                                                           , ui(new Ui::OrbitSamplingReport)
@@ -30,7 +32,7 @@ OrbitSamplingReport::~OrbitSamplingReport()
 }
 
 //-----------------------------------------------------------------------------
-void OrbitSamplingReport::Initialize( std::shared_ptr<SamplingReport> a_Report )
+void OrbitSamplingReport::Initialize( shared_ptr<SamplingReport> a_Report )
 {
     m_SamplingReport = a_Report;
 
@@ -39,7 +41,7 @@ void OrbitSamplingReport::Initialize( std::shared_ptr<SamplingReport> a_Report )
 
     m_SamplingReport->SetUiRefreshFunc( [&](){ this->Refresh(); } );
 
-    for( std::shared_ptr<class DataViewModel> report : a_Report->GetThreadReports() )
+    for( shared_ptr<class DataViewModel> report : a_Report->GetThreadReports() )
     {
         //OrbitDataViewPanel *treeView = new OrbitDataViewPanel();
         QWidget* tab = new QWidget();
@@ -78,7 +80,7 @@ void OrbitSamplingReport::on_PreviousCallstackButton_clicked()
 //-----------------------------------------------------------------------------
 void OrbitSamplingReport::Refresh()
 {
-    std::wstring label = m_SamplingReport->GetSelectedCallstackString();
+    wstring label = m_SamplingReport->GetSelectedCallstackString();
     ui->CallStackLabel->setText( QString::fromStdWString(label) );
     ui->CallstackTreeView->Refresh();
 }

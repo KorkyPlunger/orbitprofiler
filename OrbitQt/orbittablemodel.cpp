@@ -6,6 +6,8 @@
 #include <QColor>
 #include <memory>
 
+using namespace std;
+
 #define UNUSED(x) (void)(x)
 
 //-----------------------------------------------------------------------------
@@ -15,7 +17,7 @@ OrbitTableModel::OrbitTableModel(DataViewType a_Type, QObject* parent)
     , m_AlternateRowColor(true)
 {
     a_Type;
-    m_DataViewModel = std::shared_ptr<DataViewModel>(DataViewModel::Create(a_Type));
+    m_DataViewModel = shared_ptr<DataViewModel>(DataViewModel::Create(a_Type));
     
     if( a_Type == DataViewType::LOG )
     {
@@ -57,7 +59,7 @@ QVariant OrbitTableModel::headerData(int section, Qt::Orientation orientation, i
     case Qt::DisplayRole:
         if (orientation == Qt::Horizontal && section < (int)m_DataViewModel->GetColumnHeaders().size())
         {
-            std::wstring str = m_DataViewModel->GetColumnHeaders()[section];
+            wstring str = m_DataViewModel->GetColumnHeaders()[section];
             return QString::fromStdWString(str);
         }
         else if (orientation == Qt::Vertical)
@@ -75,7 +77,7 @@ QVariant OrbitTableModel::data(const QModelIndex &index, int role) const
 {
     if (role == Qt::DisplayRole)
     {
-        std::wstring  val = m_DataViewModel->GetValue(index.row(), index.column());
+        wstring  val = m_DataViewModel->GetValue(index.row(), index.column());
         QString qstr = QString::fromStdWString(val);
         return QVariant( qstr );
     }

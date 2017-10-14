@@ -9,15 +9,13 @@
 #include "SerializationMacros.h"
 #include "BaseTypes.h"
 
-using namespace std;
-
 struct Params
 {
     Params();
     void Load();
     void Save();
     
-    void AddToPdbHistory( const string & a_PdbName );
+    void AddToPdbHistory( const std::string & a_PdbName );
     void ScanPdbCache();
 
 public:
@@ -36,8 +34,8 @@ public:
     DWORD64 m_NumBytesAssembly;
     std::string m_DiffExe;
     std::string m_DiffArgs;
-    std::vector< string > m_PdbHistory;
-    std::unordered_map< string, string > m_CachedPdbsMap;
+    std::vector< std::string > m_PdbHistory;
+    std::unordered_map< std::string, std::string > m_CachedPdbsMap;
 
     ORBIT_SERIALIZABLE;
 };

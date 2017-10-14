@@ -21,6 +21,7 @@
 #include "App.h"
 #include "OrbitUnreal.h"
 #include <algorithm>
+
 using namespace std;
 
 TimeGraph* GCurrentTimeGraph = nullptr;
@@ -193,7 +194,7 @@ double TimeGraph::GetTimeIntervalMicro( double a_Ratio )
 //-----------------------------------------------------------------------------
 void TimeGraph::ProcessTimer( Timer & a_Timer )
 {
-    EpochType start = a_Timer.m_PerfCounter.get_start();
+    //EpochType start = a_Timer.m_PerfCounter.get_start();
     EpochType end   = a_Timer.m_PerfCounter.get_end();
 
     if( end > m_SessionMaxCounter )
@@ -246,7 +247,7 @@ void TimeGraph::AddTextBox(const TextBox& a_TextBox)
 //-----------------------------------------------------------------------------
 void TimeGraph::AddContextSwitch( const ContextSwitch & a_CS )
 {
-    auto pair = std::make_pair(a_CS.m_Time, a_CS);
+    auto pair = make_pair(a_CS.m_Time, a_CS);
 
     if( a_CS.m_Type == ContextSwitch::Out )
     {
@@ -254,7 +255,7 @@ void TimeGraph::AddContextSwitch( const ContextSwitch & a_CS )
         if( true )
         {
             // Processor time line
-            std::map< long long, ContextSwitch > & csMap = m_CoreUtilizationMap[a_CS.m_ProcessorIndex];
+            map< long long, ContextSwitch > & csMap = m_CoreUtilizationMap[a_CS.m_ProcessorIndex];
 
             if( csMap.rbegin() != csMap.rend() )
             {
@@ -277,7 +278,7 @@ void TimeGraph::AddContextSwitch( const ContextSwitch & a_CS )
         if( false )
         {
             // Thread time line
-            std::map< long long, ContextSwitch > & csMap = m_ContextSwitchesMap[a_CS.m_ThreadId];
+            map< long long, ContextSwitch > & csMap = m_ContextSwitchesMap[a_CS.m_ThreadId];
 
             if( csMap.rbegin() != csMap.rend() )
             {
@@ -349,7 +350,7 @@ float TimeGraph::GetThreadTotalHeight()
 Color TimeGraph::GetThreadColor( int a_ThreadId )
 {
     static BYTE a = 255;
-    static std::vector<Color> s_ThreadColors
+    static vector<Color> s_ThreadColors
     {
         Color( 231, 68, 53, a  ),  //red
         Color( 43, 145, 175, a ),  //blue
@@ -425,9 +426,9 @@ void TimeGraph::NeedsUpdate()
 }
 
 //-----------------------------------------------------------------------------
-inline std::string GetExtraInfo( const Timer & a_Timer )
+inline string GetExtraInfo( const Timer & a_Timer )
 {
-    std::string info;
+    string info;
     if( !Capture::IsCapturing() && a_Timer.GetType() == Timer::UNREAL_OBJECT )
     {
         info = "[" + ws2s( GOrbitUnreal.GetObjectNames()[a_Timer.m_UserData[0]] ) + "]";
@@ -447,7 +448,7 @@ void TimeGraph::UpdatePrimitives( bool a_Picking )
 
     int numTextBoxes = m_TextBoxes.size();
     m_SceneBox = m_Canvas->GetSceneBox();
-    float minX = m_SceneBox.GetPosX();
+    //float minX = m_SceneBox.GetPosX();
     m_NumDrawnTextBoxes = 0;
 
     m_TimeWindowUs = m_MaxEpochTimeUs - m_MinEpochTimeUs;
@@ -479,7 +480,7 @@ void TimeGraph::UpdatePrimitives( bool a_Picking )
             double elapsed = end - start;
 
             double NormalizedStart  = start   * invTimeWindow;
-            double NormalizedEnd    = end     * invTimeWindow;
+            //double NormalizedEnd    = end     * invTimeWindow;
             double NormalizedLength = elapsed * invTimeWindow;
 
             bool isCore = timer.IsType( Timer::CORE_ACTIVITY );
@@ -506,7 +507,7 @@ void TimeGraph::UpdatePrimitives( bool a_Picking )
             bool isContextSwitch = timer.IsType( Timer::THREAD_ACTIVITY );
             bool isCoreActivity  = timer.IsType( Timer::CORE_ACTIVITY );
             bool isVisibleWidth = NormalizedLength * m_Canvas->getWidth() > 1;
-            bool isMainFrameFunction = Capture::GMainFrameFunction && ( Capture::GMainFrameFunction == timer.m_FunctionAddress );
+            //bool isMainFrameFunction = Capture::GMainFrameFunction && ( Capture::GMainFrameFunction == timer.m_FunctionAddress );
             bool isSameThreadIdAsSelected = isCoreActivity && timer.m_TID == Capture::GSelectedThreadId;
             bool isInactive = ( !isContextSwitch && timer.m_FunctionAddress && ( Capture::GVisibleFunctionsMap[timer.m_FunctionAddress] == nullptr ) ) ||
                               ( Capture::GSelectedThreadId != 0 && isCoreActivity && !isSameThreadIdAsSelected );
@@ -546,15 +547,15 @@ void TimeGraph::UpdatePrimitives( bool a_Picking )
                 if( !isContextSwitch && textBox.GetText().size() == 0 )
                 {
                     double elapsedMillis = ( (double)elapsed ) * 0.001;
-                    std::string time = GetPrettyTime( elapsedMillis );
+                    string time = GetPrettyTime( elapsedMillis );
                     Function* func = Capture::GSelectedFunctionsMap[timer.m_FunctionAddress];
 
                     const char* name = nullptr;
                     if( func )
                     {
-                        std::string extraInfo = GetExtraInfo( timer );
+                        string extraInfo = GetExtraInfo( timer );
                         name = func->PrettyNameStr().c_str();
-                        std::string text = Format( "%s %s %s", name, extraInfo.c_str(), time.c_str() );
+                        string text = Format( "%s %s %s", name, extraInfo.c_str(), time.c_str() );
 
                         textBox.SetText( text );
                     }
@@ -566,7 +567,7 @@ void TimeGraph::UpdatePrimitives( bool a_Picking )
                         if( it != Capture::GZoneNames.end() )
                         {
                             name = it->second.c_str();
-                            std::string text = Format( "%s %s", name, time.c_str() );
+                            string text = Format( "%s %s", name, time.c_str() );
                             textBox.SetText( text );
                         }
                     }
@@ -621,9 +622,9 @@ void TimeGraph::UpdatePrimitives( bool a_Picking )
 //-----------------------------------------------------------------------------
 void TimeGraph::UpdateEvents()
 {
-    float x0 = GetWorldFromRawTimeStamp( m_SessionMinCounter );
-    float x1 = GetWorldFromRawTimeStamp( m_SessionMaxCounter );
-    float sizeX = x1 - x0;
+    //float x0 = GetWorldFromRawTimeStamp( m_SessionMinCounter );
+    //float x1 = GetWorldFromRawTimeStamp( m_SessionMaxCounter );
+    //float sizeX = x1 - x0;
 
     IntervalType rawMin = GetRawTimeStampFromUs( m_MinEpochTimeUs );
     IntervalType rawMax = GetRawTimeStampFromUs( m_MaxEpochTimeUs );
@@ -636,7 +637,7 @@ void TimeGraph::UpdateEvents()
     for( auto & pair : GEventTracer.GetEventBuffer().GetCallstacks() )
     {
         ThreadID threadID = pair.first;
-        std::map< long long, CallstackEvent > & callstacks = pair.second;
+        map< long long, CallstackEvent > & callstacks = pair.second;
 
         // Sampling Events
         float ThreadOffset = (float)m_Layout.GetSamplingTrackOffset( threadID );
@@ -675,7 +676,7 @@ void TimeGraph::SelectEvents( float a_WorldStart, float a_WorldEnd, ThreadID a_T
 {
     if( a_WorldStart > a_WorldEnd )
     {
-        std::swap( a_WorldEnd, a_WorldStart );
+        swap( a_WorldEnd, a_WorldStart );
     }
 
     IntervalType t0 = GetRawTimeStampFromWorld( a_WorldStart );
@@ -684,14 +685,14 @@ void TimeGraph::SelectEvents( float a_WorldStart, float a_WorldEnd, ThreadID a_T
     m_SelectedCallstackEvents = GEventTracer.GetEventBuffer().GetCallstackEvents( t0, t1, a_TID );
 
     // Generate report
-    std::shared_ptr<SamplingProfiler> samplingProfiler = std::make_shared<SamplingProfiler>( Capture::GTargetProcess );
+    shared_ptr<SamplingProfiler> samplingProfiler = make_shared<SamplingProfiler>( Capture::GTargetProcess );
     samplingProfiler->SetState( SamplingProfiler::Sampling );
 
     samplingProfiler->SetGenerateSummary(a_TID==-1);
 
     for( CallstackEvent & event : m_SelectedCallstackEvents )
     {
-        const std::shared_ptr<CallStack> callstack = Capture::GSamplingProfiler->GetCallStack(event.m_Id);
+        const shared_ptr<CallStack> callstack = Capture::GSamplingProfiler->GetCallStack(event.m_Id);
         if( callstack )
         {
             callstack->m_ThreadId = event.m_TID;
@@ -732,7 +733,7 @@ void TimeGraph::UpdateThreadIds()
         for( auto & pair : GEventTracer.GetEventBuffer().GetCallstacks() )
         {
             ThreadID threadID = pair.first;
-            std::map< long long, CallstackEvent > & callstacks = pair.second;
+            map< long long, CallstackEvent > & callstacks = pair.second;
 
             m_EventCount[threadID] = (uint32_t)callstacks.size();
 
@@ -751,14 +752,14 @@ void TimeGraph::UpdateThreadIds()
         m_Layout.m_SortedThreadIds.clear();
 
         // Show threads with instrumented functions first
-        std::vector< std::pair< ThreadID, uint32_t > > sortedThreads = OrbitUtils::ReverseValueSort( m_ThreadCountMap );
+        vector< pair< ThreadID, uint32_t > > sortedThreads = OrbitUtils::ReverseValueSort( m_ThreadCountMap );
         for( auto & pair : sortedThreads )
         {
             m_Layout.m_SortedThreadIds.push_back( pair.first );
         }
 
         // Then show threads sorted by number of events
-        std::vector< std::pair< ThreadID, uint32_t > > sortedByEvents = OrbitUtils::ReverseValueSort( m_EventCount );
+        vector< pair< ThreadID, uint32_t > > sortedByEvents = OrbitUtils::ReverseValueSort( m_EventCount );
         for( auto & pair : sortedByEvents )
         {
             if( m_ThreadCountMap.find( pair.first ) == m_ThreadCountMap.end() )
@@ -791,7 +792,7 @@ void TimeGraph::DrawIdentifiers()
     int xPos, yPos;
     m_Canvas->WorldToScreen( x0, 0, xPos, yPos );
     xPos = max( 0, xPos );
-    int i = 0;
+    //int i = 0;
     
 
     // Draw threads
@@ -801,7 +802,7 @@ void TimeGraph::DrawIdentifiers()
         float threadOffset = m_Layout.GetThreadBlockStart( threadId );
         int x, y;
         m_Canvas->WorldToScreen( 0, threadOffset-m_Layout.m_EventTrackHeight, x, y );
-        std::string threadName = Format( "%u", threadId );
+        string threadName = Format( "%u", threadId );
         m_TextRenderer->AddText2D( threadName.c_str(), xPos, y, GlCanvas::Z_VALUE_TEXT, Color( 255, 255, 255, 255 ) );
 
         int trackHeightScreen = m_Canvas->WorldToScreenHeight(m_Layout.m_EventTrackHeight);
@@ -856,8 +857,8 @@ void TimeGraph::DrawBuffered( bool a_Picking )
 //----------------------------------------------------------------------------
 void TimeGraph::DrawBoxBuffer( bool a_Picking )
 {
-    Block<Box,   BoxBuffer::NUM_BOXES_PER_BLOCK>*   boxBlock = m_Batcher.GetBoxBuffer().m_Boxes.m_Root;
-    Block<Color, BoxBuffer::NUM_BOXES_PER_BLOCK*4>* colorBlock;
+    BlockChain<Box,   BoxBuffer::NUM_BOXES_PER_BLOCK>::Block*   boxBlock = m_Batcher.GetBoxBuffer().m_Boxes.m_Root;
+    BlockChain<Color, BoxBuffer::NUM_BOXES_PER_BLOCK*4>::Block* colorBlock;
 
     colorBlock = !a_Picking ? m_Batcher.GetBoxBuffer().m_Colors.m_Root
                             : m_Batcher.GetBoxBuffer().m_PickingColors.m_Root;
@@ -879,8 +880,8 @@ void TimeGraph::DrawBoxBuffer( bool a_Picking )
 //----------------------------------------------------------------------------
 void TimeGraph::DrawLineBuffer( bool a_Picking )
 {
-    Block<Line,  LineBuffer::NUM_LINES_PER_BLOCK>*   lineBlock  = m_Batcher.GetLineBuffer().m_Lines.m_Root;
-    Block<Color, LineBuffer::NUM_LINES_PER_BLOCK*2>* colorBlock;
+    BlockChain<Line,  LineBuffer::NUM_LINES_PER_BLOCK>::Block*   lineBlock  = m_Batcher.GetLineBuffer().m_Lines.m_Root;
+    BlockChain<Color, LineBuffer::NUM_LINES_PER_BLOCK*2>::Block* colorBlock;
     
     colorBlock = !a_Picking ? m_Batcher.GetLineBuffer().m_Colors.m_Root
                             : m_Batcher.GetLineBuffer().m_PickingColors.m_Root;
@@ -902,12 +903,12 @@ void TimeGraph::DrawLineBuffer( bool a_Picking )
 //-----------------------------------------------------------------------------
 void TimeGraph::DrawEvents( bool a_Picking )
 {
-    double timeWindow = m_MaxEpochTimeUs - m_MinEpochTimeUs;
-    float WorldStartX = m_Canvas->GetWorldTopLeftX();
-    float WorldWidth = m_Canvas->GetWorldWidth();
+    //double timeWindow = m_MaxEpochTimeUs - m_MinEpochTimeUs;
+    //float WorldStartX = m_Canvas->GetWorldTopLeftX();
+    //float WorldWidth = m_Canvas->GetWorldWidth();
 
-    IntervalType rawMin = GetRawTimeStampFromUs( m_MinEpochTimeUs );
-    IntervalType rawMax = GetRawTimeStampFromUs( m_MaxEpochTimeUs );
+    //IntervalType rawMin = GetRawTimeStampFromUs( m_MinEpochTimeUs );
+    //IntervalType rawMax = GetRawTimeStampFromUs( m_MaxEpochTimeUs );
 
     // Draw track background
     float x0 = GetWorldFromRawTimeStamp( m_SessionMinCounter );
@@ -922,7 +923,7 @@ void TimeGraph::DrawEvents( bool a_Picking )
         if( y0 == -1.f )
             continue;
 
-        float y1 = y0 - m_Layout.m_EventTrackHeight;
+        //float y1 = y0 - m_Layout.m_EventTrackHeight;
         EventTrack* eventTrack = m_EventTracks[threadId];
         
         eventTrack->SetPos( x0, y0 );

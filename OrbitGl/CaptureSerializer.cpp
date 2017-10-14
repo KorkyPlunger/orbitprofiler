@@ -17,6 +17,8 @@
 #include <fstream>
 #include <memory>
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 CaptureSerializer::CaptureSerializer()
 {
@@ -26,11 +28,11 @@ CaptureSerializer::CaptureSerializer()
 }
 
 //-----------------------------------------------------------------------------
-void CaptureSerializer::Save( const std::wstring a_FileName )
+void CaptureSerializer::Save( const wstring a_FileName )
 {
     Capture::PreSave();
 
-    std::basic_ostream<char> Stream( &GStreamCounter );
+    basic_ostream<char> Stream( &GStreamCounter );
     cereal::BinaryOutputArchive CountingArchive( Stream );
     GStreamCounter.Reset();
     Save( CountingArchive );
@@ -39,7 +41,7 @@ void CaptureSerializer::Save( const std::wstring a_FileName )
 
     // Binary
     m_CaptureName = ws2s(a_FileName);
-    std::ofstream myfile( a_FileName, std::ios::binary );
+    ofstream myfile( a_FileName, ios::binary );
     if( !myfile.fail() )
     {
         SCOPE_TIMER_LOG( Format( L"Saving capture in %s", a_FileName.c_str() ) );
@@ -60,7 +62,7 @@ template <class T> void CaptureSerializer::Save( T & a_Archive )
     // Functions
     {
         ORBIT_SIZE_SCOPE( "Functions" );
-        std::vector<Function> functions;
+        vector<Function> functions;
         for( auto & pair : Capture::GSelectedFunctionsMap )
         {
             Function * func = pair.second;
@@ -115,12 +117,12 @@ template <class T> void CaptureSerializer::Save( T & a_Archive )
 }
 
 //-----------------------------------------------------------------------------
-void CaptureSerializer::Load( const std::wstring a_FileName )
+void CaptureSerializer::Load( const wstring a_FileName )
 {
     SCOPE_TIMER_LOG( Format( L"Loading capture %s", a_FileName.c_str() ) );
 
     // Binary
-    std::ifstream file( a_FileName, std::ios::binary );
+    ifstream file( a_FileName, ios::binary );
     if( !file.fail() )
     {
         // header
@@ -128,9 +130,9 @@ void CaptureSerializer::Load( const std::wstring a_FileName )
         archive( *this );
 
         // functions
-        std::shared_ptr<Module> module = std::make_shared<Module>();
+        shared_ptr<Module> module = make_shared<Module>();
         Capture::GTargetProcess->AddModule(module);
-        module->m_Pdb = std::make_shared<Pdb>( a_FileName.c_str() );
+        module->m_Pdb = make_shared<Pdb>( a_FileName.c_str() );
         archive( module->m_Pdb->GetFunctions() );
         module->m_Pdb->ProcessData();
         GPdbDbg = module->m_Pdb;

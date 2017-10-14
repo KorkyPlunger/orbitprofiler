@@ -7,12 +7,13 @@
 #include <tlhelp32.h>
 #include <psapi.h>
 #include "Capture.h"
-#include "dia2.h"
+#include "dia2.h" // #includes rpcndr.h -->  error C2872: 'byte': ambiguous symbol, if <cstddef> was #included first
 #include "OrbitDia.h"
 #include "OrbitModule.h"
 
+using namespace std;
 //-----------------------------------------------------------------------------
-void SymUtils::ListModules( HANDLE a_ProcessHandle, std::map< DWORD64, std::shared_ptr<Module> > & o_ModuleMap )
+void SymUtils::ListModules( HANDLE a_ProcessHandle, map< DWORD64, shared_ptr<Module> > & o_ModuleMap )
 {
     SCOPE_TIMER_LOG( L"SymUtils::ListModules" );
 
@@ -27,7 +28,7 @@ void SymUtils::ListModules( HANDLE a_ProcessHandle, std::map< DWORD64, std::shar
     SetLastError(NO_ERROR);
     if (!::EnumProcessModulesEx(a_ProcessHandle, &ModuleArray[0], ModuleArraySize * sizeof(HMODULE), &NumModules, LIST_MODULES_ALL))
     {
-        std::string EnumProcessModulesExError = GetLastErrorAsString();
+        string EnumProcessModulesExError = GetLastErrorAsString();
         PRINT_VAR(EnumProcessModulesExError);
         return;
     }
@@ -49,7 +50,7 @@ void SymUtils::ListModules( HANDLE a_ProcessHandle, std::map< DWORD64, std::shar
         memset(&moduleInfo, 0, sizeof(moduleInfo));
         GetModuleInformation(a_ProcessHandle, hModule, &moduleInfo, sizeof(MODULEINFO));
 
-        std::shared_ptr<Module> module = std::make_shared<Module>();
+        shared_ptr<Module> module = make_shared<Module>();
         module->m_Name = ModuleNameBuffer;
         module->m_FullName = ModuleFullNameBuffer;
         module->m_Directory = Path::GetDirectory( module->m_FullName );
@@ -57,9 +58,9 @@ void SymUtils::ListModules( HANDLE a_ProcessHandle, std::map< DWORD64, std::shar
         module->m_AddressEnd = (DWORD64)moduleInfo.lpBaseOfDll + moduleInfo.SizeOfImage;
         module->m_EntryPoint = (DWORD64)moduleInfo.EntryPoint;
 
-        std::tr2::sys::path filePath = module->m_FullName;
+        tr2::sys::path filePath = module->m_FullName;
         filePath.replace_extension( ".pdb" );
-        if( std::tr2::sys::exists( filePath ) )
+        if( tr2::sys::exists( filePath ) )
         {
             module->m_FoundPdb = true;
             module->m_PdbSize = ::tr2::sys::file_size( filePath );
@@ -67,9 +68,9 @@ void SymUtils::ListModules( HANDLE a_ProcessHandle, std::map< DWORD64, std::shar
         }
         else if( Contains( module->m_FullName, L"qt" ) )
         {
-            std::wstring pdbName = Path::GetFileName( filePath.wstring() );
-            filePath = std::wstring( L"C:\\Qt\\5.8\\msvc2015_64\\bin\\" ) + pdbName;
-            if( std::tr2::sys::exists( filePath ) )
+            wstring pdbName = Path::GetFileName( filePath.wstring() );
+            filePath = wstring( L"C:\\Qt\\5.8\\msvc2015_64\\bin\\" ) + pdbName;
+            if( tr2::sys::exists( filePath ) )
             {
                 module->m_FoundPdb = true;
                 module->m_PdbSize = ::tr2::sys::file_size( filePath );
@@ -89,7 +90,7 @@ void SymUtils::ListModules( HANDLE a_ProcessHandle, std::map< DWORD64, std::shar
 //-----------------------------------------------------------------------------
 bool SymUtils::GetLineInfo( DWORD64 a_Address, LineInfo & o_LineInfo )
 {
-    std::shared_ptr<Process> process = Capture::GTargetProcess;
+    shared_ptr<Process> process = Capture::GTargetProcess;
 
     if( process )
     {

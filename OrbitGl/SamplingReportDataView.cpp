@@ -13,6 +13,8 @@
 #include "OrbitModule.h"
 #include <memory>
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 SamplingReportDataView::SamplingReportDataView() : m_CallstackDataView(nullptr)
 {
@@ -20,13 +22,13 @@ SamplingReportDataView::SamplingReportDataView() : m_CallstackDataView(nullptr)
 }
 
 //-----------------------------------------------------------------------------
-std::vector<int> SamplingReportDataView::s_HeaderMap;
-std::vector<float> SamplingReportDataView::s_HeaderRatios;
+vector<int> SamplingReportDataView::s_HeaderMap;
+vector<float> SamplingReportDataView::s_HeaderRatios;
 
 //-----------------------------------------------------------------------------
-const std::vector<std::wstring>& SamplingReportDataView::GetColumnHeaders()
+const vector<wstring>& SamplingReportDataView::GetColumnHeaders()
 {
-    static std::vector<std::wstring> Columns;
+    static vector<wstring> Columns;
 
     if( s_HeaderMap.size() == 0 )
     {
@@ -45,17 +47,17 @@ const std::vector<std::wstring>& SamplingReportDataView::GetColumnHeaders()
 }
 
 //-----------------------------------------------------------------------------
-const std::vector<float>& SamplingReportDataView::GetColumnHeadersRatios()
+const vector<float>& SamplingReportDataView::GetColumnHeadersRatios()
 {
     return s_HeaderRatios;
 }
 
 //-----------------------------------------------------------------------------
-std::wstring SamplingReportDataView::GetValue( int a_Row, int a_Column )
+wstring SamplingReportDataView::GetValue( int a_Row, int a_Column )
 {
     const SampledFunction & func = GetFunction(a_Row);
 
-    std::wstring value;
+    wstring value;
     
     switch( s_HeaderMap[a_Column] )
     {
@@ -98,7 +100,7 @@ void SamplingReportDataView::OnSort(int a_Column, bool a_Toggle)
     }
 
     bool ascending = m_SortingToggles[column];
-    std::function<bool(int a, int b)> sorter = nullptr;
+    function<bool(int a, int b)> sorter = nullptr;
 
     switch (column)
     {
@@ -114,7 +116,7 @@ void SamplingReportDataView::OnSort(int a_Column, bool a_Toggle)
 
     if (sorter)
     {
-        std::sort(m_Indices.begin(), m_Indices.end(), sorter);
+        sort(m_Indices.begin(), m_Indices.end(), sorter);
     }
 
     m_LastSortedColumn = a_Column;
@@ -129,14 +131,14 @@ enum SampleReportContextMenuIDs
 };
 
 //-----------------------------------------------------------------------------
-const std::vector<std::wstring>& SamplingReportDataView::GetContextMenu( int a_Index )
+const vector<wstring>& SamplingReportDataView::GetContextMenu( int a_Index )
 {
-    static std::vector<std::wstring> Menu = { L"Hook", L"Unhook", L"Load Pdb" };
+    static vector<wstring> Menu = { L"Hook", L"Unhook", L"Load Pdb" };
     return Menu;
 }
 
 //-----------------------------------------------------------------------------
-void SamplingReportDataView::OnContextMenu( int a_MenuIndex, std::vector<int> & a_ItemIndices )
+void SamplingReportDataView::OnContextMenu( int a_MenuIndex, vector<int> & a_ItemIndices )
 {
     switch (a_MenuIndex)
     {
@@ -144,7 +146,7 @@ void SamplingReportDataView::OnContextMenu( int a_MenuIndex, std::vector<int> & 
     {
         if (Capture::GTargetProcess)
         {
-            std::set< std::wstring > moduleNames;
+            set< wstring > moduleNames;
 
             for (int i = 0; i < a_ItemIndices.size(); ++i)
             {
@@ -153,9 +155,9 @@ void SamplingReportDataView::OnContextMenu( int a_MenuIndex, std::vector<int> & 
             }
 
             auto & moduleMap = Capture::GTargetProcess->GetNameToModulesMap();
-            for (const std::wstring & moduleName : moduleNames)
+            for (const wstring & moduleName : moduleNames)
             {
-                std::shared_ptr<Module> module = moduleMap[ToLower(moduleName)];
+                shared_ptr<Module> module = moduleMap[ToLower(moduleName)];
                 if (module && module->m_FoundPdb && !module->m_Loaded)
                 {
                     GOrbitApp->EnqueueModuleToLoad(module);
@@ -218,7 +220,7 @@ void SamplingReportDataView::LinkModel( DataViewModel* a_DataView )
 }
 
 //-----------------------------------------------------------------------------
-void SamplingReportDataView::SetSampledFunctions( const std::vector< SampledFunction > & a_Functions )
+void SamplingReportDataView::SetSampledFunctions( const vector< SampledFunction > & a_Functions )
 { 
     m_Functions = a_Functions; 
     
@@ -243,24 +245,24 @@ void SamplingReportDataView::SetThreadID( ThreadID a_TID )
 }
 
 //-----------------------------------------------------------------------------
-void SamplingReportDataView::OnFilter(const std::wstring & a_Filter)
+void SamplingReportDataView::OnFilter(const wstring & a_Filter)
 {
-    std::vector<int> indices;
+    vector<int> indices;
 
-    std::vector< std::wstring > tokens = Tokenize( ToLower( a_Filter ) );
+    vector< wstring > tokens = Tokenize( ToLower( a_Filter ) );
 
     for (int i = 0; i < (int)m_Functions.size(); ++i)
     {
         SampledFunction & func = m_Functions[i];
-        std::wstring name = ToLower( func.m_Name );
-        std::wstring module = ToLower( func.m_Module );
+        wstring name = ToLower( func.m_Name );
+        wstring module = ToLower( func.m_Module );
 
         bool match = true;
 
-        for( std::wstring & filterToken : tokens )
+        for( wstring & filterToken : tokens )
         {
-            if( !( name.find(filterToken) != std::wstring::npos ||
-                   module.find(filterToken) != std::wstring::npos) )
+            if( !( name.find(filterToken) != wstring::npos ||
+                   module.find(filterToken) != wstring::npos) )
             {
                 match = false;
                 break;

@@ -8,6 +8,8 @@
 #include "OrbitProcess.h"
 #include "Log.h"
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 MemoryTracker::MemoryTracker() : m_NumAllocatedBytes(0)
                                , m_NumFreedBytes(0)
@@ -48,7 +50,7 @@ void MemoryTracker::ProcessFree( const Timer & a_Timer )
 void MemoryTracker::DumpReport()
 {
     DWORD64 NumLiveBytes = 0;
-    std::unordered_map< CallstackID, DWORD64 > callstackToBytes;
+    unordered_map< CallstackID, DWORD64 > callstackToBytes;
     for( auto & pair : m_LiveAllocs )
     {
         Timer & timer = pair.second;
@@ -58,10 +60,10 @@ void MemoryTracker::DumpReport()
         NumLiveBytes += size;
     }
 
-    std::multimap< DWORD64, CallstackID > bytesToCallstack;
+    multimap< DWORD64, CallstackID > bytesToCallstack;
     for( auto & pair : callstackToBytes )
     {
-        bytesToCallstack.insert( std::make_pair( pair.second, pair.first ) );
+        bytesToCallstack.insert( make_pair( pair.second, pair.first ) );
     }
 
     if( m_NumAllocatedBytes )
@@ -72,7 +74,7 @@ void MemoryTracker::DumpReport()
     for( auto rit = bytesToCallstack.rbegin(); rit != bytesToCallstack.rend(); ++rit )
     {
         CallstackID id = rit->second;
-        std::shared_ptr<CallStack> callstack = Capture::GetCallstack( id );
+        shared_ptr<CallStack> callstack = Capture::GetCallstack( id );
 
         DWORD64 numBytes = rit->first;
         DWORD64 cid = id;

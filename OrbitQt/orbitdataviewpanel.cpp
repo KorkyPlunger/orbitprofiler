@@ -5,6 +5,9 @@
 #include "orbitdataviewpanel.h"
 #include "ui_orbitdataviewpanel.h"
 
+using namespace std;
+
+
 //-----------------------------------------------------------------------------
 OrbitDataViewPanel::OrbitDataViewPanel(QWidget *parent) :
     QWidget(parent),
@@ -30,7 +33,7 @@ void OrbitDataViewPanel::Initialize( DataViewType a_Type, bool a_IsMainInstance 
         ui->treeView->GetModel()->GetDataViewModel()->SetAsMainInstance();
     }
 
-    std::wstring label = ui->treeView->GetLabel();
+    wstring label = ui->treeView->GetLabel();
     if( label != L"" )
     {
         this->ui->label->setText( QString::fromStdWString(label) );
@@ -57,7 +60,7 @@ void OrbitDataViewPanel::Refresh()
 }
 
 //-----------------------------------------------------------------------------
-void OrbitDataViewPanel::SetDataModel( std::shared_ptr<DataViewModel> a_Model )
+void OrbitDataViewPanel::SetDataModel( shared_ptr<DataViewModel> a_Model )
 { 
     ui->treeView->SetDataModel( a_Model );
 }

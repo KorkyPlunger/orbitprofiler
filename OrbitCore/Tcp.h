@@ -17,8 +17,6 @@
 #include "TcpEntity.h"
 #include "OrbitAsio.h"
 
-using asio::ip::tcp;
-
 //-----------------------------------------------------------------------------
 class TcpConnection : public std::enable_shared_from_this < TcpConnection >
 {
@@ -75,7 +73,7 @@ private:
     void handle_request_line( asio::error_code ec, std::size_t bytes_transferred );
     void SendWebsocketResponse();
 
-    tcp::socket         m_Socket;
+    asio::ip::tcp::socket         m_Socket;
     TcpSocket           m_WrappedSocket;
     Message             m_Message;
     std::vector<char>   m_Payload;
@@ -105,7 +103,7 @@ private:
     void start_accept();
     void handle_accept( TcpConnection::pointer new_connection, const asio::error_code& error );
 
-    tcp::acceptor m_Acceptor;
+    asio::ip::tcp::acceptor m_Acceptor;
     std::shared_ptr<TcpConnection> m_Connection;
     std::unordered_set< std::shared_ptr<TcpConnection> > m_ConnectionsSet;
 };

@@ -11,24 +11,26 @@
 
 #include <fstream>
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
-void SendDumpInternal( const std::wstring & a_Dir, const std::wstring & a_Id );
+void SendDumpInternal( const wstring & a_Dir, const wstring & a_Id );
 google_breakpad::ExceptionHandler* GHandler;
 
 //-----------------------------------------------------------------------------
-bool DmpFilter( void* context, EXCEPTION_POINTERS* exinfo, MDRawAssertionInfo* assertion )
+bool DmpFilter( void* , EXCEPTION_POINTERS* , MDRawAssertionInfo* )
 {
     return true;
 }
 
 //-----------------------------------------------------------------------------
-bool DmpCallback( const wchar_t* dump_path, const wchar_t* minidump_id, void* context, EXCEPTION_POINTERS* exinfo, MDRawAssertionInfo* assertion, bool succeeded )
+bool DmpCallback( const wchar_t*, const wchar_t*, void*, EXCEPTION_POINTERS*, MDRawAssertionInfo*, bool succeeded )
 {
     PRINT_FUNC;
 
     wstring dir = Path::GetDumpPath();
     wstring msg = L"A crash dump was generated in " + dir;
-    int msgboxID = MessageBox(
+    MessageBox(
         NULL,
         succeeded ? msg.c_str() : L"Failed to generate crash dump",
         L"Orbit Crash Handler: ",
@@ -39,7 +41,7 @@ bool DmpCallback( const wchar_t* dump_path, const wchar_t* minidump_id, void* co
 }
 
 //-----------------------------------------------------------------------------
-bool OnDemandDmpCallback( const wchar_t* dump_path, const wchar_t* minidump_id, void* context, EXCEPTION_POINTERS* exinfo, MDRawAssertionInfo* assertion, bool succeeded )
+bool OnDemandDmpCallback( const wchar_t* dump_path, const wchar_t* minidump_id, void* , EXCEPTION_POINTERS* , MDRawAssertionInfo* , bool  )
 {
     SendDumpInternal( dump_path, minidump_id );
     return false;
@@ -76,14 +78,14 @@ void CrashHandler::SendMiniDump()
 }
 
 //-----------------------------------------------------------------------------
-void SendDumpInternal( const std::wstring & a_Dir, const std::wstring & a_Id )
+void SendDumpInternal( const wstring & a_Dir, const wstring & a_Id )
 {
-    std::wstring fileName = a_Dir + a_Id + L".dmp";
-    std::ifstream file( fileName.c_str(), std::ios::binary | std::ios::ate );
-    std::streamsize size = file.tellg();
-    file.seekg( 0, std::ios::beg );
+    wstring fileName = a_Dir + a_Id + L".dmp";
+    ifstream file( fileName.c_str(), ios::binary | ios::ate );
+    streamsize size = file.tellg();
+    file.seekg( 0, ios::beg );
 
-    std::vector<char> buffer( (unsigned int)size );
+    vector<char> buffer( (unsigned int)size );
     if( file.read( buffer.data(), size ) )
     {
         if( GTcpClient )

@@ -7,6 +7,8 @@
 #include "..\external\capstone\include\platform.h"
 #include "..\external\capstone\include\capstone.h"
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 void Disassembler::LogHex( const unsigned char *str, size_t len )
 {
@@ -23,7 +25,7 @@ void Disassembler::LogHex( const unsigned char *str, size_t len )
 //-----------------------------------------------------------------------------
 void Disassembler::Disassemble( const unsigned char* a_MachineCode, int a_Size, DWORD64 a_Address, bool a_Is64Bit )
 {
-    std::wstring disAsm;
+    wstring disAsm;
     csh handle;
     cs_arch arch = CS_ARCH_X86;
     cs_insn *insn;

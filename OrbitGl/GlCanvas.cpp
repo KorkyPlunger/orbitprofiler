@@ -22,6 +22,8 @@
 #include <vector>
 #include <string>
 
+using namespace std;
+
 RingBuffer<float, 512> GDeltaTimeBuffer;
 
 float GlCanvas::Z_VALUE_UI              =  0.00f;
@@ -109,7 +111,7 @@ void GlCanvas::Initialize()
             ORBIT_LOGV( glewGetErrorString( err ) );
             exit( EXIT_FAILURE );
         }
-        std::string glew = Format( "Using GLEW %s\n", (char*)glewGetString( GLEW_VERSION ) );
+        string glew = Format( "Using GLEW %s\n", (char*)glewGetString( GLEW_VERSION ) );
         PRINT_VAR( glew );
         firstInit = false;
     }
@@ -211,7 +213,7 @@ void GlCanvas::LeftUp()
 void GlCanvas::LeftDoubleClick()
 {
     ScopeImguiContext state(m_ImGuiContext);
-    ImGuiIO& io = ImGui::GetIO();
+    //ImGuiIO& io = ImGui::GetIO();
 
     // TODO:
     //io.ExternalDoubleClick = true;
@@ -375,10 +377,10 @@ void GlCanvas::prepare2DViewport(int topleft_x, int topleft_y, int bottomrigth_x
     //TRACE_VAR( Capture::GOpenCaptureTime );
     //TRACE_VAR( Capture::GNumContextSwitches );
 
-    if( m_IsSelecting )
+    /*if( m_IsSelecting )
     {
         double ratio = ( double( abs( m_SelectStop[0] - m_SelectStart[0] ) ) ) / (double)m_WorldWidth;
-    }
+    }*/
         
     if( m_WorldWidth <= 0 )
         m_WorldWidth = 1.f;
@@ -568,7 +570,7 @@ void GlCanvas::RenderSamplingUI()
 
     float curTime = Capture::GSamplingProfiler->GetSampleTime();
     float totTime = Capture::GSamplingProfiler->GetSampleTimeTotal();
-    std::string prog = Format("%f/%f", curTime, totTime);
+    string prog = Format("%f/%f", curTime, totTime);
     ImGui::ProgressBar(min(curTime/totTime, 1.f), ImVec2(0.f, 0.f), prog.c_str());
 
     ImGui::End();

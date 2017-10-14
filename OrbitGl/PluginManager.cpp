@@ -9,13 +9,15 @@
 
 PluginManager GPluginManager;
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 void PluginManager::Initialize()
 {
-    std::wstring dir = Path::GetPluginPath();
-    std::vector< std::wstring > plugins = Path::ListFiles( dir, L".dll" );
+    wstring dir = Path::GetPluginPath();
+    vector< wstring > plugins = Path::ListFiles( dir, L".dll" );
 
-    for( std::wstring & file : plugins )
+    for( wstring & file : plugins )
     {
         HMODULE module = LoadLibrary(file.c_str());
         using function = Orbit::Plugin*();

@@ -8,6 +8,8 @@
 #include "Log.h"
 #include "OrbitAsio.h"
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 TcpEntity::TcpEntity() : m_NumQueuedEntries(0)
 {
@@ -25,7 +27,7 @@ TcpEntity::~TcpEntity()
 void TcpEntity::Start()
 {
     PRINT_FUNC;
-    m_SenderThread = new std::thread( [&](){ SendData(); } );
+    m_SenderThread = new thread( [&](){ SendData(); } );
 }
 
 //-----------------------------------------------------------------------------
@@ -104,7 +106,7 @@ void TcpEntity::SendData()
         while( !m_ExitRequested && !m_FlushRequested && m_SendQueue.try_dequeue( buffer ) )
         {
             --m_NumQueuedEntries;
-            Message* msg = (Message*)buffer.Data()->data();
+            //Message* msg = (Message*)buffer.Data()->data();
             TcpSocket* socket = GetSocket();
             if( socket && socket->m_Socket && socket->m_Socket->is_open() )
             {

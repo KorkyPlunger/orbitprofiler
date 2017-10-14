@@ -22,10 +22,12 @@
 #include <fstream>
 #include <ostream>
 
+using namespace std;
+
 bool        Capture::GInjected = false;
 bool        Capture::GIsConnected = false;
-std::string Capture::GInjectedProcess;
-std::wstring Capture::GInjectedProcessW;
+string Capture::GInjectedProcess;
+wstring Capture::GInjectedProcessW;
 double      Capture::GOpenCaptureTime;
 bool        Capture::GIsSampling = false;
 bool        Capture::GIsTesting = false;
@@ -40,37 +42,37 @@ ULONG64     Capture::GMainFrameFunction;
 ULONG64     Capture::GNumContextSwitches;
 ULONG64     Capture::GNumProfileEvents;
 int         Capture::GCapturePort = 0;
-std::wstring Capture::GCaptureHost = L"localhost";
-std::wstring Capture::GPresetToLoad = L"";
-std::wstring Capture::GProcessToInject = L"";
+wstring Capture::GCaptureHost = L"localhost";
+wstring Capture::GPresetToLoad = L"";
+wstring Capture::GProcessToInject = L"";
 
-std::map< ULONG64, Function* >          Capture::GSelectedFunctionsMap;
-std::map< ULONG64, Function* >          Capture::GVisibleFunctionsMap;
-std::unordered_map< ULONG64, ULONG64 >  Capture::GFunctionCountMap;
-std::shared_ptr<CallStack>              Capture::GSelectedCallstack;
-std::vector<ULONG64>                    Capture::GSelectedAddressesByType[Function::NUM_TYPES];
-std::unordered_map< DWORD64, std::shared_ptr<CallStack> > Capture::GCallstacks;
+map< ULONG64, Function* >          Capture::GSelectedFunctionsMap;
+map< ULONG64, Function* >          Capture::GVisibleFunctionsMap;
+unordered_map< ULONG64, ULONG64 >  Capture::GFunctionCountMap;
+shared_ptr<CallStack>              Capture::GSelectedCallstack;
+vector<ULONG64>                    Capture::GSelectedAddressesByType[Function::NUM_TYPES];
+unordered_map< DWORD64, shared_ptr<CallStack> > Capture::GCallstacks;
 Mutex                                                     Capture::GCallstackMutex;
-std::unordered_map< DWORD64, std::string >                Capture::GZoneNames;
+unordered_map< DWORD64, string >                Capture::GZoneNames;
 TextBox*    Capture::GSelectedTextBox;
 ThreadID    Capture::GSelectedThreadId;
 Timer       Capture::GCaptureTimer;
-std::chrono::system_clock::time_point Capture::GCaptureTimePoint;
+chrono::system_clock::time_point Capture::GCaptureTimePoint;
 Capture::LoadPdbAsyncFunc Capture::GLoadPdbAsync;
 
-std::shared_ptr<SamplingProfiler> Capture::GSamplingProfiler = nullptr;
-std::shared_ptr<Process>          Capture::GTargetProcess    = nullptr;
-std::shared_ptr<Session>          Capture::GSessionPresets   = nullptr;
+shared_ptr<SamplingProfiler> Capture::GSamplingProfiler = nullptr;
+shared_ptr<Process>          Capture::GTargetProcess    = nullptr;
+shared_ptr<Session>          Capture::GSessionPresets   = nullptr;
 
 void(*Capture::GClearCaptureDataFunc)();
-void(*Capture::GSamplingDoneCallback)( std::shared_ptr<SamplingProfiler> & a_SamplingProfiler );
-std::vector< std::shared_ptr<SamplingProfiler> > GOldSamplingProfilers;
+void(*Capture::GSamplingDoneCallback)( shared_ptr<SamplingProfiler> & a_SamplingProfiler );
+vector< shared_ptr<SamplingProfiler> > GOldSamplingProfilers;
 bool Capture::GUnrealSupported = false;
 
 //-----------------------------------------------------------------------------
 void Capture::Init()
 {
-    GTargetProcess = std::make_shared<Process>();
+    GTargetProcess = make_shared<Process>();
     Capture::GCapturePort = GParams.m_Port;
 }
 
@@ -125,7 +127,7 @@ bool Capture::InjectRemote()
 }
 
 //-----------------------------------------------------------------------------
-void Capture::SetTargetProcess( const std::shared_ptr< Process > & a_Process )
+void Capture::SetTargetProcess( const shared_ptr< Process > & a_Process )
 {
     if( a_Process != GTargetProcess )
     {
@@ -141,7 +143,7 @@ void Capture::SetTargetProcess( const std::shared_ptr< Process > & a_Process )
 
         GTargetProcess = a_Process;
         GTargetProcess->LoadDebugInfo();
-        GSamplingProfiler = std::make_shared<SamplingProfiler>( a_Process );
+        GSamplingProfiler = make_shared<SamplingProfiler>( a_Process );
         GSelectedFunctionsMap.clear();
         GSessionPresets = nullptr;
         GOrbitUnreal.Clear();
@@ -169,7 +171,7 @@ bool Capture::StartCapture()
         return false;
 
     GCaptureTimer.Start();
-    GCaptureTimePoint = std::chrono::system_clock::now();
+    GCaptureTimePoint = chrono::system_clock::now();
 
     if( !IsRemote() )
     {
@@ -247,7 +249,7 @@ void Capture::ClearCaptureData()
 //-----------------------------------------------------------------------------
 MessageType GetMessageType( Function::OrbitType a_type )
 {
-    static std::map<Function::OrbitType, MessageType> typeMap;
+    static map<Function::OrbitType, MessageType> typeMap;
     if( typeMap.size() == 0 )
     {
         typeMap[Function::NONE]                      = Msg_FunctionHook;
@@ -335,7 +337,7 @@ void Capture::SendFunctionHooks()
     // Send all hooks by type
     for( int i = 0; i < Function::NUM_TYPES; ++i )
     {
-        std::vector<DWORD64> & addresses = GSelectedAddressesByType[i];
+        vector<DWORD64> & addresses = GSelectedAddressesByType[i];
         if( addresses.size() )
         {
             MessageType msgType = GetMessageType( (Function::OrbitType)i );
@@ -350,7 +352,7 @@ void Capture::SendDataTrackingInfo()
     // Send information about arguments we want to track
     for( auto & pair : *GCoreApp->GetRules() )
     {
-        const std::shared_ptr<Rule> rule = pair.second;
+        const shared_ptr<Rule> rule = pair.second;
         Function* func = rule->m_Function;
         Message msg( Msg_ArgTracking );
         ArgTrackingHeader & header = msg.m_Header.m_ArgTrackingHeader;
@@ -361,8 +363,8 @@ void Capture::SendDataTrackingInfo()
         // TODO: Argument tracking was hijacked by data tracking
         //       We should separate both concepts and revive argument
         //       tracking.
-        std::vector<Argument> args;
-        for( const std::shared_ptr<Variable > var : rule->m_TrackedVariables )
+        vector<Argument> args;
+        for( const shared_ptr<Variable > var : rule->m_TrackedVariables )
         {
             Argument arg;
             arg.m_Offset = (DWORD)var->m_Address;
@@ -399,7 +401,7 @@ void Capture::StartSampling()
         SCOPE_TIMER_LOG( L"Capture::StartSampling" );
 
         GCaptureTimer.Start();
-        GCaptureTimePoint = std::chrono::system_clock::now();
+        GCaptureTimePoint = chrono::system_clock::now();
 
         ClearCaptureData();
         GTimerManager->StartRecording();
@@ -473,7 +475,7 @@ void Capture::DisplayStats()
 }
 
 //-----------------------------------------------------------------------------
-void Capture::OpenCapture( const std::wstring & a_CaptureName )
+void Capture::OpenCapture( const wstring &  )
 {
     LocalScopeTimer Timer( &GOpenCaptureTime );
     SCOPE_TIMER_LOG( L"OpenCapture" );
@@ -497,7 +499,7 @@ void Capture::LoadSession( const shared_ptr<Session> & a_Session )
 {
     GSessionPresets = a_Session;
 
-    std::vector<std::wstring> modulesToLoad;
+    vector<wstring> modulesToLoad;
     for( auto & it : a_Session->m_Modules )
     {
         SessionModule & module = it.second;
@@ -512,7 +514,7 @@ void Capture::LoadSession( const shared_ptr<Session> & a_Session )
 }
 
 //-----------------------------------------------------------------------------
-void Capture::SaveSession( const std::wstring & a_FileName )
+void Capture::SaveSession( const wstring & a_FileName )
 {
     Session session;
     session.m_ProcessFullPath = GTargetProcess->GetFullName();
@@ -525,14 +527,14 @@ void Capture::SaveSession( const std::wstring & a_FileName )
         }
     }
 
-    std::wstring saveFileName = a_FileName;
+    wstring saveFileName = a_FileName;
     if( !EndsWith( a_FileName, L".opr" ) )
     {
         saveFileName += L".opr";
     }
 
     SCOPE_TIMER_LOG( Format( L"Saving Orbit session in %s", saveFileName.c_str() ) );
-    std::ofstream file( saveFileName, std::ios::binary );
+    ofstream file( saveFileName, ios::binary );
     cereal::BinaryOutputArchive archive(file);
     archive( cereal::make_nvp("Session", session) );
 }
@@ -546,7 +548,7 @@ void Capture::NewSamplingProfiler()
         GOldSamplingProfilers.push_back( GSamplingProfiler );
     }
 
-    Capture::GSamplingProfiler = std::make_shared< SamplingProfiler >( Capture::GTargetProcess, true );
+    Capture::GSamplingProfiler = make_shared< SamplingProfiler >( Capture::GTargetProcess, true );
 }
 
 //-----------------------------------------------------------------------------
@@ -585,11 +587,11 @@ void Capture::RegisterZoneName( DWORD64 a_ID, char* a_Name )
 void Capture::AddCallstack( CallStack & a_CallStack )
 {
     ScopeLock lock( GCallstackMutex );
-    Capture::GCallstacks[a_CallStack.m_Hash] = std::make_shared<CallStack>(a_CallStack);
+    Capture::GCallstacks[a_CallStack.m_Hash] = make_shared<CallStack>(a_CallStack);
 }
 
 //-----------------------------------------------------------------------------
-std::shared_ptr<CallStack> Capture::GetCallstack( CallstackID a_ID )
+shared_ptr<CallStack> Capture::GetCallstack( CallstackID a_ID )
 {
     ScopeLock lock( GCallstackMutex );
     

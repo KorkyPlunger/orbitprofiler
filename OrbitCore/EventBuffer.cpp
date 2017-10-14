@@ -5,6 +5,8 @@
 #include "EventBuffer.h"
 #include "Serialization.h"
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 void EventBuffer::Print()
 {
@@ -13,8 +15,8 @@ void EventBuffer::Print()
     size_t numCallstacks = 0;
     for( auto & pair : m_CallstackEvents )
     {
-        ThreadID threadID = pair.first;
-        std::map< long long, CallstackEvent > & callstacks = pair.second;
+        //ThreadID threadID = pair.first;
+        map< long long, CallstackEvent > & callstacks = pair.second;
         numCallstacks += callstacks.size();
     }
 
@@ -23,14 +25,14 @@ void EventBuffer::Print()
     for( auto & pair : m_CallstackEvents )
     {
         ThreadID threadID = pair.first;
-        std::map< long long, CallstackEvent > & callstacks = pair.second;
+        map< long long, CallstackEvent > & callstacks = pair.second;
         PRINT_VAR( threadID );
         PRINT_VAR( callstacks.size() );
     }
 }
 
 //-----------------------------------------------------------------------------
-std::vector< CallstackEvent > EventBuffer::GetCallstackEvents( long long a_TimeBegin
+vector< CallstackEvent > EventBuffer::GetCallstackEvents( long long a_TimeBegin
                                                              , long long a_TimeEnd
                                                              , ThreadID a_ThreadId /*=-1*/)
 {
@@ -38,7 +40,7 @@ std::vector< CallstackEvent > EventBuffer::GetCallstackEvents( long long a_TimeB
     for( auto & pair : m_CallstackEvents )
     {
         ThreadID threadID = pair.first;
-        std::map< long long, CallstackEvent > & callstacks = pair.second;
+        map< long long, CallstackEvent > & callstacks = pair.second;
 
         if( a_ThreadId == -1 || threadID == a_ThreadId )
         {

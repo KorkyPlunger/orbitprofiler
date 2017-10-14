@@ -31,8 +31,6 @@
 
 #include <concurrentqueue.h>
 
-using namespace std;
-
 typedef std::basic_string<TCHAR> TString;
 typedef ULONG64                  ptr_type;
 

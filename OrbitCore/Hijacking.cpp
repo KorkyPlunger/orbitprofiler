@@ -71,12 +71,12 @@ struct ThreadLocalData
         }
     }
 
-    std::vector<ReturnAddress>      m_ReturnAdresses;
-    std::vector<Timer>              m_Timers;
-    std::vector<Context>            m_Contexts;
-    std::unordered_set<CallstackID> m_SentCallstacks;
-    std::unordered_set<char*>       m_SentLiterals;
-    std::unordered_set<char*>       m_SentActorNames;
+    vector<ReturnAddress>      m_ReturnAdresses;
+    vector<Timer>              m_Timers;
+    vector<Context>            m_Contexts;
+    unordered_set<CallstackID> m_SentCallstacks;
+    unordered_set<char*>       m_SentLiterals;
+    unordered_set<char*>       m_SentActorNames;
     int                             m_SessionID;
     DWORD                           m_ThreadID;
     int                             m_ZoneStack;
@@ -118,8 +118,8 @@ namespace Hijacking
     __forceinline void SetOverridenReturnAddresses();
     __forceinline void SendUObjectName( void* a_UnrealActor );
     
-    std::unordered_map< ULONG64, FunctionArgInfo > m_FunctionArgsMap;
-    std::unordered_set< ULONG64 >                  m_SendCallstacks;
+    unordered_map< ULONG64, FunctionArgInfo > m_FunctionArgsMap;
+    unordered_set< ULONG64 >                  m_SendCallstacks;
     OrbitUnrealInfo                                m_UnrealInfo;
     
     // On Win64, epilog context is at 40 bytes: 8 bytes (return address) + 32 bytes (shadow space)
@@ -580,7 +580,7 @@ inline void Hijacking::SendContext( Context* a_Context, EpilogContext* a_EpilogC
     FunctionArgInfo* argInfo = GetArgInfo( address );
     size_t contextSize = sizeof(Context) + sizeof(EpilogContext);
     size_t argDataSize = argInfo ? argInfo->m_ArgDataSize : 0;
-    std::vector<unsigned char> messageData( sizeof(SavedContext) + argDataSize );
+    vector<unsigned char> messageData( sizeof(SavedContext) + argDataSize );
     
     Message msg(Msg_SavedContext);
     msg.m_Size = (int)messageData.size();

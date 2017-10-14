@@ -20,6 +20,8 @@
 #include "Images.h"
 #include "Params.h"
 
+using namespace std;
+
 // Data
 struct GLFWwindow{};
 static GLFWwindow*  g_Window = NULL;
@@ -468,11 +470,11 @@ void WatchWindow::Draw(const char* title, bool* p_opened )
         return;
     }
 
-    const std::vector< std::shared_ptr<Variable> > & watchedVars = Capture::GTargetProcess->GetWatchedVariables();
+    const vector< shared_ptr<Variable> > & watchedVars = Capture::GTargetProcess->GetWatchedVariables();
 
     if (ImGui::Button("Sync"))
     {
-        for( std::shared_ptr<Variable> var : watchedVars )
+        for( shared_ptr<Variable> var : watchedVars )
         {
             var->SyncValue();
         }
@@ -484,7 +486,7 @@ void WatchWindow::Draw(const char* title, bool* p_opened )
 
     //struct funcs
     {
-        for( std::shared_ptr<Variable> variable : watchedVars )
+        for( shared_ptr<Variable> variable : watchedVars )
         {
             Variable & var = *variable;
             ImGui::PushID(variable.get());                      // Use object uid as identifier. Most commonly you could also use the object pointer as a base ID.

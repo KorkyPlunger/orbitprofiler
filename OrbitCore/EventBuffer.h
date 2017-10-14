@@ -5,7 +5,7 @@
 
 #include "Core.h"
 #include "Callstack.h"
-#include "BlockChain.h"
+//#include "BlockChain.h"
 #include "SerializationMacros.h"
 
 #include <set>

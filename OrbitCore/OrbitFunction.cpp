@@ -20,6 +20,8 @@
 
 #include "dia2.h"
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 Function::~Function()
 {
@@ -34,7 +36,7 @@ void Function::SetAsMainFrameFunction()
 }
 
 //-----------------------------------------------------------------------------
-const std::wstring & Function::PrettyName()
+const wstring & Function::PrettyName()
 {
     if( m_PrettyName.size() == 0 )
     {
@@ -89,7 +91,7 @@ DWORD64 Function::GetVirtualAddress() const
 }
 
 //-----------------------------------------------------------------------------
-std::wstring Function::GetModuleName()
+wstring Function::GetModuleName()
 {
     if( m_Pdb )
     {
@@ -113,7 +115,7 @@ void Function::ResetStats()
 {
     if( m_Stats == nullptr )
     {
-        m_Stats = std::make_shared<FunctionStats>();
+        m_Stats = make_shared<FunctionStats>();
     }
     else
     {
@@ -135,7 +137,7 @@ void Function::GetDisassembly()
         // dll
         if( m_Size == 0 )
         {
-            std::shared_ptr<Module> module = Capture::GTargetProcess->GetModuleFromAddress( address );
+            shared_ptr<Module> module = Capture::GTargetProcess->GetModuleFromAddress( address );
             if( module )
             {
                 DWORD64 maxSize = module->m_AddressEnd - address;
@@ -272,9 +274,9 @@ void Function::Print()
         DiaParser parser;
         parser.PrintFunctionType( diaSymbol );
         ORBIT_VIZ( parser.m_Log );
-    }
 
-    diaSymbol->Release();
+        diaSymbol->Release();
+    }
 
     LineInfo lineInfo;
     SymUtils::GetLineInfo( m_Address + (DWORD64)m_Pdb->GetHModule(), lineInfo );

@@ -1,6 +1,9 @@
 #include "orbitdisassemblydialog.h"
 #include "ui_orbitdisassemblydialog.h"
 
+using namespace std;
+
+
 //-----------------------------------------------------------------------------
 OrbitDisassemblyDialog::OrbitDisassemblyDialog(QWidget *parent) :
     QDialog(parent),
@@ -16,7 +19,7 @@ OrbitDisassemblyDialog::~OrbitDisassemblyDialog()
 }
 
 //-----------------------------------------------------------------------------
-void OrbitDisassemblyDialog::SetText( const std::wstring & a_Text )
+void OrbitDisassemblyDialog::SetText( const wstring & a_Text )
 {
     ui->plainTextEdit->SetText( a_Text );
     ui->plainTextEdit->moveCursor( QTextCursor::Start );

@@ -5,6 +5,8 @@
 #include "ImmediateWindow.h"
 #include "Log.h"
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 ImmediateWindow::ImmediateWindow()
 {
@@ -35,11 +37,11 @@ void ImmediateWindow::RenderUI()
     RenderSamplingUI();
     RenderProcessUI();
 
-    bool show_test_window = true;
-    bool show_another_window = false;
+    //bool show_test_window = true;
+    //bool show_another_window = false;
     ImVec4 clear_color = ImColor(114, 144, 154);
 
-    //GLogger.GetLockedLog(Log::Viz, [&](const std::vector<std::string> & a_Entries)
+    //GLogger.GetLockedLog(Log::Viz, [&](const vector<string> & a_Entries)
     //{
     //    for( auto & line : a_Entries )
     //    {

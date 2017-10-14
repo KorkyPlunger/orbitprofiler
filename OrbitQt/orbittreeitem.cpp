@@ -3,6 +3,8 @@
 
 #include "../OrbitCore/Utils.h"
 
+using namespace std;
+
 OrbitTreeItem::OrbitTreeItem(const QList<QVariant> &data, OrbitTreeItem *parent)
 {
     m_parentItem = parent;
@@ -73,14 +75,14 @@ void OrbitTreeItem::SetParentsVisible( bool a_Visible )
     }
 }
 
-void OrbitTreeItem::Filter( const std::wstring & a_Filter )
+void OrbitTreeItem::Filter( const wstring & a_Filter )
 {
     SetVisibleRecursive( false );
     SetMatchRecursive( false );
     FilterRecursive( a_Filter );
 }
 
-void OrbitTreeItem::FilterRecursive( const std::wstring & a_Filter )
+void OrbitTreeItem::FilterRecursive( const wstring & a_Filter )
 {
     if( a_Filter != L"" && this->Contains( a_Filter ) )
     {
@@ -95,11 +97,11 @@ void OrbitTreeItem::FilterRecursive( const std::wstring & a_Filter )
     }
 }
 
-bool OrbitTreeItem::Contains( const std::wstring & a_Filter )
+bool OrbitTreeItem::Contains( const wstring & a_Filter )
 {
     for( QVariant & variant : m_itemData )
     {
-        std::wstring str = variant.toString().toStdWString();
+        wstring str = variant.toString().toStdWString();
         if( ::Contains( str, a_Filter ) )
         {
             return true;

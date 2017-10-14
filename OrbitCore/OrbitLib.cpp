@@ -10,7 +10,9 @@
 #include "CallStack.h"
 #include "CrashHandler.h"
 
-std::string GHost;
+using namespace std;
+
+string GHost;
 bool GIsCaptureEnabled = false;
 
 //-----------------------------------------------------------------------------
@@ -20,7 +22,7 @@ UserScopeTimer::UserScopeTimer( const char* a_Name ) : m_Valid( false )
     if( GIsCaptureEnabled )
     {
         m_Valid = true;
-        ScopeTimer* Timer = new(m_Data)ScopeTimer( a_Name );
+        new(m_Data)ScopeTimer( a_Name );
     }
 }
 
@@ -35,7 +37,7 @@ UserScopeTimer::~UserScopeTimer()
 }
 
 //-----------------------------------------------------------------------------
-void Orbit::Init( const std::string & a_Host )
+void Orbit::Init( const string & a_Host )
 {
     PRINT_FUNC;
     PRINT_VAR(a_Host);
@@ -58,7 +60,7 @@ void Orbit::Init( const std::string & a_Host )
 }
 
 //-----------------------------------------------------------------------------
-void Orbit::InitRemote( const std::string & a_Host )
+void Orbit::InitRemote( const string & a_Host )
 {
     Init( a_Host );
     

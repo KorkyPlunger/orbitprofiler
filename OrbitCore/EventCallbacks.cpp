@@ -16,11 +16,13 @@
 
 #include "evntcons.h"
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
-std::unordered_map< ULONG64, EventTracing::EventCallback > GEventCallbacks;
-std::unordered_map< ptr_type, std::wstring > GFileMap;
-std::unordered_map< uint32_t, uint32_t > GThreadToProcessMap;
-std::unordered_map< ULONG64, ULONG > GEventCountByProviderId;
+unordered_map< ULONG64, EventTracing::EventCallback > GEventCallbacks;
+unordered_map< ptr_type, wstring > GFileMap;
+unordered_map< uint32_t, uint32_t > GThreadToProcessMap;
+unordered_map< ULONG64, ULONG > GEventCountByProviderId;
 bool GOutputEvent = false;
 
 //-----------------------------------------------------------------------------
@@ -69,7 +71,7 @@ void EventTracing::Callback( PEVENT_RECORD a_EventRecord )
 }
 
 //-----------------------------------------------------------------------------
-void EventTracing::CallbackALPC( PEVENT_RECORD a_EventRecord, UCHAR a_Opcode )
+void EventTracing::CallbackALPC( PEVENT_RECORD , UCHAR  )
 {
 }
 
@@ -98,12 +100,12 @@ void EventTracing::CallbackDiskIo( PEVENT_RECORD a_EventRecord, UCHAR a_Opcode )
     case DiskIo_TypeGroup2::OPCODE_WRITE_INIT:
     case DiskIo_TypeGroup2::OPCODE_FLUSH_INIT:
     {
-        DiskIo_TypeGroup2* event = (DiskIo_TypeGroup2*)a_EventRecord->UserData;
+        //DiskIo_TypeGroup2* event = (DiskIo_TypeGroup2*)a_EventRecord->UserData;
         break;
     }
 
     case DiskIo_TypeGroup3::OPCODE_FLUSH_BUFFER:
-        DiskIo_TypeGroup3* event = (DiskIo_TypeGroup3*)a_EventRecord->UserData;
+        //DiskIo_TypeGroup3* event = (DiskIo_TypeGroup3*)a_EventRecord->UserData;
         break;
     }
 
@@ -114,7 +116,7 @@ void EventTracing::CallbackDiskIo( PEVENT_RECORD a_EventRecord, UCHAR a_Opcode )
 }
 
 //-----------------------------------------------------------------------------
-void EventTracing::CallbackEventTraceConfig( PEVENT_RECORD a_EventRecord, UCHAR a_Opcode )
+void EventTracing::CallbackEventTraceConfig( PEVENT_RECORD , UCHAR  )
 {
 }
 
@@ -160,12 +162,12 @@ void EventTracing::CallbackFileIo( PEVENT_RECORD a_EventRecord, UCHAR a_Opcode )
 }
 
 //-----------------------------------------------------------------------------
-void EventTracing::CallbackImageLoad( PEVENT_RECORD a_EventRecord, UCHAR a_Opcode )
+void EventTracing::CallbackImageLoad( PEVENT_RECORD , UCHAR  )
 {
 }
 
 //-----------------------------------------------------------------------------
-void EventTracing::CallbackPageFault( PEVENT_RECORD a_EventRecord, UCHAR a_Opcode )
+void EventTracing::CallbackPageFault( PEVENT_RECORD , UCHAR  )
 {
 }
 
@@ -183,22 +185,22 @@ void EventTracing::CallbackPerfInfo( PEVENT_RECORD a_EventRecord, UCHAR a_Opcode
 }
 
 //-----------------------------------------------------------------------------
-void EventTracing::CallbackProcess( PEVENT_RECORD a_EventRecord, UCHAR a_Opcode )
+void EventTracing::CallbackProcess( PEVENT_RECORD , UCHAR  )
 {
 }
 
 //-----------------------------------------------------------------------------
-void EventTracing::CallbackRegistry( PEVENT_RECORD a_EventRecord, UCHAR a_Opcode )
+void EventTracing::CallbackRegistry( PEVENT_RECORD , UCHAR  )
 {
 }
 
 //-----------------------------------------------------------------------------
-void EventTracing::CallbackSplitIo( PEVENT_RECORD a_EventRecord, UCHAR a_Opcode )
+void EventTracing::CallbackSplitIo( PEVENT_RECORD , UCHAR  )
 {
 }
 
 //-----------------------------------------------------------------------------
-void EventTracing::CallbackTcpIp( PEVENT_RECORD a_EventRecord, UCHAR a_Opcode )
+void EventTracing::CallbackTcpIp( PEVENT_RECORD , UCHAR  )
 {
 }
 
@@ -237,7 +239,7 @@ void EventTracing::CallbackThread( PEVENT_RECORD a_EventRecord, UCHAR a_Opcode )
 }
 
 //-----------------------------------------------------------------------------
-void EventTracing::CallbackUdpIp( PEVENT_RECORD a_EventRecord, UCHAR a_Opcode )
+void EventTracing::CallbackUdpIp( PEVENT_RECORD , UCHAR  )
 {
 }
 
@@ -284,7 +286,7 @@ inline void ProcessContextSwitch( PEVENT_RECORD a_EventRecord )
     EVENT_HEADER &Header = a_EventRecord->EventHeader;
     UCHAR ProcessorNumber = a_EventRecord->BufferContext.ProcessorNumber;
     USHORT ProcessorIndex = a_EventRecord->BufferContext.ProcessorIndex;
-    ULONG ThreadID = Header.ThreadId;
+    //ULONG ThreadID = Header.ThreadId;
     LONGLONG CycleTime = Header.TimeStamp.QuadPart;
     CSwitch* switchEvent = (CSwitch*)a_EventRecord->UserData;
 
@@ -314,11 +316,11 @@ inline void ProcessContextSwitch( PEVENT_RECORD a_EventRecord )
 //-----------------------------------------------------------------------------
 inline void ProcessProfileEvent( PEVENT_RECORD a_EventRecord )
 {
-    EVENT_HEADER &Header = a_EventRecord->EventHeader;
-    UCHAR ProcessorNumber = a_EventRecord->BufferContext.ProcessorNumber;
-    USHORT ProcessorIndex = a_EventRecord->BufferContext.ProcessorIndex;
-    ULONG ThreadID = Header.ThreadId;
-    LONGLONG CycleTime = Header.TimeStamp.QuadPart;
+    //EVENT_HEADER &Header = a_EventRecord->EventHeader;
+    //UCHAR ProcessorNumber = a_EventRecord->BufferContext.ProcessorNumber;
+    //USHORT ProcessorIndex = a_EventRecord->BufferContext.ProcessorIndex;
+    //ULONG ThreadID = Header.ThreadId;
+    //LONGLONG CycleTime = Header.TimeStamp.QuadPart;
     PerfInfo_SampledProfile* sampleEvent = (PerfInfo_SampledProfile*)a_EventRecord->UserData;
 
     if( Capture::GTargetProcess->HasThread( sampleEvent->ThreadId ) && Capture::IsCapturing() )

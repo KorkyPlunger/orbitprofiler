@@ -9,10 +9,11 @@
 #include <memory>
 #include "../external/breakpad/src/google_breakpad/processor/minidump.h"
 
+using namespace std;
 using namespace google_breakpad;
 
 //-----------------------------------------------------------------------------
-MiniDump::MiniDump( std::wstring a_FileName )
+MiniDump::MiniDump( wstring a_FileName )
 {
     m_MiniDump = new google_breakpad::Minidump( ws2s(a_FileName) );
     m_MiniDump->Read();
@@ -25,13 +26,13 @@ MiniDump::~MiniDump()
 }
 
 //-----------------------------------------------------------------------------
-std::shared_ptr<Process> MiniDump::ToOrbitProcess()
+shared_ptr<Process> MiniDump::ToOrbitProcess()
 {
     MinidumpModuleList* moduleList = m_MiniDump->GetModuleList();
     if( moduleList )
     {
         m_MiniDump->Print();
-        std::shared_ptr<Process> process = std::make_shared<Process>();
+        shared_ptr<Process> process = make_shared<Process>();
         process->SetIsRemote(true);
         process->SetID( 0 );
 
@@ -45,7 +46,7 @@ std::shared_ptr<Process> MiniDump::ToOrbitProcess()
             PRINT_VAR( module->debug_file() );
             PRINT_VAR( module->debug_identifier() );
 
-            std::shared_ptr<Module> mod = std::make_shared<Module>();
+            shared_ptr<Module> mod = make_shared<Module>();
             
             mod->m_FullName = s2ws( module->code_file() );
             mod->m_Name = Path::GetFileName( mod->m_FullName );

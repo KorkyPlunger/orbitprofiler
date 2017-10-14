@@ -6,6 +6,8 @@
 #include "TimerManager.h"
 #include "Log.h"
 
+using namespace std;
+
 __declspec(thread) int CurrentDepth = 0;
 __declspec(thread) int CurrentDepthLocal = 0;
 
@@ -26,7 +28,7 @@ void Timer::Stop()
 }
 
 //-----------------------------------------------------------------------------
-ScopeTimer::ScopeTimer( const char* a_Name )
+ScopeTimer::ScopeTimer( const char* )
 {
     m_Timer.Start();
 }
@@ -51,9 +53,9 @@ LocalScopeTimer::LocalScopeTimer(double* a_Millis) : m_Millis( a_Millis )
 }
 
 //-----------------------------------------------------------------------------
-LocalScopeTimer::LocalScopeTimer( const std::wstring & a_Msg ) : m_Millis(nullptr), m_Msg( a_Msg )
+LocalScopeTimer::LocalScopeTimer( const wstring & a_Msg ) : m_Millis(nullptr), m_Msg( a_Msg )
 {
-    std::wstring tabs;
+    wstring tabs;
     for (int i = 0; i < CurrentDepthLocal; ++i)
     {
         tabs += L"  ";
@@ -77,7 +79,7 @@ LocalScopeTimer::~LocalScopeTimer()
 
     if( m_Msg.length() > 0 )
     {
-        std::wstring tabs;
+        wstring tabs;
         for (int i = 0; i < CurrentDepthLocal; ++i)
         {
             tabs += L"  ";

@@ -21,6 +21,8 @@
 #include "Log.h"
 #include "Params.h"
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 DataViewModel::~DataViewModel()
 {
@@ -55,22 +57,22 @@ DataViewModel* DataViewModel::Create( DataViewType a_Type )
 }
 
 //-----------------------------------------------------------------------------
-const std::vector<std::wstring>& DataViewModel::GetColumnHeaders()
+const vector<wstring>& DataViewModel::GetColumnHeaders()
 {
-    static std::vector<std::wstring> columns = { L"Invalid Header" };
+    static vector<wstring> columns = { L"Invalid Header" };
     return columns;
 }
 
 //-----------------------------------------------------------------------------
-const std::vector<float>& DataViewModel::GetColumnHeadersRatios()
+const vector<float>& DataViewModel::GetColumnHeadersRatios()
 {
-    static std::vector<float> empty;
+    static vector<float> empty;
     return empty;
 }
 
 //-----------------------------------------------------------------------------
-const std::vector<std::wstring>& DataViewModel::GetContextMenu(int a_Index)
+const vector<wstring>& DataViewModel::GetContextMenu(int a_Index)
 {
-    static std::vector<std::wstring> empty;
+    static vector<wstring> empty;
     return empty;
 }

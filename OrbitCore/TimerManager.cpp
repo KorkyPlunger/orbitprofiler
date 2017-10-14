@@ -11,6 +11,8 @@
 #include "OrbitLib.h"
 #include <direct.h>
 
+using namespace std;
+
 TimerManager* GTimerManager;
 
 //-----------------------------------------------------------------------------
@@ -32,7 +34,7 @@ TimerManager::TimerManager( bool a_IsClient )
 {
     if( m_IsClient )
     {
-        m_ConsumerThread = new std::thread([&](){ SendTimers(); });
+        m_ConsumerThread = new thread([&](){ SendTimers(); });
     }
 }
 
@@ -53,7 +55,7 @@ void TimerManager::StartRecording()
 
     if( !m_ConsumerThread )
     {
-        m_ConsumerThread = new std::thread([&](){ ConsumeTimers(); });
+        m_ConsumerThread = new thread([&](){ ConsumeTimers(); });
     }
 
     m_IsRecording = true;

@@ -15,6 +15,8 @@
 #include "App.h"
 #include "../OrbitPlugin/OrbitSDK.h"
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 RuleEditorWindow::RuleEditorWindow( Function* a_Function ) 
     : m_WindowFlags( 0 )
@@ -28,9 +30,9 @@ RuleEditorWindow::RuleEditorWindow( Function* a_Function )
 //-----------------------------------------------------------------------------
 void RuleEditorWindow::SetInputFromActiveIndex( ImGuiTextEditCallbackData* data, int entryIndex )
 {
-    RuleEditorWindow* ruleEditor = reinterpret_cast<RuleEditorWindow*>( data->UserData );
+    //RuleEditorWindow* ruleEditor = reinterpret_cast<RuleEditorWindow*>( data->UserData );
 
-    std::string  entry = m_AutoComplete[entryIndex];
+    string  entry = m_AutoComplete[entryIndex];
     ReplaceStringInPlace( entry, GetCurrentWord(m_Text), "" );
     m_Text += entry;
 
@@ -44,26 +46,26 @@ void RuleEditorWindow::SetInputFromActiveIndex( ImGuiTextEditCallbackData* data,
 }
 
 //-----------------------------------------------------------------------------
-void RuleEditorWindow::OnWordSelected( const std::string & a_Word )
+void RuleEditorWindow::OnWordSelected( const string & a_Word )
 {
     m_Text += a_Word;
 }
 
 //-----------------------------------------------------------------------------
-std::shared_ptr<Variable> RuleEditorWindow::GetLastVariable( const std::string & a_Chain )
+shared_ptr<Variable> RuleEditorWindow::GetLastVariable( const string & a_Chain )
 {
     Type* type = m_Type;
-    std::shared_ptr<Variable> var = type ? type->GetTemplateVariable() : nullptr;
+    shared_ptr<Variable> var = type ? type->GetTemplateVariable() : nullptr;
 
-    std::vector<std::string> tokens = Tokenize( a_Chain, ".->" );
+    vector<string> tokens = Tokenize( a_Chain, ".->" );
     if( tokens.size() > 0 )
     {
         type = m_Type;
 
         for( int i = tokens[0] == "this" ? 1 : 0; var && type && i < tokens.size(); ++i )
         {
-            std::wstring & varName = s2ws(tokens[i]);
-            std::shared_ptr<Variable> child = var->FindImmediateChild(varName);
+            wstring & varName = s2ws(tokens[i]);
+            shared_ptr<Variable> child = var->FindImmediateChild(varName);
             if( child )
             { 
                 var = child;
@@ -76,12 +78,12 @@ std::shared_ptr<Variable> RuleEditorWindow::GetLastVariable( const std::string &
 }
 
 //-----------------------------------------------------------------------------
-std::string RuleEditorWindow::GetCurrentWord( const std::string a_Chain )
+string RuleEditorWindow::GetCurrentWord( const string a_Chain )
 {
-    std::vector<std::string> tokens = Tokenize( a_Chain, ".->" );
+    vector<string> tokens = Tokenize( a_Chain, ".->" );
     if( tokens.size() > 0 )
     {
-        std::string lastWord = tokens[tokens.size()-1];
+        string lastWord = tokens[tokens.size()-1];
         if( EndsWith( a_Chain, lastWord.c_str() ) )
         {
             return lastWord;
@@ -92,21 +94,21 @@ std::string RuleEditorWindow::GetCurrentWord( const std::string a_Chain )
 }
 
 //-----------------------------------------------------------------------------
-void RuleEditorWindow::RefreshAutoComplete( const std::string & a_Line )
+void RuleEditorWindow::RefreshAutoComplete( const string & a_Line )
 {
     //if( a_Line.size() && a_Line != m_LastText )
     {
         m_AutoComplete.clear();
         m_MaxTextWidth = 0;
-        std::shared_ptr<Variable> var = GetLastVariable( a_Line );
+        shared_ptr<Variable> var = GetLastVariable( a_Line );
         Type* type = var ? var->GetType() : nullptr;
         if( type )
         {
-            std::string currentWord = GetCurrentWord( a_Line );
+            string currentWord = GetCurrentWord( a_Line );
             for( auto & pair : type->m_DataMembers )
             {
                 Variable & var = pair.second;
-                std::string varName = ws2s(var.m_Name);
+                string varName = ws2s(var.m_Name);
 
                 if( Contains( varName, currentWord ) )
                 {
@@ -145,15 +147,15 @@ bool RuleEditorWindow::CreateRule()
 {
     if( m_Function && m_Function->Hookable() )
     {
-        std::shared_ptr<Variable> var = GetLastVariable(m_Text);
+        shared_ptr<Variable> var = GetLastVariable(m_Text);
         if( var )
         {
             m_Function->Select();
-            std::unordered_map<DWORD64, std::shared_ptr<Rule>>& rules = GOrbitApp->GetRuleEditor()->GetRules();
-            std::shared_ptr<Rule> rule = rules[m_Function->GetVirtualAddress()];
+            unordered_map<DWORD64, shared_ptr<Rule>>& rules = GOrbitApp->GetRuleEditor()->GetRules();
+            shared_ptr<Rule> rule = rules[m_Function->GetVirtualAddress()];
             if( rule == nullptr )
             {
-                rule = rules[m_Function->GetVirtualAddress()] = std::make_shared<Rule>();
+                rule = rules[m_Function->GetVirtualAddress()] = make_shared<Rule>();
                 rule->m_Function = m_Function;
             }
             
@@ -394,7 +396,7 @@ void RuleEditorWindow::DrawPopup( ImVec2 pos, ImVec2 size, bool& isFocused )
 
 void RuleEditorWindow::UpdateTextBuffer()
 {
-    size_t len = m_Text.size();
+    //size_t len = m_Text.size();
     m_TextBuffer.resize(m_Text.size() + 8192);
     memcpy(&m_TextBuffer[0], &m_Text[0], m_Text.size() + 1);
 }
@@ -424,7 +426,7 @@ void RuleEditorWindow::Draw(const char* title, bool* p_opened, ImVec2* a_Size )
     if( m_Function )
     {
         ImGui::NewLine();
-        std::string funcName = m_Function->PrettyNameStr();
+        string funcName = m_Function->PrettyNameStr();
         ImGui::Text( "When [%s] is called, send:", funcName.c_str() );
     }
    
@@ -444,14 +446,14 @@ void RuleEditorWindow::Draw(const char* title, bool* p_opened, ImVec2* a_Size )
     {
         ImGui::SetKeyboardFocusHere( -1 );
 
-        ImVec2 & pos = ImGui::GetCurrentContext()->OsImePosRequest;
+        //ImVec2 & pos = ImGui::GetCurrentContext()->OsImePosRequest;
 
         if( m_State.m_PopupOpen && m_State.m_ActiveIdx != -1 )
         {
             // This means that enter was pressed whilst a
             // the popup was open and we had an 'active' item.
             // So we copy the entry to the input buffer here
-            std::string entry = m_AutoComplete[m_State.m_ActiveIdx];
+            string entry = m_AutoComplete[m_State.m_ActiveIdx];
             const size_t length = entry.size();
 
             ReplaceStringInPlace( entry, GetCurrentWord( m_Text ), "" );
@@ -475,7 +477,7 @@ void RuleEditorWindow::Draw(const char* title, bool* p_opened, ImVec2* a_Size )
 
     if( m_LastVariable )
     {
-        std::string typeName = ws2s( m_LastVariable->GetTypeName() );
+        string typeName = ws2s( m_LastVariable->GetTypeName() );
         ImGui::Text( "Type: %s\nLength: %i\nOffset:%i", typeName.c_str(), (int)m_LastVariable->m_Size, (int)m_LastVariable->m_Address );
     }
 
@@ -486,7 +488,7 @@ void RuleEditorWindow::Draw(const char* title, bool* p_opened, ImVec2* a_Size )
         m_PluginToggles.resize( numOptions, 0 );
     }
 
-    const std::vector<Orbit::Plugin*>& plugins = GPluginManager.m_Plugins;
+    const vector<Orbit::Plugin*>& plugins = GPluginManager.m_Plugins;
     ImGui::Text( "To plugin:");
     ImGui::SameLine();
     
@@ -496,7 +498,7 @@ void RuleEditorWindow::Draw(const char* title, bool* p_opened, ImVec2* a_Size )
         ImGui::OpenPopup( "toggle" );
     }
     
-    std::map< int, std::string > & typeMap = Card::GetTypeMap();
+    map< int, string > & typeMap = Card::GetTypeMap();
 
     if( ImGui::BeginPopup( "toggle" ) )
     {
@@ -651,18 +653,18 @@ void RuleEditor::OnReceiveMessage( const Message & a_Message )
 
         int ContextSize = Capture::GTargetProcess->GetIs64Bit() ? sizeof(SavedContext64) : sizeof(SavedContext32);
         void* argData = (void*)(a_Message.GetData() + ContextSize);
-        int argDataSize = a_Message.m_Size - ContextSize;
+        //int argDataSize = a_Message.m_Size - ContextSize;
 
         //DemoPosition( context, argData, argDataSize );
-        RuleEditor* ruleEditor = GOrbitApp->GetRuleEditor();
+        //RuleEditor* ruleEditor = GOrbitApp->GetRuleEditor();
         m_NeedsRedraw = true;
 
         DWORD64 address = a_Message.m_Header.m_GenericHeader.m_Address;
 
-        std::shared_ptr<Rule> rule = m_Rules[address];
+        shared_ptr<Rule> rule = m_Rules[address];
         int offset = 0;
         const char* maxAddress = a_Message.GetData() + a_Message.m_Size;
-        for( const std::shared_ptr<Variable > var : rule->m_TrackedVariables )
+        for( const shared_ptr<Variable > var : rule->m_TrackedVariables )
         {
             Argument arg;
             var->m_Address;
@@ -681,7 +683,7 @@ void RuleEditor::OnReceiveMessage( const Message & a_Message )
 }
 
 //-----------------------------------------------------------------------------
-void RuleEditor::ProcessVariable( const std::shared_ptr<Variable > a_Variable, char* a_Data )
+void RuleEditor::ProcessVariable( const shared_ptr<Variable > a_Variable, char* a_Data )
 {
     if( a_Variable->m_Size == 4 )
     {

@@ -13,6 +13,8 @@
 #include "Serialization.h"
 #include "DiaParser.h"
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 Variable::Variable() : m_Line(0)
                      , m_Address(0)
@@ -31,7 +33,7 @@ Variable::Variable() : m_Line(0)
 }
 
 //-----------------------------------------------------------------------------
-void Variable::SetType(const std::wstring & a_Type)
+void Variable::SetType(const wstring & a_Type)
 {
     m_Type = a_Type;
     m_BasicType = TypeFromString( a_Type );
@@ -91,9 +93,9 @@ void Variable::ReceiveValue( const Message & a_Msg )
 }
 
 //-----------------------------------------------------------------------------
-void Variable::UpdateFromRaw( const std::vector< char > & a_RawData, DWORD64 a_BaseAddress )
+void Variable::UpdateFromRaw( const vector< char > & a_RawData, DWORD64 a_BaseAddress )
 {
-    for( std::shared_ptr<Variable> & var : m_Children )
+    for( shared_ptr<Variable> & var : m_Children )
     {
         if( var->IsBasicType() )
         {
@@ -114,9 +116,9 @@ void Variable::UpdateFromRaw( const std::vector< char > & a_RawData, DWORD64 a_B
 }
 
 //-----------------------------------------------------------------------------
-std::wstring Indent( int a_Indent )
+wstring Indent( int a_Indent )
 {
-    std::wstring str;
+    wstring str;
     str.reserve(a_Indent);
     for( int i = 0; i < a_Indent; ++i )
     {
@@ -144,7 +146,7 @@ void Variable::Print()
     PrintHierarchy();
 
     DWORD64 address = 0;
-    std::wstring typeName = GetTypeName();
+    wstring typeName = GetTypeName();
     ORBIT_VIZ( Format( L"\n%s size(%i)\n", typeName.c_str(), m_Size ) );
     Print( 1, address, m_Size );
 }
@@ -152,7 +154,7 @@ void Variable::Print()
 //-----------------------------------------------------------------------------
 void Variable::Print( int a_Indent, DWORD64 & a_ByteCounter, DWORD64 a_TotalSize )
 {
-    std::wstring indent = Indent(a_Indent);
+    wstring indent = Indent(a_Indent);
     int width = MaxOffsetWidth(a_TotalSize);
 
     if( a_ByteCounter != m_Address )
@@ -169,7 +171,7 @@ void Variable::Print( int a_Indent, DWORD64 & a_ByteCounter, DWORD64 a_TotalSize
         a_ByteCounter += m_Size;
     }
 
-    for( std::shared_ptr<Variable> child : m_Children )
+    for( shared_ptr<Variable> child : m_Children )
     {
         child->Print( a_Indent + 1, a_ByteCounter, a_TotalSize );
     }
@@ -183,7 +185,7 @@ void Variable::PrintHierarchy( int a_Indent )
         type->LoadDiaInfo();
         ORBIT_VIZ( Format( L"%s%s\n", Indent( a_Indent ).c_str(), GetTypeName().c_str() ) );
 
-        for( std::shared_ptr<Variable> var : m_Children )
+        for( shared_ptr<Variable> var : m_Children )
         {
             if( var->m_IsParent )
             {
@@ -217,7 +219,7 @@ void Variable::Populate()
             const map<ULONG, Variable> & TypeMap = type->GetFullVariableMap();
             for( auto & pair : TypeMap )
             {
-                std::shared_ptr<Variable> var = std::make_shared<Variable>(pair.second);
+                shared_ptr<Variable> var = make_shared<Variable>(pair.second);
                 var->UpdateTypeFromString();
                 var->m_Address = this->m_Address + pair.first;
                 m_Children.push_back(var);
@@ -228,7 +230,7 @@ void Variable::Populate()
 }
 
 //-----------------------------------------------------------------------------
-std::shared_ptr<Variable> Variable::FindVariable( std::shared_ptr<Variable> a_Variable, const std::wstring & a_Name )
+shared_ptr<Variable> Variable::FindVariable( shared_ptr<Variable> a_Variable, const wstring & a_Name )
 {
     if( a_Variable->m_Name == a_Name )
     {
@@ -237,7 +239,7 @@ std::shared_ptr<Variable> Variable::FindVariable( std::shared_ptr<Variable> a_Va
 
     for( auto & var : a_Variable->m_Children )
     {
-        if( std::shared_ptr<Variable> foundVariable = FindVariable( var, a_Name ) )
+        if( shared_ptr<Variable> foundVariable = FindVariable( var, a_Name ) )
         {
             return foundVariable;
         }
@@ -247,9 +249,9 @@ std::shared_ptr<Variable> Variable::FindVariable( std::shared_ptr<Variable> a_Va
 }
 
 //-----------------------------------------------------------------------------
-std::shared_ptr<Variable> Variable::FindImmediateChild( const std::wstring & a_Name )
+shared_ptr<Variable> Variable::FindImmediateChild( const wstring & a_Name )
 {
-    for( std::shared_ptr<Variable> var : m_Children )
+    for( shared_ptr<Variable> var : m_Children )
     {
         if( var->m_Name == a_Name )
         {
@@ -273,10 +275,10 @@ Type * Variable::GetType()
 }
 
 //-----------------------------------------------------------------------------
-std::wstring Variable::GetTypeName() const
+wstring Variable::GetTypeName() const
 {
     const Type* type = GetType();
-    std::wstring typeName = type ? type->GetName() : L"";
+    wstring typeName = type ? type->GetName() : L"";
     return (typeName != L"") ? typeName : m_Type;
 }
 
@@ -291,9 +293,9 @@ Variable::BasicType Variable::GetBasicType()
 }
 
 //-----------------------------------------------------------------------------
-Variable::BasicType Variable::TypeFromString( const std::wstring & a_String )
+Variable::BasicType Variable::TypeFromString( const wstring & a_String )
 {
-    static std::map< std::wstring, BasicType > TypeMap;
+    static map< wstring, BasicType > TypeMap;
     if( TypeMap.size() == 0 )
     {
         TypeMap[L"int"]                = Variable::Int;         

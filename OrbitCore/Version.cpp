@@ -3,14 +3,18 @@
 #include "Core.h"
 #include "curl/curl.h"
 
+#include <thread>
+
+using namespace std;
+
 //-----------------------------------------------------------------------------
 bool        OrbitVersion::s_NeedsUpdate;
-std::string OrbitVersion::s_LatestVersion;
+string OrbitVersion::s_LatestVersion;
 
 #define OrbitVersionStr "dev"
 
 //-----------------------------------------------------------------------------
-std::string OrbitVersion::GetVersion()
+string OrbitVersion::GetVersion()
 {
     return OrbitVersionStr;
 }
@@ -18,13 +22,13 @@ std::string OrbitVersion::GetVersion()
 //-----------------------------------------------------------------------------
 bool OrbitVersion::IsDev()
 {
-    return GetVersion() == std::string("dev");
+    return GetVersion() == string("dev");
 }
 
 //-----------------------------------------------------------------------------
-bool OrbitVersion::CheckLicense( const std::wstring & a_License )
+bool OrbitVersion::CheckLicense( const wstring & a_License )
 {
-    std::vector< std::wstring > tokens = Tokenize( a_License, L"\r\n" );
+    vector< wstring > tokens = Tokenize( a_License, L"\r\n" );
     if( tokens.size() == 2 )
     {
         string decodedStr = XorString( websocketpp::base64_decode( ws2s(tokens[1]) ) );
@@ -41,7 +45,7 @@ bool OrbitVersion::CheckLicense( const std::wstring & a_License )
 //-----------------------------------------------------------------------------
 static size_t WriteCallback( void *contents, size_t size, size_t nmemb, void *userp )
 {
-    ( ( std::string* )userp )->append( (char*)contents, size * nmemb );
+    ( ( string* )userp )->append( (char*)contents, size * nmemb );
     return size * nmemb;
 }
 
@@ -50,8 +54,8 @@ void OrbitVersion::CheckForUpdate()
 {
     if( !IsDev() )
     {
-        std::thread* thread = new std::thread( [&](){ CheckForUpdateThread(); } );
-        thread->detach();
+        thread t(CheckForUpdateThread);
+        t.detach();
     }
 }
 
@@ -60,7 +64,7 @@ void OrbitVersion::CheckForUpdateThread()
 {
     CURL *curl;
     CURLcode res;
-    std::string readBuffer;
+    string readBuffer;
 
     curl = curl_easy_init();
     if( curl )
@@ -72,13 +76,13 @@ void OrbitVersion::CheckForUpdateThread()
         curl_easy_cleanup( curl );
 
         // Get latest version from html, this needs to match what is on the website...
-        std::string searchStr = "Latest version of the Orbit Profiler is: ";
+        string searchStr = "Latest version of the Orbit Profiler is: ";
         size_t pos = readBuffer.find( searchStr );
 
-        if( pos != std::string::npos )
+        if( pos != string::npos )
         {
-            std::string version = Replace( readBuffer.substr( pos, 60 ), searchStr, "" );
-            std::vector< std::string > tokens = Tokenize( version );
+            string version = Replace( readBuffer.substr( pos, 60 ), searchStr, "" );
+            vector< string > tokens = Tokenize( version );
 
             if( tokens.size() > 0 )
             {

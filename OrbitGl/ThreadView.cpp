@@ -8,7 +8,9 @@
 #include "OrbitThread.h"
 #include "SamplingProfiler.h"
 
-std::shared_ptr<SamplingProfiler> ThreadViewManager::s_CurrentSamplingProfiler = nullptr;
+using namespace std;
+
+shared_ptr<SamplingProfiler> ThreadViewManager::s_CurrentSamplingProfiler = nullptr;
 
 //-----------------------------------------------------------------------------
 ThreadView::ThreadView()
@@ -207,7 +209,7 @@ void ThreadViewWindow::DrawLive(const char* title, bool* p_opened, ImVec2* a_Siz
             if (ImGui::Selectable(label, selected == i, ImGuiSelectableFlags_SpanAllColumns))
                 selected = i;
             ImGui::NextColumn();
-            std::string ThreadUsage = Format("%.2f %%", thread->m_Usage.Latest());
+            string ThreadUsage = Format("%.2f %%", thread->m_Usage.Latest());
             //ImGui::SameLine();
             ImGui::PlotLines(ThreadUsage.c_str(), thread->m_Usage.Data(), thread->m_Usage.Size(), thread->m_Usage.IndexOfOldest(), nullptr/*"avg 0.0"*/, 0.f, 100.f, GThreadViewGraphSize);
             ImGui::NextColumn();
@@ -288,7 +290,7 @@ void ThreadViewWindow::DrawReport( const char* title, bool* p_opened, ImVec2* a_
                 selected = i;
             ImGui::NextColumn();
             //ImGui::SameLine();
-            std::string average = Format("%f", threadData->m_AverageThreadUsage);
+            string average = Format("%f", threadData->m_AverageThreadUsage);
             ImGui::PlotLines( average.c_str(), threadData->m_ThreadUsage.data(), (int)threadData->m_ThreadUsage.size(), 0, nullptr/*"avg 0.0"*/, 0.f, 100.f, graphSize);
             ImGui::NextColumn();
             ++i;

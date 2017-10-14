@@ -7,6 +7,8 @@
 #include "ThreadView.h"
 #include "Capture.h"
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 ThreadDataViewGl::ThreadDataViewGl()
 {
@@ -14,9 +16,9 @@ ThreadDataViewGl::ThreadDataViewGl()
 }
 
 //-----------------------------------------------------------------------------
-const std::vector<std::wstring>& ThreadDataViewGl::GetColumnHeaders()
+const vector<wstring>& ThreadDataViewGl::GetColumnHeaders()
 {
-    static std::vector< std::wstring > columns = { L"ThreadId", L"History", L"Usage" };
+    static vector< wstring > columns = { L"ThreadId", L"History", L"Usage" };
     return columns;
 }
 

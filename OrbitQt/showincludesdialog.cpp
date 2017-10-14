@@ -7,6 +7,8 @@
 #include <QSignalMapper>
 #include <functional>
 
+using namespace std;
+
 ShowIncludesDialog::ShowIncludesDialog(QWidget *parent) 
     : QDialog(parent)
     , ui(new Ui::ShowIncludesDialog)
@@ -36,7 +38,7 @@ enum ShowIncludesMenuItems
     COLLAPSE
 };
 
-const std::vector<std::wstring> & GContextMenuShowIncludes = {L"Expand", L"Collapse"};
+const vector<wstring> & GContextMenuShowIncludes = {L"Expand", L"Collapse"};
 
 void ShowIncludesDialog::onCustomContextMenu(const QPoint &point)
 {
@@ -47,7 +49,7 @@ void ShowIncludesDialog::onCustomContextMenu(const QPoint &point)
         {
             QMenu contextMenu( tr( "ContextMenu" ), this );
             QSignalMapper signalMapper( this );
-            std::vector<QAction*> actions;
+            vector<QAction*> actions;
 
             for( int i = 0; i < (int)GContextMenuShowIncludes.size(); ++i )
             {
@@ -182,7 +184,7 @@ void ShowIncludesDialog::on_pushButton_2_clicked()
 }
 
 void iterate( const QModelIndex & index, const QAbstractItemModel * model,
-    const std::function<void( const QModelIndex&, int )> & fun,
+    const function<void( const QModelIndex&, int )> & fun,
     int depth = 0 )
 {
     if( index.isValid() )
@@ -197,7 +199,7 @@ void iterate( const QModelIndex & index, const QAbstractItemModel * model,
 
 void ShowIncludesDialog::on_lineEdit_2_textChanged(const QString &arg1)
 {
-    std::wstring filter = arg1.toStdWString();
+    wstring filter = arg1.toStdWString();
     m_TreeModel->Filter( filter );
     
     ui->treeView->collapseAll();

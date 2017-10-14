@@ -15,6 +15,7 @@
 #include "../OrbitGl/App.h"
 #include "../OrbitGl/DataViewModel.h"
 
+using namespace std;
 
 //-----------------------------------------------------------------------------
 OrbitTreeView::OrbitTreeView(QWidget *parent) : QTreeView(parent)
@@ -96,7 +97,7 @@ void OrbitTreeView::Initialize(DataViewType a_Type)
 }
 
 //-----------------------------------------------------------------------------
-void OrbitTreeView::SetDataModel(std::shared_ptr<DataViewModel> a_Model)
+void OrbitTreeView::SetDataModel(shared_ptr<DataViewModel> a_Model)
 {
     m_Model = new OrbitTableModel(); 
     m_Model->SetDataViewModel( a_Model );
@@ -176,7 +177,7 @@ void OrbitTreeView::resizeEvent(QResizeEvent * event)
     if( m_AutoResize && m_Model && m_Model->GetDataViewModel() )
     {
         QSize headerSize = size();
-        const std::vector<float> & columnRatios = m_Model->GetDataViewModel()->GetColumnHeadersRatios();
+        const vector<float> & columnRatios = m_Model->GetDataViewModel()->GetColumnHeadersRatios();
         for (size_t i = 0; i < columnRatios.size(); ++i)
         {
             float ratio = columnRatios[i];
@@ -195,7 +196,7 @@ void OrbitTreeView::Link( OrbitTreeView* a_Link )
 {
     m_Links.push_back( a_Link );
 
-    std::shared_ptr<DataViewModel> model = a_Link->GetModel()->GetDataViewModel();
+    shared_ptr<DataViewModel> model = a_Link->GetModel()->GetDataViewModel();
     m_Model->GetDataViewModel()->LinkModel( model.get() );
 }
 
@@ -220,14 +221,14 @@ void OrbitTreeView::ShowContextMenu(const QPoint &pos)
     QModelIndex index = this->indexAt(pos);
     if( index.isValid() )
     {
-        const std::vector<std::wstring> & menu = m_Model->GetDataViewModel()->GetContextMenu(index.row());
+        const vector<wstring> & menu = m_Model->GetDataViewModel()->GetContextMenu(index.row());
 
         if( menu.size() > 0 )
         {
             QMenu contextMenu(tr("ContextMenu"), this);
             GContextMenu = &contextMenu;
             QSignalMapper signalMapper(this);
-            std::vector<QAction*> actions;
+            vector<QAction*> actions;
 
             for( int i = 0; i < (int)menu.size(); ++i )
             {
@@ -250,19 +251,19 @@ void OrbitTreeView::ShowContextMenu(const QPoint &pos)
 void OrbitTreeView::OnMenuClicked(int a_Index)
 {
     QModelIndexList list = selectionModel()->selectedIndexes();
-    std::set<int> selection;
+    set<int> selection;
     for (QModelIndex & index : list)
     {
         selection.insert( index.row() );
     }
     
-    m_Model->GetDataViewModel()->OnContextMenu( a_Index, std::vector<int>(selection.begin(), selection.end()) );
+    m_Model->GetDataViewModel()->OnContextMenu( a_Index, vector<int>(selection.begin(), selection.end()) );
 }
 
 //-----------------------------------------------------------------------------
 void OrbitTreeView::OnRangeChanged(int /*a_Min*/, int a_Max)
 {
-    std::shared_ptr<DataViewModel> dataViewModel = m_Model->GetDataViewModel();
+    shared_ptr<DataViewModel> dataViewModel = m_Model->GetDataViewModel();
     if( dataViewModel->ScrollToBottom() )
     {
         verticalScrollBar()->setValue(a_Max);
@@ -270,7 +271,7 @@ void OrbitTreeView::OnRangeChanged(int /*a_Min*/, int a_Max)
 }
 
 //-----------------------------------------------------------------------------
-std::wstring OrbitTreeView::GetLabel()
+wstring OrbitTreeView::GetLabel()
 {
     if( m_Model && m_Model->GetDataViewModel() )
     {

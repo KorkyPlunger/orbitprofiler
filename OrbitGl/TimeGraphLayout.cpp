@@ -3,10 +3,12 @@
 #include "Capture.h"
 #include <thread>
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 TimeGraphLayout::TimeGraphLayout()
 {
-    m_NumCores = std::thread::hardware_concurrency();
+    m_NumCores = thread::hardware_concurrency();
 
     Reset();
 

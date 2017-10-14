@@ -12,6 +12,8 @@
 #include "PluginCanvas.h"
 #include "RuleEditor.h"
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 GlPanel* GlPanel::Create(Type a_Type, void* a_UserData)
 {

@@ -7,7 +7,9 @@
 #include "SamplingProfiler.h"
 #include <chrono>
 
-std::vector<float> LogDataView::s_HeaderRatios;
+using namespace std;
+
+vector<float> LogDataView::s_HeaderRatios;
 
 //-----------------------------------------------------------------------------
 LogDataView::LogDataView()
@@ -18,9 +20,9 @@ LogDataView::LogDataView()
 }
 
 //-----------------------------------------------------------------------------
-const std::vector<std::wstring>& LogDataView::GetColumnHeaders()
+const vector<wstring>& LogDataView::GetColumnHeaders()
 {
-    static std::vector<std::wstring> Columns;
+    static vector<wstring> Columns;
     if( Columns.size() == 0 )
     {
         Columns.push_back( L"Log" );      s_HeaderRatios.push_back(0.7f);
@@ -31,25 +33,25 @@ const std::vector<std::wstring>& LogDataView::GetColumnHeaders()
 }
 
 //-----------------------------------------------------------------------------
-const std::vector<float>& LogDataView::GetColumnHeadersRatios()
+const vector<float>& LogDataView::GetColumnHeadersRatios()
 {
     return s_HeaderRatios;
 }
 
 //-----------------------------------------------------------------------------
-std::wstring LogDataView::GetValue( int a_Row, int a_Column )
+wstring LogDataView::GetValue( int a_Row, int a_Column )
 {
     const OrbitLogEntry & entry = GetEntry( a_Row );
-    std::wstring value;
+    wstring value;
 
     switch( a_Column )
     {
     case LDV_Time:
     {
         auto micros = PerfCounter::get_microseconds(Capture::GCaptureTimer.m_PerfCounter.get_start(), entry.m_Time);
-        std::chrono::system_clock::time_point sysTime = Capture::GCaptureTimePoint + std::chrono::microseconds(micros);
-        std::time_t now_c = std::chrono::system_clock::to_time_t(sysTime);
-        std::tm now_tm;
+        chrono::system_clock::time_point sysTime = Capture::GCaptureTimePoint + chrono::microseconds(micros);
+        time_t now_c = chrono::system_clock::to_time_t(sysTime);
+        tm now_tm;
         localtime_s(&now_tm, &now_c);
         TCHAR buffer[256];
         wcsftime( buffer, sizeof( buffer ), L"%H:%M:%S", &now_tm );
@@ -68,9 +70,9 @@ std::wstring LogDataView::GetValue( int a_Row, int a_Column )
 }
 
 //-----------------------------------------------------------------------------
-std::wstring LogDataView::GetToolTip( int a_Row, int a_Column )
+wstring LogDataView::GetToolTip( int a_Row, int a_Column )
 {
-    return std::wstring();
+    return wstring();
 }
 
 //-----------------------------------------------------------------------------
@@ -97,21 +99,21 @@ void LogDataView::OnDataChanged()
 }
 
 //-----------------------------------------------------------------------------
-void LogDataView::OnFilter( const std::wstring & a_Filter )
+void LogDataView::OnFilter( const wstring & a_Filter )
 {
-    std::vector< std::string > tokens = Tokenize( ToLower( ws2s( a_Filter ) ) );
-    std::vector<int> indices;
+    vector< string > tokens = Tokenize( ToLower( ws2s( a_Filter ) ) );
+    vector<int> indices;
 
     for( int i = 0; i < (int)m_Entries.size(); ++i )
     {
         const OrbitLogEntry & entry = m_Entries[i];
-        std::string text = ToLower( entry.m_Text );
+        string text = ToLower( entry.m_Text );
 
         bool match = true;
 
-        for( std::string & filterToken : tokens )
+        for( string & filterToken : tokens )
         {
-            if( !( text.find( filterToken ) != std::wstring::npos ) )
+            if( !( text.find( filterToken ) != wstring::npos ) )
             {
                 match = false;
                 break;
@@ -136,11 +138,11 @@ enum LDV_ContextMenu
 };
 
 //-----------------------------------------------------------------------------
-const std::vector<std::wstring>& LogDataView::GetContextMenu( int a_Index )
+const vector<wstring>& LogDataView::GetContextMenu( int a_Index )
 {
     const OrbitLogEntry & entry = LogDataView::GetEntry( a_Index );
     m_SelectedCallstack = Capture::GetCallstack( entry.m_CallstackHash );
-    static std::vector<std::wstring> menu;
+    static vector<wstring> menu;
     menu.clear();
     if( m_SelectedCallstack )
     {
@@ -154,7 +156,7 @@ const std::vector<std::wstring>& LogDataView::GetContextMenu( int a_Index )
 }
 
 //-----------------------------------------------------------------------------
-void LogDataView::OnContextMenu( int a_Index, std::vector<int>& a_ItemIndices )
+void LogDataView::OnContextMenu( int a_Index, vector<int>& a_ItemIndices )
 {
     if( m_SelectedCallstack && m_SelectedCallstack->m_Depth > a_Index )
     {

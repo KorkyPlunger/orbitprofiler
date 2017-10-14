@@ -9,6 +9,8 @@
 #include "OrbitType.h"
 #include "Serialization.h"
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 CallStack::CallStack( CallStackPOD a_CS ) : CallStack()
 {
@@ -28,13 +30,13 @@ void CallStack::Print()
 
     for( int i = 0; i < m_Depth; ++i )
     {
-        std::string address = ws2s( VAR_TO_STR( (void*) m_Data[i] ) );
+        string address = ws2s( VAR_TO_STR( (void*) m_Data[i] ) );
         PRINT_VAR_INL( address );
     }
 }
 
 //-----------------------------------------------------------------------------
-std::wstring CallStack::GetString()
+wstring CallStack::GetString()
 {
     wstring callstackString;
     

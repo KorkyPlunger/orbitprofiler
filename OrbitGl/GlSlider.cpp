@@ -6,6 +6,8 @@
 #include "GlCanvas.h"
 #include <algorithm>
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 GlSlider::GlSlider() : m_Canvas(nullptr)
                      , m_Ratio(0)

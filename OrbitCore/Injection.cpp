@@ -15,6 +15,8 @@
 #include <tlhelp32.h>
 #include <psapi.h>
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 Injection::Injection() : m_InjectedProcessID(0)
                        , m_InjectedProcessHandle(nullptr)
@@ -23,13 +25,13 @@ Injection::Injection() : m_InjectedProcessID(0)
 }
 
 //-----------------------------------------------------------------------------
-void* Injection::RemoteWrite(const std::string & a_String)
+void* Injection::RemoteWrite(const string & a_String)
 {
     return RemoteWrite((const char*)a_String.data(), (int)(a_String.size() + 1)*sizeof(a_String[0]));
 }
 
 //-----------------------------------------------------------------------------
-void* Injection::RemoteWrite(const std::wstring & a_String)
+void* Injection::RemoteWrite(const wstring & a_String)
 {
     return RemoteWrite( (const char*)a_String.data(), (int)(a_String.size()+1)*sizeof(a_String[0]) );
 }
@@ -58,7 +60,7 @@ void* Injection::RemoteWrite( const char* a_Data, int a_NumBytes )
 }
 
 //-----------------------------------------------------------------------------
-bool Injection::Inject( const wstring & a_DllName, const Process & a_Process, const std::string & ProcName )
+bool Injection::Inject( const wstring & a_DllName, const Process & a_Process, const string & ProcName )
 {
     SCOPE_TIMER_LOG( Format( L"Injecting in %s", a_Process.GetName().c_str() ) );
 
@@ -97,7 +99,7 @@ bool Injection::Inject( const wstring & a_DllName, const Process & a_Process, co
     }
 
     // Get handle of injected dll
-    std::string dllName = ws2s( Path::GetDllName( a_Process.GetIs64Bit() ) );
+    string dllName = ws2s( Path::GetDllName( a_Process.GetIs64Bit() ) );
     HMODULE remoteModuleHandle = GetRemoteModuleHandle( m_InjectedProcessHandle, dllName.c_str() );
     for( int i = 0; i < 10 && !remoteModuleHandle; ++i )
     {
@@ -113,7 +115,7 @@ bool Injection::Inject( const wstring & a_DllName, const Process & a_Process, co
     }
 
     // Remote write the host and port number
-    std::string hostString = ws2s( Capture::GCaptureHost + L":" + std::to_wstring( Capture::GCapturePort ) );
+    string hostString = ws2s( Capture::GCaptureHost + L":" + to_wstring( Capture::GCapturePort ) );
     ORBIT_LOG( Format( "Capture port: %i", Capture::GCapturePort ) );
     void* hostStringAddress = RemoteWrite( hostString );
     PRINT_VAR( hostString );
@@ -185,7 +187,7 @@ HANDLE Injection::GetTargetProcessHandle( const string & a_Target, DWORD & o_Pro
     {
         do
         {
-            std::string processname = ws2s( processinfo.szExeFile );
+            string processname = ws2s( processinfo.szExeFile );
             const DWORD process_id = processinfo.th32ProcessID;
 
             // Don't allow profiling our own process. Bad things happen.
@@ -308,8 +310,8 @@ HMODULE WINAPI Injection::GetRemoteModuleHandle( HANDLE hProcess, LPCSTR lpModul
         ::GetModuleBaseName(hProcess, ModuleArray[i],
             ModuleNameBuffer, sizeof(ModuleNameBuffer));
 
-        std::wstring ModuleNameWS(ModuleNameBuffer);
-        std::transform(ModuleNameWS.begin(), ModuleNameWS.end(), ModuleNameWS.begin(), ::tolower);
+        wstring ModuleNameWS(ModuleNameBuffer);
+        transform(ModuleNameWS.begin(), ModuleNameWS.end(), ModuleNameWS.begin(), ::tolower);
 
         /* Convert ModuleNameBuffer to all lowercase so the comparison isn't case sensitive */
         //for (size_t j = 0; ModuleNameBuffer[j] != '\0'; ++j)
@@ -320,7 +322,7 @@ HMODULE WINAPI Injection::GetRemoteModuleHandle( HANDLE hProcess, LPCSTR lpModul
 
         /* Does the name match? */
         //if (strstr(ModuleNameBuffer, lpModuleNameCopy) != NULL)
-        if (ModuleNameWS.find(lpModuleNameCopy) != std::string::npos)
+        if (ModuleNameWS.find(lpModuleNameCopy) != string::npos)
         {
             /* Make a temporary variable to hold return value*/
             HMODULE TempReturn = ModuleArray[i];

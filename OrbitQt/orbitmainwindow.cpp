@@ -29,6 +29,8 @@
 
 #include "../external/concurrentqueue/concurrentqueue.h"
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 OrbitMainWindow* GMainWindow;
 extern QMenu* GContextMenu;
@@ -53,10 +55,10 @@ OrbitMainWindow::OrbitMainWindow(QApplication* a_App, QWidget *parent)
     ui->splitter_2->setSizes(sizes);
 
     GOrbitApp->AddRefreshCallback([this](DataViewType a_Type) { this->OnRefreshDataViewPanels(a_Type); });
-    GOrbitApp->AddSamplingReoprtCallback( [this]( std::shared_ptr<SamplingReport> a_Report ) { this->OnNewSamplingReport( a_Report ); } );
-    GOrbitApp->AddSelectionReportCallback( [this]( std::shared_ptr<SamplingReport> a_Report ) { this->OnNewSelection( a_Report ); } );
-    GOrbitApp->AddUiMessageCallback( [this]( const std::wstring & a_Message ) { this->OnReceiveMessage( a_Message ); } );
-    GOrbitApp->SetFindFileCallback( [this]( const std::wstring & a_Caption, const std::wstring & a_Dir, const std::wstring & a_Filter ){ return this->FindFile( a_Caption, a_Dir, a_Filter ); } );
+    GOrbitApp->AddSamplingReoprtCallback( [this]( shared_ptr<SamplingReport> a_Report ) { this->OnNewSamplingReport( a_Report ); } );
+    GOrbitApp->AddSelectionReportCallback( [this]( shared_ptr<SamplingReport> a_Report ) { this->OnNewSelection( a_Report ); } );
+    GOrbitApp->AddUiMessageCallback( [this]( const wstring & a_Message ) { this->OnReceiveMessage( a_Message ); } );
+    GOrbitApp->SetFindFileCallback( [this]( const wstring & a_Caption, const wstring & a_Dir, const wstring & a_Filter ){ return this->FindFile( a_Caption, a_Dir, a_Filter ); } );
     GOrbitApp->AddWatchCallback( [this]( const Variable* a_Variable ) { this->OnAddToWatch( a_Variable ); } );
 
     ParseCommandlineArguments();
@@ -139,7 +141,7 @@ OrbitMainWindow::~OrbitMainWindow()
 //-----------------------------------------------------------------------------
 void OrbitMainWindow::ParseCommandlineArguments()
 {
-    std::vector< std::string > args;
+    vector< string > args;
     for (QString arg : QCoreApplication::arguments())
     {
         args.push_back(arg.toStdString());
@@ -173,7 +175,7 @@ bool OrbitMainWindow::HideTab( QTabWidget* a_TabWidget, const char* a_TabName )
     
     for( int i = 0; i < tab->count(); ++i )
     {
-        std::string tabName = tab->tabText(i).toStdString();
+        string tabName = tab->tabText(i).toStdString();
 
         if( tabName == a_TabName )
         {
@@ -186,7 +188,7 @@ bool OrbitMainWindow::HideTab( QTabWidget* a_TabWidget, const char* a_TabName )
 }
 
 //-----------------------------------------------------------------------------
-std::wstring OrbitMainWindow::FindFile( const std::wstring & a_Caption, const std::wstring & a_Dir, const std::wstring & a_Filter )
+wstring OrbitMainWindow::FindFile( const wstring & a_Caption, const wstring & a_Dir, const wstring & a_Filter )
 {
     QStringList list = QFileDialog::getOpenFileNames( this, ws2s(a_Caption).c_str(), ws2s(a_Dir).c_str(), ws2s(a_Filter).c_str() );
     for( auto & file : list )
@@ -277,7 +279,7 @@ void OrbitMainWindow::CreatePluginTabs()
 }
 
 //-----------------------------------------------------------------------------
-void OrbitMainWindow::OnNewSamplingReport( std::shared_ptr<SamplingReport> a_SamplingReport )
+void OrbitMainWindow::OnNewSamplingReport( shared_ptr<SamplingReport> a_SamplingReport )
 {
     m_SamplingLayout->removeWidget( m_OrbitSamplingReport );
     delete m_OrbitSamplingReport;
@@ -301,7 +303,7 @@ void OrbitMainWindow::CreateSelectionTab()
 }
 
 //-----------------------------------------------------------------------------
-void OrbitMainWindow::OnNewSelection( std::shared_ptr<class SamplingReport> a_SamplingReport )
+void OrbitMainWindow::OnNewSelection( shared_ptr<class SamplingReport> a_SamplingReport )
 {
     m_SelectionLayout->removeWidget( m_SelectionReport );
     delete m_SelectionReport;
@@ -314,7 +316,7 @@ void OrbitMainWindow::OnNewSelection( std::shared_ptr<class SamplingReport> a_Sa
 }
 
 //-----------------------------------------------------------------------------
-void OrbitMainWindow::OnReceiveMessage( const std::wstring & a_Message )
+void OrbitMainWindow::OnReceiveMessage( const wstring & a_Message )
 {
     if( a_Message == L"ScreenShot" )
     {
@@ -323,7 +325,7 @@ void OrbitMainWindow::OnReceiveMessage( const std::wstring & a_Message )
         QPixmap pixMap = this->grab();
         pixMap.save( &file, "PNG" );
 
-        std::wstring fileName = file.fileName().toStdWString();
+        wstring fileName = file.fileName().toStdWString();
         ShellExecute(0, 0, ws2s(fileName).c_str(), 0, 0 , SW_SHOW );
     }
     else if( StartsWith( a_Message, L"code" ) )
@@ -384,10 +386,10 @@ void OrbitMainWindow::OnReceiveMessage( const std::wstring & a_Message )
     }
     else if( a_Message == L"Update" )
     {
-        std::string title = "Orbit Profiler";
+        string title = "Orbit Profiler";
 
         title += " | Version " + GOrbitApp->GetVersion();
-        std::string msg = Format("A new version (%s) is available at <a href='www.telescopp.com/update'>telescopp.com/update</a>", OrbitVersion::s_LatestVersion.c_str() );
+        string msg = Format("A new version (%s) is available at <a href='www.telescopp.com/update'>telescopp.com/update</a>", OrbitVersion::s_LatestVersion.c_str() );
         QMessageBox::about( this, title.c_str(), msg.c_str() );
     }
     else if( StartsWith( a_Message, L"asm:" ) )
@@ -425,7 +427,7 @@ void OrbitMainWindow::GetLicense()
 //-----------------------------------------------------------------------------
 void OrbitMainWindow::on_actionAbout_triggered()
 {
-    std::string title = "Orbit Profiler";
+    string title = "Orbit Profiler";
 
     title += " | Version " + GOrbitApp->GetVersion();
 
@@ -477,7 +479,7 @@ void OrbitMainWindow::on_actionOpen_Capture_triggered()
 //-----------------------------------------------------------------------------
 void OrbitMainWindow::on_actionSave_Session_triggered()
 {
-    std::wstring sessionName = GOrbitApp->GetSessionFileName();
+    wstring sessionName = GOrbitApp->GetSessionFileName();
     if( sessionName != L"" )
     {
         GOrbitApp->OnSaveSession( sessionName );
@@ -633,7 +635,7 @@ void OrbitMainWindow::on_actionDiff_triggered()
 }
 
 //-----------------------------------------------------------------------------
-void OrbitMainWindow::OpenDisassembly( const std::wstring & a_String )
+void OrbitMainWindow::OpenDisassembly( const wstring & a_String )
 {
     OrbitDisassemblyDialog* dialog = new OrbitDisassemblyDialog( this );
     dialog->SetText( a_String );

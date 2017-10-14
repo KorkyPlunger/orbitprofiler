@@ -21,6 +21,8 @@
 #include "EventClasses.h"
 #include "Params.h"
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 EventTracer GEventTracer;
 
@@ -163,8 +165,8 @@ void EventTracer::Start()
         return;
     }
 
-    std::thread* thread = new std::thread( [&](){ EventTracerThread(); } );
-    thread->detach();
+    thread t([&]() { this->EventTracerThread(); });
+    t.detach();
 }
 
 //-----------------------------------------------------------------------------

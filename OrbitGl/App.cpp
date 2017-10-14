@@ -40,13 +40,14 @@
 #include "Tcp.h"
 #include "PrintVar.h"
 #include "Version.h"
-#include "curl\curl.h"
 #include "EventTracer.h"
 #include "Debugger.h"
 
 #include <thread>
 #include <cmath>
 #include <fstream>
+
+using namespace std;
 
 class OrbitApp* GOrbitApp;
 float GFontSize;
@@ -79,48 +80,48 @@ OrbitApp::~OrbitApp()
 }
 
 //-----------------------------------------------------------------------------
-std::wstring OrbitApp::FindFile( const std::wstring & a_Caption, const std::wstring & a_Dir, const std::wstring & a_Filter )
+wstring OrbitApp::FindFile( const wstring & a_Caption, const wstring & a_Dir, const wstring & a_Filter )
 {
     if( m_FindFileCallback )
     {
          return m_FindFileCallback( a_Caption, a_Dir, a_Filter );
     }
     
-    return std::wstring();
+    return wstring();
 }
 
 //-----------------------------------------------------------------------------
-void OrbitApp::SetCommandLineArguments(const std::vector< std::string > & a_Args)
+void OrbitApp::SetCommandLineArguments(const vector< string > & a_Args)
 { 
     m_Arguments = a_Args;
     bool inject = false;
 
-    for( std::string arg : a_Args )
+    for( string arg : a_Args )
     {
         if( Contains( arg, "host:" )  )
         { 
-            std::vector< std::string > vec = Tokenize( arg, ":" );
+            vector< string > vec = Tokenize( arg, ":" );
             if( vec.size() > 1 )
             {
-                std::string & host = vec[1];
+                string & host = vec[1];
                 Capture::GCaptureHost = s2ws(host);
             }
         }
         else if( Contains( arg, "preset:" ) )
         {
-            std::vector< std::string > vec = Tokenize( arg, ":" );
+            vector< string > vec = Tokenize( arg, ":" );
             if( vec.size() > 1 )
             {
-                std::string & preset = vec[1];
+                string & preset = vec[1];
                 Capture::GPresetToLoad = s2ws( preset );
             }
         }
         else if( Contains( arg, "inject:" ) )
         {
-            std::vector< std::string > vec = Tokenize( arg, ":" );
+            vector< string > vec = Tokenize( arg, ":" );
             if( vec.size() > 1 )
             {
-                std::string & preset = vec[1];
+                string & preset = vec[1];
                 Capture::GProcessToInject = s2ws( preset );
             }
             inject = true;
@@ -145,7 +146,7 @@ void GetDesktopResolution(int& horizontal, int& vertical)
 }
 
 //-----------------------------------------------------------------------------
-void GLoadPdbAsync( const std::vector<std::wstring> & a_Modules )
+void GLoadPdbAsync( const vector<wstring> & a_Modules )
 {
     GModuleManager.LoadPdbAsync( a_Modules, [](){ GOrbitApp->OnPdbLoaded(); } );
 }
@@ -203,10 +204,10 @@ void OrbitApp::PostInit()
 void OrbitApp::LoadFileMapping()
 {
     m_FileMapping.clear();
-    std::wstring fileName = Path::GetFileMappingFileName();
+    wstring fileName = Path::GetFileMappingFileName();
     if ( !Path::FileExists( fileName ) )
     {
-        std::ofstream outfile( fileName );
+        ofstream outfile( fileName );
         outfile << "//-------------------" << endl
                 << "// Orbit File Mapping" << endl
                 << "//-------------------" << endl
@@ -220,26 +221,26 @@ void OrbitApp::LoadFileMapping()
         outfile.close();
     }
 
-    std::wfstream infile(fileName);
+    wfstream infile(fileName);
     if( !infile.fail())
     {
-        std::wstring line;
-        while( std::getline(infile, line) )
+        wstring line;
+        while( getline(infile, line) )
         {
             if( StartsWith( line, L"//") )
                 continue;
             
             bool containsQuotes = Contains( line, L"\"" );
             
-            std::vector< std::wstring > tokens = Tokenize( line );
+            vector< wstring > tokens = Tokenize( line );
             if( tokens.size() == 2 && !containsQuotes )
             {
                 m_FileMapping[ ToLower( tokens[0]) ] = ToLower( tokens[1] );
             }
             else
             {
-                std::vector< std::wstring > validTokens;
-                for( std::wstring token : Tokenize( line, L"\"//") )
+                vector< wstring > validTokens;
+                for( wstring token : Tokenize( line, L"\"//") )
                 {
                     if( !IsBlank( token ) )
                     {
@@ -261,10 +262,10 @@ void OrbitApp::LoadSymbolsFile()
 {
     m_SymbolLocations.clear();
 
-    std::wstring fileName = Path::GetSymbolsFileName();
+    wstring fileName = Path::GetSymbolsFileName();
     if( !Path::FileExists( fileName ) )
     {
-        std::ofstream outfile( fileName );
+        ofstream outfile( fileName );
         outfile << "//-------------------" << endl
             << "// Orbit Symbol Locations" << endl
             << "//-------------------" << endl
@@ -277,16 +278,16 @@ void OrbitApp::LoadSymbolsFile()
         outfile.close();
     }
 
-    std::wfstream infile( fileName );
+    wfstream infile( fileName );
     if( !infile.fail() )
     {
-        std::wstring line;
-        while( std::getline( infile, line ) )
+        wstring line;
+        while( getline( infile, line ) )
         {
             if( StartsWith( line, L"//" ) )
                 continue;
 
-            std::wstring dir = line;
+            wstring dir = line;
             if( Path::DirExists( dir ) )
             {
                 m_SymbolLocations.push_back( dir );
@@ -298,13 +299,13 @@ void OrbitApp::LoadSymbolsFile()
 //-----------------------------------------------------------------------------
 void OrbitApp::ListSessions()
 {
-    std::vector< std::wstring > sessionFileNames = Path::ListFiles( Path::GetPresetPath(), L".opr" );
-    std::vector< std::shared_ptr< Session > > sessions;
-    for( std::wstring & fileName : sessionFileNames )
+    vector< wstring > sessionFileNames = Path::ListFiles( Path::GetPresetPath(), L".opr" );
+    vector< shared_ptr< Session > > sessions;
+    for( wstring & fileName : sessionFileNames )
     {
-        shared_ptr<Session> session = std::make_shared<Session>();
+        shared_ptr<Session> session = make_shared<Session>();
 
-        std::ifstream file( fileName.c_str(), std::ios::binary );
+        ifstream file( fileName.c_str(), ios::binary );
         if( !file.fail() )
         {
             cereal::BinaryInputArchive archive( file );
@@ -319,7 +320,7 @@ void OrbitApp::ListSessions()
 }
 
 //-----------------------------------------------------------------------------
-void OrbitApp::SetRemoteProcess( std::shared_ptr<Process> a_Process )
+void OrbitApp::SetRemoteProcess( shared_ptr<Process> a_Process )
 {
     m_ProcessesDataView->SetRemoteProcess( a_Process );
 }
@@ -374,7 +375,7 @@ void OrbitApp::Disassemble( Function * a_Function, const char * a_MachineCode, i
 }
 
 //-----------------------------------------------------------------------------
-const std::unordered_map<DWORD64, std::shared_ptr<class Rule> > * OrbitApp::GetRules()
+const unordered_map<DWORD64, shared_ptr<class Rule> > * OrbitApp::GetRules()
 {
     return &m_RuleEditor->GetRules();
 }
@@ -382,15 +383,15 @@ const std::unordered_map<DWORD64, std::shared_ptr<class Rule> > * OrbitApp::GetR
 //-----------------------------------------------------------------------------
 void OrbitApp::CallHome()
 {
-    std::thread* thread = new std::thread( [&](){ CallHomeThread(); } );
-    thread->detach();
+    thread t( [&](){ CallHomeThread(); } );
+    t.detach();
 }
 
 //-----------------------------------------------------------------------------
 void OrbitApp::CallHomeThread()
 {
     asio::ip::tcp::iostream stream;
-    stream.expires_from_now( std::chrono::seconds( 60 ) );
+    stream.expires_from_now( chrono::seconds( 60 ) );
 
     const bool isLocal = false;
 
@@ -420,7 +421,7 @@ void OrbitApp::CallHomeThread()
     stream << "Accept-Encoding: gzip, deflate\r\n";
     stream << "Host: localhost:60485\r\n";
     
-    std::string content = ws2s(m_User) + "-" + OrbitVersion::GetVersion();
+    string content = ws2s(m_User) + "-" + OrbitVersion::GetVersion();
     stream << "Content-Length: " << content.length() << "\r\n\r\n";
     stream << XorString(content);
 
@@ -431,11 +432,11 @@ void OrbitApp::CallHomeThread()
 void OrbitApp::CheckLicense()
 {
     m_License.clear();
-    std::wifstream infile( Path::GetLicenseName() );
+    wifstream infile( Path::GetLicenseName() );
     
     if( !infile.fail() )
     {
-        std::wstringstream buffer;
+        wstringstream buffer;
         buffer << infile.rdbuf();
         m_License = buffer.str();
         infile.close();
@@ -461,7 +462,7 @@ void OrbitApp::CheckLicense()
 }
 
 //-----------------------------------------------------------------------------
-void OrbitApp::SetLicense( const std::wstring & a_License )
+void OrbitApp::SetLicense( const wstring & a_License )
 {
     m_License = a_License;
 }
@@ -532,7 +533,7 @@ void OrbitApp::CheckForUpdate()
 }
 
 //-----------------------------------------------------------------------------
-std::string OrbitApp::GetVersion()
+string OrbitApp::GetVersion()
 {
     return OrbitVersion::GetVersion();
 }
@@ -625,9 +626,9 @@ void OrbitApp::NeedsRedraw()
 }
 
 //-----------------------------------------------------------------------------
-void OrbitApp::AddSamplingReport(std::shared_ptr<SamplingProfiler> & a_SamplingProfiler)
+void OrbitApp::AddSamplingReport(shared_ptr<SamplingProfiler> & a_SamplingProfiler)
 {
-    auto report = std::make_shared<SamplingReport>(a_SamplingProfiler);
+    auto report = make_shared<SamplingReport>(a_SamplingProfiler);
     
     ThreadViewManager::s_CurrentSamplingProfiler = a_SamplingProfiler;
 
@@ -640,9 +641,9 @@ void OrbitApp::AddSamplingReport(std::shared_ptr<SamplingProfiler> & a_SamplingP
 }
 
 //-----------------------------------------------------------------------------
-void OrbitApp::AddSelectionReport( std::shared_ptr<SamplingProfiler> & a_SamplingProfiler )
+void OrbitApp::AddSelectionReport( shared_ptr<SamplingProfiler> & a_SamplingProfiler )
 {
-    auto report = std::make_shared<SamplingReport>( a_SamplingProfiler );
+    auto report = make_shared<SamplingReport>( a_SamplingProfiler );
 
     for( SamplingReportCallback & callback : GOrbitApp->m_SelectionReportCallbacks )
     {
@@ -658,10 +659,10 @@ void OrbitApp::GoToCode( DWORD64 a_Address )
 }
 
 //-----------------------------------------------------------------------------
-void OrbitApp::OnOpenPdb( const std::wstring a_FileName )
+void OrbitApp::OnOpenPdb( const wstring a_FileName )
 {
-    Capture::GTargetProcess = std::make_shared<Process>();
-    std::shared_ptr<Module> mod = std::make_shared<Module>();
+    Capture::GTargetProcess = make_shared<Process>();
+    shared_ptr<Module> mod = make_shared<Module>();
     
     mod->m_FullName = a_FileName;
     mod->m_Name = Path::GetFileName( mod->m_FullName );
@@ -682,25 +683,25 @@ void OrbitApp::OnOpenPdb( const std::wstring a_FileName )
 }
 
 //-----------------------------------------------------------------------------
-void OrbitApp::OnLaunchProcess( const std::wstring a_ProcessName, const std::wstring a_WorkingDir, const std::wstring a_Args )
+void OrbitApp::OnLaunchProcess( const wstring a_ProcessName, const wstring a_WorkingDir, const wstring a_Args )
 {
     m_Debugger->LaunchProcess( a_ProcessName, a_WorkingDir, a_Args );
 }
 
 //-----------------------------------------------------------------------------
-std::wstring OrbitApp::GetCaptureFileName()
+wstring OrbitApp::GetCaptureFileName()
 {
     return Path::StripExtension( Capture::GTargetProcess->GetName() ) + L"_" + OrbitUtils::GetTimeStampW() + L".orbit";
 }
 
 //-----------------------------------------------------------------------------
-std::wstring OrbitApp::GetSessionFileName()
+wstring OrbitApp::GetSessionFileName()
 {
     return Capture::GSessionPresets ? Capture::GSessionPresets->m_FileName : L"";
 }
 
 //-----------------------------------------------------------------------------
-void OrbitApp::OnSaveSession( const std::wstring a_FileName )
+void OrbitApp::OnSaveSession( const wstring a_FileName )
 {
     Capture::SaveSession( a_FileName );
     ListSessions();
@@ -708,13 +709,13 @@ void OrbitApp::OnSaveSession( const std::wstring a_FileName )
 }
 
 //-----------------------------------------------------------------------------
-void OrbitApp::OnLoadSession( const std::wstring a_FileName )
+void OrbitApp::OnLoadSession( const wstring a_FileName )
 {
-    shared_ptr<Session> session = std::make_shared<Session>();
+    shared_ptr<Session> session = make_shared<Session>();
 
-    std::wstring fileName = Path::GetDirectory( a_FileName ) == L"" ? Path::GetPresetPath() + a_FileName : a_FileName; 
+    wstring fileName = Path::GetDirectory( a_FileName ) == L"" ? Path::GetPresetPath() + a_FileName : a_FileName; 
 
-    std::ifstream file( fileName.c_str() );
+    ifstream file( fileName.c_str() );
     if (!file.fail())
     {
         cereal::BinaryInputArchive archive( file );
@@ -731,7 +732,7 @@ void OrbitApp::OnLoadSession( const std::wstring a_FileName )
 }
 
 //-----------------------------------------------------------------------------
-void OrbitApp::OnSaveCapture( const std::wstring a_FileName )
+void OrbitApp::OnSaveCapture( const wstring a_FileName )
 {
     CaptureSerializer ar;
     ar.m_TimeGraph = GCurrentTimeGraph;
@@ -739,7 +740,7 @@ void OrbitApp::OnSaveCapture( const std::wstring a_FileName )
 }
 
 //-----------------------------------------------------------------------------
-void OrbitApp::OnLoadCapture( const std::wstring a_FileName )
+void OrbitApp::OnLoadCapture( const wstring a_FileName )
 {
     StopCapture();
     Capture::ClearCaptureData();
@@ -757,13 +758,13 @@ void OrbitApp::OnLoadCapture( const std::wstring a_FileName )
 }
 
 //-----------------------------------------------------------------------------
-void GLoadPdbAsync( const std::shared_ptr<Module> & a_Module )
+void GLoadPdbAsync( const shared_ptr<Module> & a_Module )
 {
     GModuleManager.LoadPdbAsync( a_Module, [](){ GOrbitApp->OnPdbLoaded(); } );
 }
 
 //-----------------------------------------------------------------------------
-void OrbitApp::OnOpenCapture( const std::wstring a_FileName )
+void OrbitApp::OnOpenCapture( const wstring a_FileName )
 {
     Capture::OpenCapture( a_FileName );
     OnPdbLoaded();
@@ -791,7 +792,7 @@ void OrbitApp::OnPdbLoaded()
 }
 
 //-----------------------------------------------------------------------------
-void OrbitApp::LogMsg( const std::wstring & a_Msg )
+void OrbitApp::LogMsg( const wstring & a_Msg )
 {
     ORBIT_LOG( a_Msg );
 }
@@ -815,7 +816,7 @@ void OrbitApp::FireRefreshCallbacks( DataViewType a_Type )
 }
 
 //-----------------------------------------------------------------------------
-void OrbitApp::AddUiMessageCallback( std::function< void( const std::wstring & ) > a_Callback )
+void OrbitApp::AddUiMessageCallback( function< void( const wstring & ) > a_Callback )
 {
     GTcpServer->SetUiCallback( a_Callback );
     m_UiCallback = a_Callback;
@@ -865,7 +866,7 @@ void OrbitApp::Unregister( DataViewModel * a_Model )
 }
 
 //-----------------------------------------------------------------------------
-bool OrbitApp::SelectProcess( const std::wstring & a_Process )
+bool OrbitApp::SelectProcess( const wstring & a_Process )
 {
     if( m_ProcessesDataView )
     {
@@ -898,26 +899,26 @@ bool OrbitApp::Inject( unsigned long a_ProcessId )
 }
 
 //-----------------------------------------------------------------------------
-void OrbitApp::SetCallStack(std::shared_ptr<CallStack> a_CallStack)
+void OrbitApp::SetCallStack(shared_ptr<CallStack> a_CallStack)
 {
     m_CallStackDataView->SetCallStack( a_CallStack );
     FireRefreshCallbacks( DataViewType::CALLSTACK );
 }
 
 //-----------------------------------------------------------------------------
-void OrbitApp::SendToUiAsync( const std::wstring & a_Msg )
+void OrbitApp::SendToUiAsync( const wstring & a_Msg )
 {
     GTcpServer->SendToUiAsync( a_Msg );
 }
 
 //-----------------------------------------------------------------------------
-void OrbitApp::SendToUiNow( const std::wstring & a_Msg )
+void OrbitApp::SendToUiNow( const wstring & a_Msg )
 {
     m_UiCallback( a_Msg );
 }
 
 //-----------------------------------------------------------------------------
-void OrbitApp::EnqueueModuleToLoad( const std::shared_ptr<Module> & a_Module )
+void OrbitApp::EnqueueModuleToLoad( const shared_ptr<Module> & a_Module )
 {
     m_ModulesToLoad.push( a_Module );
 }
@@ -927,7 +928,7 @@ void OrbitApp::LoadModules()
 {
     if( m_ModulesToLoad.size() > 0 )
     {
-        std::shared_ptr< Module > module = m_ModulesToLoad.front();
+        shared_ptr< Module > module = m_ModulesToLoad.front();
         m_ModulesToLoad.pop();
         GLoadPdbAsync( module );
     }
@@ -1002,14 +1003,14 @@ bool OrbitApp::GetSamplingEnabled()
 //-----------------------------------------------------------------------------
 void OrbitApp::OnMiniDump( const Message & a_Message )
 {
-    std::wstring dumpPath = Path::GetDumpPath();
-    std::wstring o_File = dumpPath + L"a_received.dmp";
-    std::ofstream out( o_File, std::ios::binary );
+    wstring dumpPath = Path::GetDumpPath();
+    wstring o_File = dumpPath + L"a_received.dmp";
+    ofstream out( o_File, ios::binary );
     out.write( a_Message.m_Data, a_Message.m_Size );
     out.close();
 
     MiniDump miniDump(o_File);
-    std::shared_ptr<Process> process = miniDump.ToOrbitProcess();
+    shared_ptr<Process> process = miniDump.ToOrbitProcess();
     process->SetID( (DWORD)a_Message.GetHeader().m_GenericHeader.m_Address );
     GOrbitApp->m_ProcessesDataView->SetRemoteProcess( process );
 }

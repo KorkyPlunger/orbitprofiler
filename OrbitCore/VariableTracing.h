@@ -13,8 +13,6 @@
 //#define TRACE_VAR( var ) TraceVar( __FUNCTION__ ##"."#var, var );
 #define TRACE_VAR( var ) TraceVar( #var, var )
 
-using namespace std;
-
 //-----------------------------------------------------------------------------
 class VariableTracing
 {

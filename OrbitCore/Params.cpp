@@ -10,6 +10,8 @@
 #include <filesystem>
 #include <fstream>
 
+using namespace std;
+
 Params GParams;
 
 //-----------------------------------------------------------------------------
@@ -54,9 +56,9 @@ ORBIT_SERIALIZE( Params, 9 )
 //-----------------------------------------------------------------------------
 void Params::Save()
 {
-    std::wstring fileName = Path::GetParamsFileName();
+    wstring fileName = Path::GetParamsFileName();
     SCOPE_TIMER_LOG( Format( L"Saving hook params in %s", fileName.c_str() ) );
-    std::ofstream file( fileName );
+    ofstream file( fileName );
     cereal::XMLOutputArchive archive( file );
     archive( cereal::make_nvp("Params", *this) );
 }
@@ -64,7 +66,7 @@ void Params::Save()
 //-----------------------------------------------------------------------------
 void Params::Load()
 {
-    std::ifstream file( Path::GetParamsFileName() );
+    ifstream file( Path::GetParamsFileName() );
     if( !file.fail() )
     {
         cereal::XMLInputArchive archive( file );
@@ -80,15 +82,15 @@ void Params::Load()
 void Params::AddToPdbHistory( const string & a_PdbName )
 {
     m_PdbHistory.push_back( a_PdbName );
-    auto it = std::unique( m_PdbHistory.begin(), m_PdbHistory.end() );
-    m_PdbHistory.resize( std::distance( m_PdbHistory.begin(), it) );
+    auto it = unique( m_PdbHistory.begin(), m_PdbHistory.end() );
+    m_PdbHistory.resize( distance( m_PdbHistory.begin(), it) );
     Save();
 }
 
 //-----------------------------------------------------------------------------
 void Params::ScanPdbCache()
 {
-    std::wstring cachePath = Path::GetCachePath();
+    wstring cachePath = Path::GetCachePath();
     SCOPE_TIMER_LOG( Format( L"Scanning cache (%s)", cachePath.c_str() ) );
 
     for( auto it = tr2::sys::directory_iterator( cachePath ); it != tr2::sys::directory_iterator(); ++it )
@@ -96,9 +98,9 @@ void Params::ScanPdbCache()
         const auto& file = it->path();
         if( file.extension() == ".bin" )
         {
-            std::string fileName(file.filename().string());
+            string fileName(file.filename().string());
             fileName = fileName.substr( 0, fileName.find_first_of('_') );
-            m_CachedPdbsMap.insert( std::make_pair( fileName, ws2s(cachePath + file.filename().wstring()) ) );
+            m_CachedPdbsMap.insert( make_pair( fileName, ws2s(cachePath + file.filename().wstring()) ) );
         }
     }
 }

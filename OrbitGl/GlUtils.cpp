@@ -9,6 +9,8 @@
 #include "OrbitCore\Core.h"
 #include "Log.h"
 
+using namespace std;
+
 void CheckGlError()
 {
     GLenum errCode = glGetError();
