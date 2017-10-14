@@ -170,7 +170,7 @@ void TimeGraph::PanTime( int a_InitialX, int a_CurrentX, int a_Width, double a_I
     double initialLocalTime = (double)a_InitialX/(double)a_Width * m_TimeWindowUs;
     double dt = (double)(a_CurrentX-a_InitialX)/(double)a_Width * m_TimeWindowUs;
     double currentTime = a_InitialTime - dt;
-    m_MinEpochTimeUs = clamp( currentTime - initialLocalTime, 0.0, GetSessionTimeSpanUs()-m_TimeWindowUs );
+    m_MinEpochTimeUs = ::clamp( currentTime - initialLocalTime, 0.0, GetSessionTimeSpanUs()-m_TimeWindowUs );
     m_MaxEpochTimeUs = m_MinEpochTimeUs + m_TimeWindowUs;
 
     NeedsUpdate();

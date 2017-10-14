@@ -578,7 +578,7 @@ inline void Hijacking::SendContext( Context* a_Context, EpilogContext* a_EpilogC
 
     void* address = a_Context->GetRet();
     FunctionArgInfo* argInfo = GetArgInfo( address );
-    size_t contextSize = sizeof(Context) + sizeof(EpilogContext);
+    //size_t contextSize = sizeof(Context) + sizeof(EpilogContext);
     size_t argDataSize = argInfo ? argInfo->m_ArgDataSize : 0;
     vector<unsigned char> messageData( sizeof(SavedContext) + argDataSize );
     

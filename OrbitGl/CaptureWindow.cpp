@@ -110,8 +110,8 @@ void CaptureWindow::MouseMoved( int a_X, int a_Y, bool a_Left, bool a_Right, boo
         m_WorldTopLeftX = m_WorldClickX - (float)mousex / (float)getWidth() * m_WorldWidth;
         m_WorldTopLeftY = m_WorldClickY + (float)mousey / (float)getHeight() * m_WorldHeight;
 
-        m_WorldTopLeftX = clamp( m_WorldTopLeftX, worldMin, worldMax-m_WorldWidth );
-        m_WorldTopLeftY = clamp( m_WorldTopLeftY, -FLT_MAX, m_WorldMaxY );
+        m_WorldTopLeftX = ::clamp( m_WorldTopLeftX, worldMin, worldMax-m_WorldWidth );
+        m_WorldTopLeftY = ::clamp( m_WorldTopLeftY, -FLT_MAX, m_WorldMaxY );
         UpdateSceneBox();
 
         m_TimeGraph.PanTime(m_ScreenClickX, a_X, getWidth(), (double)m_RefTimeClick);

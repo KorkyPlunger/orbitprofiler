@@ -247,7 +247,7 @@ void Debugger::DebuggerThread( const wstring & a_ProcessName, const wstring & a_
         break;
 
         case UNLOAD_DLL_DEBUG_EVENT:
-            strEventMessage = Format( "%s", DllNameMap[debug_event.u.UnloadDll.lpBaseOfDll] );
+            strEventMessage = Format( "%s", DllNameMap[debug_event.u.UnloadDll.lpBaseOfDll].c_str() );
             break;
 
         case OUTPUT_DEBUG_STRING_EVENT:

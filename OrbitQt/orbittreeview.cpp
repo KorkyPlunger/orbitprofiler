@@ -257,7 +257,8 @@ void OrbitTreeView::OnMenuClicked(int a_Index)
         selection.insert( index.row() );
     }
     
-    m_Model->GetDataViewModel()->OnContextMenu( a_Index, vector<int>(selection.begin(), selection.end()) );
+    vector<int> intvec(selection.begin(), selection.end());
+    m_Model->GetDataViewModel()->OnContextMenu( a_Index, intvec );
 }
 
 //-----------------------------------------------------------------------------

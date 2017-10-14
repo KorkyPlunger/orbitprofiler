@@ -441,7 +441,7 @@ void Orbit_ImGui_NewFrame( GlCanvas * a_Canvas )
     //io.DisplayFramebufferScale = ImVec2((float)display_w / w, (float)display_h / h);
 
     // Setup time step
-    double current_time =  0;
+    //double current_time =  0;
     io.DeltaTime = a_Canvas->GetDeltaTimeSeconds();
 
     // Setup inputs
@@ -495,7 +495,7 @@ void WatchWindow::Draw(const char* title, bool* p_opened )
             ImGui::NextColumn();
             ImGui::AlignFirstTextHeightToWidgets();
 
-            bool sendVariable = false;
+            //bool sendVariable = false;
 
             switch( var.m_BasicType )
             {
