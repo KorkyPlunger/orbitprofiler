@@ -6,3 +6,7 @@ bin/
 OrbitQt/Makefile
 OrbitQt/Makefile.Debug
 OrbitQt/Makefile.Release
+
+OrbitQt/GeneratedFiles/
+OrbitQt/debug/
+OrbitQt/release/

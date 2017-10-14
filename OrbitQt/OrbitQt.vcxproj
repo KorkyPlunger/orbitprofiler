@@ -437,7 +437,7 @@
     <ClCompile Include="GeneratedFiles\release\moc_outputdialog.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <CustomBuild Include="..\OrbitQt\GeneratedFiles\debug\moc_predefs.h.cbt">
+    <CustomBuild Include="..\OrbitQt\GeneratedFiles\debug\moc_predefs.h">
       <FileType>Document</FileType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\mkspecs\features\data\dummy.cpp;%(AdditionalInputs)</AdditionalInputs>
@@ -445,7 +445,7 @@
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Generate moc_predefs.h</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\OrbitQt\GeneratedFiles\debug\moc_predefs.h;%(Outputs)</Outputs>
     </CustomBuild>
-    <CustomBuild Include="..\OrbitQt\GeneratedFiles\release\moc_predefs.h.cbt">
+    <CustomBuild Include="..\OrbitQt\GeneratedFiles\release\moc_predefs.h">
       <FileType>Document</FileType>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\mkspecs\features\data\dummy.cpp;%(AdditionalInputs)</AdditionalInputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">cl -Bx"$(QTDIR)\bin\qmake.exe" -nologo -Zc:wchar_t -FS -Zc:strictStrings -Zc:throwingNew -O2 -MD -GR -W3 -w34100 -w34189 -w44996 -w44456 -w44457 -w44458 -wd4577 -wd4467 -E -Za $(QTDIR)\mkspecs\features\data\dummy.cpp 2&gt;NUL &gt;..\OrbitQt\GeneratedFiles\release\moc_predefs.h</Command>
@@ -477,7 +477,7 @@
     <ClCompile Include="release\qrc_qtpropertybrowser.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <CustomBuild Include="..\OrbitQt\GeneratedFiles\debug\qteditorfactory.moc.cbt">
+    <CustomBuild Include="..\OrbitQt\GeneratedFiles\debug\qteditorfactory.moc">
       <FileType>Document</FileType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">qtpropertybrowser\qteditorfactory.cpp;..\OrbitQt\GeneratedFiles\debug\moc_predefs.h;$(QTDIR)\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
@@ -485,7 +485,7 @@
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MOC qtpropertybrowser/qteditorfactory.cpp</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\OrbitQt\GeneratedFiles\debug\qteditorfactory.moc;%(Outputs)</Outputs>
     </CustomBuild>
-    <CustomBuild Include="..\OrbitQt\GeneratedFiles\release\qteditorfactory.moc.cbt">
+    <CustomBuild Include="..\OrbitQt\GeneratedFiles\release\qteditorfactory.moc">
       <FileType>Document</FileType>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">qtpropertybrowser\qteditorfactory.cpp;..\OrbitQt\GeneratedFiles\release\moc_predefs.h;$(QTDIR)\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe  -DUNICODE -DWIN32 -DWIN64 -DORBIT_PROFILER -DUNICODE -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include ../OrbitQt/GeneratedFiles/release//moc_predefs.h -IC:/QT/5.8/MSVC2015_64/mkspecs/win32-msvc2015 -I../OrbitQt -ID:/git/Orbit -IC:/QT/5.8/MSVC2015_64/include -IC:/QT/5.8/MSVC2015_64/include/QtWidgets -IC:/QT/5.8/MSVC2015_64/include/QtGui -IC:/QT/5.8/MSVC2015_64/include/QtANGLE -IC:/QT/5.8/MSVC2015_64/include/QtCore qtpropertybrowser\qteditorfactory.cpp -o ..\OrbitQt\GeneratedFiles\release\qteditorfactory.moc</Command>
@@ -493,7 +493,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\OrbitQt\GeneratedFiles\release\qteditorfactory.moc;%(Outputs)</Outputs>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </CustomBuild>
-    <CustomBuild Include="..\OrbitQt\GeneratedFiles\debug\qtpropertymanager.moc.cbt">
+    <CustomBuild Include="..\OrbitQt\GeneratedFiles\debug\qtpropertymanager.moc">
       <FileType>Document</FileType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">qtpropertybrowser\qtpropertymanager.cpp;..\OrbitQt\GeneratedFiles\debug\moc_predefs.h;$(QTDIR)\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
@@ -501,7 +501,7 @@
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MOC qtpropertybrowser/qtpropertymanager.cpp</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\OrbitQt\GeneratedFiles\debug\qtpropertymanager.moc;%(Outputs)</Outputs>
     </CustomBuild>
-    <CustomBuild Include="..\OrbitQt\GeneratedFiles\release\qtpropertymanager.moc.cbt">
+    <CustomBuild Include="..\OrbitQt\GeneratedFiles\release\qtpropertymanager.moc">
       <FileType>Document</FileType>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">qtpropertybrowser\qtpropertymanager.cpp;..\OrbitQt\GeneratedFiles\release\moc_predefs.h;$(QTDIR)\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe  -DUNICODE -DWIN32 -DWIN64 -DORBIT_PROFILER -DUNICODE -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include ../OrbitQt/GeneratedFiles/release//moc_predefs.h -IC:/QT/5.8/MSVC2015_64/mkspecs/win32-msvc2015 -I../OrbitQt -ID:/git/Orbit -IC:/QT/5.8/MSVC2015_64/include -IC:/QT/5.8/MSVC2015_64/include/QtWidgets -IC:/QT/5.8/MSVC2015_64/include/QtGui -IC:/QT/5.8/MSVC2015_64/include/QtANGLE -IC:/QT/5.8/MSVC2015_64/include/QtCore qtpropertybrowser\qtpropertymanager.cpp -o ..\OrbitQt\GeneratedFiles\release\qtpropertymanager.moc</Command>
@@ -509,7 +509,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\OrbitQt\GeneratedFiles\release\qtpropertymanager.moc;%(Outputs)</Outputs>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </CustomBuild>
-    <CustomBuild Include="..\OrbitQt\GeneratedFiles\debug\qttreepropertybrowser.moc.cbt">
+    <CustomBuild Include="..\OrbitQt\GeneratedFiles\debug\qttreepropertybrowser.moc">
       <FileType>Document</FileType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">qtpropertybrowser\qttreepropertybrowser.cpp;..\OrbitQt\GeneratedFiles\debug\moc_predefs.h;$(QTDIR)\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
@@ -517,7 +517,7 @@
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MOC qtpropertybrowser/qttreepropertybrowser.cpp</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\OrbitQt\GeneratedFiles\debug\qttreepropertybrowser.moc;%(Outputs)</Outputs>
     </CustomBuild>
-    <CustomBuild Include="..\OrbitQt\GeneratedFiles\release\qttreepropertybrowser.moc.cbt">
+    <CustomBuild Include="..\OrbitQt\GeneratedFiles\release\qttreepropertybrowser.moc">
       <FileType>Document</FileType>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">qtpropertybrowser\qttreepropertybrowser.cpp;..\OrbitQt\GeneratedFiles\release\moc_predefs.h;$(QTDIR)\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe  -DUNICODE -DWIN32 -DWIN64 -DORBIT_PROFILER -DUNICODE -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include ../OrbitQt/GeneratedFiles/release//moc_predefs.h -IC:/QT/5.8/MSVC2015_64/mkspecs/win32-msvc2015 -I../OrbitQt -ID:/git/Orbit -IC:/QT/5.8/MSVC2015_64/include -IC:/QT/5.8/MSVC2015_64/include/QtWidgets -IC:/QT/5.8/MSVC2015_64/include/QtGui -IC:/QT/5.8/MSVC2015_64/include/QtANGLE -IC:/QT/5.8/MSVC2015_64/include/QtCore qtpropertybrowser\qttreepropertybrowser.cpp -o ..\OrbitQt\GeneratedFiles\release\qttreepropertybrowser.moc</Command>
