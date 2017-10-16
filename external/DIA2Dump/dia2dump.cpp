@@ -14,8 +14,8 @@
 #include "PrintSymbol.h"
 #include "Callback.h"
 
-#include "../../../OrbitCore/OrbitDia.h"
-#include "../../../OrbitGl/App.h"
+//#include "OrbitDia.h"
+//#include "App.h"
 
 #pragma warning (disable : 4100)
 
@@ -128,7 +128,7 @@ bool LoadDataFromPdb(
 
     if( FAILED( hr ) )
     {
-        GCoreApp->LogMsg( Format( L"CoCreateInstance failed - HRESULT = %08X\n", hr ) );
+        //GCoreApp->LogMsg( Format( L"CoCreateInstance failed - HRESULT = %08X\n", hr ) );
 
         // try loading dll by hand
         HMODULE msDiaModule = LoadLibrary(L"msdia140.dll");

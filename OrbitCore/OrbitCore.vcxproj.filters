@@ -108,16 +108,10 @@
     <ClInclude Include="CoreMath.h">
       <Filter>Inc</Filter>
     </ClInclude>
-    <ClInclude Include="CrashHandler.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
     <ClInclude Include="FunctionStats.h">
       <Filter>Inc</Filter>
     </ClInclude>
     <ClInclude Include="Hashing.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
-    <ClInclude Include="Hijacking.h">
       <Filter>Inc</Filter>
     </ClInclude>
     <ClInclude Include="Injection.h">
@@ -148,9 +142,6 @@
       <Filter>Inc</Filter>
     </ClInclude>
     <ClInclude Include="OrbitDbgHelp.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
-    <ClInclude Include="OrbitLib.h">
       <Filter>Inc</Filter>
     </ClInclude>
     <ClInclude Include="OrbitProcess.h">
@@ -252,9 +243,6 @@
     <ClInclude Include="Tcp.h">
       <Filter>Inc</Filter>
     </ClInclude>
-    <ClInclude Include="TcpClient.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
     <ClInclude Include="TcpEntity.h">
       <Filter>Inc</Filter>
     </ClInclude>
@@ -282,6 +270,7 @@
     <ClInclude Include="Diff.h">
       <Filter>Inc</Filter>
     </ClInclude>
+    <ClInclude Include="CrashHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\external\xxHash-r42\xxhash.c">
@@ -326,13 +315,7 @@
     <ClCompile Include="CoreApp.cpp">
       <Filter>Src</Filter>
     </ClCompile>
-    <ClCompile Include="CrashHandler.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
     <ClCompile Include="FunctionStats.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="Hijacking.cpp">
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Injection.cpp">
@@ -360,9 +343,6 @@
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="OrbitDia.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="OrbitLib.cpp">
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="OrbitProcess.cpp">
@@ -402,9 +382,6 @@
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Tcp.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="TcpClient.cpp">
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="TcpEntity.cpp">
@@ -458,6 +435,7 @@
     <ClCompile Include="Diff.cpp">
       <Filter>Src</Filter>
     </ClCompile>
+    <ClCompile Include="CrashHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\external\gte\GteVector.inl">

@@ -53,11 +53,11 @@
 #include <QTextCursor>
 #include "orbitcodeeditor.h"
 
-#include "../OrbitCore/PrintVar.h"
-#include "../OrbitCore/Utils.h"
-#include "../OrbitCore/Path.h"
-#include "../OrbitCore/LogInterface.h"
-#include "../OrbitGl/App.h"
+#include "PrintVar.h"
+#include "Utils.h"
+#include "Path.h"
+#include "LogInterface.h"
+#include "App.h"
 
 #include <fstream>
 

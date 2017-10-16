@@ -4,12 +4,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
   <ItemDefinitionGroup>
-    <ClCompile />
     <ClCompile>
-      <AdditionalIncludeDirectories>..\OrbitCore;..\external\freeglut-2.8.1\include\GL\;..\external\freetype-gl;..\external\glew-1.13.0\include;..\external\imgui\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\external\freeglut-2.8.1\include\GL\;..\external\freetype-gl;..\external\glew-1.13.0\include;..\external\imgui\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <Link />
   </ItemDefinitionGroup>
   <ItemGroup />
 </Project>

@@ -36,13 +36,25 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\PropSheets\DebugCommon.props" />
     <Import Project="..\PropSheets\GlDebug.props" />
+    <Import Project="..\PropSheets\CapstoneWin64Debug.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\PropSheets\ReleaseCommon.props" />
     <Import Project="..\PropSheets\GlRelease.props" />
+    <Import Project="..\PropSheets\CapstoneWin64Release.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\OrbitCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\OrbitCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\external\imgui\imconfig.h" />
     <ClInclude Include="..\external\imgui\imgui.h" />
@@ -138,6 +150,11 @@
     <ClCompile Include="TimeGraphLayout.cpp" />
     <ClCompile Include="TypeDataView.cpp" />
     <ClCompile Include="App.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OrbitCore\OrbitCore.vcxproj">
+      <Project>{f0d7a3d4-1d29-4053-a29a-32be327c3beb}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

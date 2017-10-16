@@ -56,21 +56,25 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="DllCommon.props" />
     <Import Project="..\PropSheets\DebugCommon.props" />
+    <Import Project="..\PropSheets\MinhookWin64Debug.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="DllCommon.props" />
     <Import Project="..\PropSheets\ReleaseCommon.props" />
+    <Import Project="..\PropSheets\MinhookWin64Release.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="DllCommon.props" />
     <Import Project="..\PropSheets\DebugCommon.props" />
+    <Import Project="..\PropSheets\MinhookWin32Debug.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="DllCommon.props" />
     <Import Project="..\PropSheets\ReleaseCommon.props" />
+    <Import Project="..\PropSheets\MinhookWin32Release.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -79,11 +83,20 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetName>Orbit64</TargetName>
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Link />
+  </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Hijacking.cpp" />
     <ClCompile Include="OrbitDll.cpp" />
+    <ClCompile Include="OrbitLib.cpp" />
+    <ClCompile Include="TcpClient.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Hijacking.h" />
     <ClInclude Include="OrbitDll.h" />
+    <ClInclude Include="OrbitLib.h" />
+    <ClInclude Include="TcpClient.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OrbitAsm\OrbitAsm.vcxproj">

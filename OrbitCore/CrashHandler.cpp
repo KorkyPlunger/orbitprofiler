@@ -5,7 +5,7 @@
 #include "CrashHandler.h"
 #include "Core.h"
 #include "ScopeTimer.h"
-#include "TcpClient.h"
+//#include "TcpClient.h"
 #include "OrbitDbgHelp.h"
 #include "../external/breakpad/src/client/windows/handler/exception_handler.h"
 
@@ -88,12 +88,12 @@ void SendDumpInternal( const wstring & a_Dir, const wstring & a_Id )
     vector<char> buffer( (unsigned int)size );
     if( file.read( buffer.data(), size ) )
     {
-        if( GTcpClient )
+        /*if( GTcpClient )
         {
             Message msg(Msg_MiniDump);
             msg.m_Header.m_GenericHeader.m_Address = GetCurrentProcessId();
             GTcpClient->Send( msg, buffer );
-        }
+        }*/
     }
 
     file.close();

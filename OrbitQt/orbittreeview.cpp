@@ -12,8 +12,8 @@
 #include <QFontDatabase>
 #include <set>
 
-#include "../OrbitGl/App.h"
-#include "../OrbitGl/DataViewModel.h"
+#include "App.h"
+#include "DataViewModel.h"
 
 using namespace std;
 

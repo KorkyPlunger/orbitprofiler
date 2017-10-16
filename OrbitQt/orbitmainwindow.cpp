@@ -18,13 +18,13 @@
 #include <QMouseEvent>
 #include <QToolTip>
 
-#include "../OrbitGl/SamplingReport.h"
-#include "../OrbitGl/App.h"
-#include "../OrbitGl/PluginManager.h"
-#include "../OrbitCore/Path.h"
-#include "../OrbitCore/Version.h"
-#include "../OrbitCore/PrintVar.h"
-#include "../OrbitCore/Utils.h"
+#include "SamplingReport.h"
+#include "App.h"
+#include "PluginManager.h"
+#include "Path.h"
+#include "Version.h"
+#include "PrintVar.h"
+#include "Utils.h"
 #include "../OrbitPlugin/OrbitSDK.h"
 
 #include "../external/concurrentqueue/concurrentqueue.h"

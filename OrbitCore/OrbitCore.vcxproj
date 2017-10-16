@@ -57,24 +57,28 @@
     <Import Project="CoreCommon.props" />
     <Import Project="..\PropSheets\DebugCommon.props" />
     <Import Project="..\PropSheets\CurlDebug.props" />
+    <Import Project="..\PropSheets\BreakpadWin64Debug.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="CoreCommon.props" />
     <Import Project="..\PropSheets\ReleaseCommon.props" />
     <Import Project="..\PropSheets\CurlRelease.props" />
+    <Import Project="..\PropSheets\BreakpadWin64Release.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="CoreCommon.props" />
     <Import Project="..\PropSheets\DebugCommon.props" />
     <Import Project="..\PropSheets\CurlDebug.props" />
+    <Import Project="..\PropSheets\BreakpadWin32Debug.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="CoreCommon.props" />
     <Import Project="..\PropSheets\ReleaseCommon.props" />
     <Import Project="..\PropSheets\CurlRelease.props" />
+    <Import Project="..\PropSheets\BreakpadWin32Release.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
@@ -121,11 +125,9 @@
     <ClInclude Include="OrbitAsio.h" />
     <ClInclude Include="OrbitDbgHelp.h" />
     <ClInclude Include="Hashing.h" />
-    <ClInclude Include="Hijacking.h" />
     <ClInclude Include="Injection.h" />
     <ClInclude Include="OrbitDia.h" />
     <ClInclude Include="OrbitFunction.h" />
-    <ClInclude Include="OrbitLib.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="CoreMath.h" />
     <ClInclude Include="MemoryTracker.h" />
@@ -149,7 +151,6 @@
     <ClInclude Include="SerializationMacros.h" />
     <ClInclude Include="SymbolUtils.h" />
     <ClInclude Include="Tcp.h" />
-    <ClInclude Include="TcpClient.h" />
     <ClInclude Include="TcpEntity.h" />
     <ClInclude Include="TcpForward.h" />
     <ClInclude Include="TcpServer.h" />
@@ -187,14 +188,12 @@
     <ClCompile Include="EventCallbacks.cpp" />
     <ClCompile Include="EventUtils.cpp" />
     <ClCompile Include="EventTracer.cpp" />
-    <ClCompile Include="Hijacking.cpp" />
     <ClCompile Include="Injection.cpp" />
     <ClCompile Include="LogInterface.cpp" />
     <ClCompile Include="MiniDump.cpp" />
     <ClCompile Include="OrbitAsio.cpp" />
     <ClCompile Include="OrbitDia.cpp" />
     <ClCompile Include="OrbitFunction.cpp" />
-    <ClCompile Include="OrbitLib.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="MemoryTracker.cpp" />
     <ClCompile Include="Message.cpp" />
@@ -213,7 +212,6 @@
     <ClCompile Include="FunctionStats.cpp" />
     <ClCompile Include="SymbolUtils.cpp" />
     <ClCompile Include="Tcp.cpp" />
-    <ClCompile Include="TcpClient.cpp" />
     <ClCompile Include="TcpEntity.cpp" />
     <ClCompile Include="TcpServer.cpp" />
     <ClCompile Include="OrbitThread.cpp" />

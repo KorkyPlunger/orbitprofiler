@@ -6,9 +6,9 @@
 #include "Threading.h"
 #include "Message.h"
 #include "TcpForward.h"
-#include "TcpClient.h"
+//#include "TcpClient.h"
 #include "Params.h"
-#include "OrbitLib.h"
+//#include "OrbitLib.h"
 #include <direct.h>
 
 using namespace std;
@@ -32,10 +32,10 @@ TimerManager::TimerManager( bool a_IsClient )
     , m_NumFlushedTimers(0)
     , m_IsClient(a_IsClient)
 {
-    if( m_IsClient )
+    /*if( m_IsClient )
     {
         m_ConsumerThread = new thread([&](){ SendTimers(); });
-    }
+    }*/
 }
 
 //-----------------------------------------------------------------------------
@@ -80,10 +80,10 @@ void TimerManager::StopClient()
     m_IsRecording = false;
     GTimerManager->FlushQueue();
     
-    if( GTcpClient )
+    /*if( GTcpClient )
     {
         GTcpClient->FlushSendQueue();
-    }
+    }*/
 }
 
 //-----------------------------------------------------------------------------
@@ -105,11 +105,11 @@ void TimerManager::FlushQueue()
         m_NumQueuedEntries -= (int)numDequeued;
         m_NumFlushedTimers += (int)numDequeued;
 
-        if( m_IsClient )
+        /*if( m_IsClient )
         {
             int numEntries = m_NumFlushedTimers;
             GTcpClient->Send( Msg_NumFlushedEntries, numEntries );
-        }
+        }*/
     }
 
     m_FlushRequested = false;
@@ -162,7 +162,7 @@ void TimerManager::ConsumeTimers()
 }
 
 //-----------------------------------------------------------------------------
-void TimerManager::SendTimers()
+/*void TimerManager::SendTimers()
 {
     SetThreadName( GetCurrentThreadId(), "OrbitSendTimers" );
 
@@ -196,7 +196,7 @@ void TimerManager::SendTimers()
             GTcpClient->Send(Msg);
         }
     }
-}
+}*/
 
 //-----------------------------------------------------------------------------
 void TimerManager::Add( const Timer& a_Timer )

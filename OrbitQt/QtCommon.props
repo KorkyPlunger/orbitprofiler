@@ -11,6 +11,7 @@
     </Link>
     <ClCompile>
       <PreprocessorDefinitions>_WIN32_WINNT=0x0700</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\OrbitCore;..\OrbitGl</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />

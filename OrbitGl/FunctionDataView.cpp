@@ -159,25 +159,20 @@ void FunctionsDataView::OnContextMenu( int a_MenuIndex, vector<int> & a_ItemIndi
     switch (a_MenuIndex)
     {
         case FUN_SELECT:
-        {
             for (int i : a_ItemIndices)
             {
                 Function & func = GetFunction(i);
                 func.Select();
             }
             break;
-        }
         case FUN_UNSELECT:
-        {
             for( int i : a_ItemIndices )
             {
                 Function & func = GetFunction( i );
                 func.UnSelect();
             }
             break;
-        }
         case FUNC_MENU_VIEW: 
-        {
             for( int i : a_ItemIndices )
             {
                 GetFunction(i).Print();
@@ -185,16 +180,13 @@ void FunctionsDataView::OnContextMenu( int a_MenuIndex, vector<int> & a_ItemIndi
 
             GOrbitApp->SendToUiNow(L"output");
             break;
-        }
         case FUNC_GO_TO_DISASSEMBLY:
-        {
             for( int i : a_ItemIndices )
             {
                 Function & func = GetFunction( i );
                 func.GetDisassembly();
             }
             break;
-        }
         case FUNC_CREATE_RULE:
             for( int i : a_ItemIndices )
             {

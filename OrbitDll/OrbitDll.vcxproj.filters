@@ -14,9 +14,27 @@
     <ClCompile Include="OrbitDll.cpp">
       <Filter>Src</Filter>
     </ClCompile>
+    <ClCompile Include="Hijacking.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="TcpClient.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="OrbitLib.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OrbitDll.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="OrbitLib.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="TcpClient.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Hijacking.h">
       <Filter>Inc</Filter>
     </ClInclude>
   </ItemGroup>

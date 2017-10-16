@@ -11,9 +11,9 @@
 #include <string>
 #include <queue>
 
-#include "OrbitCore\CoreApp.h"
-#include "OrbitCore\CrashHandler.h"
-#include "OrbitCore\Message.h"
+#include "CoreApp.h"
+#include "CrashHandler.h"
+#include "Message.h"
 
 struct CallStack;
 class Process;

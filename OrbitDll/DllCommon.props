@@ -5,6 +5,9 @@
   <PropertyGroup />
   <ItemDefinitionGroup>
     <ClCompile />
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\OrbitCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />
 </Project>

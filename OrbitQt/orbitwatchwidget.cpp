@@ -11,11 +11,11 @@
 #include "qtpropertybrowser\qtbuttonpropertybrowser.h"
 #include "qtpropertybrowser\qtgroupboxpropertybrowser.h"
 
-#include "../OrbitCore/Variable.h"
-#include "../OrbitCore/OrbitType.h"
-#include "../OrbitCore/Pdb.h"
-#include "../OrbitCore/PrintVar.h"
-#include "../OrbitGl/App.h"
+#include "Variable.h"
+#include "OrbitType.h"
+#include "Pdb.h"
+#include "PrintVar.h"
+#include "App.h"
 
 using namespace std;
 

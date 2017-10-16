@@ -4,8 +4,7 @@
 
 #include "Disassembler.h"
 
-#include "..\external\capstone\include\platform.h"
-#include "..\external\capstone\include\capstone.h"
+#include <capstone.h>
 
 using namespace std;
 
