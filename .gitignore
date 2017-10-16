@@ -10,3 +10,6 @@ OrbitQt/Makefile.Release
 OrbitQt/GeneratedFiles/
 OrbitQt/debug/
 OrbitQt/release/
+
+OrbitGl/OrbitGl.log
+OrbitCore/OrbitCore.log

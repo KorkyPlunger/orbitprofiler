@@ -218,14 +218,30 @@
     <CustomBuild Include="showincludesdialog.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\OrbitQt\GeneratedFiles\debug\moc_predefs.h.cbt" />
-    <CustomBuild Include="..\OrbitQt\GeneratedFiles\release\moc_predefs.h.cbt" />
-    <CustomBuild Include="..\OrbitQt\GeneratedFiles\debug\qteditorfactory.moc.cbt" />
-    <CustomBuild Include="..\OrbitQt\GeneratedFiles\release\qteditorfactory.moc.cbt" />
-    <CustomBuild Include="..\OrbitQt\GeneratedFiles\debug\qtpropertymanager.moc.cbt" />
-    <CustomBuild Include="..\OrbitQt\GeneratedFiles\release\qtpropertymanager.moc.cbt" />
-    <CustomBuild Include="..\OrbitQt\GeneratedFiles\debug\qttreepropertybrowser.moc.cbt" />
-    <CustomBuild Include="..\OrbitQt\GeneratedFiles\release\qttreepropertybrowser.moc.cbt" />
+    <CustomBuild Include="..\OrbitQt\GeneratedFiles\debug\moc_predefs.h">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\OrbitQt\GeneratedFiles\release\moc_predefs.h">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\OrbitQt\GeneratedFiles\debug\qteditorfactory.moc">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\OrbitQt\GeneratedFiles\release\qteditorfactory.moc">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\OrbitQt\GeneratedFiles\debug\qtpropertymanager.moc">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\OrbitQt\GeneratedFiles\release\qtpropertymanager.moc">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\OrbitQt\GeneratedFiles\debug\qttreepropertybrowser.moc">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\OrbitQt\GeneratedFiles\release\qttreepropertybrowser.moc">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GeneratedFiles\debug\moc_licensedialog.cpp">
