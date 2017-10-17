@@ -12,18 +12,12 @@
 
 using namespace std;
 
-TimerManager* GTimerManager;
-
 //-----------------------------------------------------------------------------
 TimerManager::TimerManager()
-    : m_TimerIndex(0)
-    , m_ThreadCounter(0)
-    , m_IsFull(false)
-    , m_IsRecording(false)
+    : m_IsRecording(false)
     , m_ExitRequested(false)
     , m_FlushRequested(false)
     , m_LockFreeQueue(65534)
-    , m_ConsumerThread(nullptr)
     , m_NumQueuedEntries(0)
     , m_NumQueuedMessages(0)
     , m_NumQueuedTimers(0)
@@ -45,13 +39,6 @@ void TimerManager::StartRecording()
         return;
     }
     
-    //CreateDataBase();
-
-    if( !m_ConsumerThread )
-    {
-        m_ConsumerThread = new thread([&](){ ConsumeTimers(); });
-    }
-
     m_IsRecording = true;
 }
 
@@ -60,19 +47,6 @@ void TimerManager::StopRecording()
 {
     m_IsRecording = false;
     FlushQueue();
-}
-
-//-----------------------------------------------------------------------------
-void TimerManager::StartClient()
-{
-    m_IsRecording = true;
-}
-
-//-----------------------------------------------------------------------------
-void TimerManager::StopClient()
-{
-    m_IsRecording = false;
-    GTimerManager->FlushQueue();
 }
 
 //-----------------------------------------------------------------------------
@@ -105,42 +79,10 @@ void TimerManager::Stop()
     m_IsRecording = false;
     m_ExitRequested = true;
     m_ConditionVariable.signal();
-    
-    if( m_ConsumerThread )
+
+    if (m_ConsumerThread)
     {
         m_ConsumerThread->join();
-    }
-}
-
-//-----------------------------------------------------------------------------
-void TimerManager::ConsumeTimers()
-{
-    SetThreadName( GetCurrentThreadId(), "OrbitConsumeTimers" );
-    SetThreadPriority( GetCurrentThread(), THREAD_PRIORITY_TIME_CRITICAL );
-
-    Timer Timer;
-
-    while( !m_ExitRequested )
-    {
-        m_ConditionVariable.wait();
-
-        while( !m_ExitRequested && !m_FlushRequested && m_LockFreeQueue.try_dequeue( Timer ) )
-        {
-            --m_NumQueuedEntries;
-            --m_NumQueuedTimers;
-            
-            if( Timer.m_SessionID == Message::GSessionID )
-            {
-                for (TimerAddedCallback & Callback : m_TimerAddedCallbacks)
-                {
-                    Callback(Timer);
-                }
-            }
-            else
-            {
-                ++m_NumTimersFromPreviousSession;
-            }
-        }
     }
 }
 

@@ -14,7 +14,7 @@
 #include "OrbitProcess.h"
 #include "SamplingProfiler.h"
 #include "PrintVar.h"
-#include "TimerManager.h"
+#include "ServerTimerManager.h"
 
 #include <evntcons.h>
 

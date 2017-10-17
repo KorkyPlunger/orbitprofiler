@@ -13,29 +13,7 @@
 
 using namespace std;
 
-string GHost;
-bool GIsCaptureEnabled = false;
-
-//-----------------------------------------------------------------------------
-UserScopeTimer::UserScopeTimer( const char* a_Name ) : m_Valid( false )
-{
-    // TODO: assert on size
-    if( GIsCaptureEnabled )
-    {
-        m_Valid = true;
-        new(m_Data)ScopeTimer( a_Name );
-    }
-}
-
-//-----------------------------------------------------------------------------
-UserScopeTimer::~UserScopeTimer()
-{
-    if( m_Valid )
-    {
-        ScopeTimer* Timer = (ScopeTimer*)m_Data;
-        Timer->~ScopeTimer();
-    }
-}
+ClientTimerManager* GTimerManager;
 
 //-----------------------------------------------------------------------------
 void Orbit::Init( const string & a_Host )
@@ -46,7 +24,6 @@ void Orbit::Init( const string & a_Host )
     delete GTimerManager;
     GTimerManager = nullptr;
     
-    GHost = a_Host;
     GTcpClient = make_unique<TcpClient>(a_Host);
 
     if( GTcpClient->IsValid() )
@@ -82,10 +59,10 @@ void Orbit::DeInit()
     if( GTimerManager )
     {
         GTimerManager->Stop();
+        delete GTimerManager;
+        GTimerManager = nullptr;
     }
 
-    delete GTimerManager;
-    GTimerManager = nullptr;
     HMODULE module = GetCurrentModule();
     FreeLibraryAndExitThread(module, 0);
 }
@@ -93,14 +70,12 @@ void Orbit::DeInit()
 //-----------------------------------------------------------------------------
 void Orbit::Start()
 {
-	GTimerManager->StartClient();
-    GIsCaptureEnabled = true;
+    GTimerManager->StartClient();
 }
 
 //-----------------------------------------------------------------------------
 void Orbit::Stop()
 {
-	GTimerManager->StopClient();
-    GIsCaptureEnabled = false;
+    GTimerManager->StopClient();
     Hijacking::DisableAllHooks();
 }

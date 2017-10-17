@@ -11,10 +11,16 @@ public:
     }
 
     //-----------------------------------------------------------------------------
-    void StopClient() override
+    void StartClient()
+    {
+        m_IsRecording = true;
+    }
+
+    //-----------------------------------------------------------------------------
+    void StopClient()
     {
         m_IsRecording = false;
-        GTimerManager->FlushQueue();
+        FlushQueue();
 
         if( GTcpClient )
         {
@@ -85,5 +91,6 @@ public:
             }
         }
     }
-
 };
+
+extern ClientTimerManager* GTimerManager;

@@ -52,6 +52,7 @@
 using namespace std;
 
 class OrbitApp* GOrbitApp;
+ServerTimerManager* GTimerManager;
 float GFontSize;
 
 //-----------------------------------------------------------------------------
@@ -163,7 +164,6 @@ bool OrbitApp::Init()
 
     Path::Init();
 
-    GTimerManager->m_GlobalTimer.start();
     DiaManager::InitMsDiaDll();
     GModuleManager.Init();
     Capture::Init();

@@ -3,7 +3,7 @@
 //-----------------------------------
 
 #include "Capture.h"
-#include "TimerManager.h"
+#include "ServerTimerManager.h"
 #include "TcpServer.h"
 #include "TcpForward.h"
 #include "Path.h"

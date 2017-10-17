@@ -17,7 +17,7 @@
 
 
 #include "VariableTracing.h"
-#include "TimerManager.h"
+#include "ServerTimerManager.h"
 #include "../external/imgui/imgui.h"
 #include "Card.h"
 #include <vector>
@@ -42,7 +42,6 @@ void ClearCaptureData()
     if( GCurrentTimeGraph )
     {
         GCurrentTimeGraph->Clear();
-        GTimerManager->m_GlobalTimer.start();
     }
 
     GOrbitApp->FireRefreshCallbacks( DataViewType::LIVEFUNCTIONS );
