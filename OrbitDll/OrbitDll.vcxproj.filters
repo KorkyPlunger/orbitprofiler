@@ -23,6 +23,39 @@
     <ClCompile Include="OrbitLib.cpp">
       <Filter>Src</Filter>
     </ClCompile>
+    <ClCompile Include="..\OrbitCore\TcpEntity.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OrbitCore\TimerManager.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OrbitCore\ScopeTimer.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OrbitCore\Message.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OrbitCore\OrbitAsio.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OrbitCore\Log.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OrbitCore\Utils.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OrbitCore\CrashHandler.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OrbitCore\Path.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OrbitCore\CallstackPOD.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\external\xxHash-r42\xxhash.c">
+      <Filter>Src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OrbitDll.h">

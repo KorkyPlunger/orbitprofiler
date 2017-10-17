@@ -57,6 +57,7 @@
     <Import Project="DllCommon.props" />
     <Import Project="..\PropSheets\DebugCommon.props" />
     <Import Project="..\PropSheets\MinhookWin64Debug.props" />
+    <Import Project="..\PropSheets\BreakpadWin64Debug.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -93,6 +94,17 @@
     <Link />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\external\xxHash-r42\xxhash.c" />
+    <ClCompile Include="..\OrbitCore\CallstackPOD.cpp" />
+    <ClCompile Include="..\OrbitCore\CrashHandler.cpp" />
+    <ClCompile Include="..\OrbitCore\Log.cpp" />
+    <ClCompile Include="..\OrbitCore\Message.cpp" />
+    <ClCompile Include="..\OrbitCore\OrbitAsio.cpp" />
+    <ClCompile Include="..\OrbitCore\Path.cpp" />
+    <ClCompile Include="..\OrbitCore\ScopeTimer.cpp" />
+    <ClCompile Include="..\OrbitCore\TcpEntity.cpp" />
+    <ClCompile Include="..\OrbitCore\TimerManager.cpp" />
+    <ClCompile Include="..\OrbitCore\Utils.cpp" />
     <ClCompile Include="Hijacking.cpp" />
     <ClCompile Include="OrbitDll.cpp" />
     <ClCompile Include="OrbitLib.cpp" />
@@ -107,9 +119,6 @@
   <ItemGroup>
     <ProjectReference Include="..\OrbitAsm\OrbitAsm.vcxproj">
       <Project>{3fe26f37-74ce-4111-8654-50fc00dfbb9e}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\OrbitCore\OrbitCore.vcxproj">
-      <Project>{f0d7a3d4-1d29-4053-a29a-32be327c3beb}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
