@@ -3,12 +3,14 @@
 //-----------------------------------
 
 #include "Tcp.h"
-#include "Core.h"
+
 #include "TcpServer.h"
 #include "Capture.h"
 #include "PrintVar.h"
 
 #include <websocketpp/frame.hpp>
+#include <websocketpp/sha1/sha1.hpp>
+#include <websocketpp/base64/base64.hpp>
 
 using namespace std;
 

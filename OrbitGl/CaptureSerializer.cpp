@@ -1,8 +1,8 @@
-#include "Core.h"
+
 #include "CaptureSerializer.h"
 #include "Serialization.h"
 #include "ScopeTimer.h"
-#include "Core.h"
+
 #include "capture.h"
 #include "TextBox.h"
 #include "TimeGraph.h"

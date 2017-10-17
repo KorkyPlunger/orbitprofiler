@@ -5,6 +5,7 @@
 #include "ScopeTimer.h"
 #include "TimerManager.h"
 #include "Log.h"
+#include "PrintVar.h"
 
 using namespace std;
 

@@ -8,13 +8,13 @@
 // If you are new to ImGui, see examples/README.txt and documentation at the top of imgui.cpp.
 // https://github.com/ocornut/imgui
 
-#include "Core.h"
+
 #include "ImGuiOrbit.h"
 #include "GlCanvas.h"
 #include "OpenGl.h"
 #include "SymbolUtils.h"
 #include "Pdb.h"
-#include "Core.h"
+
 #include "Message.h"
 #include "Capture.h"
 #include "Images.h"

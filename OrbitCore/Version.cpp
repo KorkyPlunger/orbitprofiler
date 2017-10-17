@@ -1,7 +1,8 @@
 #include "Version.h"
 #include "Utils.h"
-#include "Core.h"
-#include "curl/curl.h"
+
+#include <curl/curl.h>
+#include <websocketpp/base64/base64.hpp>
 
 #include <thread>
 

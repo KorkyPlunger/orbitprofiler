@@ -2,13 +2,15 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
+
 #include "OrbitType.h"
 #include "BaseTypes.h"
 #include "Pdb.h"
 #include "Log.h"
 #include "Capture.h"
+
 #include "external/xxHash-r42/xxhash.h"
+
 #include "SamplingProfiler.h"
 #include "SymbolUtils.h"
 #include "PrintVar.h"
@@ -19,7 +21,7 @@
 #include "Serialization.h"
 #include "TcpServer.h"
 
-#include "dia2.h"
+#include <dia2.h>
 
 using namespace std;
 

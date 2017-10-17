@@ -3,8 +3,16 @@
 //-----------------------------------
 #pragma once
 
-#include "Core.h"
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+
+#define INITGUID
 #include <evntrace.h>
+#include <evntcons.h>
+
+//struct _EVENT_RECORD;
+//typedef _EVENT_RECORD EVENT_RECORD;
+//typedef EVENT_RECORD* PEVENT_RECORD;
 
 namespace EventUtils
 {

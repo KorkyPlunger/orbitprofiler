@@ -3,9 +3,14 @@
 //-----------------------------------
 #pragma once
 
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+
 #define INITGUID
 #include <evntrace.h>
 #include <Guiddef.h>
+
+#include "external/xxHash-r42/xxhash.h"
 
 DEFINE_GUID( /* 45d8cccd-539f-4b72-a8b7-5c683142609a */
     ALPCGuid,

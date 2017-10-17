@@ -3,18 +3,20 @@
 //-----------------------------------
 
 #include "TcpServer.h"
+
 #include "Tcp.h"
 #include "VariableTracing.h"
-#include "Core.h"
+
 #include "Log.h"
 #include "Context.h"
 #include "Capture.h"
-#include <thread>
-#include <windows.h>
 #include "OrbitAsio.h"
 #include "Callstack.h"
 #include "SamplingProfiler.h"
 #include "OrbitUnreal.h"
+#include "TimerManager.h"
+
+#include <thread>
 
 using namespace std;
 

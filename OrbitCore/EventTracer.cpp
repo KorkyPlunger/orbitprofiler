@@ -6,10 +6,7 @@
 #include "SamplingProfiler.h"
 
 #define INITGUID
-#include <windows.h>
 #include <strsafe.h>
-#include <wmistr.h>
-#include <evntrace.h>
 #include <evntcons.h>
 
 #include "Capture.h"

@@ -4,12 +4,15 @@
 
 #include "SymbolUtils.h"
 #include "OrbitDbgHelp.h"
-#include <tlhelp32.h>
-#include <psapi.h>
 #include "Capture.h"
 #include "dia2.h" // #includes rpcndr.h -->  error C2872: 'byte': ambiguous symbol, if <cstddef> was #included first
 #include "OrbitDia.h"
 #include "OrbitModule.h"
+#include "PrintVar.h"
+#include "Path.h"
+
+#include <tlhelp32.h>
+#include <psapi.h>
 
 using namespace std;
 //-----------------------------------------------------------------------------

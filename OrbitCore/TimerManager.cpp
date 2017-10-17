@@ -6,9 +6,8 @@
 #include "Threading.h"
 #include "Message.h"
 #include "TcpForward.h"
-//#include "TcpClient.h"
 #include "Params.h"
-//#include "OrbitLib.h"
+
 #include <direct.h>
 
 using namespace std;

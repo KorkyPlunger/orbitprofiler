@@ -2,7 +2,7 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
+
 #include "CallStackDataView.h"
 #include "CallStack.h"
 #include "Capture.h"

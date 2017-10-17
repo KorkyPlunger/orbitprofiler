@@ -2,7 +2,7 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
+
 #include "FunctionDataView.h"
 #include "OrbitType.h"
 #include "OrbitProcess.h"

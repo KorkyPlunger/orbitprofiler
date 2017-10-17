@@ -10,6 +10,7 @@
 #include "BaseTypes.h"
 #include "FunctionStats.h"
 #include "SerializationMacros.h"
+#include "Utils.h"
 
 class Pdb;
 

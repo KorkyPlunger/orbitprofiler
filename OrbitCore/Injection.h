@@ -3,7 +3,6 @@
 //-----------------------------------
 #pragma once
 
-#include "Core.h"
 #include "ProcessUtils.h"
 #include <string>
 

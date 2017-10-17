@@ -6,6 +6,8 @@
 //#define _NO_CVCONST_H
 #include "OrbitDbgHelp.h"
 
+#include <vector>
+
 // Maximal length of name buffers (in characters) 
 #define TIS_MAXNAMELEN  256
 // Maximal number of dimensions of an array 

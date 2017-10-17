@@ -9,11 +9,13 @@
 #include "Log.h"
 #include "Params.h"
 #include "OrbitThread.h"
-#include <set>
-#include <map>
-#include "dia2.h"
+#include <dia2.h>
 #include "Serialization.h"
 #include "OrbitModule.h"
+#include "PrintVar.h"
+
+#include <set>
+#include <map>
 
 using namespace std;
 

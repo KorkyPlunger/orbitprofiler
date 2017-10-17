@@ -2,7 +2,7 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
+
 #include "SessionsDataView.h"
 #include "ModuleDataView.h"
 #include "Pdb.h"
@@ -11,6 +11,7 @@
 #include "App.h"
 #include "Callstack.h"
 #include "OrbitSession.h"
+#include "Path.h"
 
 using namespace std;
 

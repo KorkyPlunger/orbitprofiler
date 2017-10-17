@@ -19,6 +19,8 @@
 #include "CoreApp.h"
 #include "Params.h"
 #include "OrbitRule.h"
+#include "VariableTracing.h"
+
 #include <fstream>
 #include <ostream>
 

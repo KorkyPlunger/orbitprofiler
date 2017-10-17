@@ -108,7 +108,6 @@
     <ClInclude Include="Capture.h" />
     <ClInclude Include="Context.h" />
     <ClInclude Include="ContextSwitch.h" />
-    <ClInclude Include="Core.h" />
     <ClInclude Include="CoreApp.h" />
     <ClInclude Include="CrashHandler.h" />
     <ClInclude Include="DiaManager.h" />
@@ -178,7 +177,7 @@
     <ClCompile Include="Callstack.cpp" />
     <ClCompile Include="Capture.cpp" />
     <ClCompile Include="ContextSwitch.cpp" />
-    <ClCompile Include="Core.cpp" />
+    <ClCompile Include="Serialization.cpp" />
     <ClCompile Include="CoreApp.cpp" />
     <ClCompile Include="CrashHandler.cpp" />
     <ClCompile Include="DiaManager.cpp" />

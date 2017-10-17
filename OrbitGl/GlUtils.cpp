@@ -3,10 +3,11 @@
 //-----------------------------------
 
 #include "GlUtils.h"
-#include "Core.h"
+
 
 #include "freetype-gl.h"
 #include "Log.h"
+#include "PrintVar.h"
 
 using namespace std;
 

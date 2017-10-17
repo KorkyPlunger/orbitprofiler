@@ -3,10 +3,11 @@
 //-----------------------------------
 
 #include "CrashHandler.h"
-#include "Core.h"
 #include "ScopeTimer.h"
-//#include "TcpClient.h"
 #include "OrbitDbgHelp.h"
+#include "PrintVar.h"
+#include "Path.h"
+
 #include "../external/breakpad/src/client/windows/handler/exception_handler.h"
 
 #include <fstream>

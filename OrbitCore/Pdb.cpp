@@ -2,12 +2,13 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
+
 #include "Pdb.h"
 #include <algorithm>
 #include <functional>
 #include <fstream>
 #include <ppl.h>
+#include <tchar.h>
 
 #include "SymbolUtils.h"
 
@@ -22,6 +23,7 @@
 #include "OrbitType.h"
 #include "OrbitUnreal.h"
 #include "DiaManager.h"
+#include "Path.h"
 
 #include "external/DIA2Dump/dia2dump.h"
 #include "external/DIA2Dump/PrintSymbol.h"

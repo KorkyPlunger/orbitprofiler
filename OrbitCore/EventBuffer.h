@@ -3,12 +3,12 @@
 //-----------------------------------
 #pragma once
 
-#include "Core.h"
 #include "Callstack.h"
-//#include "BlockChain.h"
 #include "SerializationMacros.h"
+#include "Threading.h"
 
 #include <set>
+#include <map>
 
 //-----------------------------------------------------------------------------
 struct CallstackEvent

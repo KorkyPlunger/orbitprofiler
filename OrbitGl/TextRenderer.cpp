@@ -7,10 +7,11 @@
 #include "vertex-buffer.h"
 #include "shader.h"
 
-#include "Core.h"
+
 #include "GlUtils.h"
 #include "App.h"
 #include "Params.h"
+#include "Path.h"
 
 using namespace std;
 

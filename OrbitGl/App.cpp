@@ -42,6 +42,8 @@
 #include "Version.h"
 #include "EventTracer.h"
 #include "Debugger.h"
+#include "Path.h"
+#include "VariableTracing.h"
 
 #include <thread>
 #include <cmath>

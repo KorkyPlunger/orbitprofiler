@@ -3,11 +3,12 @@
 //-----------------------------------
 #pragma once
 
-#include "Core.h"
+
 #include "CallstackTypes.h"
 #include <string>
 #include <chrono>
 #include "OrbitType.h"
+#include "Threading.h"
 
 class Process;
 class Session;

@@ -2,10 +2,11 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
+
 #include "PluginManager.h"
 #include "TcpServer.h"
 #include "../OrbitPlugin/OrbitSDK.h"
+#include "Path.h"
 
 PluginManager GPluginManager;
 

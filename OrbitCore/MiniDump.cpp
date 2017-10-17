@@ -2,10 +2,12 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
 #include "MiniDump.h"
 #include "OrbitProcess.h"
 #include "CoreApp.h"
+#include "PrintVar.h"
+#include "Path.h"
+
 #include <memory>
 #include "../external/breakpad/src/google_breakpad/processor/minidump.h"
 

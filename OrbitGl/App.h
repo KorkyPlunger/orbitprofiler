@@ -3,17 +3,16 @@
 //-----------------------------------
 #pragma once
 
-
 #include "DataViewTypes.h"
+#include "CoreApp.h"
+#include "CrashHandler.h"
+#include "Message.h"
 
 #include <functional>
 #include <memory>
 #include <string>
 #include <queue>
-
-#include "CoreApp.h"
-#include "CrashHandler.h"
-#include "Message.h"
+#include <map>
 
 struct CallStack;
 class Process;

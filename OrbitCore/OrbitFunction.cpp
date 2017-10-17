@@ -2,7 +2,7 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
+
 #include "OrbitFunction.h"
 #include "OrbitModule.h"
 #include "Serialization.h"
@@ -18,7 +18,7 @@
 #include "SymbolUtils.h"
 #include "DiaParser.h"
 
-#include "dia2.h"
+#include <dia2.h>
 
 using namespace std;
 

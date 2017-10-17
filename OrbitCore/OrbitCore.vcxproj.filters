@@ -99,9 +99,6 @@
     <ClInclude Include="Context.h">
       <Filter>Inc</Filter>
     </ClInclude>
-    <ClInclude Include="Core.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
     <ClInclude Include="CoreApp.h">
       <Filter>Inc</Filter>
     </ClInclude>
@@ -309,9 +306,6 @@
     <ClCompile Include="Capture.cpp">
       <Filter>Src</Filter>
     </ClCompile>
-    <ClCompile Include="Core.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
     <ClCompile Include="CoreApp.cpp">
       <Filter>Src</Filter>
     </ClCompile>
@@ -436,6 +430,9 @@
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="CrashHandler.cpp" />
+    <ClCompile Include="Serialization.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\external\gte\GteVector.inl">

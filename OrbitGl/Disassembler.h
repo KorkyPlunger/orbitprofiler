@@ -6,7 +6,7 @@
 #include <string>
 #include "BaseTypes.h"
 
-#include "../OrbitCore/Utils.h"
+#include "Utils.h"
 
 //-----------------------------------------------------------------------------
 class Disassembler

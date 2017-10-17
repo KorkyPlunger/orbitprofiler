@@ -9,6 +9,7 @@
 #include "Hijacking.h"
 #include "CallStack.h"
 #include "CrashHandler.h"
+#include "PrintVar.h"
 
 using namespace std;
 

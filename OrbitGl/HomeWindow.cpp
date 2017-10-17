@@ -5,6 +5,7 @@
 #include "HomeWindow.h"
 #include "Log.h"
 #include "App.h"
+#include "VariableTracing.h"
 
 using namespace std;
 

@@ -13,8 +13,10 @@
 #include "ContextSwitch.h"
 #include "OrbitProcess.h"
 #include "SamplingProfiler.h"
+#include "PrintVar.h"
+#include "TimerManager.h"
 
-#include "evntcons.h"
+#include <evntcons.h>
 
 using namespace std;
 

@@ -3,17 +3,15 @@
 //-----------------------------------
 
 #include "EventUtils.h"
+#include "PrintVar.h"
 
 //Turns the DEFINE_GUID for EventTraceGuid into a const.
-#define INITGUID
+//#define INITGUID
 
-#include <windows.h>
-#include <stdio.h>
-#include <wbemidl.h>
-#include <wmistr.h>
 #include <evntrace.h>
 #include <tdh.h>
 #include <in6addr.h>
+#include <combaseapi.h>
 
 #pragma comment(lib, "tdh.lib")
 

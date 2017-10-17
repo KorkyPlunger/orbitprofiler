@@ -2,10 +2,11 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
+
 #include "OrbitModule.h"
 #include "Serialization.h"
 #include "Pdb.h"
+#include "Path.h"
 
 using namespace std;
 

@@ -3,8 +3,10 @@
 //-----------------------------------
 #pragma once
 
-#include "Core.h"
+
+#include "Message.h"
 #include "DataViewModel.h"
+#include "Threading.h"
 
 struct CallStack;
 

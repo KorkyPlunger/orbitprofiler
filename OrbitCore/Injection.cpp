@@ -3,13 +3,14 @@
 //-----------------------------------
 
 #include "Injection.h"
-#include "Core.h"
 #include "TcpForward.h"
 #include "SamplingProfiler.h"
 #include "Capture.h"
 #include "ProcessUtils.h"
 #include "ScopeTimer.h"
 #include "Log.h"
+#include "PrintVar.h"
+#include "Path.h"
 
 #include <cstdio>
 #include <tlhelp32.h>

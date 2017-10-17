@@ -6,9 +6,11 @@
 #include "TcpClient.h"
 #include "OrbitLib.h"
 #include "Hijacking.h"
-#include "Core.h"
+
 #include "OrbitType.h"
 #include "Log.h"
+#include "PrintVar.h"
+
 #include <thread>
 
 using namespace std;

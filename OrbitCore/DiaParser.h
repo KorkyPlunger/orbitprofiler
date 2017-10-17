@@ -13,6 +13,7 @@ struct IDiaSectionContrib;
 struct IDiaEnumDebugStreamData;
 struct IDiaFrameData;
 struct IDiaPropertyStorage;
+struct IDiaSession;
 
 //-----------------------------------------------------------------------------
 struct DiaParser

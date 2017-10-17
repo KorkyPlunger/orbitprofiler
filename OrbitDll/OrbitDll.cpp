@@ -4,11 +4,6 @@
 
 #include "OrbitDll.h"
 
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-#include <iostream>
-#include <fstream>
-
 #include "OrbitLib.h"
 #include "TcpClient.h"
 #include "PrintVar.h"

@@ -3,7 +3,8 @@
 //-----------------------------------
 #pragma once
 
-#include "Core.h"
+#include <stdint.h>
+typedef ULONG64                  ptr_type;
 
 //-----------------------------------------------------------------------------
 //[EventType{ 1, 2, 3, 4 }, EventTypeName{ "Start", "End", "DCStart", "DCEnd" }]

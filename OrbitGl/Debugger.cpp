@@ -2,15 +2,19 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
+
 #include "Debugger.h"
 #include "OrbitDbgHelp.h"
 #include "TcpServer.h"
 #include "App.h"
+#include "Params.h"
+#include "Path.h"
+#include "PrintVar.h"
+
 #include <psapi.h>
 #include <thread>
 #include <string>
-#include "Params.h"
+#include <tchar.h>
 
 using namespace std;
 

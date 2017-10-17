@@ -2,7 +2,7 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
+
 #include "ThreadDataViewGl.h"
 #include "ThreadView.h"
 #include "Capture.h"

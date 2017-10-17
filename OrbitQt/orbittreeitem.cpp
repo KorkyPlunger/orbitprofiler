@@ -1,7 +1,7 @@
 #include "orbittreeitem.h"
 #include <QStringList>
 
-#include "../OrbitCore/Utils.h"
+#include "Utils.h"
 
 using namespace std;
 

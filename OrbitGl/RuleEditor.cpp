@@ -2,7 +2,7 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
+
 #include "RuleEditor.h"
 #include "OrbitFunction.h"
 #include "OrbitType.h"

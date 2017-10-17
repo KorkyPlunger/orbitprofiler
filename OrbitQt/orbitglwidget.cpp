@@ -10,8 +10,8 @@
 #include <QOpenGLDebugLogger>
 #include <QOpenGLDebugMessage>
 
-#include "../OrbitCore/PrintVar.h"
-#include "../OrbitCore/Utils.h"
+#include "PrintVar.h"
+#include "Utils.h"
 
 #define ORBIT_DEBUG_OPEN_GL 1
 

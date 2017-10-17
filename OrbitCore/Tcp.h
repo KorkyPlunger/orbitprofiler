@@ -3,13 +3,9 @@
 //-----------------------------------
 #pragma once
 
-//#define _WIN32_WINNT 0x0501
-#include <sdkddkver.h>
-#define _WINSOCK_DEPRECATED_NO_WARNINGS
-
-#include <ctime>
-#include <iostream>
 #include <string>
+#include <vector>
+#include <memory>
 #include <unordered_set>
 #include <asio.hpp>
 

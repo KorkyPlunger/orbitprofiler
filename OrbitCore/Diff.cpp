@@ -3,9 +3,9 @@
 //-----------------------------------
 
 #include "Diff.h"
-#include "Core.h"
 #include "Path.h"
 #include "Params.h"
+#include "Utils.h"
 
 #include <fstream>
 #include <Shellapi.h>

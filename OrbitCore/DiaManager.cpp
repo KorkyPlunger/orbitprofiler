@@ -4,6 +4,8 @@
 
 #include "DiaManager.h"
 #include "ScopeTimer.h"
+#include "Path.h"
+#include "Log.h"
 
 #include "external/DIA2Dump/dia2dump.h"
 #include "external/DIA2Dump/PrintSymbol.h"

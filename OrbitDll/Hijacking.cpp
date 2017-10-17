@@ -2,7 +2,7 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
+
 #include "Hijacking.h"
 #include "TcpClient.h"
 #include "MinHook.h"
@@ -10,12 +10,15 @@
 #include "ScopeTimer.h"
 #include "Context.h"
 #include "Message.h"
+#include "TimerManager.h"
+
 #include <iostream>
 #include <vector>
 #include <unordered_set>
+
 #include "Callstack.h"
 #include "OrbitAsm/OrbitAsm.h"
-//#include "../OrbitPlugin/OrbitSDK.h"
+
 #include "../external/minhook/src/buffer.h"
 #include "../external/minhook/src/trampoline.h"
 

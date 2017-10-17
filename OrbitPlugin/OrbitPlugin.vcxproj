@@ -51,6 +51,7 @@
     <ClInclude Include="..\external\imgui\stb_rect_pack.h" />
     <ClInclude Include="..\external\imgui\stb_textedit.h" />
     <ClInclude Include="..\external\imgui\stb_truetype.h" />
+    <ClInclude Include="OrbitUserData.h" />
     <ClInclude Include="UserPlugin.h" />
   </ItemGroup>
   <ItemGroup>

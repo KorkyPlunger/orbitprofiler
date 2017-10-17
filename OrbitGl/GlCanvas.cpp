@@ -15,8 +15,9 @@
 #include "App.h"
 #include "SamplingProfiler.h"
 
-#include "Core.h"
+
 #include "VariableTracing.h"
+#include "TimerManager.h"
 #include "../external/imgui/imgui.h"
 #include "Card.h"
 #include <vector>

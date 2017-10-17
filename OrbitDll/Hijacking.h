@@ -4,6 +4,7 @@
 #pragma once
 
 #include "OrbitType.h"
+#include "Message.h"
 
 namespace Hijacking
 {

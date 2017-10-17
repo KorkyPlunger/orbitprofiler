@@ -3,7 +3,9 @@
 //-----------------------------------
 #pragma once
 
-#include "Core.h"
+#include "Threading.h"
+#include "Utils.h"
+
 #include <vector>
 
 #define ORBIT_LOG( msg )       GLogger.Log( OrbitLog::Global, msg )

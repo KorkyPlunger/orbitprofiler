@@ -1,16 +1,15 @@
-#include "Core.h"
-
-#include <malloc.h>
 #include "external/DIA2Dump/dia2dump.h"
 #include "external/DIA2Dump/regs.h"
 
 #include "DiaParser.h"
-#include <map>
 
 #include "Log.h"
 #include "Utils.h"
 #include "OrbitType.h"
 #include "Pdb.h"
+#include "PrintVar.h"
+
+#include <dia2.h>
 
 using namespace std;
 

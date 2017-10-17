@@ -2,7 +2,7 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
+
 #include "GlobalDataView.h"
 #include "Capture.h"
 #include "OrbitType.h"

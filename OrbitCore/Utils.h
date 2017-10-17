@@ -15,7 +15,6 @@
 #include <sstream>
 
 #include <external/xxHash-r42/xxhash.h>
-//#include <websocketpp/base64/base64.hpp>
 
 //-----------------------------------------------------------------------------
 inline std::string ws2s( const std::wstring& wstr )
@@ -69,9 +68,6 @@ inline unsigned long long StringHash( const std::wstring & a_String )
 {
     return XXH64(a_String.data(), a_String.size()*sizeof(wchar_t), 0xBADDCAFEDEAD10CC);
 }
-
-#define MemPrintf( Dest, DestSize, Source, ... ) _stprintf_s( Dest, DestSize, Source, __VA_ARGS__ )
-#define Log( Msg, ... ) OrbitPrintf( Msg, __VA_ARGS__ )
 
 //-----------------------------------------------------------------------------
 template <typename T, size_t N>

@@ -9,6 +9,8 @@
 #include "Capture.h"
 #include "OrbitProcess.h"
 #include "CoreApp.h"
+#include "Path.h"
+#include "Pdb.h"
 
 using namespace std;
 

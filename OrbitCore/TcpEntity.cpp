@@ -2,11 +2,11 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
 #include "TcpEntity.h"
 #include "Tcp.h"
 #include "Log.h"
 #include "OrbitAsio.h"
+#include "PrintVar.h"
 
 using namespace std;
 
