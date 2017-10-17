@@ -16,7 +16,7 @@ using namespace std;
 TimerManager* GTimerManager;
 
 //-----------------------------------------------------------------------------
-TimerManager::TimerManager( bool a_IsClient )
+TimerManager::TimerManager()
     : m_TimerIndex(0)
     , m_ThreadCounter(0)
     , m_IsFull(false)
@@ -30,12 +30,7 @@ TimerManager::TimerManager( bool a_IsClient )
     , m_NumQueuedTimers(0)
     , m_NumTimersFromPreviousSession(0)
     , m_NumFlushedTimers(0)
-    , m_IsClient(a_IsClient)
 {
-    /*if( m_IsClient )
-    {
-        m_ConsumerThread = new thread([&](){ SendTimers(); });
-    }*/
 }
 
 //-----------------------------------------------------------------------------
@@ -79,11 +74,6 @@ void TimerManager::StopClient()
 {
     m_IsRecording = false;
     GTimerManager->FlushQueue();
-    
-    /*if( GTcpClient )
-    {
-        GTcpClient->FlushSendQueue();
-    }*/
 }
 
 //-----------------------------------------------------------------------------
@@ -104,12 +94,6 @@ void TimerManager::FlushQueue()
 
         m_NumQueuedEntries -= (int)numDequeued;
         m_NumFlushedTimers += (int)numDequeued;
-
-        /*if( m_IsClient )
-        {
-            int numEntries = m_NumFlushedTimers;
-            GTcpClient->Send( Msg_NumFlushedEntries, numEntries );
-        }*/
     }
 
     m_FlushRequested = false;
@@ -162,43 +146,6 @@ void TimerManager::ConsumeTimers()
 }
 
 //-----------------------------------------------------------------------------
-/*void TimerManager::SendTimers()
-{
-    SetThreadName( GetCurrentThreadId(), "OrbitSendTimers" );
-
-    const size_t numTimers = 4096;
-    Timer Timers[numTimers];
-
-    while( !m_ExitRequested )
-    {
-        Message Msg(Msg_Timer);
-
-        // Wait for non-empty queue
-        while( m_NumQueuedEntries <= 0 && !m_ExitRequested )
-        {
-            m_ConditionVariable.wait();
-        }
-
-        size_t numDequeued = m_LockFreeQueue.try_dequeue_bulk(Timers, numTimers);
-        m_NumQueuedEntries -= (int)numDequeued;
-        m_NumQueuedTimers  -= (int)numDequeued;
-        Msg.m_Size = (int)numDequeued*sizeof(Timer);
-
-		GTcpClient->Send(Msg, (void*)Timers);
-
-        int numEntries = m_NumQueuedEntries;
-        GTcpClient->Send( Msg_NumQueuedEntries, numEntries );
-
-        while (m_LockFreeMessageQueue.try_dequeue(Msg) && !m_ExitRequested)
-        {
-            --m_NumQueuedEntries;
-            --m_NumQueuedMessages;
-            GTcpClient->Send(Msg);
-        }
-    }
-}*/
-
-//-----------------------------------------------------------------------------
 void TimerManager::Add( const Timer& a_Timer )
 {
     if( m_IsRecording )
@@ -213,7 +160,7 @@ void TimerManager::Add( const Timer& a_Timer )
 //-----------------------------------------------------------------------------
 void TimerManager::Add( const Message& a_Message )
 {
-    if( m_IsRecording || m_IsClient )
+    if( m_IsRecording )
     {
         m_LockFreeMessageQueue.enqueue(a_Message);
         m_ConditionVariable.signal();

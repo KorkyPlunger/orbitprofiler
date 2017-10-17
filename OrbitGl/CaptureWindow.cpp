@@ -8,8 +8,8 @@
 #include "App.h"
 #include "SymbolUtils.h"
 #include "TcpServer.h"
-#include "PluginManager.h"
-#include "../OrbitPlugin/OrbitSDK.h"
+//#include "PluginManager.h"
+//#include "../OrbitPlugin/OrbitSDK.h"
 
 using namespace std;
 

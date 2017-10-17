@@ -15,8 +15,8 @@
 #include "App.h"
 #include "SamplingProfiler.h"
 
-#include "OrbitCore\Core.h"
-#include "OrbitCore\VariableTracing.h"
+#include "Core.h"
+#include "VariableTracing.h"
 #include "../external/imgui/imgui.h"
 #include "Card.h"
 #include <vector>

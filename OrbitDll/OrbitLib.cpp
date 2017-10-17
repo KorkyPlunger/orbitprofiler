@@ -5,7 +5,7 @@
 #include "TcpClient.h"
 #include "OrbitLib.h"
 #include "ScopeTimer.h"
-#include "TimerManager.h"
+#include "ClientTimerManager.h"
 #include "Hijacking.h"
 #include "CallStack.h"
 #include "CrashHandler.h"
@@ -51,7 +51,7 @@ void Orbit::Init( const string & a_Host )
     if( GTcpClient->IsValid() )
     {
         GTcpClient->Start();
-        GTimerManager = new TimerManager( true );
+        GTimerManager = new ClientTimerManager();
     }
     else
     {

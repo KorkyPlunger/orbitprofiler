@@ -31,12 +31,12 @@
 #include "PluginManager.h"
 #include "RuleEditor.h"
 
-#include "OrbitCore\Pdb.h"
-#include "OrbitCore\ModuleManager.h"
-#include "OrbitCore\TcpServer.h"
-#include "OrbitCore\TimerManager.h"
-#include "OrbitCore\Injection.h"
-#include "OrbitCore\Utils.h"
+#include "Pdb.h"
+#include "ModuleManager.h"
+#include "TcpServer.h"
+#include "ServerTimerManager.h"
+#include "Injection.h"
+#include "Utils.h"
 #include "Tcp.h"
 #include "PrintVar.h"
 #include "Version.h"
@@ -156,7 +156,7 @@ bool OrbitApp::Init()
 {
     GOrbitApp = new OrbitApp();
     GCoreApp = GOrbitApp;
-    GTimerManager = new TimerManager();
+    GTimerManager = new ServerTimerManager();
     GTcpServer = new TcpServer();
 
     Path::Init();

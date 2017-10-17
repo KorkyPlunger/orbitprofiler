@@ -3,10 +3,9 @@
 //-----------------------------------
 
 #include "GlUtils.h"
-#include "OrbitCore\Core.h"
+#include "Core.h"
 
 #include "freetype-gl.h"
-#include "OrbitCore\Core.h"
 #include "Log.h"
 
 using namespace std;
