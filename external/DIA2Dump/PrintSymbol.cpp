@@ -17,10 +17,10 @@
 #include <malloc.h>
 #include <map>
 
-#include "../../OrbitCore/Log.h"
+#include "../../OrbitBase/Log.h"
 #include "../../OrbitCore/OrbitType.h"
 #include "../../OrbitCore/Pdb.h"
-#include "../../OrbitCore/PrintVar.h"
+#include "../../OrbitBase/PrintVar.h"
 
 VizLogger    GMainLog;
 OrbitLogger* GLog = &GMainLog;

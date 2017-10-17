@@ -105,9 +105,6 @@
     <ClInclude Include="CoreMath.h">
       <Filter>Inc</Filter>
     </ClInclude>
-    <ClInclude Include="FunctionStats.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
     <ClInclude Include="Hashing.h">
       <Filter>Inc</Filter>
     </ClInclude>
@@ -267,15 +264,8 @@
     <ClInclude Include="Diff.h">
       <Filter>Inc</Filter>
     </ClInclude>
-    <ClInclude Include="CrashHandler.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\external\xxHash-r42\xxhash.c">
-      <Filter>hash</Filter>
-    </ClCompile>
-    <ClCompile Include="..\external\xxHash-r42\xxhsum.c">
-      <Filter>hash</Filter>
-    </ClCompile>
     <ClCompile Include="..\external\multicore\common\inmemorylogger.cpp">
       <Filter>multicore</Filter>
     </ClCompile>
@@ -315,25 +305,16 @@
     <ClCompile Include="Injection.cpp">
       <Filter>Src</Filter>
     </ClCompile>
-    <ClCompile Include="Log.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
     <ClCompile Include="LogInterface.cpp">
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="MemoryTracker.cpp">
       <Filter>Src</Filter>
     </ClCompile>
-    <ClCompile Include="Message.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
     <ClCompile Include="MiniDump.cpp">
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="ModuleManager.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="OrbitAsio.cpp">
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="OrbitDia.cpp">
@@ -357,9 +338,6 @@
     <ClCompile Include="Params.cpp">
       <Filter>Src</Filter>
     </ClCompile>
-    <ClCompile Include="Path.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
     <ClCompile Include="Pdb.cpp">
       <Filter>Src</Filter>
     </ClCompile>
@@ -369,31 +347,13 @@
     <ClCompile Include="SamplingProfiler.cpp">
       <Filter>Src</Filter>
     </ClCompile>
-    <ClCompile Include="ScopeTimer.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
     <ClCompile Include="SymbolUtils.cpp">
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Tcp.cpp">
       <Filter>Src</Filter>
     </ClCompile>
-    <ClCompile Include="TcpEntity.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
     <ClCompile Include="TcpServer.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="TimerManager.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="Utils.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="Variable.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="VariableTracing.cpp">
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Version.cpp">
@@ -429,8 +389,13 @@
     <ClCompile Include="Diff.cpp">
       <Filter>Src</Filter>
     </ClCompile>
-    <ClCompile Include="CrashHandler.cpp" />
     <ClCompile Include="Serialization.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Variable.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="VariableTracing.cpp">
       <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>

@@ -768,6 +768,9 @@
     <ProjectReference Include="..\OrbitAsm\OrbitAsm.vcxproj">
       <Project>{3fe26f37-74ce-4111-8654-50fc00dfbb9e}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\OrbitBase\OrbitBase.vcxproj">
+      <Project>{5f4efd6b-6c58-4d37-aea2-03d0c93cdc14}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\OrbitCore\OrbitCore.vcxproj">
       <Project>{f0d7a3d4-1d29-4053-a29a-32be327c3beb}</Project>
     </ProjectReference>

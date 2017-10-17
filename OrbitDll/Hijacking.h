@@ -3,7 +3,7 @@
 //-----------------------------------
 #pragma once
 
-#include "OrbitType.h"
+#include "FunctionArgs.h"
 #include "Message.h"
 
 namespace Hijacking

@@ -109,7 +109,6 @@
     <ClInclude Include="Context.h" />
     <ClInclude Include="ContextSwitch.h" />
     <ClInclude Include="CoreApp.h" />
-    <ClInclude Include="CrashHandler.h" />
     <ClInclude Include="DiaManager.h" />
     <ClInclude Include="DiaParser.h" />
     <ClInclude Include="Diff.h" />
@@ -146,7 +145,6 @@
     <ClInclude Include="SamplingProfiler.h" />
     <ClInclude Include="ScopeTimer.h" />
     <ClInclude Include="Serialization.h" />
-    <ClInclude Include="FunctionStats.h" />
     <ClInclude Include="SerializationMacros.h" />
     <ClInclude Include="SymbolUtils.h" />
     <ClInclude Include="Tcp.h" />
@@ -172,14 +170,11 @@
     <ClCompile Include="..\external\peparse\buffer.cpp" />
     <ClCompile Include="..\external\peparse\dump.cpp" />
     <ClCompile Include="..\external\peparse\parse.cpp" />
-    <ClCompile Include="..\external\xxHash-r42\xxhash.c" />
-    <ClCompile Include="..\external\xxHash-r42\xxhsum.c" />
     <ClCompile Include="Callstack.cpp" />
     <ClCompile Include="Capture.cpp" />
     <ClCompile Include="ContextSwitch.cpp" />
     <ClCompile Include="Serialization.cpp" />
     <ClCompile Include="CoreApp.cpp" />
-    <ClCompile Include="CrashHandler.cpp" />
     <ClCompile Include="DiaManager.cpp" />
     <ClCompile Include="DiaParser.cpp" />
     <ClCompile Include="Diff.cpp" />
@@ -190,33 +185,25 @@
     <ClCompile Include="Injection.cpp" />
     <ClCompile Include="LogInterface.cpp" />
     <ClCompile Include="MiniDump.cpp" />
-    <ClCompile Include="OrbitAsio.cpp" />
     <ClCompile Include="OrbitDia.cpp" />
     <ClCompile Include="OrbitFunction.cpp" />
-    <ClCompile Include="Log.cpp" />
     <ClCompile Include="MemoryTracker.cpp" />
-    <ClCompile Include="Message.cpp" />
     <ClCompile Include="ModuleManager.cpp" />
     <ClCompile Include="OrbitModule.cpp" />
     <ClCompile Include="OrbitRule.cpp" />
     <ClCompile Include="OrbitUnreal.cpp" />
     <ClCompile Include="Params.cpp" />
-    <ClCompile Include="Path.cpp" />
     <ClCompile Include="Pdb.cpp" />
     <ClCompile Include="OrbitSession.cpp" />
     <ClCompile Include="OrbitProcess.cpp" />
     <ClCompile Include="ProcessUtils.cpp" />
     <ClCompile Include="SamplingProfiler.cpp" />
-    <ClCompile Include="ScopeTimer.cpp" />
     <ClCompile Include="FunctionStats.cpp" />
     <ClCompile Include="SymbolUtils.cpp" />
     <ClCompile Include="Tcp.cpp" />
-    <ClCompile Include="TcpEntity.cpp" />
     <ClCompile Include="TcpServer.cpp" />
     <ClCompile Include="OrbitThread.cpp" />
-    <ClCompile Include="TimerManager.cpp" />
     <ClCompile Include="OrbitType.cpp" />
-    <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Variable.cpp" />
     <ClCompile Include="VariableTracing.cpp" />
     <ClCompile Include="Version.cpp" />
@@ -226,6 +213,11 @@
     <None Include="..\external\gte\GteVector2.inl" />
     <None Include="..\external\gte\GteVector3.inl" />
     <None Include="..\external\gte\GteVector4.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OrbitBase\OrbitBase.vcxproj">
+      <Project>{5f4efd6b-6c58-4d37-aea2-03d0c93cdc14}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

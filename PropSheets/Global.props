@@ -13,7 +13,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_WIN32_WINNT=0x0700;NTDDI_VERSION=0x06030000;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\;..\external\stlsoft-1.9.118\include\;..\external\concurrentqueue\;..\external\asio\include\;..\external\cereal-1.1.2\include\;..\external\multicore\common\;..\external\websocketpp\;$(VCInstallDir)\..\DIA SDK\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..;..\external\stlsoft-1.9.118\include\;..\external\concurrentqueue\;..\external\asio\include\;..\external\cereal-1.1.2\include\;..\external\multicore\common\;..\external\websocketpp\;$(VCInstallDir)\..\DIA SDK\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4100;4245;4244;4481;4201</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../OrbitCore/Log.h"
+#include "../../OrbitBase/Log.h"
 #include <string>
 
 #include <dia2.h>

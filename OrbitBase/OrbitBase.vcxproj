@@ -19,32 +19,32 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{FCD5BAF3-2F7F-4160-ADC2-7798444B030D}</ProjectGuid>
-    <RootNamespace>hookdll</RootNamespace>
-    <ProjectName>OrbitDll</ProjectName>
+    <ProjectGuid>{5F4EFD6B-6C58-4D37-AEA2-03D0C93CDC14}</ProjectGuid>
+    <RootNamespace>Base</RootNamespace>
+    <ProjectName>OrbitBase</ProjectName>
     <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -54,65 +54,60 @@
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="DllCommon.props" />
     <Import Project="..\PropSheets\DebugCommon.props" />
-    <Import Project="..\PropSheets\MinhookWin64Debug.props" />
     <Import Project="..\PropSheets\BreakpadWin64Debug.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="DllCommon.props" />
     <Import Project="..\PropSheets\ReleaseCommon.props" />
-    <Import Project="..\PropSheets\MinhookWin64Release.props" />
+    <Import Project="..\PropSheets\BreakpadWin64Release.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="DllCommon.props" />
     <Import Project="..\PropSheets\DebugCommon.props" />
-    <Import Project="..\PropSheets\MinhookWin32Debug.props" />
+    <Import Project="..\PropSheets\BreakpadWin32Debug.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="DllCommon.props" />
     <Import Project="..\PropSheets\ReleaseCommon.props" />
-    <Import Project="..\PropSheets\MinhookWin32Release.props" />
+    <Import Project="..\PropSheets\BreakpadWin32Release.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <TargetName>Orbit64</TargetName>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <TargetName>Orbit64</TargetName>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <TargetName>Orbit32</TargetName>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <TargetName>Orbit32</TargetName>
-  </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Link />
-  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="BaseTypes.h" />
+    <ClInclude Include="Callstack.h" />
+    <ClInclude Include="CallstackTypes.h" />
+    <ClInclude Include="CrashHandler.h" />
+    <ClInclude Include="FunctionStats.h" />
+    <ClInclude Include="Log.h" />
+    <ClInclude Include="Message.h" />
+    <ClInclude Include="OrbitAsio.h" />
+    <ClInclude Include="OrbitDbgHelp.h" />
+    <ClInclude Include="Path.h" />
+    <ClInclude Include="PrintVar.h" />
+    <ClInclude Include="Profiling.h" />
+    <ClInclude Include="ScopeTimer.h" />
+    <ClInclude Include="SerializationMacros.h" />
+    <ClInclude Include="TcpEntity.h" />
+    <ClInclude Include="TcpForward.h" />
+    <ClInclude Include="Threading.h" />
+    <ClInclude Include="TimerManager.h" />
+    <ClInclude Include="TypeInfoStructs.h" />
+    <ClInclude Include="Utils.h" />
+  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\external\xxHash-r42\xxhash.c" />
-    <ClCompile Include="Hijacking.cpp" />
-    <ClCompile Include="OrbitDll.cpp" />
-    <ClCompile Include="OrbitLib.cpp" />
-    <ClCompile Include="TcpClient.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Hijacking.h" />
-    <ClInclude Include="OrbitDll.h" />
-    <ClInclude Include="OrbitLib.h" />
-    <ClInclude Include="TcpClient.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\OrbitAsm\OrbitAsm.vcxproj">
-      <Project>{3fe26f37-74ce-4111-8654-50fc00dfbb9e}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\OrbitBase\OrbitBase.vcxproj">
-      <Project>{5f4efd6b-6c58-4d37-aea2-03d0c93cdc14}</Project>
-    </ProjectReference>
+    <ClCompile Include="..\external\xxHash-r42\xxhsum.c" />
+    <ClCompile Include="CallstackPOD.cpp" />
+    <ClCompile Include="CrashHandler.cpp" />
+    <ClCompile Include="OrbitAsio.cpp" />
+    <ClCompile Include="Log.cpp" />
+    <ClCompile Include="Message.cpp" />
+    <ClCompile Include="Path.cpp" />
+    <ClCompile Include="ScopeTimer.cpp" />
+    <ClCompile Include="TcpEntity.cpp" />
+    <ClCompile Include="TimerManager.cpp" />
+    <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

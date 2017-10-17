@@ -3,8 +3,7 @@
 //-----------------------------------
 
 #include "OrbitAsio.h"
-#include "Tcp.h"
-#include "VariableTracing.h"
+#include "PrintVar.h"
 
 //-----------------------------------------------------------------------------
 TcpService::TcpService()
@@ -23,5 +22,3 @@ TcpSocket::~TcpSocket()
 {
     PRINT_FUNC;
 }
-
-

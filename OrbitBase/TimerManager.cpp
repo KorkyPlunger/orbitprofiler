@@ -6,7 +6,7 @@
 #include "Threading.h"
 #include "Message.h"
 #include "TcpForward.h"
-#include "Params.h"
+//#include "Params.h"
 
 #include <direct.h>
 

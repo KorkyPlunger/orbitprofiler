@@ -1,7 +1,7 @@
 #include <dia2.h>
 
 #include "../../OrbitCore/Pdb.h"
-#include "../../OrbitCore/PrintVar.h"
+#include "../../OrbitBase/PrintVar.h"
 
 //#include <stdio.h>
 //#include <tchar.h>

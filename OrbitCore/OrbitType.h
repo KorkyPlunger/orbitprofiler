@@ -15,6 +15,7 @@
 #include "FunctionStats.h"
 #include "SerializationMacros.h"
 #include "OrbitFunction.h"
+#include "TypeInfoStructs.h"
 
 //-----------------------------------------------------------------------------
 struct Parent

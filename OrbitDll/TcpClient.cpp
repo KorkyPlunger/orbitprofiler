@@ -2,14 +2,13 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Tcp.h"
 #include "TcpClient.h"
 #include "OrbitLib.h"
 #include "Hijacking.h"
 
-#include "OrbitType.h"
 #include "Log.h"
 #include "PrintVar.h"
+#include "OrbitAsio.h"
 
 #include <thread>
 

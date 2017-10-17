@@ -7,7 +7,6 @@
 #include "ScopeTimer.h"
 #include "ClientTimerManager.h"
 #include "Hijacking.h"
-#include "CallStack.h"
 #include "CrashHandler.h"
 #include "PrintVar.h"
 
