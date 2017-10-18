@@ -15,6 +15,8 @@
 #include "App.h"
 #include "../OrbitPlugin/OrbitSDK.h"
 
+#include <imgui_internal.h>
+
 using namespace std;
 
 //-----------------------------------------------------------------------------

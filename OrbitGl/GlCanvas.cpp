@@ -18,7 +18,7 @@
 
 #include "VariableTracing.h"
 #include "ServerTimerManager.h"
-#include "../external/imgui/imgui.h"
+#include <imgui.h>
 #include "Card.h"
 #include <vector>
 #include <string>

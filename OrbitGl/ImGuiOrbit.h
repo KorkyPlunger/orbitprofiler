@@ -9,8 +9,8 @@
 // If you are new to ImGui, see examples/README.txt and documentation at the top of imgui.cpp.
 // https://github.com/ocornut/imgui
 
-#include "imgui.h"
-#include "imgui_internal.h"
+#include <imgui.h>
+//#include "imgui_internal.h"
 #include "OrbitType.h"
 #include "ProcessUtils.h"
 #include <string>
@@ -41,13 +41,13 @@ extern ImFont* GOrbitImguiFont;
 
 struct ScopeImguiContext
 {
-    ScopeImguiContext( ImGuiContext & a_State ) : m_ImGuiContext( nullptr )
+    ScopeImguiContext( ImGuiContext* a_State ) : m_ImGuiContext( nullptr )
     {
-        ImGuiContext* state = (ImGuiContext*)ImGui::GetCurrentContext();
-        if( state != &a_State )
+        ImGuiContext* state = ImGui::GetCurrentContext();
+        if( state != a_State )
         {
             m_ImGuiContext = state;
-            ImGui::SetCurrentContext( &a_State );
+            ImGui::SetCurrentContext( a_State );
         }
     }
     ~ScopeImguiContext()

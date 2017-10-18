@@ -11,7 +11,7 @@ class TcpService
 public:
     TcpService();
     ~TcpService();
-    asio::io_context* m_IoService;
+    asio::io_service* m_IoService;
 };
 
 //-----------------------------------------------------------------------------

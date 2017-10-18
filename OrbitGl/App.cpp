@@ -49,6 +49,8 @@
 #include <cmath>
 #include <fstream>
 
+#include <GL/freeglut.h>
+
 using namespace std;
 
 class OrbitApp* GOrbitApp;
@@ -393,7 +395,7 @@ void OrbitApp::CallHome()
 void OrbitApp::CallHomeThread()
 {
     asio::ip::tcp::iostream stream;
-    stream.expires_from_now( chrono::seconds( 60 ) );
+    stream.expires_from_now( boost::posix_time::seconds( 60 ) );
 
     const bool isLocal = false;
 

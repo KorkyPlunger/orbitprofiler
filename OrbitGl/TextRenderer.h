@@ -3,8 +3,8 @@
 //-----------------------------------
 #pragma once
 
-#include "freetype-gl.h"
-#include "mat4.h"
+#include <freetype-gl.h>
+#include <mat4.h>
 #include "TextBox.h"
 
 namespace ftgl
