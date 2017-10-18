@@ -27,10 +27,13 @@ public:
     Process();
     Process( DWORD a_ID );
     ~Process();
-    
+
+    typedef std::map< DWORD64, std::shared_ptr<Module> > ModuleMap_t;
+    typedef std::map< std::wstring, std::shared_ptr<Module> > ModuleMapByName_t;
+
     void Init();
     void LoadDebugInfo();
-    void ListModules();
+    ModuleMap_t ListModules();
     void EnumerateThreads();
     void UpdateCpuTime();
     void UpdateThreadUsage();
@@ -46,8 +49,8 @@ public:
     static bool IsElevated( HANDLE a_Process );
     static bool SetPrivilege( LPCTSTR a_Name, bool a_Enable );
 
-    std::map< DWORD64, std::shared_ptr<Module> >& GetModules() { return m_Modules; }
-    std::map< std::wstring, std::shared_ptr<Module> >& GetNameToModulesMap() { return m_NameToModuleMap; }
+    ModuleMap_t& GetModules() { return m_Modules; }
+    ModuleMapByName_t& GetNameToModulesMap() { return m_NameToModuleMap; }
     std::shared_ptr<Module> FindModule( const std::wstring & a_ModuleName );
 
     const std::wstring & GetName() const { return m_Name; }
@@ -110,8 +113,8 @@ private:
     bool        m_IsRemote;
     Mutex       m_DataMutex;
 
-    std::map< DWORD64, std::shared_ptr<Module> > m_Modules;
-    std::map< std::wstring, std::shared_ptr<Module> > m_NameToModuleMap;
+    ModuleMap_t m_Modules;
+    ModuleMapByName_t m_NameToModuleMap;
     std::vector<std::shared_ptr<Thread> >   m_Threads;
     std::unordered_set<DWORD>               m_ThreadIds;
 

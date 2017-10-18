@@ -146,7 +146,7 @@ void ModuleManager::OnPdbLoaded()
 //-----------------------------------------------------------------------------
 void ModuleManager::AddPdb( const shared_ptr<Pdb> & a_Pdb )
 { 
-    map< DWORD64, shared_ptr<Module> >& modules = Capture::GTargetProcess->GetModules();
+    Process::ModuleMap_t& modules = Capture::GTargetProcess->GetModules();
 
     auto it = modules.find( (DWORD64)a_Pdb->GetHModule() );
     if( it != modules.end() )

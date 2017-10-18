@@ -154,7 +154,7 @@ void ModulesDataView::OnContextMenu( int a_MenuIndex, vector<int> & a_ItemIndice
 
             if( module->m_FoundPdb || module->IsDll() )
             {
-                map< DWORD64, shared_ptr<Module>  >& processModules = m_Process->GetModules();
+                Process::ModuleMap_t& processModules = m_Process->GetModules();
                 auto it = processModules.find( module->m_AddressStart );
                 if( it != processModules.end() )
                 {

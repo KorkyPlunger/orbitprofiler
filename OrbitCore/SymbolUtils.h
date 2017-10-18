@@ -13,7 +13,8 @@
 //-----------------------------------------------------------------------------
 struct SymUtils
 {
-    static void ListModules( HANDLE a_ProcessHandle, std::map< DWORD64, std::shared_ptr< Module > > & o_ModuleMap );
+    typedef std::map< DWORD64, std::shared_ptr<Module> > ModuleMap_t;
+    static ModuleMap_t ListModules( HANDLE a_ProcessHandle);
     static bool GetLineInfo( DWORD64 a_Address, LineInfo & o_LineInfo );
 };
 

@@ -5,7 +5,6 @@
 #include "Injection.h"
 #include "TcpForward.h"
 #include "SamplingProfiler.h"
-#include "Capture.h"
 #include "ProcessUtils.h"
 #include "ScopeTimer.h"
 #include "Log.h"
@@ -61,7 +60,7 @@ void* Injection::RemoteWrite( const char* a_Data, int a_NumBytes )
 }
 
 //-----------------------------------------------------------------------------
-bool Injection::Inject( const wstring & a_DllName, const Process & a_Process, const string & ProcName )
+bool Injection::Inject( const wstring & a_DllName, const Process & a_Process, const string & ProcName, const std::wstring& captureHost, int capturePort)
 {
     SCOPE_TIMER_LOG( Format( L"Injecting in %s", a_Process.GetName().c_str() ) );
 
@@ -116,8 +115,8 @@ bool Injection::Inject( const wstring & a_DllName, const Process & a_Process, co
     }
 
     // Remote write the host and port number
-    string hostString = ws2s( Capture::GCaptureHost + L":" + to_wstring( Capture::GCapturePort ) );
-    ORBIT_LOG( Format( "Capture port: %i", Capture::GCapturePort ) );
+    string hostString = ws2s(captureHost + L":" + to_wstring( capturePort ) );
+    ORBIT_LOG( Format( "Capture port: %i", capturePort ) );
     void* hostStringAddress = RemoteWrite( hostString );
     PRINT_VAR( hostString );
     if( hostStringAddress == nullptr )
@@ -126,7 +125,6 @@ bool Injection::Inject( const wstring & a_DllName, const Process & a_Process, co
     }
 
     PVOID procAdd = GetRemoteProcAddress(m_InjectedProcessHandle, remoteModuleHandle, ProcName.c_str());
-    
     if( procAdd == NULL )
     {
         PRINT_VAR("Could not find function in injected dll.");

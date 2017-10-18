@@ -93,12 +93,12 @@ void Process::SetID( DWORD a_ID )
 }
 
 //-----------------------------------------------------------------------------
-void Process::ListModules()
+Process::ModuleMap_t Process::ListModules()
 {
     SCOPE_TIMER_LOG( L"ListModules" );
 
     ClearTransients();
-    SymUtils::ListModules( m_Handle, m_Modules );
+    m_Modules = SymUtils::ListModules(m_Handle);
 
     for( auto & pair : m_Modules )
     {
@@ -107,6 +107,7 @@ void Process::ListModules()
         m_NameToModuleMap[name] = module;
         module->LoadDebugInfo();
     }
+    return m_Modules;
 }
 
 //-----------------------------------------------------------------------------

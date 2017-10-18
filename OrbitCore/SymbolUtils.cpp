@@ -16,7 +16,7 @@
 
 using namespace std;
 //-----------------------------------------------------------------------------
-void SymUtils::ListModules( HANDLE a_ProcessHandle, map< DWORD64, shared_ptr<Module> > & o_ModuleMap )
+SymUtils::ModuleMap_t SymUtils::ListModules( HANDLE a_ProcessHandle)
 {
     SCOPE_TIMER_LOG( L"SymUtils::ListModules" );
 
@@ -25,7 +25,7 @@ void SymUtils::ListModules( HANDLE a_ProcessHandle, map< DWORD64, shared_ptr<Mod
     TCHAR ModuleNameBuffer[MAX_PATH] = { 0 };
     TCHAR ModuleFullNameBuffer[MAX_PATH] = { 0 };
     HMODULE ModuleArray[1024];
-    o_ModuleMap.clear();
+    ModuleMap_t o_ModuleMap;
 
     /* Get handles to all the modules in the target process */
     SetLastError(NO_ERROR);
@@ -33,14 +33,14 @@ void SymUtils::ListModules( HANDLE a_ProcessHandle, map< DWORD64, shared_ptr<Mod
     {
         string EnumProcessModulesExError = GetLastErrorAsString();
         PRINT_VAR(EnumProcessModulesExError);
-        return;
+        return o_ModuleMap;
     }
 
     NumModules /= sizeof(HMODULE);
     if (NumModules > ModuleArraySize)
     {
         PRINT_VAR("NumModules > ModuleArraySize");
-        return;
+        return o_ModuleMap;
     }
 
     for (DWORD i = 0; i <= NumModules; ++i)
@@ -88,6 +88,7 @@ void SymUtils::ListModules( HANDLE a_ProcessHandle, map< DWORD64, shared_ptr<Mod
             o_ModuleMap[module->m_AddressStart] = module;
         }
     }
+    return o_ModuleMap;
 }
 
 //-----------------------------------------------------------------------------

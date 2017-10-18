@@ -86,7 +86,7 @@ bool Capture::Inject( bool a_WaitForConnection )
 
     GTcpServer->Disconnect();
 
-    GInjected = inject.Inject( dllName.c_str(), *GTargetProcess, "OrbitInit" );
+    GInjected = inject.Inject( dllName.c_str(), *GTargetProcess, "OrbitInit", GCaptureHost, GCapturePort );
     if( GInjected )
     {
         ORBIT_LOG( Format( "Injected in %s", GTargetProcess->GetName().c_str() ) );
@@ -99,7 +99,7 @@ bool Capture::Inject( bool a_WaitForConnection )
         int numTries = 50;
         while( !GTcpServer->HasConnection() && numTries-- > 0 )
         {
-            ORBIT_LOG( Format( "Waiting for connection on port %i", Capture::GCapturePort ) );
+            ORBIT_LOG( Format( "Waiting for connection on port %i", GCapturePort ) );
             Sleep(100);
         }
 
@@ -116,7 +116,7 @@ bool Capture::InjectRemote()
     wstring dllName = Path::GetDllPath( GTargetProcess->GetIs64Bit() );
     GTcpServer->Disconnect();
 
-    GInjected = inject.Inject( dllName.c_str(), *GTargetProcess, "OrbitInitRemote" );
+    GInjected = inject.Inject( dllName.c_str(), *GTargetProcess, "OrbitInitRemote", GCaptureHost, GCapturePort );
     
     if( GInjected )
     {
