@@ -1,6 +1,13 @@
-get_filename_component(EXTERN_ROOT ${CMAKE_SOURCE_DIR}/external REALPATH)
-
 add_library(OrbitCore STATIC
+
+    ../external/DIA2Dump/dia2dump.cpp
+    ../external/DIA2Dump/PrintSymbol.cpp
+    ../external/DIA2Dump/regs.cpp
+    ../external/multicore/common/inmemorylogger.cpp
+    ../external/peparse/buffer.cpp
+    ../external/peparse/dump.cpp
+    ../external/peparse/parse.cpp
+
     Callstack.cpp
     Capture.cpp
     ContextSwitch.cpp
@@ -50,4 +57,9 @@ PRIVATE
 
 target_link_libraries(OrbitCore
     OrbitBase
+	dbghelp.lib
+	debug
+		${BREAKPAD_LIBS_DEBUG}
+	optimized
+		${BREAKPAD_LIBS_RELEASE}
 )

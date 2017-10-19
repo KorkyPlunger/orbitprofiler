@@ -13,3 +13,5 @@ OrbitQt/release/
 
 OrbitGl/OrbitGl.log
 OrbitCore/OrbitCore.log
+
+build/

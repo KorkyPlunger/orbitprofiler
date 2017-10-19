@@ -8,7 +8,7 @@
 #include "PrintVar.h"
 #include "Path.h"
 
-#include "../external/breakpad/src/client/windows/handler/exception_handler.h"
+#include "client/windows/handler/exception_handler.h"
 
 #include <fstream>
 

@@ -10,7 +10,7 @@
 #include <evntrace.h>
 #include <Guiddef.h>
 
-#include "external/xxHash-r42/xxhash.h"
+#include <xxhash.h> // xxHash-r42
 
 DEFINE_GUID( /* 45d8cccd-539f-4b72-a8b7-5c683142609a */
     ALPCGuid,

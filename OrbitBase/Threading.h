@@ -11,7 +11,7 @@
 #include "ScopeTimer.h"
 
 #define OQPI_USE_DEFAULT
-#include "../external/oqpi/include/oqpi.hpp"
+#include <oqpi.hpp>
 
 typedef std::recursive_mutex                    Mutex;
 typedef std::lock_guard<std::recursive_mutex>   ScopeLock;

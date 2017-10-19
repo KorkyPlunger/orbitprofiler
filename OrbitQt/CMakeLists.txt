@@ -1,32 +1,14 @@
-#find_package(Qt REQUIRED)
-#find_package(Qt5Widgets REQUIRED)
-
-#set(CMAKE_AUTOMOC ON)
-#set(CMAKE_AUTOUIC ON)
-#set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
 set(QTDIR "C:/Qt/5.8/msvc2015_64")
-include_directories(
-	${QTDIR}/include
-	${QTDIR}/include
-	${QTDIR}/include/QtWidgets
-	${QTDIR}/include/QtGui
-	${QTDIR}/include/QtANGLE
-	${QTDIR}/include/QtCore
-	${QTDIR}/mkspecs/win32-msvc2015
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${QTDIR}")
+
+find_package(Qt5 CONFIG REQUIRED 
+	HINTS "${QTDIR}" 
+	COMPONENTS Widgets Core
 )
-#licensedialog.ui
-#orbitdataviewpanel.ui
-#orbitdiffdialog.ui
-#orbitdisassemblydialog.ui
-#orbitglwidgetwithheader.ui
-#orbitmainwindow.ui
-#orbitsamplingreport.ui
-#orbitvisualizer.ui
-#orbitwatchwidget.ui
-#outputdialog.ui
-#processlauncherwidget.ui
-#showincludesdialog.ui
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 add_executable(OrbitQt
     licensedialog.cpp
@@ -48,7 +30,26 @@ add_executable(OrbitQt
     outputdialog.cpp
     processlauncherwidget.cpp
     showincludesdialog.cpp
+
+    qtpropertybrowser/qtbuttonpropertybrowser.cpp
+    qtpropertybrowser/qteditorfactory.cpp
+    qtpropertybrowser/qtgroupboxpropertybrowser.cpp
+    qtpropertybrowser/qtpropertybrowser.cpp
+    qtpropertybrowser/qtpropertybrowserutils.cpp
+    qtpropertybrowser/qtpropertymanager.cpp
+    qtpropertybrowser/qttreepropertybrowser.cpp
+    qtpropertybrowser/qtvariantproperty.cpp
 )
 
-#target_link_libraries (OrbitQt Qt5::Widgets)
-target_link_libraries(OrbitQt OrbitGl OrbitCore OrbitBase)
+if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+	set_target_properties(OrbitQt PROPERTIES COMPILE_FLAGS /wd4127)
+endif()
+
+target_link_libraries (OrbitQt
+	OrbitGl
+	OrbitCore
+	OrbitBase
+	Qt5::Widgets
+	Qt5::Core
+	${CURL_LIBRARIES}
+)

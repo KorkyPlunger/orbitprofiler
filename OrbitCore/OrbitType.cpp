@@ -9,7 +9,7 @@
 #include "Log.h"
 #include "Capture.h"
 
-#include "external/xxHash-r42/xxhash.h"
+#include <xxhash.h> // xxHash-r42
 
 #include "SamplingProfiler.h"
 #include "SymbolUtils.h"

@@ -14,7 +14,7 @@
 #include <wchar.h>
 #include <sstream>
 
-#include <external/xxHash-r42/xxhash.h>
+#include <xxhash.h> // xxHash-r42
 
 //-----------------------------------------------------------------------------
 inline std::string ws2s( const std::wstring& wstr )

@@ -52,11 +52,30 @@ include(CheckStructHasMember)
 #message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
 #message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
 
+get_filename_component(EXTERN_ROOT ${CMAKE_SOURCE_DIR}/external REALPATH)
+
+set(BREAKPAD_ROOT ${EXTERN_ROOT}/breakpad)
+set(BREAKPAD_LIBROOT_RELEASE ${BREAKPAD_ROOT}/src/client/windows/${CMAKE_VS_PLATFORM_NAME}/Release/lib)
+set(BREAKPAD_LIBROOT_DEBUG ${BREAKPAD_ROOT}/src/client/windows/${CMAKE_VS_PLATFORM_NAME}/Debug/lib)
+
+FUNCTION(PREPEND var prefix)
+   SET(listVar "")
+   FOREACH(f ${ARGN})
+      LIST(APPEND listVar "${prefix}/${f}")
+   ENDFOREACH(f)
+   SET(${var} "${listVar}" PARENT_SCOPE)
+ENDFUNCTION(PREPEND)
+
+PREPEND(BREAKPAD_LIBS_RELEASE ${BREAKPAD_LIBROOT_RELEASE} "crash_generation_client.lib;common.lib;exception_handler.lib;processor_bits.lib")
+PREPEND(BREAKPAD_LIBS_DEBUG ${BREAKPAD_LIBROOT_DEBUG} "crash_generation_client.lib;common.lib;exception_handler.lib;processor_bits.lib")
+
+
 #pkg_check_modules(FREETYPE freetype2 REQUIRED)
 find_package(freetype REQUIRED)
 PrintVars(FREETYPE)
 
 find_path(FREEGLUT_INCLUDE_DIR GL/freeglut.h)
+find_library(FREEGLUT_LIB freeglut.lib)
 PrintVars(FREEGLUT)
 
 #pkg_check_modules(GLEW glew REQUIRED)
@@ -65,6 +84,7 @@ PrintVars(GLEW)
 
 #find_package(imgui REQUIRED)
 find_path(IMGUI_INCLUDE_DIR imgui.h) 
+find_library(IMGUI_LIB imgui.lib)
 PrintVars(IMGUI)
 
 #pkg_check_modules(ASIO asio REQUIRED)

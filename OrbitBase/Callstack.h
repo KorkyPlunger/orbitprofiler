@@ -9,7 +9,7 @@
 #include "CallstackTypes.h"
 #include "SerializationMacros.h"
 
-#include "external/xxHash-r42/xxhash.h"
+#include <xxhash.h> // xxHash-r42
 
 #include <vector>
 

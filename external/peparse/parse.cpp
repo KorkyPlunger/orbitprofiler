@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "to_string.h"
 #include <string>
 
-#include "../../OrbitCore/Log.h"
+#include "../../OrbitBase/Log.h"
 #include "../../OrbitCore/Params.h"
 #include "../../OrbitCore/Pdb.h"
 
@@ -1212,7 +1212,7 @@ parsed_pe *ParsePEFromFile(const char *filePath) {
       //boost::to_upper(modName);
 
       //then, try and get all of the sub-symbols
-      VA lookupVA;
+      VA lookupVA = 0;
       if(curEnt.LookupTableRVA != 0) { 
         if (p->peHeader.nt.OptionalMagic == NT_OPTIONAL_32_MAGIC) {
           lookupVA = curEnt.LookupTableRVA + p->peHeader.nt.OptionalHeader.ImageBase;

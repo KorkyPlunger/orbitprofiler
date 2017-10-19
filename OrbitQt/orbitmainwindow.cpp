@@ -326,7 +326,7 @@ void OrbitMainWindow::OnReceiveMessage( const wstring & a_Message )
         pixMap.save( &file, "PNG" );
 
         wstring fileName = file.fileName().toStdWString();
-        ShellExecute(0, 0, ws2s(fileName).c_str(), 0, 0 , SW_SHOW );
+        ShellExecute(0, 0, fileName.c_str(), 0, 0 , SW_SHOW );
     }
     else if( StartsWith( a_Message, L"code" ) )
     {

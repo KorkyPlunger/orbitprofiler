@@ -1,5 +1,3 @@
-get_filename_component(EXTERN_ROOT ${CMAKE_SOURCE_DIR}/external REALPATH)
-
 add_library(OrbitGl STATIC
     App.cpp
     Batcher.cpp
@@ -53,4 +51,16 @@ PRIVATE
 target_link_libraries(OrbitGl
     OrbitCore
     OrbitBase
+
+    ${FREEGLUT_LIB}
+    ${FREETYPE_LIBRARIES}
+    ${IMGUI_LIB}
+    ${GLEW_LIBRARIES}
+
+    debug
+        ${EXTERN_ROOT}/freetype-gl/x64/Debug/freetype-gl.lib
+        ${EXTERN_ROOT}/capstone/msvc/x64/Debug/capstone.lib
+    optimized
+        ${EXTERN_ROOT}/freetype-gl/x64/Release/freetype-gl.lib
+        ${EXTERN_ROOT}/capstone/msvc/x64/Release/capstone.lib
 )
