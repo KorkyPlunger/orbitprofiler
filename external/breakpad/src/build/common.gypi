@@ -251,8 +251,10 @@
       'win_release_Optimization%': '2', # 2 = /Os
       'win_debug_Optimization%': '0',   # 0 = /Od
       # See http://msdn.microsoft.com/en-us/library/aa652367(VS.71).aspx
-      'win_release_RuntimeLibrary%': '0', # 0 = /MT (nondebug static)
-      'win_debug_RuntimeLibrary%': '1',   # 1 = /MTd (debug static)
+      #'win_release_RuntimeLibrary%': '0', # 0 = /MT (nondebug static)
+      #'win_debug_RuntimeLibrary%': '1',   # 1 = /MTd (debug static)
+      'win_release_RuntimeLibrary%': '2', # 0 = /MD (nondebug)
+      'win_debug_RuntimeLibrary%': '3',   # 1 = /MDd (debug)
 
       'release_extra_cflags%': '',
       'debug_extra_cflags%': '',
@@ -319,16 +321,16 @@
       }],
       [ 'OS=="win"', {
         'defines': [
-          '_CRT_SECURE_NO_DEPRECATE',
-          '_CRT_NONSTDC_NO_WARNINGS',
-          '_CRT_NONSTDC_NO_DEPRECATE',
+          #'_CRT_SECURE_NO_DEPRECATE',
+          #'_CRT_NONSTDC_NO_WARNINGS',
+          #'_CRT_NONSTDC_NO_DEPRECATE',
           # This is required for ATL to use XP-safe versions of its functions.
           '_USING_V110_SDK71_',
         ],
         'msvs_disabled_warnings': [4800],
         'msvs_settings': {
           'VCCLCompilerTool': {
-            'WarnAsError': 'true',
+            'WarnAsError': 'false',
             'Detect64BitPortabilityProblems': 'false',
           },
         },
@@ -354,7 +356,7 @@
       'Common_Base': {
         'abstract': 1,
         'msvs_configuration_attributes': {
-          'OutputDirectory': '$(SolutionDir)$(ConfigurationName)',
+          'OutputDirectory': '$(SolutionDir)$(Platform)\\$(Configuration)',
           'IntermediateDirectory': '$(OutDir)\\obj\\$(ProjectName)',
           'CharacterSet': '1',
         },
@@ -892,7 +894,7 @@
           '<(DEPTH)/third_party/platformsdk_win7/files/Include',
           '$(VSInstallDir)/VC/atlmfc/include',
         ],
-        'msvs_cygwin_dirs': ['<(DEPTH)/third_party/cygwin'],
+        #'msvs_cygwin_dirs': ['<(DEPTH)/third_party/cygwin'],
         'msvs_disabled_warnings': [
           4100, 4127, 4396, 4503, 4512, 4819, 4995, 4702
         ],
@@ -904,7 +906,7 @@
             'EnableFunctionLevelLinking': 'true',
             'RuntimeTypeInfo': 'false',
             'WarningLevel': '4',
-            'WarnAsError': 'true',
+            'WarnAsError': 'false',
             'DebugInformationFormat': '3',
             'conditions': [
               [ 'msvs_multi_core_compile', {

@@ -1,5 +1,5 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
+# Visual Studio 2017
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(crash_generation)", ".", "{71054F76-E083-ED71-B3F9-3E9B872F3E9E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "common", "..\common.vcxproj", "{4ED48541-4F88-BEA7-7F51-2F7D869EF242}"

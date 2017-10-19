@@ -1,5 +1,5 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
+# Visual Studio 2017
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(crash_generation)", "crash_generation", "{71054F76-E083-ED71-B3F9-3E9B872F3E9E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(handler)", "handler", "{07BF0989-2B77-D3C5-75FC-813F97B41E10}"

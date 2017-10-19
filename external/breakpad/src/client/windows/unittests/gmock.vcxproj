@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -32,25 +32,26 @@
     <RootNamespace>gmock</RootNamespace>
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props"/>
   <PropertyGroup Label="Configuration">
     <CharacterSet>Unicode</CharacterSet>
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
   <PropertyGroup Label="Locals">
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
-  <ImportGroup Label="ExtensionSettings" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props"/>
+  <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props"/>
+  <ImportGroup Label="ExtensionSettings"/>
   <ImportGroup Label="PropertySheets">
-    <Import Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" />
+    <Import Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props"/>
   </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Label="UserMacros"/>
   <PropertyGroup>
-    <ExecutablePath>$(ExecutablePath);$(MSBuildProjectDirectory)\..\..\..\third_party\cygwin\bin\;$(MSBuildProjectDirectory)\..\..\..\third_party\python_26\</ExecutablePath>
-    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <ExecutablePath>$(ExecutablePath);$(MSBuildProjectDirectory)\.\bin\;$(MSBuildProjectDirectory)\.\bin\</ExecutablePath>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(OutDir)obj\$(ProjectName)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Purify|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Purify|x64'">false</LinkIncremental>
@@ -74,8 +75,8 @@
       <MinimalRebuild>false</MinimalRebuild>
       <Optimization>Disabled</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_DEBUG;_WIN32_WINNT=0x0600;WINVER=0x0600;WIN32;_WINDOWS;_HAS_EXCEPTIONS=0;NOMINMAX;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_SECURE_ATL;_VARIADIC_MAX=10;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_USING_V110_SDK71_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PreprocessorDefinitions>_DEBUG;_WIN32_WINNT=0x0600;WINVER=0x0600;WIN32;_WINDOWS;_HAS_EXCEPTIONS=0;NOMINMAX;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_SECURE_ATL;_VARIADIC_MAX=10;_USING_V110_SDK71_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <TreatWarningAsError>false</TreatWarningAsError>
       <WarningLevel>Level4</WarningLevel>
@@ -111,7 +112,7 @@
     <ResourceCompile>
       <AdditionalIncludeDirectories>../../..;..\..\..\testing\include;..\..\..\testing\googletest\include;..\..\..\testing\googletest;..\..\..\testing\googlemock\include;..\..\..\testing\googlemock;..\..\..\testing;..\..\..\third_party\platformsdk_win7\files\Include;$(VSInstallDir)\VC\atlmfc\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
-      <PreprocessorDefinitions>_DEBUG;_WIN32_WINNT=0x0600;WINVER=0x0600;WIN32;_WINDOWS;_HAS_EXCEPTIONS=0;NOMINMAX;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_SECURE_ATL;_VARIADIC_MAX=10;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_USING_V110_SDK71_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_WIN32_WINNT=0x0600;WINVER=0x0600;WIN32;_WINDOWS;_HAS_EXCEPTIONS=0;NOMINMAX;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_SECURE_ATL;_VARIADIC_MAX=10;_USING_V110_SDK71_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -127,8 +128,8 @@
       <MinimalRebuild>false</MinimalRebuild>
       <Optimization>Disabled</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_DEBUG;_WIN32_WINNT=0x0600;WINVER=0x0600;WIN32;_WINDOWS;_HAS_EXCEPTIONS=0;NOMINMAX;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_SECURE_ATL;_VARIADIC_MAX=10;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_USING_V110_SDK71_;NO_TCMALLOC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PreprocessorDefinitions>_DEBUG;_WIN32_WINNT=0x0600;WINVER=0x0600;WIN32;_WINDOWS;_HAS_EXCEPTIONS=0;NOMINMAX;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_SECURE_ATL;_VARIADIC_MAX=10;_USING_V110_SDK71_;NO_TCMALLOC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <TreatWarningAsError>false</TreatWarningAsError>
       <WarningLevel>Level4</WarningLevel>
@@ -163,7 +164,7 @@
     <ResourceCompile>
       <AdditionalIncludeDirectories>../../..;..\..\..\testing\include;..\..\..\testing\googletest\include;..\..\..\testing\googletest;..\..\..\testing\googlemock\include;..\..\..\testing\googlemock;..\..\..\testing;..\..\..\third_party\platformsdk_win7\files\Include;$(VSInstallDir)\VC\atlmfc\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
-      <PreprocessorDefinitions>_DEBUG;_WIN32_WINNT=0x0600;WINVER=0x0600;WIN32;_WINDOWS;_HAS_EXCEPTIONS=0;NOMINMAX;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_SECURE_ATL;_VARIADIC_MAX=10;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_USING_V110_SDK71_;NO_TCMALLOC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_WIN32_WINNT=0x0600;WINVER=0x0600;WIN32;_WINDOWS;_HAS_EXCEPTIONS=0;NOMINMAX;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_SECURE_ATL;_VARIADIC_MAX=10;_USING_V110_SDK71_;NO_TCMALLOC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Purify|Win32'">
@@ -172,14 +173,14 @@
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>4100;4127;4396;4503;4512;4819;4995;4702;4800;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4100;4127;4396;4503;4512;4819;4995;4702;4800;4275;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ExceptionHandling>false</ExceptionHandling>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <MinimalRebuild>false</MinimalRebuild>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_WIN32_WINNT=0x0600;WINVER=0x0600;WIN32;_WINDOWS;_HAS_EXCEPTIONS=0;NOMINMAX;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_SECURE_ATL;_VARIADIC_MAX=10;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_USING_V110_SDK71_;NDEBUG;NVALGRIND;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PreprocessorDefinitions>_WIN32_WINNT=0x0600;WINVER=0x0600;WIN32;_WINDOWS;_HAS_EXCEPTIONS=0;NOMINMAX;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_SECURE_ATL;_VARIADIC_MAX=10;_USING_V110_SDK71_;NDEBUG;NVALGRIND;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <TreatWarningAsError>false</TreatWarningAsError>
       <WarningLevel>Level4</WarningLevel>
@@ -215,7 +216,7 @@
     <ResourceCompile>
       <AdditionalIncludeDirectories>../../..;..\..\..\testing\include;..\..\..\testing\googletest\include;..\..\..\testing\googletest;..\..\..\testing\googlemock\include;..\..\..\testing\googlemock;..\..\..\testing;..\..\..\third_party\platformsdk_win7\files\Include;$(VSInstallDir)\VC\atlmfc\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
-      <PreprocessorDefinitions>_WIN32_WINNT=0x0600;WINVER=0x0600;WIN32;_WINDOWS;_HAS_EXCEPTIONS=0;NOMINMAX;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_SECURE_ATL;_VARIADIC_MAX=10;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_USING_V110_SDK71_;NDEBUG;NVALGRIND;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WIN32_WINNT=0x0600;WINVER=0x0600;WIN32;_WINDOWS;_HAS_EXCEPTIONS=0;NOMINMAX;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_SECURE_ATL;_VARIADIC_MAX=10;_USING_V110_SDK71_;NDEBUG;NVALGRIND;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Purify|x64'">
@@ -224,13 +225,13 @@
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>4100;4127;4396;4503;4512;4819;4995;4702;4800;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4100;4127;4396;4503;4512;4819;4995;4702;4800;4275;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ExceptionHandling>false</ExceptionHandling>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <MinimalRebuild>false</MinimalRebuild>
       <Optimization>Disabled</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_WIN32_WINNT=0x0600;WINVER=0x0600;WIN32;_WINDOWS;_HAS_EXCEPTIONS=0;NOMINMAX;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_SECURE_ATL;_VARIADIC_MAX=10;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_USING_V110_SDK71_;NO_TCMALLOC;NDEBUG;NVALGRIND;PURIFY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WIN32_WINNT=0x0600;WINVER=0x0600;WIN32;_WINDOWS;_HAS_EXCEPTIONS=0;NOMINMAX;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_SECURE_ATL;_VARIADIC_MAX=10;_USING_V110_SDK71_;NO_TCMALLOC;NDEBUG;NVALGRIND;PURIFY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <TreatWarningAsError>false</TreatWarningAsError>
@@ -267,7 +268,7 @@
     <ResourceCompile>
       <AdditionalIncludeDirectories>../../..;..\..\..\testing\include;..\..\..\testing\googletest\include;..\..\..\testing\googletest;..\..\..\testing\googlemock\include;..\..\..\testing\googlemock;..\..\..\testing;..\..\..\third_party\platformsdk_win7\files\Include;$(VSInstallDir)\VC\atlmfc\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
-      <PreprocessorDefinitions>_WIN32_WINNT=0x0600;WINVER=0x0600;WIN32;_WINDOWS;_HAS_EXCEPTIONS=0;NOMINMAX;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_SECURE_ATL;_VARIADIC_MAX=10;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_USING_V110_SDK71_;NO_TCMALLOC;NDEBUG;NVALGRIND;PURIFY;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WIN32_WINNT=0x0600;WINVER=0x0600;WIN32;_WINDOWS;_HAS_EXCEPTIONS=0;NOMINMAX;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_SECURE_ATL;_VARIADIC_MAX=10;_USING_V110_SDK71_;NO_TCMALLOC;NDEBUG;NVALGRIND;PURIFY;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -276,7 +277,7 @@
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>4100;4127;4396;4503;4512;4819;4995;4702;4800;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4100;4127;4396;4503;4512;4819;4995;4702;4800;4275;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <ExceptionHandling>false</ExceptionHandling>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
@@ -287,8 +288,8 @@
       <OmitFramePointers>true</OmitFramePointers>
       <Optimization>Full</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_WIN32_WINNT=0x0600;WINVER=0x0600;WIN32;_WINDOWS;_HAS_EXCEPTIONS=0;NOMINMAX;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_SECURE_ATL;_VARIADIC_MAX=10;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_USING_V110_SDK71_;NDEBUG;NVALGRIND;OFFICIAL_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PreprocessorDefinitions>_WIN32_WINNT=0x0600;WINVER=0x0600;WIN32;_WINDOWS;_HAS_EXCEPTIONS=0;NOMINMAX;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_SECURE_ATL;_VARIADIC_MAX=10;_USING_V110_SDK71_;NDEBUG;NVALGRIND;OFFICIAL_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <StringPooling>true</StringPooling>
       <TreatWarningAsError>false</TreatWarningAsError>
@@ -329,7 +330,7 @@
     <ResourceCompile>
       <AdditionalIncludeDirectories>../../..;..\..\..\testing\include;..\..\..\testing\googletest\include;..\..\..\testing\googletest;..\..\..\testing\googlemock\include;..\..\..\testing\googlemock;..\..\..\testing;..\..\..\third_party\platformsdk_win7\files\Include;$(VSInstallDir)\VC\atlmfc\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
-      <PreprocessorDefinitions>_WIN32_WINNT=0x0600;WINVER=0x0600;WIN32;_WINDOWS;_HAS_EXCEPTIONS=0;NOMINMAX;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_SECURE_ATL;_VARIADIC_MAX=10;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_USING_V110_SDK71_;NDEBUG;NVALGRIND;OFFICIAL_BUILD;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WIN32_WINNT=0x0600;WINVER=0x0600;WIN32;_WINDOWS;_HAS_EXCEPTIONS=0;NOMINMAX;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_SECURE_ATL;_VARIADIC_MAX=10;_USING_V110_SDK71_;NDEBUG;NVALGRIND;OFFICIAL_BUILD;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -338,14 +339,14 @@
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>4100;4127;4396;4503;4512;4819;4995;4702;4800;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4100;4127;4396;4503;4512;4819;4995;4702;4800;4275;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ExceptionHandling>false</ExceptionHandling>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <MinimalRebuild>false</MinimalRebuild>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_WIN32_WINNT=0x0600;WINVER=0x0600;WIN32;_WINDOWS;_HAS_EXCEPTIONS=0;NOMINMAX;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_SECURE_ATL;_VARIADIC_MAX=10;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_USING_V110_SDK71_;NO_TCMALLOC;NDEBUG;NVALGRIND;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PreprocessorDefinitions>_WIN32_WINNT=0x0600;WINVER=0x0600;WIN32;_WINDOWS;_HAS_EXCEPTIONS=0;NOMINMAX;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_SECURE_ATL;_VARIADIC_MAX=10;_USING_V110_SDK71_;NO_TCMALLOC;NDEBUG;NVALGRIND;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <TreatWarningAsError>false</TreatWarningAsError>
       <WarningLevel>Level4</WarningLevel>
@@ -380,17 +381,17 @@
     <ResourceCompile>
       <AdditionalIncludeDirectories>../../..;..\..\..\testing\include;..\..\..\testing\googletest\include;..\..\..\testing\googletest;..\..\..\testing\googlemock\include;..\..\..\testing\googlemock;..\..\..\testing;..\..\..\third_party\platformsdk_win7\files\Include;$(VSInstallDir)\VC\atlmfc\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
-      <PreprocessorDefinitions>_WIN32_WINNT=0x0600;WINVER=0x0600;WIN32;_WINDOWS;_HAS_EXCEPTIONS=0;NOMINMAX;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_SECURE_ATL;_VARIADIC_MAX=10;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_USING_V110_SDK71_;NO_TCMALLOC;NDEBUG;NVALGRIND;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WIN32_WINNT=0x0600;WINVER=0x0600;WIN32;_WINDOWS;_HAS_EXCEPTIONS=0;NOMINMAX;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_SECURE_ATL;_VARIADIC_MAX=10;_USING_V110_SDK71_;NO_TCMALLOC;NDEBUG;NVALGRIND;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="testing.gyp" />
+    <None Include="testing.gyp"/>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\testing\googlemock\src\gmock-all.cc" />
-    <ClCompile Include="..\..\..\testing\googletest\src\gtest_main.cc" />
+    <ClCompile Include="..\..\..\testing\googlemock\src\gmock-all.cc"/>
+    <ClCompile Include="..\..\..\testing\googletest\src\gtest_main.cc"/>
   </ItemGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
-  <ImportGroup Label="ExtensionTargets" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
+  <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets"/>
+  <ImportGroup Label="ExtensionTargets"/>
 </Project>
