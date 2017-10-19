@@ -92,7 +92,8 @@ PrintVars(IMGUI)
 find_path(ASIO_INCLUDE_DIR asio.hpp) 
 PrintVars(ASIO)
 
-add_definitions(-DASIO_HAS_STD_CHRONO)
+#add_definitions(-DASIO_HAS_STD_CHRONO)
+add_definitions(-DASIO_DISABLE_BOOST_DATE_TIME)
 include_directories(${ASIO_INCLUDE_DIR})
 
 #pkg_check_modules(CURL libcurl REQUIRED)
