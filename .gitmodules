@@ -1,6 +1,0 @@
-[submodule "external/curl"]
-	path = external/curl
-	url = https://github.com/curl/curl.git
-[submodule "external/googletest"]
-	path = external/googletest
-	url = https://github.com/google/googletest.git
