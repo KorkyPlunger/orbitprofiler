@@ -27,6 +27,6 @@ PUBLIC
     ${EXTERN_ROOT}/oqpi/include
     ${DIASDKDir}/include
 PRIVATE
-    ${EXTERN_ROOT}/mintomic/include
+    #${EXTERN_ROOT}/mintomic/include
     ${EXTERN_ROOT}/breakpad/src
 )

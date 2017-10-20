@@ -10,11 +10,9 @@
 #include <memory>
 
 #include "Threading.h"
-#include "Profiling.h"
+//#include "Profiling.h"
 #include "Message.h"
 
-class TcpClient;
-class Message;
 struct ContextSwitch;
 
 //-----------------------------------------------------------------------------

@@ -58,8 +58,14 @@ PRIVATE
 target_link_libraries(OrbitCore
     OrbitBase
 	dbghelp.lib
-	debug
-		${BREAKPAD_LIBS_DEBUG}
-	optimized
-		${BREAKPAD_LIBS_RELEASE}
+	#debug ${BREAKPAD_LIBS_DEBUG}
+	#optimized ${BREAKPAD_LIBS_RELEASE}
 )
+
+FOREACH(f ${BREAKPAD_LIBS_DEBUG})
+	target_link_libraries(OrbitCore debug ${f})
+ENDFOREACH()
+
+FOREACH(f ${BREAKPAD_LIBS_RELEASE})
+	target_link_libraries(OrbitCore optimized ${f})
+ENDFOREACH()

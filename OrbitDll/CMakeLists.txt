@@ -18,16 +18,23 @@ PRIVATE
 #message(STATUS "CMAKE_VS_PLATFORM_TOOLSET=${CMAKE_VS_PLATFORM_TOOLSET}")
 #message(STATUS "CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION=${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION}")
 
-message(STATUS "MinHook lib: ${MINHOOK_ROOT}/lib/Debug/libMinHook.${CMAKE_VS_PLATFORM_TOOLSET}.lib")
-
 #link_directories(${MINHOOK_ROOT}/lib/debug)
+message(STATUS "BREAKPAD_LIBS_DEBUG: ${BREAKPAD_LIBS_DEBUG}")
+message(STATUS "BREAKPAD_LIBS_RELEASE: ${BREAKPAD_LIBS_RELEASE}")
+
 target_link_libraries(OrbitDll
     OrbitBase
 	OrbitAsm
-	debug
-		"${MINHOOK_ROOT}/lib/Debug/libMinHook.${CMAKE_VS_PLATFORM_NAME}.lib"
-		${BREAKPAD_LIBS_DEBUG}
-	optimized
-		"${MINHOOK_ROOT}/lib/Release/libMinHook.${CMAKE_VS_PLATFORM_NAME}.lib"
-		${BREAKPAD_LIBS_RELEASE}
+	debug "${MINHOOK_ROOT}/lib/Debug/libMinHook.${CMAKE_VS_PLATFORM_NAME}.lib"
+	#${BREAKPAD_LIBS_DEBUG}
+	optimized "${MINHOOK_ROOT}/lib/Release/libMinHook.${CMAKE_VS_PLATFORM_NAME}.lib"
+	#${BREAKPAD_LIBS_RELEASE}
 )
+
+FOREACH(f ${BREAKPAD_LIBS_DEBUG})
+	target_link_libraries(OrbitDll debug ${f})
+ENDFOREACH()
+
+FOREACH(f ${BREAKPAD_LIBS_RELEASE})
+	target_link_libraries(OrbitDll optimized ${f})
+ENDFOREACH()

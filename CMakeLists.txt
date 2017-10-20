@@ -61,13 +61,13 @@ set(BREAKPAD_LIBROOT_DEBUG ${BREAKPAD_ROOT}/src/client/windows/${CMAKE_VS_PLATFO
 FUNCTION(PREPEND var prefix)
    SET(listVar "")
    FOREACH(f ${ARGN})
-      LIST(APPEND listVar "${prefix}/${f}")
+      LIST(APPEND listVar ${prefix}/${f})
    ENDFOREACH(f)
    SET(${var} "${listVar}" PARENT_SCOPE)
 ENDFUNCTION(PREPEND)
 
-PREPEND(BREAKPAD_LIBS_RELEASE ${BREAKPAD_LIBROOT_RELEASE} "crash_generation_client.lib;common.lib;exception_handler.lib;processor_bits.lib")
-PREPEND(BREAKPAD_LIBS_DEBUG ${BREAKPAD_LIBROOT_DEBUG} "crash_generation_client.lib;common.lib;exception_handler.lib;processor_bits.lib")
+PREPEND(BREAKPAD_LIBS_RELEASE ${BREAKPAD_LIBROOT_RELEASE} crash_generation_client.lib common.lib exception_handler.lib processor_bits.lib)
+PREPEND(BREAKPAD_LIBS_DEBUG ${BREAKPAD_LIBROOT_DEBUG} crash_generation_client.lib common.lib exception_handler.lib processor_bits.lib)
 
 
 #pkg_check_modules(FREETYPE freetype2 REQUIRED)
@@ -130,7 +130,8 @@ add_definitions(-D_WIN32_WINNT=0x0700)
 add_definitions(-DNTDDI_VERSION=0x06030000)
 add_definitions(-DUNICODE -D_UNICODE)
 
-#add_definitions(-D_USE_MATH_DEFINES)
+#add_definitions(-D_SCL_SECURE_NO_WARNINGS)
+#add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 
 # Clang specific stuff
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
