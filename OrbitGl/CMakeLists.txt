@@ -47,7 +47,7 @@ PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
 PRIVATE
     ${FREETYPE_GL_INCLUDE_DIR}
-    ${EXTERN_ROOT}/capstone/include
+    ${CAPSTONE_INCLUDE_DIR}
     ${FREEGLUT_INCLUDE_DIR}
 )
 
@@ -60,9 +60,5 @@ target_link_libraries(OrbitGl
     ${IMGUI_LIB}
     ${GLEW_LIBRARIES}
     ${FREETYPE_GL_LIB}
-
-    debug
-        ${EXTERN_ROOT}/capstone/msvc/x64/Debug/capstone.lib
-    optimized
-        ${EXTERN_ROOT}/capstone/msvc/x64/Release/capstone.lib
+    ${CAPSTONE_LIBRARIES}
 )

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 3.6)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
 
@@ -74,6 +74,7 @@ PREPEND(BREAKPAD_LIBS_DEBUG ${BREAKPAD_LIBROOT_DEBUG} crash_generation_client.li
 find_package(freetype REQUIRED)
 PrintVars(FREETYPE)
 
+#find_package(freeglut REQUIRED)
 find_path(FREEGLUT_INCLUDE_DIR GL/freeglut.h)
 find_library(FREEGLUT_LIB freeglut.lib)
 PrintVars(FREEGLUT)
@@ -101,16 +102,17 @@ add_definitions(-DASIO_DISABLE_BOOST_DATE_TIME)
 include_directories(${ASIO_INCLUDE_DIR})
 
 #pkg_check_modules(CURL libcurl REQUIRED)
-find_package(curl)
+find_package(curl REQUIRED)
 PrintVars(CURL)
 
 #pkg_check_modules(CEREAL cereal REQUIRED)
 find_package(cereal REQUIRED)
 PrintVars(CEREAL)
 
-#pkg_check_modules(CAPSTONE capstone REQUIRED)
-#find_package(capstone)
-#PrintVars(CAPSTONE)
+#find_package(capstone REQUIRED)
+find_path(CAPSTONE_INCLUDE_DIR capstone.h PATH_SUFFIXES capstone)
+find_library(CAPSTONE_LIBRARIES capstone.lib)
+PrintVars(CAPSTONE)
 
 #string(REGEX REPLACE "/bin/[^/]*$" "" VCINSTALLDIR "${CMAKE_C_COMPILER}")
 #message(STATUS "Guessed MSVC directory: ${VCINSTALLDIR}")
