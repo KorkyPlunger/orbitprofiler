@@ -82,6 +82,10 @@ PrintVars(FREEGLUT)
 find_package(glew REQUIRED)
 PrintVars(GLEW)
 
+find_path(FREETYPE_GL_INCLUDE_DIR freetype-gl.h PATH_SUFFIXES freetype-gl)
+find_library(FREETYPE_GL_LIB freetype-gl.lib)
+PrintVars(FREETYPE_GL)
+
 #find_package(imgui REQUIRED)
 find_path(IMGUI_INCLUDE_DIR imgui.h) 
 find_library(IMGUI_LIB imgui.lib)

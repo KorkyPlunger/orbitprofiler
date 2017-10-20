@@ -1,4 +1,7 @@
 add_library(OrbitGl STATIC
+    shader.c
+    mat4.c
+
     App.cpp
     Batcher.cpp
     BlackBoard.cpp
@@ -43,7 +46,7 @@ target_include_directories(OrbitGl
 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
 PRIVATE
-    ${EXTERN_ROOT}/freetype-gl
+    ${FREETYPE_GL_INCLUDE_DIR}
     ${EXTERN_ROOT}/capstone/include
     ${FREEGLUT_INCLUDE_DIR}
 )
@@ -56,11 +59,10 @@ target_link_libraries(OrbitGl
     ${FREETYPE_LIBRARIES}
     ${IMGUI_LIB}
     ${GLEW_LIBRARIES}
+    ${FREETYPE_GL_LIB}
 
     debug
-        ${EXTERN_ROOT}/freetype-gl/x64/Debug/freetype-gl.lib
         ${EXTERN_ROOT}/capstone/msvc/x64/Debug/capstone.lib
     optimized
-        ${EXTERN_ROOT}/freetype-gl/x64/Release/freetype-gl.lib
         ${EXTERN_ROOT}/capstone/msvc/x64/Release/capstone.lib
 )
