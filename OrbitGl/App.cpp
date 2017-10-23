@@ -58,20 +58,9 @@ ServerTimerManager* GTimerManager;
 float GFontSize;
 
 //-----------------------------------------------------------------------------
-OrbitApp::OrbitApp() : m_ProcessesDataView(nullptr)
-                     , m_ModulesDataView(nullptr)
-                     , m_FunctionsDataView(nullptr)
-                     , m_LiveFunctionsDataView(nullptr)
-                     , m_TypesDataView(nullptr)
-                     , m_GlobalsDataView(nullptr)
-                     , m_SessionsDataView(nullptr)
-                     , m_CaptureWindow(nullptr)
-                     , m_HasPromptedForUpdate(false)
-                     , m_NumTicks(0)
-                     , m_NeedsThawing(false)
-                     , m_UnrealEnabled(true)
-                     , m_FindFileCallback(nullptr)
+OrbitApp::OrbitApp() : m_FindFileCallback(nullptr)
                      , m_RuleEditor(nullptr)
+                     , m_CallStackDataView(nullptr)
 {
     m_Debugger = new Debugger();
 }

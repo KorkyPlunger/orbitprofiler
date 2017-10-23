@@ -23,6 +23,8 @@
 #include <vector>
 #include <string>
 
+#include <imgui_internal.h>
+
 using namespace std;
 
 RingBuffer<float, 512> GDeltaTimeBuffer;
@@ -86,6 +88,7 @@ GlCanvas::GlCanvas()
 
     UpdateSceneBox();
 
+    m_ImGuiContext = new ImGuiContext;
     ScopeImguiContext state( m_ImGuiContext );
     Orbit_ImGui_Init();
 }
