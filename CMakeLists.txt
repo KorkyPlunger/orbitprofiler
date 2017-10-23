@@ -5,6 +5,8 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
 set(NAME orbitProfiler)
 project(${NAME})
 
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
 #include(FindPkgConfig)
 
 function(PrintVars var)

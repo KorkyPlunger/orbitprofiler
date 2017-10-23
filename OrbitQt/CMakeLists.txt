@@ -10,7 +10,28 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-add_executable(OrbitQt
+set(HEADERS
+    licensedialog.h
+    orbitcodeeditor.h
+    orbitdataviewpanel.h
+    orbitdiffdialog.h
+    orbitdisassemblydialog.h
+    orbitglwidget.h
+    orbitglwidgetwithheader.h
+    orbitmainwindow.h
+    orbitsamplingreport.h
+    orbittablemodel.h
+    orbittreeitem.h
+    orbittreemodel.h
+    orbittreeview.h
+    orbitvisualizer.h
+    orbitwatchwidget.h
+    outputdialog.h
+    processlauncherwidget.h
+    resource.h
+    showincludesdialog.h
+)
+set(SOURCES
     licensedialog.cpp
     main.cpp
     orbitcodeeditor.cpp
@@ -30,7 +51,22 @@ add_executable(OrbitQt
     outputdialog.cpp
     processlauncherwidget.cpp
     showincludesdialog.cpp
+)
 
+source_group("Header Files" FILES ${HEADERS})
+source_group("Source Files" FILES ${SOURCES})
+
+set(qtpropertybrowser_HEADERS
+    qtpropertybrowser/qtbuttonpropertybrowser.h
+    qtpropertybrowser/qteditorfactory.h
+    qtpropertybrowser/qtgroupboxpropertybrowser.h
+    qtpropertybrowser/qtpropertybrowser.h
+    qtpropertybrowser/qtpropertybrowserutils_p.h
+    qtpropertybrowser/qtpropertymanager.h
+    qtpropertybrowser/qttreepropertybrowser.h
+    qtpropertybrowser/qtvariantproperty.h
+)
+set(qtpropertybrowser_SOURCES
     qtpropertybrowser/qtbuttonpropertybrowser.cpp
     qtpropertybrowser/qteditorfactory.cpp
     qtpropertybrowser/qtgroupboxpropertybrowser.cpp
@@ -39,6 +75,13 @@ add_executable(OrbitQt
     qtpropertybrowser/qtpropertymanager.cpp
     qtpropertybrowser/qttreepropertybrowser.cpp
     qtpropertybrowser/qtvariantproperty.cpp
+)
+source_group("qtpropertybrowser\\Header Files" FILES ${qtpropertybrowser_HEADERS})
+source_group("qtpropertybrowser\\Source Files" FILES ${qtpropertybrowser_SOURCES})
+
+add_executable(OrbitQt 
+    ${SOURCES} ${HEADERS} 
+	${qtpropertybrowser_SOURCES} ${qtpropertybrowser_HEADERS}
 )
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")

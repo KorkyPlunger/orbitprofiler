@@ -1,6 +1,41 @@
-get_filename_component(EXTERN_ROOT ${CMAKE_SOURCE_DIR}/external REALPATH)
+set(EXTERNAL_HEADERS
+    ${EXTERN_ROOT}/xxHash-r42/xxhash.h
+)
 
-add_library(OrbitBase STATIC
+set(EXTERNAL_SOURCES
+    ${EXTERN_ROOT}/xxHash-r42/xxhash.c
+    ${EXTERN_ROOT}/xxHash-r42/xxhsum.c
+)
+
+source_group("External\\Header Files" FILES ${EXTERNAL_HEADERS})
+source_group("External\\Source Files" FILES ${EXTERNAL_SOURCES})
+
+set(HEADERS
+    BaseTypes.h
+    Callstack.h
+    CallstackTypes.h
+    Context.h
+    CrashHandler.h
+    FunctionArgs.h
+    FunctionStats.h
+    Log.h
+    Message.h
+    OrbitAsio.h
+    OrbitDbgHelp.h
+    Path.h
+    PrintVar.h
+    Profiling.h
+    ScopeTimer.h
+    SerializationMacros.h
+    TcpEntity.h
+    TcpForward.h
+    Threading.h
+    TimerManager.h
+    TypeInfoStructs.h
+    Utils.h
+)
+
+set(SOURCES
     CallstackPOD.cpp
     CrashHandler.cpp
     Log.cpp
@@ -11,9 +46,14 @@ add_library(OrbitBase STATIC
     TcpEntity.cpp
     TimerManager.cpp
     Utils.cpp
+)
 
-	${EXTERN_ROOT}/xxHash-r42/xxhash.c
-    ${EXTERN_ROOT}/xxHash-r42/xxhsum.c
+source_group("Header Files" FILES ${HEADERS})
+source_group("Source Files" FILES ${SOURCES})
+
+add_library(OrbitBase STATIC 
+	${SOURCES} ${EXTERNAL_SOURCES}
+	${HEADERS} ${EXTERNAL_HEADERS}
 )
 
 target_include_directories(OrbitBase

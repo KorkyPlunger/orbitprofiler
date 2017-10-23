@@ -1,9 +1,22 @@
-add_library(OrbitDll SHARED
+set(HEADERS
+    ClientTimerManager.h
+    Hijacking.h
+    OrbitDll.h
+    OrbitLib.h
+    TcpClient.h
+)
+
+set(SOURCES
     Hijacking.cpp
     OrbitDll.cpp
     OrbitLib.cpp
     TcpClient.cpp
 )
+
+source_group("Header Files" FILES ${HEADERS})
+source_group("Source Files" FILES ${SOURCES})
+
+add_library(OrbitDll SHARED ${SOURCES} ${HEADERS})
 
 set(MINHOOK_ROOT ${EXTERN_ROOT}/minhook)
 target_include_directories(OrbitDll
