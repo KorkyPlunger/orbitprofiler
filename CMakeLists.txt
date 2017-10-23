@@ -54,21 +54,8 @@ include(CheckStructHasMember)
 
 get_filename_component(EXTERN_ROOT ${CMAKE_SOURCE_DIR}/external REALPATH)
 
-set(BREAKPAD_ROOT ${EXTERN_ROOT}/breakpad)
-set(BREAKPAD_LIBROOT_RELEASE ${BREAKPAD_ROOT}/src/client/windows/${CMAKE_VS_PLATFORM_NAME}/Release/lib)
-set(BREAKPAD_LIBROOT_DEBUG ${BREAKPAD_ROOT}/src/client/windows/${CMAKE_VS_PLATFORM_NAME}/Debug/lib)
-
-FUNCTION(PREPEND var prefix)
-   SET(listVar "")
-   FOREACH(f ${ARGN})
-      LIST(APPEND listVar ${prefix}/${f})
-   ENDFOREACH(f)
-   SET(${var} "${listVar}" PARENT_SCOPE)
-ENDFUNCTION(PREPEND)
-
-PREPEND(BREAKPAD_LIBS_RELEASE ${BREAKPAD_LIBROOT_RELEASE} crash_generation_client.lib common.lib exception_handler.lib processor_bits.lib)
-PREPEND(BREAKPAD_LIBS_DEBUG ${BREAKPAD_LIBROOT_DEBUG} crash_generation_client.lib common.lib exception_handler.lib processor_bits.lib)
-
+find_package(breakpad REQUIRED)
+PrintVars(BREAKPAD)
 
 #pkg_check_modules(FREETYPE freetype2 REQUIRED)
 find_package(freetype REQUIRED)

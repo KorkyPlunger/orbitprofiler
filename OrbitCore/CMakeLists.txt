@@ -51,21 +51,13 @@ add_library(OrbitCore STATIC
 target_include_directories(OrbitCore
 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CEREAL_INCLUDE_DIR}
 PRIVATE
-    ${EXTERN_ROOT}/breakpad/src
+    ${BREAKPAD_INCLUDE_DIR}
 )
 
 target_link_libraries(OrbitCore
     OrbitBase
 	dbghelp.lib
-	#debug ${BREAKPAD_LIBS_DEBUG}
-	#optimized ${BREAKPAD_LIBS_RELEASE}
+	${BREAKPAD_LIBRARIES}
 )
-
-FOREACH(f ${BREAKPAD_LIBS_DEBUG})
-	target_link_libraries(OrbitCore debug ${f})
-ENDFOREACH()
-
-FOREACH(f ${BREAKPAD_LIBS_RELEASE})
-	target_link_libraries(OrbitCore optimized ${f})
-ENDFOREACH()

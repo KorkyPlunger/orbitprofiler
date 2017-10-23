@@ -28,5 +28,5 @@ PUBLIC
     ${DIASDKDir}/include
 PRIVATE
     #${EXTERN_ROOT}/mintomic/include
-    ${EXTERN_ROOT}/breakpad/src
+    ${BREAKPAD_INCLUDE_DIR}
 )
