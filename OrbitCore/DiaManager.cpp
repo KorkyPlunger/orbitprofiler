@@ -10,6 +10,8 @@
 #include "external/DIA2Dump/dia2dump.h"
 #include "external/DIA2Dump/PrintSymbol.h"
 
+#include <Shellapi.h>
+
 using namespace std;
 
 //-----------------------------------------------------------------------------
