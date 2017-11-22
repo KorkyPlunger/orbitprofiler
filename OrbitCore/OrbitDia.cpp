@@ -4,16 +4,19 @@
 
 #include "OrbitDia.h"
 #include "Log.h"
-#include "Core.h"
-#include "dia2.h"
+
+#include <dia2.h>
 #include "external/DIA2Dump/dia2dump.h"
+#include "PrintVar.h"
+
+using namespace std;
 
 #define StringRef char*
 
 //-----------------------------------------------------------------------------
 template <typename ArgType>
-void DumpDIAValue( std::ostream &OS
-                 , int Indent
+void DumpDIAValue( ostream &OS
+                 , int //Indent
                  , StringRef Name
                  , IDiaSymbol *Symbol
                  , HRESULT( __stdcall IDiaSymbol::*Method )( ArgType * ) ) 
@@ -28,8 +31,8 @@ void DumpDIAValue( std::ostream &OS
 }
 
 //-----------------------------------------------------------------------------
-void DumpDIAValue( std::ostream &OS
-    , int Indent
+void DumpDIAValue( ostream &OS
+    , int //Indent
     , StringRef Name
     , IDiaSymbol *Symbol
     , HRESULT( __stdcall IDiaSymbol::*Method )( GUID * ) )
@@ -44,8 +47,8 @@ void DumpDIAValue( std::ostream &OS
 }
 
 //-----------------------------------------------------------------------------
-void DumpDIAValue( std::ostream &OS
-                 , int Indent
+void DumpDIAValue( ostream &OS
+                 , int //Indent
                  , StringRef Name
                  , IDiaSymbol *Symbol
                  , HRESULT( __stdcall IDiaSymbol::*Method )( BSTR * ) ) 
@@ -54,10 +57,10 @@ void DumpDIAValue( std::ostream &OS
     if( S_OK != ( Symbol->*Method )( &Value ) )
         return;
 
-    const char *Bytes = reinterpret_cast<const char *>( Value );
+   // const char *Bytes = reinterpret_cast<const char *>( Value );
 
     wstring wresult = Value;
-    std::string result = ws2s(wresult);
+    string result = ws2s(wresult);
     {
         OS << "\n";
         //OS.indent( Indent );
@@ -68,10 +71,10 @@ void DumpDIAValue( std::ostream &OS
 }
 
 //-----------------------------------------------------------------------------
-void DumpDIAValue( std::ostream &OS
-                 , int Indent
-                 , StringRef Name
-                 , IDiaSymbol *Symbol
+void DumpDIAValue( ostream& //OS
+                 , int //Indent
+                 , StringRef //Name
+                 , IDiaSymbol * //Symbol
                  , HRESULT( __stdcall IDiaSymbol::*Method )( VARIANT * ) ) 
 {
     PRINT_FUNC;
@@ -88,7 +91,7 @@ void DumpDIAValue( std::ostream &OS
 #define RAW_METHOD_DUMP(Stream, Method) DumpDIAValue(Stream, Indent, #Method, Symbol, &IDiaSymbol::Method);
 
 //-----------------------------------------------------------------------------
-void OrbitDia::DiaDump( IDiaSymbol* Symbol, std::ostream &OS, int Indent )
+void OrbitDia::DiaDump( IDiaSymbol* Symbol, ostream &OS, int Indent )
 {
     if( Symbol == nullptr )
         return;
@@ -314,7 +317,7 @@ void OrbitDia::DiaDump( IDiaSymbol* Symbol, std::ostream &OS, int Indent )
 //-----------------------------------------------------------------------------
 void OrbitDia::DiaDump( IDiaSymbol* a_Symbol )
 {
-    std::stringstream l_StringStream;
+    stringstream l_StringStream;
     
     DiaDump( a_Symbol, l_StringStream, 0 );
 

@@ -10,6 +10,8 @@
 #include "App.h"
 #include "Callstack.h"
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 ProcessesDataView::ProcessesDataView()
 {
@@ -21,12 +23,12 @@ ProcessesDataView::ProcessesDataView()
 }
 
 //-----------------------------------------------------------------------------
-std::vector<float> ProcessesDataView::s_HeaderRatios;
+vector<float> ProcessesDataView::s_HeaderRatios;
 
 //-----------------------------------------------------------------------------
-const std::vector<std::wstring>& ProcessesDataView::GetColumnHeaders()
+const vector<wstring>& ProcessesDataView::GetColumnHeaders()
 {
-	static std::vector<std::wstring> Columns;
+	static vector<wstring> Columns;
     if( Columns.size() == 0 )
     { 
         Columns.push_back( L"PID" );   s_HeaderRatios.push_back( 0 );
@@ -39,21 +41,21 @@ const std::vector<std::wstring>& ProcessesDataView::GetColumnHeaders()
 }
 
 //-----------------------------------------------------------------------------
-const std::vector<float>& ProcessesDataView::GetColumnHeadersRatios()
+const vector<float>& ProcessesDataView::GetColumnHeadersRatios()
 {
     return s_HeaderRatios;
 }
 
 //-----------------------------------------------------------------------------
-std::wstring ProcessesDataView::GetValue( int row, int col )
+wstring ProcessesDataView::GetValue( int row, int col )
 {
     const Process & process = *GetProcess(row);
-	std::wstring value;
+	wstring value;
 
     switch (col)
     {
     case PDV_ProcessID:
-        value = std::to_wstring((long)process.GetID());     break;
+        value = to_wstring((long)process.GetID());     break;
     case PDV_ProcessName:
         value = process.GetName(); 
         if( process.IsElevated() ) { value+=L"*"; }
@@ -70,7 +72,7 @@ std::wstring ProcessesDataView::GetValue( int row, int col )
 }
 
 //-----------------------------------------------------------------------------
-std::wstring ProcessesDataView::GetToolTip( int a_Row, int a_Column )
+wstring ProcessesDataView::GetToolTip( int a_Row, int a_Column )
 {
     const Process & process = *GetProcess(a_Row);
     return process.GetFullName();
@@ -87,7 +89,7 @@ void ProcessesDataView::OnSort(int a_Column, bool a_Toggle)
         a_Column = PdvColumn::PDV_CPU;
     }
 
-    const vector< std::shared_ptr<Process> > & processes = m_ProcessList.m_Processes;
+    const vector< shared_ptr<Process> > & processes = m_ProcessList.m_Processes;
     PdvColumn pdvColumn = PdvColumn(a_Column);
     
     if (a_Toggle)
@@ -96,7 +98,7 @@ void ProcessesDataView::OnSort(int a_Column, bool a_Toggle)
     }
 
     bool ascending = m_SortingToggles[pdvColumn];
-    std::function<bool(int a, int b)> sorter = nullptr;
+    function<bool(int a, int b)> sorter = nullptr;
 
     switch (pdvColumn)
     {
@@ -108,7 +110,7 @@ void ProcessesDataView::OnSort(int a_Column, bool a_Toggle)
 
     if (sorter)
     {
-        std::sort(m_Indices.begin(), m_Indices.end(), sorter);
+        sort(m_Indices.begin(), m_Indices.end(), sorter);
     }
 
     m_LastSortedColumn = a_Column;
@@ -150,7 +152,7 @@ void ProcessesDataView::Refresh()
     ScopeLock lock( m_Mutex );
     if( m_RemoteProcess )
     {
-        std::shared_ptr< Process > CurrentRemoteProcess = m_ProcessList.m_Processes.size() == 1 ? m_ProcessList.m_Processes[0] : nullptr;
+        shared_ptr< Process > CurrentRemoteProcess = m_ProcessList.m_Processes.size() == 1 ? m_ProcessList.m_Processes[0] : nullptr;
 
         if( m_RemoteProcess != CurrentRemoteProcess )
         {
@@ -194,12 +196,12 @@ void ProcessesDataView::SetSelectedItem()
 }
 
 //-----------------------------------------------------------------------------
-bool ProcessesDataView::SelectProcess( const std::wstring & a_ProcessName )
+bool ProcessesDataView::SelectProcess( const wstring & a_ProcessName )
 {
 	for( int i = 0; i < GetNumElements(); ++i )
 	{
 		Process & process = *GetProcess(i);
-		if ( process.GetFullName().find( a_ProcessName ) != std::string::npos )
+		if ( process.GetFullName().find( a_ProcessName ) != string::npos )
 		{
 			OnSelect(i);
             Capture::GPresetToLoad = L"";
@@ -230,25 +232,25 @@ bool ProcessesDataView::SelectProcess( DWORD a_ProcessId )
 }
 
 //-----------------------------------------------------------------------------
-void ProcessesDataView::OnFilter( const std::wstring & a_Filter )
+void ProcessesDataView::OnFilter( const wstring & a_Filter )
 {
-    std::vector<int> indices;
-    const vector<std::shared_ptr<Process>> & processes = m_ProcessList.m_Processes;
+    vector<int> indices;
+    const vector<shared_ptr<Process>> & processes = m_ProcessList.m_Processes;
 
-    std::vector< std::wstring > tokens = Tokenize( ToLower( a_Filter ) );
+    vector< wstring > tokens = Tokenize( ToLower( a_Filter ) );
 
     for (int i = 0; i < (int)processes.size(); ++i)
     {
         const Process & process = *processes[i];
-        std::wstring name = ToLower( process.GetName() );
-        std::wstring type = process.GetIs64Bit() ? L"64" : L"32";
+        wstring name = ToLower( process.GetName() );
+        wstring type = process.GetIs64Bit() ? L"64" : L"32";
 
         bool match = true;
 
-        for( std::wstring & filterToken : tokens )
+        for( wstring & filterToken : tokens )
         {
-            if (!(name.find(filterToken) != std::wstring::npos ||
-                type.find(filterToken) != std::wstring::npos))
+            if (!(name.find(filterToken) != wstring::npos ||
+                type.find(filterToken) != wstring::npos))
             {
                 match = false;
                 break;
@@ -281,14 +283,14 @@ void ProcessesDataView::UpdateProcessList()
 }
 
 //-----------------------------------------------------------------------------
-void ProcessesDataView::SetRemoteProcess( std::shared_ptr<Process> a_Process )
+void ProcessesDataView::SetRemoteProcess( shared_ptr<Process> a_Process )
 {
     ScopeLock lock( m_Mutex );
     m_RemoteProcess = a_Process;
 }
 
 //-----------------------------------------------------------------------------
-std::shared_ptr<Process> ProcessesDataView::GetProcess(unsigned int a_Row) const
+shared_ptr<Process> ProcessesDataView::GetProcess(unsigned int a_Row) const
 {
     return m_ProcessList.m_Processes[m_Indices[a_Row]];
 }

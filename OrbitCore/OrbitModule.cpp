@@ -2,10 +2,13 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
+
 #include "OrbitModule.h"
 #include "Serialization.h"
 #include "Pdb.h"
+#include "Path.h"
+
+using namespace std;
 
 //-----------------------------------------------------------------------------
 Module::Module()
@@ -28,13 +31,13 @@ const wstring & Module::GetPrettyName()
 //-----------------------------------------------------------------------------
 bool Module::IsDll() const
 {
-    return ToLower( Path::GetExtension( m_FullName ) ) == std::wstring( L".dll" );
+    return ToLower( Path::GetExtension( m_FullName ) ) == wstring( L".dll" );
 }
 
 //-----------------------------------------------------------------------------
 bool Module::LoadDebugInfo()
 {
-    m_Pdb = std::make_shared<Pdb>( m_PdbName.c_str() );
+    m_Pdb = make_shared<Pdb>( m_PdbName.c_str() );
     m_Pdb->SetMainModule( (HMODULE)m_AddressStart );
 
     if( m_FoundPdb )

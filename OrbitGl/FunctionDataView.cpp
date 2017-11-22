@@ -2,7 +2,7 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
+
 #include "FunctionDataView.h"
 #include "OrbitType.h"
 #include "OrbitProcess.h"
@@ -11,6 +11,8 @@
 #include "App.h"
 #include "Pdb.h"
 #include "RuleEditor.h"
+
+using namespace std;
 
 //-----------------------------------------------------------------------------
 FunctionsDataView::FunctionsDataView()
@@ -21,13 +23,13 @@ FunctionsDataView::FunctionsDataView()
 }
 
 //-----------------------------------------------------------------------------
-std::vector<int>   FunctionsDataView::s_HeaderMap;
-std::vector<float> FunctionsDataView::s_HeaderRatios;
+vector<int>   FunctionsDataView::s_HeaderMap;
+vector<float> FunctionsDataView::s_HeaderRatios;
 
 //-----------------------------------------------------------------------------
-const std::vector<std::wstring>& FunctionsDataView::GetColumnHeaders()
+const vector<wstring>& FunctionsDataView::GetColumnHeaders()
 {
-    static std::vector<std::wstring> Columns;
+    static vector<wstring> Columns;
 
     if( s_HeaderMap.size() == 0 )
     {
@@ -46,13 +48,13 @@ const std::vector<std::wstring>& FunctionsDataView::GetColumnHeaders()
 }
 
 //-----------------------------------------------------------------------------
-const std::vector<float>& FunctionsDataView::GetColumnHeadersRatios()
+const vector<float>& FunctionsDataView::GetColumnHeadersRatios()
 {
     return s_HeaderRatios;
 }
 
 //-----------------------------------------------------------------------------
-std::wstring FunctionsDataView::GetValue( int a_Row, int a_Column )
+wstring FunctionsDataView::GetValue( int a_Row, int a_Column )
 {
     ScopeLock lock( Capture::GTargetProcess->GetDataMutex() );
 
@@ -63,7 +65,7 @@ std::wstring FunctionsDataView::GetValue( int a_Row, int a_Column )
 
     Function & function = GetFunction( a_Row );
 
-    std::wstring value;
+    wstring value;
 
     switch ( s_HeaderMap[a_Column] )
     {
@@ -111,7 +113,7 @@ void FunctionsDataView::OnSort( int a_Column, bool a_Toggle )
     }
 
     bool ascending = m_SortingToggles[MemberID];
-    std::function<bool(int a, int b)> sorter = nullptr;
+    function<bool(int a, int b)> sorter = nullptr;
 
     switch (MemberID)
     {
@@ -127,7 +129,7 @@ void FunctionsDataView::OnSort( int a_Column, bool a_Toggle )
 
     if( sorter ) 
     {
-        std::sort(m_Indices.begin(), m_Indices.end(), sorter);
+        sort(m_Indices.begin(), m_Indices.end(), sorter);
     }
 
     m_LastSortedColumn = a_Column;
@@ -145,37 +147,32 @@ enum TypesContextMenu
 };
 
 //-----------------------------------------------------------------------------
-const std::vector<std::wstring>& FunctionsDataView::GetContextMenu(int a_Index)
+const vector<wstring>& FunctionsDataView::GetContextMenu(int a_Index)
 {
-    static std::vector<std::wstring> Menu = { L"Hook", L"Unhook", L"Visualize", L"Go To Disassembly", L"Create Rule"/*, "Set as Main Frame"*/ };
+    static vector<wstring> Menu = { L"Hook", L"Unhook", L"Visualize", L"Go To Disassembly", L"Create Rule"/*, "Set as Main Frame"*/ };
     return Menu;
 }
 
 //-----------------------------------------------------------------------------
-void FunctionsDataView::OnContextMenu( int a_MenuIndex, std::vector<int> & a_ItemIndices )
+void FunctionsDataView::OnContextMenu( int a_MenuIndex, vector<int> & a_ItemIndices )
 {
     switch (a_MenuIndex)
     {
         case FUN_SELECT:
-        {
             for (int i : a_ItemIndices)
             {
                 Function & func = GetFunction(i);
                 func.Select();
             }
             break;
-        }
         case FUN_UNSELECT:
-        {
             for( int i : a_ItemIndices )
             {
                 Function & func = GetFunction( i );
                 func.UnSelect();
             }
             break;
-        }
         case FUNC_MENU_VIEW: 
-        {
             for( int i : a_ItemIndices )
             {
                 GetFunction(i).Print();
@@ -183,16 +180,13 @@ void FunctionsDataView::OnContextMenu( int a_MenuIndex, std::vector<int> & a_Ite
 
             GOrbitApp->SendToUiNow(L"output");
             break;
-        }
         case FUNC_GO_TO_DISASSEMBLY:
-        {
             for( int i : a_ItemIndices )
             {
                 Function & func = GetFunction( i );
                 func.GetDisassembly();
             }
             break;
-        }
         case FUNC_CREATE_RULE:
             for( int i : a_ItemIndices )
             {
@@ -213,7 +207,7 @@ void FunctionsDataView::OnContextMenu( int a_MenuIndex, std::vector<int> & a_Ite
 }
 
 //-----------------------------------------------------------------------------
-void FunctionsDataView::OnFilter( const std::wstring & a_Filter )
+void FunctionsDataView::OnFilter( const wstring & a_Filter )
 {
     m_FilterTokens = Tokenize( ToLower( a_Filter ) );
 
@@ -232,17 +226,17 @@ void FunctionsDataView::ParallelFilter()
     const auto prio = oqpi::task_priority::normal;
     auto numWorkers = oqpi_tk::scheduler().workersCount( prio );
     //int numWorkers = oqpi::thread::hardware_concurrency();
-    std::vector< std::vector<int> > indicesArray;
+    vector< vector<int> > indicesArray;
     indicesArray.resize( numWorkers );
 
     oqpi_tk::parallel_for( "FunctionsDataViewParallelFor", (int)functions.size(), [&]( int32_t a_BlockIndex, int32_t a_ElementIndex )
     {
-        std::vector<int> & result = indicesArray[a_BlockIndex];
-        const std::wstring & name = functions[a_ElementIndex]->Lower();
+        vector<int> & result = indicesArray[a_BlockIndex];
+        const wstring & name = functions[a_ElementIndex]->Lower();
 
-        for( std::wstring & filterToken : m_FilterTokens )
+        for( wstring & filterToken : m_FilterTokens )
         {
-            if( name.find( filterToken ) == std::wstring::npos )
+            if( name.find( filterToken ) == wstring::npos )
             {
                 return;
             }
@@ -251,8 +245,8 @@ void FunctionsDataView::ParallelFilter()
         result.push_back( a_ElementIndex );
     } );
     
-    std::set< int > indicesSet;
-    for( std::vector<int> & results : indicesArray )
+    set< int > indicesSet;
+    for( vector<int> & results : indicesArray )
     {
         for( int index : results )
         {

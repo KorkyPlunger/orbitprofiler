@@ -9,15 +9,13 @@
 #include "SerializationMacros.h"
 #include "BaseTypes.h"
 
-using namespace std;
-
 struct Params
 {
     Params();
     void Load();
     void Save();
     
-    void AddToPdbHistory( const string & a_PdbName );
+    void AddToPdbHistory( const std::string & a_PdbName );
     void ScanPdbCache();
 
 public:

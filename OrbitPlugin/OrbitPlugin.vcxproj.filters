@@ -35,6 +35,9 @@
     <ClInclude Include="..\external\imgui\stb_truetype.h">
       <Filter>imgui</Filter>
     </ClInclude>
+    <ClInclude Include="OrbitUserData.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UserPlugin.cpp">

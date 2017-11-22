@@ -6,6 +6,8 @@
 #include "GlCanvas.h"
 #include "Capture.h"
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 EventTrack::EventTrack( TimeGraph* a_TimeGraph ) : m_TimeGraph( a_TimeGraph )
 {

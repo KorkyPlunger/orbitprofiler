@@ -6,10 +6,7 @@
 #include "SamplingProfiler.h"
 
 #define INITGUID
-#include <windows.h>
 #include <strsafe.h>
-#include <wmistr.h>
-#include <evntrace.h>
 #include <evntcons.h>
 
 #include "Capture.h"
@@ -20,6 +17,8 @@
 #include "EventCallbacks.h"
 #include "EventClasses.h"
 #include "Params.h"
+
+using namespace std;
 
 //-----------------------------------------------------------------------------
 EventTracer GEventTracer;
@@ -163,8 +162,8 @@ void EventTracer::Start()
         return;
     }
 
-    std::thread* thread = new std::thread( [&](){ EventTracerThread(); } );
-    thread->detach();
+    thread t([&]() { this->EventTracerThread(); });
+    t.detach();
 }
 
 //-----------------------------------------------------------------------------

@@ -8,8 +8,10 @@
 #include "App.h"
 #include "SymbolUtils.h"
 #include "TcpServer.h"
-#include "PluginManager.h"
-#include "../OrbitPlugin/OrbitSDK.h"
+#include "ServerTimerManager.h"
+#include "PrintVar.h"
+
+using namespace std;
 
 //-----------------------------------------------------------------------------
 CaptureWindow::CaptureWindow()
@@ -65,7 +67,7 @@ void CaptureWindow::ZoomAll()
     m_TimeGraph.ZoomAll();
     m_DesiredWorldHeight = m_TimeGraph.GetThreadTotalHeight();
 
-    float margin = (float)m_TimeGraph.GetMarginInPixels();
+    //float margin = (float)m_TimeGraph.GetMarginInPixels();
     m_WorldTopLeftY = m_WorldMaxY;
     ResetHoverTimer();
     NeedsUpdate();
@@ -108,8 +110,8 @@ void CaptureWindow::MouseMoved( int a_X, int a_Y, bool a_Left, bool a_Right, boo
         m_WorldTopLeftX = m_WorldClickX - (float)mousex / (float)getWidth() * m_WorldWidth;
         m_WorldTopLeftY = m_WorldClickY + (float)mousey / (float)getHeight() * m_WorldHeight;
 
-        m_WorldTopLeftX = clamp( m_WorldTopLeftX, worldMin, worldMax-m_WorldWidth );
-        m_WorldTopLeftY = clamp( m_WorldTopLeftY, -FLT_MAX, m_WorldMaxY );
+        m_WorldTopLeftX = ::clamp( m_WorldTopLeftX, worldMin, worldMax-m_WorldWidth );
+        m_WorldTopLeftY = ::clamp( m_WorldTopLeftY, -FLT_MAX, m_WorldMaxY );
         UpdateSceneBox();
 
         m_TimeGraph.PanTime(m_ScreenClickX, a_X, getWidth(), (double)m_RefTimeClick);
@@ -227,7 +229,7 @@ void CaptureWindow::SelectTextBox( class TextBox* a_TextBox )
     DWORD64 address = a_Timer.m_FunctionAddress;
     if( a_Timer.IsType( Timer::ZONE ) )
     {
-        std::shared_ptr<CallStack> callStack = Capture::GetCallstack( a_Timer.m_CallstackHash );
+        shared_ptr<CallStack> callStack = Capture::GetCallstack( a_Timer.m_CallstackHash );
         if( callStack && callStack->m_Depth > 1 )
         {
             address = callStack->m_Data[1];
@@ -274,7 +276,7 @@ void CaptureWindow::FindCode( DWORD64 address )
         --lineInfo.m_Line;
 
         //File mapping
-        const std::map< std::wstring, std::wstring > & fileMap = GOrbitApp->GetFileMapping();
+        const map< wstring, wstring > & fileMap = GOrbitApp->GetFileMapping();
         for( const auto & pair : fileMap )
         {
             ReplaceStringInPlace( lineInfo.m_File, pair.first, pair.second );
@@ -542,7 +544,7 @@ void CaptureWindow::Draw()
         }        
 
         double micros = m_TimeGraph.GetTimeIntervalMicro( sizex/m_WorldWidth );
-        std::string time = GetPrettyTime( micros*0.001 );
+        string time = GetPrettyTime( micros*0.001 );
         TextBox box( pos, size, time, &m_TextRenderer, Color(0, 128, 0, 128) );
         box.SetTextY( m_SelectStop[1] );
         box.Draw( m_TextRenderer, -FLT_MAX, true, true );
@@ -650,7 +652,7 @@ void CaptureWindow::DrawStatus()
 
     if( Capture::GInjected )
     {
-        std::string injectStr = Format( " %s", Capture::GInjectedProcess.c_str() );
+        string injectStr = Format( " %s", Capture::GInjectedProcess.c_str() );
         m_ProcessX = m_TextRenderer.AddText2D( injectStr.c_str(), PosX, PosY, Z_VALUE_TEXT_UI, s_Color, -1, true ); PosY += s_IncY;
     }
 
@@ -703,7 +705,7 @@ void CaptureWindow::RenderUI()
         m_StatsWindow.AddLine( VAR_TO_ANSI( m_TimeGraph.m_TextBoxes.m_NumItems ) );
         m_StatsWindow.AddLine( VAR_TO_ANSI( m_TimeGraph.m_TextBoxes.m_NumBlocks ) );
 
-        for( std::string & line : GTcpServer->GetStats() )
+        for( string & line : GTcpServer->GetStats() )
         {
             m_StatsWindow.AddLine( line );
         }
@@ -831,7 +833,7 @@ void CaptureWindow::RenderMemTracker()
     MemoryTracker & memTracker = m_TimeGraph.m_MemTracker;
     if( memTracker.NumAllocatedBytes() == 0 )
     {
-        std::string str = VAR_TO_ANSI( memTracker.NumAllocatedBytes() ) + std::string( "            ");
+        string str = VAR_TO_ANSI( memTracker.NumAllocatedBytes() ) + string( "            ");
         ImGui::Text( str.c_str() );
         ImGui::Text( VAR_TO_ANSI( memTracker.NumFreedBytes() ) );
         ImGui::Text( VAR_TO_ANSI( memTracker.NumLiveBytes() ) );
@@ -917,7 +919,7 @@ inline double GetIncrementMs( double a_MilliSeconds )
     const double Micro = 0.001;
     const double Nano = 0.000001;
 
-    std::string res;
+    string res;
 
     if (a_MilliSeconds < Micro)
         return Nano;
@@ -948,7 +950,7 @@ void CaptureWindow::RenderTimeBar()
         double normInc= (double((int)((incr+unit)/unit)))*unit;
 
         double startMs = m_TimeGraph.m_MinEpochTimeUs*0.001;
-        double endMs   = m_TimeGraph.m_MaxEpochTimeUs*0.001;
+        //double endMs   = m_TimeGraph.m_MaxEpochTimeUs*0.001;
 
         double normStartUs = 1000.0*(double(int(startMs/normInc)))*normInc;
 
@@ -967,7 +969,7 @@ void CaptureWindow::RenderTimeBar()
                 continue;
 
             double currentMillis = currentMicros * 0.001;
-            std::string text = GetPrettyTime(currentMillis);
+            string text = GetPrettyTime(currentMillis);
             float worldX = m_TimeGraph.GetWorldFromUs(currentMicros);
             m_TextRenderer.AddText(text.c_str(), worldX + xMargin, worldY, GlCanvas::Z_VALUE_TEXT_UI, Color(255, 255, 255, 255));
         

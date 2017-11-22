@@ -10,18 +10,17 @@
 // Debug Interface Access SDK API.
 //
 
-#include <malloc.h>
-
-#include "dia2dump.h"
-#include "regs.h"
 #include "PrintSymbol.h"
+
+#include "regs.h"
+
+#include <malloc.h>
 #include <map>
 
-#include "../../OrbitCore/Core.h"
-#include "../../OrbitCore/Log.h"
-#include "../../OrbitCore/Utils.h"
+#include "../../OrbitBase/Log.h"
 #include "../../OrbitCore/OrbitType.h"
 #include "../../OrbitCore/Pdb.h"
+#include "../../OrbitBase/PrintVar.h"
 
 VizLogger    GMainLog;
 OrbitLogger* GLog = &GMainLog;

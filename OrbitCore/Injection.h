@@ -3,22 +3,19 @@
 //-----------------------------------
 #pragma once
 
-#include "Core.h"
 #include "ProcessUtils.h"
 #include <string>
-
-using namespace std;
 
 class Injection
 {
 public:
     Injection();
 
-    bool Inject( const wstring & a_Dll, const Process & a_Process, const std::string & ProcName );
+    bool Inject( const std::wstring & a_Dll, const Process & a_Process, const std::string & ProcName, const std::wstring& captureHost, int capturePort);
     DWORD GetProcessID() const { return m_InjectedProcessID; }
     HANDLE GetProcessHandle() const { return m_InjectedProcessHandle; }
 
-    static HANDLE GetTargetProcessHandle( const string & a_Target, DWORD & o_ProcessID );
+    static HANDLE GetTargetProcessHandle( const std::string & a_Target, DWORD & o_ProcessID );
     static HMODULE WINAPI GetRemoteModuleHandle( HANDLE hProcess, LPCSTR lpModuleName );
     static FARPROC WINAPI GetRemoteProcAddress( HANDLE hProcess, HMODULE hModule, LPCSTR lpProcName, UINT Ordinal = 0, BOOL UseOrdinal = FALSE );
 

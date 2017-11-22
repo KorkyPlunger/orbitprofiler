@@ -1,28 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="DebugMT|Win32">
-      <Configuration>DebugMT</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugMT|x64">
-      <Configuration>DebugMT</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseMT|Win32">
-      <Configuration>ReleaseMT</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseMT|x64">
-      <Configuration>ReleaseMT</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
@@ -34,6 +18,69 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F0D7A3D4-1D29-4053-A29A-32BE327C3BEB}</ProjectGuid>
+    <RootNamespace>Core</RootNamespace>
+    <ProjectName>OrbitCore</ProjectName>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="CoreCommon.props" />
+    <Import Project="..\PropSheets\DebugCommon.props" />
+    <Import Project="..\PropSheets\CurlDebug.props" />
+    <Import Project="..\PropSheets\BreakpadWin64Debug.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="CoreCommon.props" />
+    <Import Project="..\PropSheets\ReleaseCommon.props" />
+    <Import Project="..\PropSheets\CurlRelease.props" />
+    <Import Project="..\PropSheets\BreakpadWin64Release.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="CoreCommon.props" />
+    <Import Project="..\PropSheets\DebugCommon.props" />
+    <Import Project="..\PropSheets\CurlDebug.props" />
+    <Import Project="..\PropSheets\BreakpadWin32Debug.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="CoreCommon.props" />
+    <Import Project="..\PropSheets\ReleaseCommon.props" />
+    <Import Project="..\PropSheets\CurlRelease.props" />
+    <Import Project="..\PropSheets\BreakpadWin32Release.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClInclude Include="..\external\concurrentqueue\concurrentqueue.h" />
     <ClInclude Include="..\external\DIA2Dump\Callback.h" />
@@ -61,9 +108,7 @@
     <ClInclude Include="Capture.h" />
     <ClInclude Include="Context.h" />
     <ClInclude Include="ContextSwitch.h" />
-    <ClInclude Include="Core.h" />
     <ClInclude Include="CoreApp.h" />
-    <ClInclude Include="CrashHandler.h" />
     <ClInclude Include="DiaManager.h" />
     <ClInclude Include="DiaParser.h" />
     <ClInclude Include="Diff.h" />
@@ -78,11 +123,9 @@
     <ClInclude Include="OrbitAsio.h" />
     <ClInclude Include="OrbitDbgHelp.h" />
     <ClInclude Include="Hashing.h" />
-    <ClInclude Include="Hijacking.h" />
     <ClInclude Include="Injection.h" />
     <ClInclude Include="OrbitDia.h" />
     <ClInclude Include="OrbitFunction.h" />
-    <ClInclude Include="OrbitLib.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="CoreMath.h" />
     <ClInclude Include="MemoryTracker.h" />
@@ -102,11 +145,9 @@
     <ClInclude Include="SamplingProfiler.h" />
     <ClInclude Include="ScopeTimer.h" />
     <ClInclude Include="Serialization.h" />
-    <ClInclude Include="FunctionStats.h" />
     <ClInclude Include="SerializationMacros.h" />
     <ClInclude Include="SymbolUtils.h" />
     <ClInclude Include="Tcp.h" />
-    <ClInclude Include="TcpClient.h" />
     <ClInclude Include="TcpEntity.h" />
     <ClInclude Include="TcpForward.h" />
     <ClInclude Include="TcpServer.h" />
@@ -127,106 +168,42 @@
     <ClCompile Include="..\external\DIA2Dump\regs.cpp" />
     <ClCompile Include="..\external\multicore\common\inmemorylogger.cpp" />
     <ClCompile Include="..\external\peparse\buffer.cpp" />
-    <ClCompile Include="..\external\peparse\dump.cpp">
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ShowIncludes>
-    </ClCompile>
+    <ClCompile Include="..\external\peparse\dump.cpp" />
     <ClCompile Include="..\external\peparse\parse.cpp" />
-    <ClCompile Include="..\external\xxHash-r42\xxhash.c" />
-    <ClCompile Include="..\external\xxHash-r42\xxhsum.c" />
     <ClCompile Include="Callstack.cpp" />
-    <ClCompile Include="Capture.cpp">
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ShowIncludes>
-    </ClCompile>
+    <ClCompile Include="Capture.cpp" />
     <ClCompile Include="ContextSwitch.cpp" />
-    <ClCompile Include="Core.cpp" />
+    <ClCompile Include="Serialization.cpp" />
     <ClCompile Include="CoreApp.cpp" />
-    <ClCompile Include="CrashHandler.cpp" />
     <ClCompile Include="DiaManager.cpp" />
     <ClCompile Include="DiaParser.cpp" />
     <ClCompile Include="Diff.cpp" />
     <ClCompile Include="EventBuffer.cpp" />
-    <ClCompile Include="EventCallbacks.cpp">
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ShowIncludes>
-    </ClCompile>
-    <ClCompile Include="EventUtils.cpp">
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ShowIncludes>
-    </ClCompile>
-    <ClCompile Include="EventTracer.cpp">
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ShowIncludes>
-    </ClCompile>
-    <ClCompile Include="Hijacking.cpp" />
+    <ClCompile Include="EventCallbacks.cpp" />
+    <ClCompile Include="EventUtils.cpp" />
+    <ClCompile Include="EventTracer.cpp" />
     <ClCompile Include="Injection.cpp" />
     <ClCompile Include="LogInterface.cpp" />
     <ClCompile Include="MiniDump.cpp" />
-    <ClCompile Include="OrbitAsio.cpp" />
     <ClCompile Include="OrbitDia.cpp" />
     <ClCompile Include="OrbitFunction.cpp" />
-    <ClCompile Include="OrbitLib.cpp" />
-    <ClCompile Include="Log.cpp" />
     <ClCompile Include="MemoryTracker.cpp" />
-    <ClCompile Include="Message.cpp" />
     <ClCompile Include="ModuleManager.cpp" />
     <ClCompile Include="OrbitModule.cpp" />
     <ClCompile Include="OrbitRule.cpp" />
     <ClCompile Include="OrbitUnreal.cpp" />
     <ClCompile Include="Params.cpp" />
-    <ClCompile Include="Path.cpp" />
     <ClCompile Include="Pdb.cpp" />
     <ClCompile Include="OrbitSession.cpp" />
     <ClCompile Include="OrbitProcess.cpp" />
     <ClCompile Include="ProcessUtils.cpp" />
     <ClCompile Include="SamplingProfiler.cpp" />
-    <ClCompile Include="ScopeTimer.cpp">
-      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</PreprocessToFile>
-    </ClCompile>
     <ClCompile Include="FunctionStats.cpp" />
     <ClCompile Include="SymbolUtils.cpp" />
     <ClCompile Include="Tcp.cpp" />
-    <ClCompile Include="TcpClient.cpp">
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'">false</ShowIncludes>
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ShowIncludes>
-    </ClCompile>
-    <ClCompile Include="TcpEntity.cpp" />
     <ClCompile Include="TcpServer.cpp" />
     <ClCompile Include="OrbitThread.cpp" />
-    <ClCompile Include="TimerManager.cpp" />
     <ClCompile Include="OrbitType.cpp" />
-    <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Variable.cpp" />
     <ClCompile Include="VariableTracing.cpp" />
     <ClCompile Include="Version.cpp" />
@@ -237,315 +214,11 @@
     <None Include="..\external\gte\GteVector3.inl" />
     <None Include="..\external\gte\GteVector4.inl" />
   </ItemGroup>
-  <PropertyGroup Label="Globals">
-    <ProjectGuid>{F0D7A3D4-1D29-4053-A29A-32BE327C3BEB}</ProjectGuid>
-    <RootNamespace>hook</RootNamespace>
-    <ProjectName>OrbitCore</ProjectName>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
-  </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <WholeProgramOptimization>false</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <WholeProgramOptimization>false</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
-  </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>..\intermediate\$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(BOOST_ROOT);..\external\mintomic\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(BOOST_ROOT)\stage\lib;$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>..\intermediate\$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(BOOST_ROOT);..\external\mintomic\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(BOOST_ROOT)\stage\lib;$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>..\intermediate\$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(BOOST_ROOT);..\external\mintomic\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(BOOST_ROOT)\stage\lib;$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'">
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>..\intermediate\$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(BOOST_ROOT);..\external\mintomic\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(BOOST_ROOT)\stage\lib;$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>..\intermediate\$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(BOOST_ROOT);..\external\mintomic\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(BOOST_ROOT)\stage\lib;$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>..\intermediate\$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(BOOST_ROOT);..\external\mintomic\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(BOOST_ROOT)\stage\lib;$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>..\intermediate\$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(BOOST_ROOT);..\external\mintomic\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(BOOST_ROOT)\stage\lib;$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'">
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>..\intermediate\$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(BOOST_ROOT);..\external\mintomic\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(BOOST_ROOT)\stage\lib;$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <BrowseInformation>false</BrowseInformation>
-      <AdditionalIncludeDirectories>..\;..\external\stlsoft-1.9.118\include\;..\external\sqlite\;..\external\concurrentqueue\;..\external\asio\include\;..\external\minhook\include\;..\external\cereal-1.1.2\include\;..\external\multicore\common\;..\external\websocketpp\;..\external\curl-7.52.1\include;..\external\breakpad\src;$(VCInstallDir)\..\DIA SDK\include</AdditionalIncludeDirectories>
-      <ShowIncludes>false</ShowIncludes>
-      <PreprocessorDefinitions>ORBIT_PROFILER;_WIN32_WINNT=0x0700;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DebugInformationFormat>OldStyle</DebugInformationFormat>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <MinimalRebuild>false</MinimalRebuild>
-    </ClCompile>
-    <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-    <Bscmake>
-      <PreserveSbr>true</PreserveSbr>
-    </Bscmake>
-    <Lib>
-      <AdditionalDependencies>dbghelp.lib</AdditionalDependencies>
-    </Lib>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <BrowseInformation>true</BrowseInformation>
-      <AdditionalIncludeDirectories>..\;..\external\stlsoft-1.9.118\include\;..\external\sqlite\;..\external\concurrentqueue\;..\external\asio\include\;..\external\minhook\include\;..\external\cereal-1.1.2\include\;..\external\multicore\common\;..\external\websocketpp\;..\external\curl-7.52.1\include;..\external\breakpad\src;$(VCInstallDir)\..\DIA SDK\include</AdditionalIncludeDirectories>
-      <ShowIncludes>false</ShowIncludes>
-      <PreprocessorDefinitions>ORBIT_PROFILER;_WIN32_WINNT=0x0700;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DebugInformationFormat>OldStyle</DebugInformationFormat>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-    </ClCompile>
-    <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-    <Bscmake>
-      <PreserveSbr>true</PreserveSbr>
-    </Bscmake>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>..\;..\external\stlsoft-1.9.118\include\;..\external\sqlite\;..\external\concurrentqueue\;..\external\asio\include\;..\external\minhook\include\;..\external\cereal-1.1.2\include\;..\external\multicore\common\;..\external\websocketpp\;..\external\curl-7.52.1\include;..\external\breakpad\src;$(VCInstallDir)\..\DIA SDK\include</AdditionalIncludeDirectories>
-      <ShowIncludes>false</ShowIncludes>
-      <PreprocessorDefinitions>ORBIT_PROFILER;_WIN32_WINNT=0x0700;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DebugInformationFormat>OldStyle</DebugInformationFormat>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <MinimalRebuild>false</MinimalRebuild>
-    </ClCompile>
-    <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-    <Lib>
-      <AdditionalDependencies>dbghelp.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-    </Lib>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>..\;..\external\stlsoft-1.9.118\include\;..\external\sqlite\;..\external\concurrentqueue\;..\external\asio\include\;..\external\minhook\include\;..\external\cereal-1.1.2\include\;..\external\multicore\common\;..\external\websocketpp\;..\external\curl-7.52.1\include;..\external\breakpad\src;$(VCInstallDir)\..\DIA SDK\include</AdditionalIncludeDirectories>
-      <ShowIncludes>false</ShowIncludes>
-      <PreprocessorDefinitions>ORBIT_PROFILER;_WIN32_WINNT=0x0700;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DebugInformationFormat>OldStyle</DebugInformationFormat>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-    </ClCompile>
-    <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-    <Lib>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-    </Lib>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>..\;..\external\stlsoft-1.9.118\include\;..\external\sqlite\;..\external\concurrentqueue\;..\external\asio\include\;..\external\minhook\include\;..\external\cereal-1.1.2\include\;..\external\multicore\common\;..\external\websocketpp\;..\external\curl-7.52.1\include;..\external\breakpad\src;$(VCInstallDir)\..\DIA SDK\include</AdditionalIncludeDirectories>
-      <ShowIncludes>false</ShowIncludes>
-      <PreprocessorDefinitions>ORBIT_PROFILER;_WIN32_WINNT=0x0700;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DebugInformationFormat>OldStyle</DebugInformationFormat>
-    </ClCompile>
-    <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-    </Link>
-    <Lib>
-      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
-      <AdditionalDependencies>dbghelp.lib</AdditionalDependencies>
-    </Lib>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>..\;..\external\stlsoft-1.9.118\include\;..\external\sqlite\;..\external\concurrentqueue\;..\external\asio\include\;..\external\minhook\include\;..\external\cereal-1.1.2\include\;..\external\multicore\common\;..\external\websocketpp\;..\external\curl-7.52.1\include;..\external\breakpad\src;$(VCInstallDir)\..\DIA SDK\include</AdditionalIncludeDirectories>
-      <ShowIncludes>false</ShowIncludes>
-      <PreprocessorDefinitions>ORBIT_PROFILER;_WIN32_WINNT=0x0700;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DebugInformationFormat>OldStyle</DebugInformationFormat>
-    </ClCompile>
-    <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-    </Link>
-    <Lib>
-      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
-    </Lib>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>..\;..\external\stlsoft-1.9.118\include\;..\external\sqlite\;..\external\concurrentqueue\;..\external\asio\include\;..\external\minhook\include\;..\external\cereal-1.1.2\include\;..\external\multicore\common\;..\external\websocketpp\;..\external\curl-7.52.1\include;..\external\breakpad\src;$(VCInstallDir)\..\DIA SDK\include</AdditionalIncludeDirectories>
-      <ShowIncludes>false</ShowIncludes>
-      <PreprocessorDefinitions>ORBIT_PROFILER;_WIN32_WINNT=0x0700;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DebugInformationFormat>OldStyle</DebugInformationFormat>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-    </ClCompile>
-    <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-    </Link>
-    <Lib>
-      <AdditionalDependencies>dbghelp.lib;OrbitAsm.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-    </Lib>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>..\;..\external\stlsoft-1.9.118\include\;..\external\sqlite\;..\external\concurrentqueue\;..\external\asio\include\;..\external\minhook\include\;..\external\cereal-1.1.2\include\;..\external\multicore\common\;..\external\websocketpp\;..\external\curl-7.52.1\include;..\external\breakpad\src;$(VCInstallDir)\..\DIA SDK\include</AdditionalIncludeDirectories>
-      <ShowIncludes>false</ShowIncludes>
-      <PreprocessorDefinitions>ORBIT_PROFILER;_WIN32_WINNT=0x0700;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DebugInformationFormat>OldStyle</DebugInformationFormat>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-    </ClCompile>
-    <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-    </Link>
-    <Lib>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-    </Lib>
-  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OrbitBase\OrbitBase.vcxproj">
+      <Project>{5f4efd6b-6c58-4d37-aea2-03d0c93cdc14}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

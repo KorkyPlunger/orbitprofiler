@@ -5,6 +5,7 @@
 #include "PluginCanvas.h"
 #include "../OrbitPlugin/OrbitSDK.h"
 
+using namespace std;
 
 //-----------------------------------------------------------------------------
 PluginCanvas::PluginCanvas(Orbit::Plugin* a_Plugin) : GlCanvas(), m_Plugin(a_Plugin)

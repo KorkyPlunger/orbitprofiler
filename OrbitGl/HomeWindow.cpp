@@ -5,6 +5,9 @@
 #include "HomeWindow.h"
 #include "Log.h"
 #include "App.h"
+#include "VariableTracing.h"
+
+using namespace std;
 
 //-----------------------------------------------------------------------------
 HomeWindow::HomeWindow()
@@ -13,7 +16,7 @@ HomeWindow::HomeWindow()
     m_DrawTestUI = false;
     m_DrawLog = true;
 
-    VariableTracing::AddCallback( [=]( std::vector<std::string> & a_Entries ){ this->VariableTracingCallback(a_Entries); } );
+    VariableTracing::AddCallback( [=]( vector<string> & a_Entries ){ this->VariableTracingCallback(a_Entries); } );
 }
 
 //-----------------------------------------------------------------------------
@@ -23,12 +26,12 @@ HomeWindow::~HomeWindow()
 }
 
 //-----------------------------------------------------------------------------
-void HomeWindow::VariableTracingCallback(std::vector< std::string > & a_Entries)
+void HomeWindow::VariableTracingCallback(vector< string > & a_Entries)
 {
     if (m_DrawDebugDisplay)
     {
         m_DebugWindow.Clear();
-        for (std::string & entry : a_Entries)
+        for (string & entry : a_Entries)
         {
             m_DebugWindow.AddLog("%s\n", entry.c_str());
         }
@@ -98,7 +101,7 @@ void HomeWindow::RenderUI()
 
     if (m_DrawLog)
     {
-        GLogger.GetLockedLog(OrbitLog::Global, [&](const std::vector<std::string> & a_Entries)
+        GLogger.GetLockedLog(OrbitLog::Global, [&](const vector<string> & a_Entries)
         {
             m_LogWindow.Draw("Log", a_Entries, &m_LogWindow.m_Open);
         });

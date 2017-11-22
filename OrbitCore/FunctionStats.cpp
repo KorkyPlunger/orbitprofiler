@@ -1,6 +1,6 @@
 #include "FunctionStats.h"
-#include "Core.h"
 #include "Serialization.h"
+#include "ScopeTimer.h"
 
 //-----------------------------------------------------------------------------
 template< class T >

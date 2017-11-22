@@ -3,7 +3,7 @@
 //-----------------------------------
 #pragma once
 
-#include "Core.h"
+
 #include "OrbitType.h"
 #include "Log.h"
 #include "ProcessUtils.h"
@@ -13,7 +13,8 @@
 //-----------------------------------------------------------------------------
 struct SymUtils
 {
-    static void ListModules( HANDLE a_ProcessHandle, std::map< DWORD64, std::shared_ptr< Module > > & o_ModuleMap );
+    typedef std::map< DWORD64, std::shared_ptr<Module> > ModuleMap_t;
+    static ModuleMap_t ListModules( HANDLE a_ProcessHandle);
     static bool GetLineInfo( DWORD64 a_Address, LineInfo & o_LineInfo );
 };
 
@@ -26,7 +27,7 @@ struct ScopeSymCleanup
 };
 
 //-----------------------------------------------------------------------------
-inline bool SymInit( HANDLE a_Handle )
+inline bool SymInit( HANDLE /*a_Handle*/ )
 {
     return true;
 
@@ -55,7 +56,7 @@ inline bool SymInit( HANDLE a_Handle )
 }
 
 //-----------------------------------------------------------------------------
-inline void OrbitSymCleanup(HANDLE a_Handle)
+inline void OrbitSymCleanup(HANDLE /*a_Handle*/)
 {
     return;
     /*if( !SymCleanup( a_Handle ) )

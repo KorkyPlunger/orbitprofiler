@@ -2,7 +2,7 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
+
 #include "SessionsDataView.h"
 #include "ModuleDataView.h"
 #include "Pdb.h"
@@ -11,6 +11,9 @@
 #include "App.h"
 #include "Callstack.h"
 #include "OrbitSession.h"
+#include "Path.h"
+
+using namespace std;
 
 //-----------------------------------------------------------------------------
 SessionsDataView::SessionsDataView()
@@ -20,12 +23,12 @@ SessionsDataView::SessionsDataView()
 }
 
 //-----------------------------------------------------------------------------
-std::vector<float> SessionsDataView::s_HeaderRatios;
+vector<float> SessionsDataView::s_HeaderRatios;
 
 //-----------------------------------------------------------------------------
-const std::vector<std::wstring>& SessionsDataView::GetColumnHeaders()
+const vector<wstring>& SessionsDataView::GetColumnHeaders()
 {
-	static std::vector<std::wstring> Columns;
+	static vector<wstring> Columns;
     if( Columns.size() == 0 )
     { 
         Columns.push_back( L"Session" );  s_HeaderRatios.push_back( 0.5 );
@@ -43,24 +46,24 @@ enum SessionsContextMenuIDs
 };
 
 //-----------------------------------------------------------------------------
-const std::vector<std::wstring>& SessionsDataView::GetContextMenu( int a_Index )
+const vector<wstring>& SessionsDataView::GetContextMenu( int a_Index )
 {
-    static std::vector<std::wstring> Menu = { L"Load Session" };
+    static vector<wstring> Menu = { L"Load Session" };
     return Menu;
 }
 
 //-----------------------------------------------------------------------------
-const std::vector<float>& SessionsDataView::GetColumnHeadersRatios()
+const vector<float>& SessionsDataView::GetColumnHeadersRatios()
 {
     return s_HeaderRatios;
 }
 
 //-----------------------------------------------------------------------------
-std::wstring SessionsDataView::GetValue( int row, int col )
+wstring SessionsDataView::GetValue( int row, int col )
 {
-	std::wstring value;
+	wstring value;
 
-    const std::shared_ptr<Session> & session = GetSession(row);
+    const shared_ptr<Session> & session = GetSession(row);
 
     switch (col)
     {
@@ -78,7 +81,7 @@ std::wstring SessionsDataView::GetValue( int row, int col )
 }
 
 //-----------------------------------------------------------------------------
-std::wstring SessionsDataView::GetToolTip( int a_Row, int a_Column )
+wstring SessionsDataView::GetToolTip( int a_Row, int a_Column )
 {
     const Session & session = *GetSession(a_Row);
     return session.m_FileName;
@@ -98,7 +101,7 @@ void SessionsDataView::OnSort(int a_Column, bool a_Toggle)
     }
 
     bool ascending = m_SortingToggles[pdvColumn];
-    std::function<bool(int a, int b)> sorter = nullptr;
+    function<bool(int a, int b)> sorter = nullptr;
 
     switch (pdvColumn)
     {
@@ -108,14 +111,14 @@ void SessionsDataView::OnSort(int a_Column, bool a_Toggle)
 
     if (sorter)
     {
-        std::sort(m_Indices.begin(), m_Indices.end(), sorter);
+        sort(m_Indices.begin(), m_Indices.end(), sorter);
     }
 
     m_LastSortedColumn = a_Column;
 }
 
 //-----------------------------------------------------------------------------
-void SessionsDataView::OnContextMenu( int a_Index, std::vector<int> & a_ItemIndices )
+void SessionsDataView::OnContextMenu( int a_Index, vector<int> & a_ItemIndices )
 {
     switch( a_Index )
     {
@@ -123,7 +126,7 @@ void SessionsDataView::OnContextMenu( int a_Index, std::vector<int> & a_ItemIndi
     {
         for( int index : a_ItemIndices )
         {
-            const std::shared_ptr<Session> & session = GetSession( index );
+            const shared_ptr<Session> & session = GetSession( index );
             if( GOrbitApp->SelectProcess( Path::GetFileName( session->m_ProcessFullPath ) ) )
             {
                 Capture::LoadSession( session );
@@ -138,24 +141,24 @@ void SessionsDataView::OnContextMenu( int a_Index, std::vector<int> & a_ItemIndi
 }
 
 //-----------------------------------------------------------------------------
-void SessionsDataView::OnFilter( const std::wstring & a_Filter )
+void SessionsDataView::OnFilter( const wstring & a_Filter )
 {
-    std::vector<int> indices;
+    vector<int> indices;
 
-    std::vector< std::wstring > tokens = Tokenize( ToLower( a_Filter ) );
+    vector< wstring > tokens = Tokenize( ToLower( a_Filter ) );
 
     for (int i = 0; i < (int)m_Sessions.size(); ++i)
     {
         const Session & session = *m_Sessions[i];
-        std::wstring name = Path::GetFileName( ToLower( session.m_FileName ) );
-        std::wstring path = ToLower( session.m_ProcessFullPath );
+        wstring name = Path::GetFileName( ToLower( session.m_FileName ) );
+        wstring path = ToLower( session.m_ProcessFullPath );
 
         bool match = true;
 
-        for( std::wstring & filterToken : tokens )
+        for( wstring & filterToken : tokens )
         {
-            if (!(name.find(filterToken) != std::wstring::npos ||
-                path.find(filterToken) != std::wstring::npos))
+            if (!(name.find(filterToken) != wstring::npos ||
+                path.find(filterToken) != wstring::npos))
             {
                 match = false;
                 break;
@@ -192,14 +195,14 @@ void SessionsDataView::OnDataChanged()
 }
 
 //-----------------------------------------------------------------------------
-void SessionsDataView::SetSessions( const std::vector< std::shared_ptr< Session > > & a_Sessions )
+void SessionsDataView::SetSessions( const vector< shared_ptr< Session > > & a_Sessions )
 {
     m_Sessions = a_Sessions;
     OnDataChanged();
 }
 
 //-----------------------------------------------------------------------------
-const std::shared_ptr<Session> & SessionsDataView::GetSession( unsigned int a_Row ) const
+const shared_ptr<Session> & SessionsDataView::GetSession( unsigned int a_Row ) const
 {
     return m_Sessions[m_Indices[a_Row]];
 }

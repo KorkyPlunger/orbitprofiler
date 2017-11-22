@@ -3,17 +3,16 @@
 //-----------------------------------
 #pragma once
 
-
 #include "DataViewTypes.h"
+#include "CoreApp.h"
+#include "CrashHandler.h"
+#include "Message.h"
 
 #include <functional>
 #include <memory>
 #include <string>
 #include <queue>
-
-#include "OrbitCore\CoreApp.h"
-#include "OrbitCore\CrashHandler.h"
-#include "OrbitCore\Message.h"
+#include <map>
 
 struct CallStack;
 class Process;
@@ -146,21 +145,21 @@ private:
     std::vector< class DataViewModel* >   m_Panels;
     FindFileCallback                      m_FindFileCallback;
     
-    ProcessesDataView*      m_ProcessesDataView;
-    ModulesDataView*        m_ModulesDataView;
-    FunctionsDataView*      m_FunctionsDataView;
-    LiveFunctionsDataView*  m_LiveFunctionsDataView;
-    CallStackDataView*      m_CallStackDataView;
-    TypesDataView*          m_TypesDataView;
-    GlobalsDataView*        m_GlobalsDataView;
-    SessionsDataView*       m_SessionsDataView;
-    CaptureWindow*          m_CaptureWindow;
-    LogDataView*            m_Log;
-    RuleEditor*             m_RuleEditor;
+    ProcessesDataView*      m_ProcessesDataView = nullptr;
+    ModulesDataView*        m_ModulesDataView = nullptr;
+    FunctionsDataView*      m_FunctionsDataView = nullptr;
+    LiveFunctionsDataView*  m_LiveFunctionsDataView = nullptr;
+    CallStackDataView*      m_CallStackDataView = nullptr;
+    TypesDataView*          m_TypesDataView = nullptr;
+    GlobalsDataView*        m_GlobalsDataView = nullptr;
+    SessionsDataView*       m_SessionsDataView = nullptr;
+    CaptureWindow*          m_CaptureWindow = nullptr;
+    LogDataView*            m_Log = nullptr;
+    RuleEditor*             m_RuleEditor = nullptr;
     int                     m_ScreenRes[2];
-    bool                    m_HasPromptedForUpdate;
-    bool                    m_NeedsThawing;
-    bool                    m_UnrealEnabled;
+    bool                    m_HasPromptedForUpdate = false;
+    bool                    m_NeedsThawing = false;
+    bool                    m_UnrealEnabled = true;
 
     std::vector< std::shared_ptr< class SamplingReport> > m_SamplingReports;
     std::map< std::wstring, std::wstring > m_FileMapping;
@@ -171,9 +170,9 @@ private:
 
     std::queue< std::shared_ptr<struct Module> > m_ModulesToLoad;
 
-    class EventTracer* m_EventTracer;
-    class Debugger*    m_Debugger;
-    int m_NumTicks;
+    class EventTracer* m_EventTracer = nullptr;
+    class Debugger*    m_Debugger = nullptr;
+    int m_NumTicks = 0;
     CrashHandler       m_CrashHandler;
 };
 

@@ -53,13 +53,15 @@
 #include <QTextCursor>
 #include "orbitcodeeditor.h"
 
-#include "../OrbitCore/PrintVar.h"
-#include "../OrbitCore/Utils.h"
-#include "../OrbitCore/Path.h"
-#include "../OrbitCore/LogInterface.h"
-#include "../OrbitGl/App.h"
+#include "PrintVar.h"
+#include "Utils.h"
+#include "Path.h"
+#include "LogInterface.h"
+#include "App.h"
 
 #include <fstream>
+
+using namespace std;
 
 OrbitCodeEditor* OrbitCodeEditor::GFileMapEditor;
 QWidget* OrbitCodeEditor::GFileMapWidget;
@@ -172,9 +174,9 @@ int OrbitCodeEditor::lineNumberAreaWidth()
 }
 
 //-----------------------------------------------------------------------------
-bool OrbitCodeEditor::loadCode( std::string a_Msg )
+bool OrbitCodeEditor::loadCode( string a_Msg )
 {
-    std::vector< std::string > tokens = Tokenize( a_Msg, "^" );
+    vector< string > tokens = Tokenize( a_Msg, "^" );
 
     if( tokens.size() == 3 )
     {
@@ -189,7 +191,7 @@ bool OrbitCodeEditor::loadCode( std::string a_Msg )
         }
         else
         {
-            std::string msg = Format( "Could not find %s (%s)\n", tokens[1].c_str(), tokens[2].c_str() );
+            string msg = Format( "Could not find %s (%s)\n", tokens[1].c_str(), tokens[2].c_str() );
             msg += "Please modify FileMapping.txt shown below if the source code is available at another location.";
             document()->setPlainText(msg.c_str());
             return false;
@@ -243,8 +245,8 @@ void OrbitCodeEditor::OnTimer()
 {
     if( m_IsOutput && isVisible() )
     {
-        std::vector< std::string > outputEntries = LogInterface::GetOutput();
-        for( std::string & line : outputEntries )
+        vector< string > outputEntries = LogInterface::GetOutput();
+        for( string & line : outputEntries )
         {
             QTextCursor prev_cursor = textCursor();
             moveCursor( QTextCursor::End );
@@ -255,7 +257,7 @@ void OrbitCodeEditor::OnTimer()
 }
 
 //-----------------------------------------------------------------------------
-void OrbitCodeEditor::SetText( const std::wstring & a_Text )
+void OrbitCodeEditor::SetText( const wstring & a_Text )
 {
     this->document()->setPlainText( QString::fromStdWString(a_Text) );
 }
@@ -373,7 +375,7 @@ void OrbitCodeEditor::keyPressEvent( QKeyEvent *e )
 //-----------------------------------------------------------------------------
 void OrbitCodeEditor::saveFileMap()
 {
-    std::wstring fileName = Path::GetFileMappingFileName();
+    wstring fileName = Path::GetFileMappingFileName();
     wofstream outFile( fileName );
     if (!outFile.fail())
     {
@@ -383,7 +385,7 @@ void OrbitCodeEditor::saveFileMap()
 }
 
 //-----------------------------------------------------------------------------
-void OrbitCodeEditor::HighlightWord( const std::wstring & a_Text, const QColor & a_Color, QList<QTextEdit::ExtraSelection>& extraSelections )
+void OrbitCodeEditor::HighlightWord( const wstring & a_Text, const QColor & a_Color, QList<QTextEdit::ExtraSelection>& extraSelections )
 {
     QString searchString(QString::fromStdWString(a_Text));
     QTextDocument *document = this->document();
@@ -427,7 +429,7 @@ void OrbitCodeEditor::highlightCurrentLine()
         QTextEdit::ExtraSelection wordSelection;
         wordSelection.cursor = textCursor();
         wordSelection.cursor.select( QTextCursor::WordUnderCursor );
-        std::wstring word = wordSelection.cursor.selectedText().toStdWString();
+        wstring word = wordSelection.cursor.selectedText().toStdWString();
         if( word == L"" || !m_SelectedText.Contains(word) )
         {
             m_SelectedText.Add(word);
@@ -435,7 +437,7 @@ void OrbitCodeEditor::highlightCurrentLine()
 
         for( int i = 0; i < m_SelectedText.Size(); ++i )
         {
-            std::wstring word = m_SelectedText.Data()[i];
+            wstring word = m_SelectedText.Data()[i];
             HighlightWord( word, m_SelectedColors[i], extraSelections );
         }
     }

@@ -1,16 +1,17 @@
-#include "Core.h"
-
-#include <malloc.h>
 #include "external/DIA2Dump/dia2dump.h"
 #include "external/DIA2Dump/regs.h"
 
 #include "DiaParser.h"
-#include <map>
 
 #include "Log.h"
 #include "Utils.h"
 #include "OrbitType.h"
 #include "Pdb.h"
+#include "PrintVar.h"
+
+#include <dia2.h>
+
+using namespace std;
 
 inline int myDebugBreak( int ){
     DebugBreak();
@@ -601,9 +602,9 @@ void DiaParser::PrintGlobalSymbol(IDiaSymbol *pSymbol)
     }
 }
 
-std::wstring DiaParser::GetBasicType(DWORD a_BaseType)
+wstring DiaParser::GetBasicType(DWORD a_BaseType)
 {
-    static std::unordered_map<DWORD, std::wstring> BasicTypeMap;
+    static unordered_map<DWORD, wstring> BasicTypeMap;
     if (BasicTypeMap.size() == 0)
     {
         BasicTypeMap[btNoType]  = L"btNoType  ";
@@ -1088,26 +1089,26 @@ void DiaParser::PrintSymTag(DWORD dwSymTag)
     LOGF(L"%-15s: ", SafeDRef(rgTags, dwSymTag));
 }
 
-std::wstring DiaParser::GetSymTag( DWORD dwSymTag )
+wstring DiaParser::GetSymTag( DWORD dwSymTag )
 {
     return Format( L"%-15s: ", SafeDRef(rgTags, dwSymTag)).c_str();
 }
 
-std::wstring DiaParser::GetLocation( IDiaSymbol* pSymbol )
+wstring DiaParser::GetLocation( IDiaSymbol* pSymbol )
 {
     DiaParser parser;
     parser.PrintLocation( pSymbol );
     return parser.m_Log;
 }
 
-std::wstring DiaParser::GetSymbolType( IDiaSymbol *pSymbol )
+wstring DiaParser::GetSymbolType( IDiaSymbol *pSymbol )
 {
     DiaParser parser;
     parser.PrintSymbolTypeNoPrefix( pSymbol );
     return parser.m_Log;
 }
 
-std::wstring DiaParser::GetName( IDiaSymbol* pSymbol )
+wstring DiaParser::GetName( IDiaSymbol* pSymbol )
 {
     DiaParser parser;
     parser.PrintName( pSymbol );
@@ -2039,7 +2040,7 @@ void DiaParser::PrintData(IDiaSymbol *pSymbol)
     PrintName(pSymbol);
 }
 
-std::wstring DiaParser::GetData( IDiaSymbol *pSymbol )
+wstring DiaParser::GetData( IDiaSymbol *pSymbol )
 {
     DiaParser parser;
     parser.PrintData( pSymbol );
@@ -2101,7 +2102,7 @@ void DiaParser::PrintUdtKind(IDiaSymbol *pSymbol)
     }
 }
 
-void DiaParser::PrintClassHierarchy( IDiaSymbol* pSymbol, DWORD dwIndent, IDiaSymbol* a_Parent )
+void DiaParser::PrintClassHierarchy( IDiaSymbol* pSymbol, DWORD dwIndent, IDiaSymbol* )
 {
     IDiaEnumSymbols *pEnumChildren;
     IDiaSymbol *pChild;

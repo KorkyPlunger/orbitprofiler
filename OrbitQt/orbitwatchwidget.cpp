@@ -11,11 +11,13 @@
 #include "qtpropertybrowser\qtbuttonpropertybrowser.h"
 #include "qtpropertybrowser\qtgroupboxpropertybrowser.h"
 
-#include "../OrbitCore/Variable.h"
-#include "../OrbitCore/OrbitType.h"
-#include "../OrbitCore/Pdb.h"
-#include "../OrbitCore/PrintVar.h"
-#include "../OrbitGl/App.h"
+#include "Variable.h"
+#include "OrbitType.h"
+#include "Pdb.h"
+#include "PrintVar.h"
+#include "App.h"
+
+using namespace std;
 
 //-----------------------------------------------------------------------------
 void OrbitWatchWidget::valueChanged( QtProperty *property, int val )
@@ -197,14 +199,14 @@ QtAbstractPropertyManager* OrbitWatchWidget::GetManager( const Variable* a_Varia
 //-----------------------------------------------------------------------------
 void OrbitWatchWidget::AddToMap( const Variable * a_Variable, QtProperty * a_QtProperty )
 {
-    std::lock_guard<std::recursive_mutex> lock(m_Mutex);
+    lock_guard<recursive_mutex> lock(m_Mutex);
     m_Properties[a_Variable] = a_QtProperty;
 }
 
 //-----------------------------------------------------------------------------
 QtProperty* OrbitWatchWidget::GetProperty( const Variable* a_Variable )
 {
-    std::lock_guard<std::recursive_mutex> lock( m_Mutex );
+    lock_guard<recursive_mutex> lock( m_Mutex );
     return m_Properties[a_Variable];
 }
 
@@ -213,13 +215,13 @@ QtProperty* OrbitWatchWidget::AddProp( QtProperty* a_Parent, const Variable* a_V
 {
     QtAbstractPropertyManager* manager = GetManager(a_Variable);
     QtProperty* newProperty = nullptr;
-    std::wstring typeName = a_Variable->m_Type == L"" ? a_Variable->GetTypeName() : a_Variable->m_Type;
+    wstring typeName = a_Variable->m_Type == L"" ? a_Variable->GetTypeName() : a_Variable->m_Type;
 
     if( a_Variable->m_Children.size() )
     {
         newProperty = groupManager->addProperty( QString::fromStdWString( a_Variable->m_Name ) );
 
-        for( std::shared_ptr<Variable> member : a_Variable->m_Children )
+        for( shared_ptr<Variable> member : a_Variable->m_Children )
         {
             QtProperty* prop = AddProp( newProperty, member.get() );
             newProperty->addSubProperty( prop );
@@ -262,7 +264,7 @@ void OrbitWatchWidget::UpdateVariable( const Variable * a_Variable )
     }
     else
     {
-        for( const std::shared_ptr< Variable > var : a_Variable->m_Children )
+        for( const shared_ptr< Variable > var : a_Variable->m_Children )
         {
             UpdateProperty( var.get() );
         }
@@ -272,7 +274,7 @@ void OrbitWatchWidget::UpdateVariable( const Variable * a_Variable )
 //-----------------------------------------------------------------------------
 void OrbitWatchWidget::UpdateProperty( const Variable * a_Variable )
 {
-    std::lock_guard<std::recursive_mutex> lock(m_Mutex);
+    lock_guard<recursive_mutex> lock(m_Mutex);
     QtProperty* prop = GetProperty( a_Variable );
 
     if( prop )
@@ -314,7 +316,7 @@ void OrbitWatchWidget::UpdateProperty( const Variable * a_Variable )
 //-----------------------------------------------------------------------------
 void OrbitWatchWidget::Reset()
 {
-    std::lock_guard<std::recursive_mutex> lock(m_Mutex);
+    lock_guard<recursive_mutex> lock(m_Mutex);
     m_Properties.clear();
     m_Editor->clear();
 }

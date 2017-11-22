@@ -2,15 +2,21 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
+
 #include "Debugger.h"
 #include "OrbitDbgHelp.h"
 #include "TcpServer.h"
 #include "App.h"
+#include "Params.h"
+#include "Path.h"
+#include "PrintVar.h"
+
 #include <psapi.h>
 #include <thread>
 #include <string>
-#include "Params.h"
+#include <tchar.h>
+
+using namespace std;
 
 //-----------------------------------------------------------------------------
 Debugger::Debugger() : m_LoopReady(false)
@@ -23,9 +29,9 @@ Debugger::~Debugger()
 }
 
 //-----------------------------------------------------------------------------
-void Debugger::LaunchProcess( const std::wstring & a_ProcessName, const std::wstring & a_WorkingDir, const std::wstring & a_Args )
+void Debugger::LaunchProcess( const wstring & a_ProcessName, const wstring & a_WorkingDir, const wstring & a_Args )
 {
-    std::thread t( &Debugger::DebuggerThread, this, a_ProcessName, a_WorkingDir, a_Args );
+    thread t( &Debugger::DebuggerThread, this, a_ProcessName, a_WorkingDir, a_Args );
     t.detach();
 }
 
@@ -51,13 +57,13 @@ void Debugger::SendThawMessage()
 
 #define BUFSIZE 512
 //-----------------------------------------------------------------------------
-std::string GetFileNameFromHandle( HANDLE hFile )
+string GetFileNameFromHandle( HANDLE hFile )
 {
     BOOL bSuccess = FALSE;
     TCHAR pszFilename[MAX_PATH + 1];
     HANDLE hFileMap;
 
-    std::wstring strFilename;
+    wstring strFilename;
 
     // Get the file size.
     DWORD dwFileSizeHi = 0;
@@ -142,7 +148,7 @@ HANDLE hProcess = 0;
 void* startAddress = 0;
 
 //-----------------------------------------------------------------------------
-void Debugger::DebuggerThread( const std::wstring & a_ProcessName, const std::wstring & a_WorkingDir, const std::wstring & a_Args )
+void Debugger::DebuggerThread( const wstring & a_ProcessName, const wstring & a_WorkingDir, const wstring & a_Args )
 {
     SetThreadName( GetCurrentThreadId(), "Debugger" );
 
@@ -152,8 +158,8 @@ void Debugger::DebuggerThread( const std::wstring & a_ProcessName, const std::ws
     si.cb = sizeof( si );
     ZeroMemory( &pi, sizeof( pi ) );
 
-    std::wstring dir = a_WorkingDir.size() ? a_WorkingDir : Path::GetDirectory( a_ProcessName );
-    std::wstring args = a_ProcessName + L" " + a_Args;
+    wstring dir = a_WorkingDir.size() ? a_WorkingDir : Path::GetDirectory( a_ProcessName );
+    wstring args = a_ProcessName + L" " + a_Args;
     TCHAR commandline[MAX_PATH + 1];
     int numChars = (int)min( (size_t)MAX_PATH, args.size() );
     memcpy( commandline, args.c_str(), numChars*sizeof(TCHAR) );
@@ -170,8 +176,8 @@ void Debugger::DebuggerThread( const std::wstring & a_ProcessName, const std::ws
                                 , &si
                                 , &pi ) != 0;
 
-    std::string strEventMessage;
-    std::map<LPVOID, std::string> DllNameMap;
+    string strEventMessage;
+    map<LPVOID, string> DllNameMap;
     DEBUG_EVENT debug_event = { 0 };
     bool bContinueDebugging = true;
     DWORD dwContinueStatus = DBG_CONTINUE;
@@ -238,14 +244,14 @@ void Debugger::DebuggerThread( const std::wstring & a_ProcessName, const std::ws
         {
             strEventMessage = GetFileNameFromHandle( debug_event.u.LoadDll.hFile );
 
-            DllNameMap.insert( std::make_pair( debug_event.u.LoadDll.lpBaseOfDll, strEventMessage ) );
+            DllNameMap.insert( make_pair( debug_event.u.LoadDll.lpBaseOfDll, strEventMessage ) );
 
             strEventMessage += Format( "%x", debug_event.u.LoadDll.lpBaseOfDll );
         }
         break;
 
         case UNLOAD_DLL_DEBUG_EVENT:
-            strEventMessage = Format( "%s", DllNameMap[debug_event.u.UnloadDll.lpBaseOfDll] );
+            strEventMessage = Format( "%s", DllNameMap[debug_event.u.UnloadDll.lpBaseOfDll].c_str() );
             break;
 
         case OUTPUT_DEBUG_STRING_EVENT:

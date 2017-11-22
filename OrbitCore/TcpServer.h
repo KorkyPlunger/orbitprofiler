@@ -3,8 +3,10 @@
 //-----------------------------------
 #pragma once
 
-#include "Core.h"
+
 #include "TcpEntity.h"
+#include "Utils.h" // s2ws
+
 #include <functional>
 #include <unordered_map>
 

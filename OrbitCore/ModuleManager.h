@@ -3,10 +3,13 @@
 //-----------------------------------
 #pragma once
 
-#include "Core.h"
-#include "Pdb.h"
+#include <memory>
+#include <vector>
+#include <functional>
 
+class Pdb;
 struct Module;
+class Message;
 
 class ModuleManager
 {

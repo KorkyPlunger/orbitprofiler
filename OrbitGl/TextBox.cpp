@@ -9,6 +9,8 @@
 #include "Capture.h"
 #include "Params.h"
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 TextBox::TextBox() : m_Pos( Vec2::Zero() )
                    , m_Size( Vec2(100.f, 10.f) )
@@ -22,7 +24,7 @@ TextBox::TextBox() : m_Pos( Vec2::Zero() )
 //-----------------------------------------------------------------------------
 TextBox::TextBox( const Vec2 & a_Pos
                 , const Vec2 & a_Size
-                , const std::string & a_Text
+                , const string & a_Text
                 , TextRenderer * a_Renderer
                 , const Color & a_Color )
                 : m_Pos( a_Pos )
@@ -147,7 +149,7 @@ void TextBox::Draw( TextRenderer & a_TextRenderer
         float maxSize = m_Pos[0]+m_Size[0] - posX;
 
         Function* func = Capture::GSelectedFunctionsMap[m_Timer.m_FunctionAddress];
-        std::string text = Format( "%s %s", func ? func->PrettyNameStr().c_str() : "", m_Text.c_str() );
+        string text = Format( "%s %s", func ? func->PrettyNameStr().c_str() : "", m_Text.c_str() );
 
         if( !a_IsPicking && !isCoreActivity )
         {

@@ -4,6 +4,8 @@
 #include <QStringList>
 #include <QColor>
 
+using namespace std;
+
 OrbitTreeModel::OrbitTreeModel(const QString &data, QObject *parent)
     : QAbstractItemModel(parent)
 {
@@ -159,7 +161,7 @@ void OrbitTreeModel::setupModelData(const QStringList &lines, OrbitTreeItem *par
     }
 }
 
-void OrbitTreeModel::Filter( const std::wstring & a_Filter )
+void OrbitTreeModel::Filter( const wstring & a_Filter )
 {
     if( rootItem )
     {

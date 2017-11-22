@@ -3,12 +3,13 @@
 //-----------------------------------
 #pragma once
 
-#include "Core.h"
+
 #include "Pdb.h"
 #include "Callstack.h"
 #include "BlockChain.h"
-#include "external/xxHash-r42/xxhash.h"
+#include <xxhash.h> // xxHash-r42
 #include "SerializationMacros.h"
+#include "Threading.h"
 
 class Process;
 class Thread;

@@ -10,10 +10,10 @@
 #include <QOpenGLDebugLogger>
 #include <QOpenGLDebugMessage>
 
-#include "../OrbitCore/PrintVar.h"
-#include "../OrbitCore/Utils.h"
+#include "PrintVar.h"
+#include "Utils.h"
 
-#define ORBIT_DEBUG_OPEN_GL 0
+#define ORBIT_DEBUG_OPEN_GL 1
 
 //-----------------------------------------------------------------------------
 OrbitGLWidget::OrbitGLWidget(QWidget *parent) : QOpenGLWidget(parent)

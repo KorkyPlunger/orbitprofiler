@@ -3,12 +3,16 @@
 //-----------------------------------
 
 #include "Tcp.h"
-#include "Core.h"
+
 #include "TcpServer.h"
 #include "Capture.h"
 #include "PrintVar.h"
 
 #include <websocketpp/frame.hpp>
+#include <websocketpp/sha1/sha1.hpp>
+#include <websocketpp/base64/base64.hpp>
+
+using namespace std;
 
 // Based off asio sample
 // https://github.com/chriskohlhoff/asio/
@@ -21,7 +25,7 @@ tcp_server::~tcp_server()
 
 //-----------------------------------------------------------------------------
 tcp_server::tcp_server( asio::io_service & io_service, unsigned short port )
-    : m_Acceptor( io_service, tcp::endpoint( tcp::v4(), port ) )
+    : m_Acceptor( io_service, asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port ) )
 {
     start_accept();
 }
@@ -39,7 +43,7 @@ void tcp_server::Disconnect()
 }
 
 //-----------------------------------------------------------------------------
-void tcp_server::RegisterConnection( std::shared_ptr<TcpConnection> a_Connection )
+void tcp_server::RegisterConnection( shared_ptr<TcpConnection> a_Connection )
 {
     m_Connection = a_Connection;
 }
@@ -53,10 +57,10 @@ void tcp_server::start_accept()
     // initiates an asynchronous accept operation 
     // to wait for a new connection. 
     m_Acceptor.async_accept( *new_connection->GetSocket().m_Socket
-                           , std::bind( &tcp_server::handle_accept
+                           , bind( &tcp_server::handle_accept
                                       , this
                                       , new_connection
-                                      , std::placeholders::_1 ) 
+                                      , placeholders::_1 ) 
                            );
 }
 
@@ -86,7 +90,7 @@ void TcpConnection::ReadMessage()
 {
     asio::async_read( m_Socket, asio::buffer( &m_Message, sizeof(Message) ), 
         
-    [this]( asio::error_code ec, std::size_t /*length*/ )
+    [this]( asio::error_code ec, size_t /*length*/ )
     {
         if(!ec)
         {
@@ -108,7 +112,7 @@ void TcpConnection::ReadWebsocketMessage()
 {
     asio::async_read( m_Socket, asio::buffer( &m_WebSocketBuffer, sizeof(websocketpp::frame::basic_header) ),
 
-        [this]( asio::error_code ec, std::size_t /*length*/ )
+        [this]( asio::error_code ec, size_t /*length*/ )
     {
         if( !ec )
         {
@@ -133,7 +137,7 @@ void TcpConnection::ReadWebsocketMask()
 {
     asio::async_read( m_Socket, asio::buffer( &m_WebSocketMask, sizeof( m_WebSocketMask ) ),
 
-        [this]( asio::error_code ec, std::size_t /*length*/ )
+        [this]( asio::error_code ec, size_t /*length*/ )
     {
         if( !ec )
         {
@@ -156,7 +160,7 @@ void TcpConnection::ReadWebsocketPayload()
     m_Payload[m_WebSocketPayloadLength] = 0;
     asio::async_read( m_Socket, asio::buffer( m_Payload.data(), m_WebSocketPayloadLength ),
 
-        [this]( asio::error_code ec, std::size_t /*length*/ )
+        [this]( asio::error_code ec, size_t /*length*/ )
     {
         if( !ec )
         {
@@ -181,7 +185,7 @@ void TcpConnection::DecodeWebsocketPayload()
         m_Payload[i] = m_Payload[i] ^ mask[i%4];
     }
 
-    std::string cmd = m_Payload.data();
+    string cmd = m_Payload.data();
     PRINT_VAR(cmd);
     GTcpServer->SendToUiAsync( cmd );
     ReadWebsocketMessage();
@@ -194,9 +198,9 @@ void TcpConnection::ResetStats()
 }
 
 //-----------------------------------------------------------------------------
-std::vector<std::string> TcpConnection::GetStats()
+vector<string> TcpConnection::GetStats()
 {
-    return std::vector<std::string>();
+    return vector<string>();
 }
 
 //-----------------------------------------------------------------------------
@@ -209,7 +213,7 @@ bool IsWebSocketHandshakeMessage( Message& a_Message )
 }
 
 //-----------------------------------------------------------------------------
-void process_handshake_key( std::string & key )
+void process_handshake_key( string & key )
 {
     static char const ws_handshake_guid[] = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
 
@@ -221,18 +225,18 @@ void process_handshake_key( std::string & key )
 }
 
 //-----------------------------------------------------------------------------
-void TcpConnection::handle_request_line( asio::error_code ec, std::size_t bytes_transferred )
+void TcpConnection::handle_request_line( asio::error_code ec, size_t bytes_transferred )
 {
     if( !ec )
     {
         m_NumBytesReceived += bytes_transferred;
 
         asio::streambuf::const_buffers_type bufs = m_StreamBuf.data();
-        std::string str( asio::buffers_begin( bufs ), asio::buffers_begin( bufs ) + bytes_transferred );
+        string str( asio::buffers_begin( bufs ), asio::buffers_begin( bufs ) + bytes_transferred );
 
         if( Contains( str, "Sec-WebSocket-Key:" ) )
         {
-            std::vector<std::string> tokens = Tokenize( str, " " );
+            vector<string> tokens = Tokenize( str, " " );
             m_WebSocketKey = tokens[1];
             ReplaceStringInPlace( m_WebSocketKey, "\r\n", "" );
             process_handshake_key( m_WebSocketKey );
@@ -247,7 +251,7 @@ void TcpConnection::handle_request_line( asio::error_code ec, std::size_t bytes_
         }
         else
         {
-            asio::async_read_until( m_Socket, m_StreamBuf, "\r\n", std::bind( &TcpConnection::handle_request_line, this, std::placeholders::_1, std::placeholders::_2));
+            asio::async_read_until( m_Socket, m_StreamBuf, "\r\n", bind( &TcpConnection::handle_request_line, this, placeholders::_1, placeholders::_2));
         }
     }
     else
@@ -259,7 +263,7 @@ void TcpConnection::handle_request_line( asio::error_code ec, std::size_t bytes_
 //-----------------------------------------------------------------------------
 void handle_writes(const asio::error_code& error, size_t bytes_transferred)
 {
-    std::string errorStr = error.message();
+    string errorStr = error.message();
     PRINT_VAR( error.message().c_str() );
     PRINT_VAR( bytes_transferred );
 }
@@ -270,7 +274,7 @@ void TcpConnection::SendWebsocketResponse()
     const char* p = "HTTP/1.1 101 Switching Protocols\r\nConnection: upgrade\r\nSec-WebSocket-Accept: ";
     const char* s = "\r\nUpgrade: websocket\r\n\r\n";
     
-    std::string response = p + m_WebSocketKey + s;
+    string response = p + m_WebSocketKey + s;
 
     
     asio::async_write( m_Socket, asio::buffer( response.data(), response.size() ), handle_writes );
@@ -279,7 +283,7 @@ void TcpConnection::SendWebsocketResponse()
 //-----------------------------------------------------------------------------
 void TcpConnection::ReadWebsocketHandshake()
 {
-    asio::async_read_until( m_Socket, m_StreamBuf, "\r\n", std::bind( &TcpConnection::handle_request_line, this, std::placeholders::_1, std::placeholders::_2));
+    asio::async_read_until( m_Socket, m_StreamBuf, "\r\n", bind( &TcpConnection::handle_request_line, this, placeholders::_1, placeholders::_2));
 }
 
 //-----------------------------------------------------------------------------
@@ -302,7 +306,7 @@ void TcpConnection::ReadPayload()
         m_Payload.resize(m_Message.m_Size);
         asio::async_read( m_Socket, asio::buffer( m_Payload.data(), m_Message.m_Size ),
 
-        [this](asio::error_code ec, std::size_t bytes_transferred)
+        [this](asio::error_code ec, size_t bytes_transferred)
         {
             if (!ec)
             {

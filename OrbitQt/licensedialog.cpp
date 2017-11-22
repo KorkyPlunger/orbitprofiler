@@ -2,6 +2,8 @@
 #include "ui_licensedialog.h"
 #include <QPlainTextEdit>
 
+using namespace std;
+
 LicenseDialog::LicenseDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LicenseDialog)
@@ -14,7 +16,7 @@ LicenseDialog::~LicenseDialog()
     delete ui;
 }
 
-std::wstring LicenseDialog::GetLicense()
+wstring LicenseDialog::GetLicense()
 {
     return ui->LicenseTextEdit->document()->toPlainText().toStdWString();
 }

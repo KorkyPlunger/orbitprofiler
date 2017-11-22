@@ -3,12 +3,12 @@
 //-----------------------------------
 #pragma once
 
-#include "Core.h"
+
 #include "CallstackTypes.h"
 #include <string>
 #include <chrono>
 #include "OrbitType.h"
-using namespace std;
+#include "Threading.h"
 
 class Process;
 class Session;
@@ -38,7 +38,7 @@ struct Capture
     static void TestHooks();
     static void OpenCapture( const std::wstring & a_CaptureName );
     static bool IsOtherInstanceRunning();
-    static void LoadSession( const shared_ptr<Session> & a_Session );
+    static void LoadSession( const std::shared_ptr<Session> & a_Session );
     static void SaveSession( const std::wstring & a_FileName );
     static void NewSamplingProfiler();
     static bool IsTrackingEvents();

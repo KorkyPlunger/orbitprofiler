@@ -8,17 +8,19 @@
 // If you are new to ImGui, see examples/README.txt and documentation at the top of imgui.cpp.
 // https://github.com/ocornut/imgui
 
-#include "Core.h"
+
 #include "ImGuiOrbit.h"
 #include "GlCanvas.h"
 #include "OpenGl.h"
 #include "SymbolUtils.h"
 #include "Pdb.h"
-#include "Core.h"
+
 #include "Message.h"
 #include "Capture.h"
 #include "Images.h"
 #include "Params.h"
+
+using namespace std;
 
 // Data
 struct GLFWwindow{};
@@ -329,7 +331,7 @@ ImFont* AddFontDefault()
         font_cfg.OversampleH = font_cfg.OversampleV = 1;
         font_cfg.PixelSnapH = true;
     }
-    if (font_cfg.Name[0] == '\0') strcpy(font_cfg.Name, "ProggyClean.ttf, 13px");
+    if (font_cfg.Name[0] == '\0') strcpy_s(font_cfg.Name, "ProggyClean.ttf, 13px");
 
     const char* ttf_compressed_base85 = GetDefaultCompressedFontDataTTFBase85();
     ImFont* font = ImGui::GetIO().Fonts->AddFontFromMemoryCompressedBase85TTF(ttf_compressed_base85, GParams.m_FontSize, &font_cfg, ImGui::GetIO().Fonts->GetGlyphRangesDefault());
@@ -439,7 +441,7 @@ void Orbit_ImGui_NewFrame( GlCanvas * a_Canvas )
     //io.DisplayFramebufferScale = ImVec2((float)display_w / w, (float)display_h / h);
 
     // Setup time step
-    double current_time =  0;
+    //double current_time =  0;
     io.DeltaTime = a_Canvas->GetDeltaTimeSeconds();
 
     // Setup inputs
@@ -468,11 +470,11 @@ void WatchWindow::Draw(const char* title, bool* p_opened )
         return;
     }
 
-    const std::vector< std::shared_ptr<Variable> > & watchedVars = Capture::GTargetProcess->GetWatchedVariables();
+    const vector< shared_ptr<Variable> > & watchedVars = Capture::GTargetProcess->GetWatchedVariables();
 
     if (ImGui::Button("Sync"))
     {
-        for( std::shared_ptr<Variable> var : watchedVars )
+        for( shared_ptr<Variable> var : watchedVars )
         {
             var->SyncValue();
         }
@@ -484,7 +486,7 @@ void WatchWindow::Draw(const char* title, bool* p_opened )
 
     //struct funcs
     {
-        for( std::shared_ptr<Variable> variable : watchedVars )
+        for( shared_ptr<Variable> variable : watchedVars )
         {
             Variable & var = *variable;
             ImGui::PushID(variable.get());                      // Use object uid as identifier. Most commonly you could also use the object pointer as a base ID.
@@ -493,7 +495,7 @@ void WatchWindow::Draw(const char* title, bool* p_opened )
             ImGui::NextColumn();
             ImGui::AlignFirstTextHeightToWidgets();
 
-            bool sendVariable = false;
+            //bool sendVariable = false;
 
             switch( var.m_BasicType )
             {

@@ -6,6 +6,8 @@
 #include "GlCanvas.h"
 #include <algorithm>
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 GlSlider::GlSlider() : m_Canvas(nullptr)
                      , m_Ratio(0)
@@ -56,7 +58,7 @@ void GlSlider::OnDrag( int a_X, int a_Y )
     float newX = (float)a_X - sliderLeftWidth;
     float ratio = newX / nonSliderWidth;
 
-    m_Ratio = clamp( ratio, 0.f, 1.f );
+    m_Ratio = ::clamp( ratio, 0.f, 1.f );
 
     if( m_DragCallback )
     {

@@ -7,8 +7,10 @@
 #include "SamplingReportDataView.h"
 #include "CallstackDataView.h"
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
-SamplingReport::SamplingReport( std::shared_ptr< class SamplingProfiler > a_SamplingProfiler )
+SamplingReport::SamplingReport( shared_ptr< class SamplingProfiler > a_SamplingProfiler )
 {
     m_Profiler = a_SamplingProfiler;
     m_SelectedAddress = 0;
@@ -34,7 +36,7 @@ void SamplingReport::FillReport()
         if( tid == 0 && m_Profiler->GetGenerateSummary() == false )
             continue;
 
-        std::shared_ptr<SamplingReportDataView> threadReport = std::make_shared<SamplingReportDataView>();
+        shared_ptr<SamplingReportDataView> threadReport = make_shared<SamplingReportDataView>();
         threadReport->SetSampledFunctions(threadSampleData->m_SampleReport);
         threadReport->SetThreadID(tid);
         threadReport->SetSamplingProfiler(m_Profiler);
@@ -43,7 +45,7 @@ void SamplingReport::FillReport()
     }
 
     static int cnt = 0;
-    std::string panelName = "samplingReport" + std::to_string(cnt++);
+    string panelName = "samplingReport" + to_string(cnt++);
 }
 
 //-----------------------------------------------------------------------------
@@ -90,7 +92,7 @@ void SamplingReport::DecrementCallstackIndex()
 }
 
 //-----------------------------------------------------------------------------
-std::wstring SamplingReport::GetSelectedCallstackString()
+wstring SamplingReport::GetSelectedCallstackString()
 {
     if( m_SelectedSortedCallstackReport )
     {

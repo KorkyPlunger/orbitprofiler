@@ -5,7 +5,9 @@
 #include "LogInterface.h"
 #include "Log.h"
 
-std::vector< std::string > LogInterface::GetOutput()
+using namespace std;
+
+vector< string > LogInterface::GetOutput()
 {
     return GLogger.ConsumeEntries( OrbitLog::Viz );
 }

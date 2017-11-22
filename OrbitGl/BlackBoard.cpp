@@ -11,6 +11,7 @@
 #include "RuleEditor.h"
 #include "App.h"
 
+using namespace std;
 
 //-----------------------------------------------------------------------------
 BlackBoard::BlackBoard()

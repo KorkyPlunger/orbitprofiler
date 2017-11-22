@@ -2,7 +2,7 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
+
 #include "TypeDataView.h"
 #include "Capture.h"
 #include "OrbitType.h"
@@ -11,6 +11,8 @@
 #include "Pdb.h"
 #include "OrbitDia.h"
 #include <algorithm>
+
+using namespace std;
 
 //-----------------------------------------------------------------------------
 TypesDataView::TypesDataView()
@@ -34,13 +36,13 @@ void TypesDataView::OnDataChanged()
 }
 
 //-----------------------------------------------------------------------------
-std::vector<int> TypesDataView::s_HeaderMap;
-std::vector<float> TypesDataView::s_HeaderRatios;
+vector<int> TypesDataView::s_HeaderMap;
+vector<float> TypesDataView::s_HeaderRatios;
 
 //-----------------------------------------------------------------------------
-const std::vector<std::wstring>& TypesDataView::GetColumnHeaders()
+const vector<wstring>& TypesDataView::GetColumnHeaders()
 {
-    static std::vector<std::wstring> Columns;
+    static vector<wstring> Columns;
 
     if (s_HeaderMap.size() == 0)
     {
@@ -60,19 +62,19 @@ const std::vector<std::wstring>& TypesDataView::GetColumnHeaders()
 }
 
 //-----------------------------------------------------------------------------
-const std::vector<float>& TypesDataView::GetColumnHeadersRatios()
+const vector<float>& TypesDataView::GetColumnHeadersRatios()
 {
     return s_HeaderRatios;
 }
 
 //-----------------------------------------------------------------------------
-std::wstring TypesDataView::GetValue( int a_Row, int a_Column )
+wstring TypesDataView::GetValue( int a_Row, int a_Column )
 {
     ScopeLock lock( Capture::GTargetProcess->GetDataMutex() );
 
     Type & type = GetType(a_Row);
 
-    std::wstring value;
+    wstring value;
 
     switch ( s_HeaderMap[a_Column] )
     {
@@ -105,7 +107,7 @@ std::wstring TypesDataView::GetValue( int a_Row, int a_Column )
 }
 
 //-----------------------------------------------------------------------------
-void TypesDataView::OnFilter( const std::wstring & a_Filter )
+void TypesDataView::OnFilter( const wstring & a_Filter )
 {
     ParallelFilter( a_Filter );
 
@@ -116,23 +118,23 @@ void TypesDataView::OnFilter( const std::wstring & a_Filter )
 }
 
 //-----------------------------------------------------------------------------
-void TypesDataView::ParallelFilter( const std::wstring & a_Filter )
+void TypesDataView::ParallelFilter( const wstring & a_Filter )
 {
     m_FilterTokens = Tokenize( ToLower( a_Filter ) );
     vector<Type*> & types = Capture::GTargetProcess->GetTypes();
     const auto prio = oqpi::task_priority::normal;
     auto numWorkers = oqpi_tk::scheduler().workersCount( prio );
-    std::vector< std::vector<int> > indicesArray;
+    vector< vector<int> > indicesArray;
     indicesArray.resize( numWorkers );
 
     oqpi_tk::parallel_for( "TypesDataViewParallelFor", (int)types.size(), [&]( int32_t a_BlockIndex, int32_t a_ElementIndex )
     {
-        std::vector<int> & result = indicesArray[a_BlockIndex];
-        const std::wstring & name = types[a_ElementIndex]->GetNameLower();
+        vector<int> & result = indicesArray[a_BlockIndex];
+        const wstring & name = types[a_ElementIndex]->GetNameLower();
 
-        for( std::wstring & filterToken : m_FilterTokens )
+        for( wstring & filterToken : m_FilterTokens )
         {
-            if( name.find( filterToken ) == std::wstring::npos )
+            if( name.find( filterToken ) == wstring::npos )
             {
                 return;
             }
@@ -141,8 +143,8 @@ void TypesDataView::ParallelFilter( const std::wstring & a_Filter )
         result.push_back( a_ElementIndex );
     } );
 
-    std::set< int > indicesSet;
-    for( std::vector<int> & results : indicesArray )
+    set< int > indicesSet;
+    for( vector<int> & results : indicesArray )
     {
         for( int index : results )
         {
@@ -173,7 +175,7 @@ void TypesDataView::OnSort( int a_Column, bool a_Toggle )
 
     bool ascending = m_SortingToggles[MemberID];
     
-    std::function<bool(int a, int b)> sorter = nullptr;
+    function<bool(int a, int b)> sorter = nullptr;
 
     switch (MemberID)
     {
@@ -191,7 +193,7 @@ void TypesDataView::OnSort( int a_Column, bool a_Toggle )
 
     if( sorter )
     {
-        std::sort(m_Indices.begin(), m_Indices.end(), sorter);
+        sort(m_Indices.begin(), m_Indices.end(), sorter);
     }
 
     m_LastSortedColumn = a_Column;
@@ -206,31 +208,31 @@ enum TypesContextMenu
 };
 
 //-----------------------------------------------------------------------------
-const std::vector<std::wstring>& TypesDataView::GetContextMenu(int a_Index)
+const vector<wstring>& TypesDataView::GetContextMenu(int a_Index)
 {
-    static std::vector<std::wstring> Menu = { L"Summary", L"Details" /*, L"Copy"*/ };
+    static vector<wstring> Menu = { L"Summary", L"Details" /*, L"Copy"*/ };
     return Menu;
 }
 
 //-----------------------------------------------------------------------------
-void TypesDataView::OnProp( std::vector<int> & a_Items )
+void TypesDataView::OnProp( vector<int> & a_Items )
 {
     for(auto & item : a_Items) 
     { 
         Type & type = GetType(item);
-        std::shared_ptr<Variable> var = type.GetTemplateVariable();
+        shared_ptr<Variable> var = type.GetTemplateVariable();
         var->Print();
         GOrbitApp->SendToUiNow( L"output" );
     }
 }
 
 //-----------------------------------------------------------------------------
-void TypesDataView::OnView( std::vector<int> & a_Items )
+void TypesDataView::OnView( vector<int> & a_Items )
 {
     for( auto & item : a_Items )
     {
         Type & type = GetType( item );
-        std::shared_ptr<Variable> var = type.GetTemplateVariable();
+        shared_ptr<Variable> var = type.GetTemplateVariable();
         var->PrintDetails();
         OrbitDia::DiaDump( type.GetDiaSymbol() );
         GOrbitApp->SendToUiNow( L"output" );
@@ -238,14 +240,14 @@ void TypesDataView::OnView( std::vector<int> & a_Items )
 }
 
 //-----------------------------------------------------------------------------
-void TypesDataView::OnClip( std::vector<int> & a_Items )
+void TypesDataView::OnClip( vector<int> & a_Items )
 {
     GOrbitApp->SendToUiAsync( L"output" );
-    for(auto & item : a_Items) {}
+    //for(auto & item : a_Items) {}
 }
 
 //-----------------------------------------------------------------------------
-void TypesDataView::OnContextMenu( int a_MenuIndex, std::vector<int> & a_ItemIndices )
+void TypesDataView::OnContextMenu( int a_MenuIndex, vector<int> & a_ItemIndices )
 {
     switch (a_MenuIndex)
     {

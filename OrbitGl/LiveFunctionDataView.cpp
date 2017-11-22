@@ -2,7 +2,7 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
+
 #include "LiveFunctionDataView.h"
 #include "OrbitType.h"
 #include "Capture.h"
@@ -10,6 +10,8 @@
 #include "App.h"
 #include "Pdb.h"
 #include "FunctionStats.h"
+
+using namespace std;
 
 //-----------------------------------------------------------------------------
 namespace LiveFunction
@@ -42,13 +44,13 @@ LiveFunctionsDataView::LiveFunctionsDataView()
 }
 
 //-----------------------------------------------------------------------------
-std::vector<int>   LiveFunctionsDataView::s_HeaderMap;
-std::vector<float> LiveFunctionsDataView::s_HeaderRatios;
+vector<int>   LiveFunctionsDataView::s_HeaderMap;
+vector<float> LiveFunctionsDataView::s_HeaderRatios;
 
 //-----------------------------------------------------------------------------
-const std::vector<std::wstring>& LiveFunctionsDataView::GetColumnHeaders()
+const vector<wstring>& LiveFunctionsDataView::GetColumnHeaders()
 {
-    static std::vector<std::wstring> Columns;
+    static vector<wstring> Columns;
 
     if( s_HeaderMap.size() == 0 )
     {
@@ -68,13 +70,13 @@ const std::vector<std::wstring>& LiveFunctionsDataView::GetColumnHeaders()
 }
 
 //-----------------------------------------------------------------------------
-const std::vector<float>& LiveFunctionsDataView::GetColumnHeadersRatios()
+const vector<float>& LiveFunctionsDataView::GetColumnHeadersRatios()
 {
     return s_HeaderRatios;
 }
 
 //-----------------------------------------------------------------------------
-std::wstring LiveFunctionsDataView::GetValue( int a_Row, int a_Column )
+wstring LiveFunctionsDataView::GetValue( int a_Row, int a_Column )
 {
     if( a_Row >= GetNumElements() )
     {
@@ -82,9 +84,9 @@ std::wstring LiveFunctionsDataView::GetValue( int a_Row, int a_Column )
     }
 
     Function & function = GetFunction( a_Row );
-    std::shared_ptr<FunctionStats> stats = function.m_Stats;
+    shared_ptr<FunctionStats> stats = function.m_Stats;
 
-    std::wstring value;
+    wstring value;
     
     switch ( s_HeaderMap[a_Column] )
     {
@@ -130,7 +132,7 @@ void LiveFunctionsDataView::OnSort( int a_Column, bool a_Toggle )
     }
 
     bool ascending = m_SortingToggles[MemberID];
-    std::function<bool(int a, int b)> sorter = nullptr;
+    function<bool(int a, int b)> sorter = nullptr;
 
     switch (MemberID)
     {
@@ -147,7 +149,7 @@ void LiveFunctionsDataView::OnSort( int a_Column, bool a_Toggle )
 
     if( sorter ) 
     {
-        std::sort(m_Indices.begin(), m_Indices.end(), sorter);
+        sort(m_Indices.begin(), m_Indices.end(), sorter);
     }
 
     m_LastSortedColumn = a_Column;
@@ -162,14 +164,14 @@ enum LiveFunctionsContextMenu
 };
 
 //-----------------------------------------------------------------------------
-const std::vector<std::wstring>& LiveFunctionsDataView::GetContextMenu(int a_Index)
+const vector<wstring>& LiveFunctionsDataView::GetContextMenu(int a_Index)
 {
-    static std::vector<std::wstring> Menu = { L"Toggle Select" };
+    static vector<wstring> Menu = { L"Toggle Select" };
     return Menu;
 }
 
 //-----------------------------------------------------------------------------
-void LiveFunctionsDataView::OnContextMenu( int a_MenuIndex, std::vector<int> & a_ItemIndices )
+void LiveFunctionsDataView::OnContextMenu( int a_MenuIndex, vector<int> & a_ItemIndices )
 {
     for( int i : a_ItemIndices )
     {
@@ -179,26 +181,26 @@ void LiveFunctionsDataView::OnContextMenu( int a_MenuIndex, std::vector<int> & a
 }
 
 //-----------------------------------------------------------------------------
-void LiveFunctionsDataView::OnFilter( const std::wstring & a_Filter )
+void LiveFunctionsDataView::OnFilter( const wstring & a_Filter )
 {
-    std::vector<int> indices;
+    vector<int> indices;
 
-    std::vector< std::wstring > tokens = Tokenize( ToLower( a_Filter ) );
+    vector< wstring > tokens = Tokenize( ToLower( a_Filter ) );
 
     for( int i = 0; i < (int)m_Functions.size(); ++i )
     {
         const Function* function = m_Functions[i];
         if( function )
         {
-            std::wstring name = ToLower( function->m_PrettyName );
-            //std::string file = ToLower( function.m_File );
+            wstring name = ToLower( function->m_PrettyName );
+            //string file = ToLower( function.m_File );
 
             bool match = true;
 
-            for( std::wstring & filterToken : tokens )
+            for( wstring & filterToken : tokens )
             {
-                if( !( name.find( filterToken ) != std::wstring::npos/* ||
-                       file.find( filterToken ) != std::string::npos*/ ) )
+                if( !( name.find( filterToken ) != wstring::npos/* ||
+                       file.find( filterToken ) != string::npos*/ ) )
                 {
                     match = false;
                     break;

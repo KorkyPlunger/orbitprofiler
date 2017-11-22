@@ -3,6 +3,9 @@
 //-----------------------------------
 #pragma once
 
+#include "Message.h"
+#include <vector>
+
 namespace Orbit{ class Plugin; }
 
 class PluginManager

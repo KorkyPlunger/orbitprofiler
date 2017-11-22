@@ -2,13 +2,15 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
+
 #include "OrbitType.h"
 #include "BaseTypes.h"
 #include "Pdb.h"
 #include "Log.h"
 #include "Capture.h"
-#include "external/xxHash-r42/xxhash.h"
+
+#include <xxhash.h> // xxHash-r42
+
 #include "SamplingProfiler.h"
 #include "SymbolUtils.h"
 #include "PrintVar.h"
@@ -19,7 +21,9 @@
 #include "Serialization.h"
 #include "TcpServer.h"
 
-#include "dia2.h"
+#include <dia2.h>
+
+using namespace std;
 
 //-----------------------------------------------------------------------------
 void Type::LoadDiaInfo()
@@ -154,7 +158,7 @@ void Type::ListDataMembers( ULONG a_BaseOffset, map<ULONG, Variable> & o_DataMem
     {
         ULONG offset = pair.first + a_BaseOffset;
         const Variable & member = pair.second;
-        const Type & memberType = m_Pdb->GetTypeFromId( member.m_TypeIndex );
+        //const Type & memberType = m_Pdb->GetTypeFromId( member.m_TypeIndex );
        
         if( o_DataMembersFull.find(offset) != o_DataMembersFull.end() )
         {
@@ -189,7 +193,7 @@ IDiaSymbol* Type::GetDiaSymbol()
 }
 
 //-----------------------------------------------------------------------------
-bool Type::IsA( const std::wstring & a_TypeName )
+bool Type::IsA( const wstring & a_TypeName )
 {
     GenerateDiaHierarchy();
 
@@ -212,7 +216,7 @@ bool Type::IsA( const std::wstring & a_TypeName )
 }
 
 //-----------------------------------------------------------------------------
-int Type::GetOffset( const std::wstring & a_Member )
+int Type::GetOffset( const wstring & a_Member )
 {
     LoadDiaInfo();
     
@@ -229,7 +233,7 @@ int Type::GetOffset( const std::wstring & a_Member )
 }
 
 //-----------------------------------------------------------------------------
-Variable* Type::FindImmediateChild( const std::wstring & a_Name )
+Variable* Type::FindImmediateChild( const wstring & a_Name )
 {
     LoadDiaInfo();
 
@@ -326,7 +330,7 @@ unsigned long long Type::Hash()
 }
 
 //-----------------------------------------------------------------------------
-std::shared_ptr<Variable> Type::GetTemplateVariable()
+shared_ptr<Variable> Type::GetTemplateVariable()
 {
     if( m_TemplateVariable == nullptr )
     {
@@ -337,11 +341,11 @@ std::shared_ptr<Variable> Type::GetTemplateVariable()
 }
 
 //-----------------------------------------------------------------------------
-std::shared_ptr<Variable> Type::GenerateVariable( DWORD64 a_Address, const std::wstring* a_Name )
+shared_ptr<Variable> Type::GenerateVariable( DWORD64 a_Address, const wstring* a_Name )
 {
     LoadDiaInfo();
 
-    std::shared_ptr<Variable> var = std::make_shared<Variable>();
+    shared_ptr<Variable> var = make_shared<Variable>();
     var->m_Pdb = this->m_Pdb;
     var->m_Address = a_Address;
     var->m_TypeIndex = m_Id;
@@ -356,7 +360,7 @@ std::shared_ptr<Variable> Type::GenerateVariable( DWORD64 a_Address, const std::
         
         if( Type* type = m_Pdb->GetTypePtrFromId( parent.m_TypeId ) )
         {
-            std::shared_ptr<Variable> parent = type->GenerateVariable( a_Address + baseOffset );
+            shared_ptr<Variable> parent = type->GenerateVariable( a_Address + baseOffset );
             parent->m_IsParent = true;
             parent->m_BaseOffset = baseOffset;
             var->AddChild( parent );
@@ -376,7 +380,7 @@ std::shared_ptr<Variable> Type::GenerateVariable( DWORD64 a_Address, const std::
         }
         else
         {
-            std::shared_ptr<Variable> newMember = std::make_shared<Variable>(member);
+            shared_ptr<Variable> newMember = make_shared<Variable>(member);
             newMember->m_Address = a_Address + memberOffset;
             newMember->m_Name = member.m_Name;
             var->AddChild( newMember );

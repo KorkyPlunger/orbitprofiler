@@ -3,11 +3,13 @@
 //-----------------------------------
 
 #include "GlUtils.h"
-#include "OrbitCore\Core.h"
+
 
 #include "freetype-gl.h"
-#include "OrbitCore\Core.h"
 #include "Log.h"
+#include "PrintVar.h"
+
+using namespace std;
 
 void CheckGlError()
 {

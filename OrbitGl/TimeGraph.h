@@ -3,7 +3,7 @@
 //-----------------------------------
 #pragma once
 
-#include "Core.h"
+
 #include "TextBox.h"
 #include "BlockChain.h"
 #include "ContextSwitch.h"

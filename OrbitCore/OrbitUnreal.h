@@ -3,7 +3,10 @@
 //-----------------------------------
 #pragma once
 
-#include "Core.h"
+
+#include "BaseTypes.h"
+#include "Message.h"
+
 #include <unordered_map>
 #include <string>
 

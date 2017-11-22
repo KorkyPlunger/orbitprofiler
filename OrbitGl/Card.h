@@ -3,12 +3,12 @@
 //-----------------------------------
 #pragma once
 
-#include <unordered_map>
-#include <OrbitCore\CoreMath.h>
-#include <OrbitCore\RingBuffer.h>
-#include <OrbitCore\Threading.h>
+#include "CoreMath.h"
+#include "RingBuffer.h"
+#include "Threading.h"
 #include "ImguiOrbit.h"
 
+#include <unordered_map>
 
 class GlCanvas;
 

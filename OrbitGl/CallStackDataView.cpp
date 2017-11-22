@@ -2,7 +2,7 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
+
 #include "CallStackDataView.h"
 #include "CallStack.h"
 #include "Capture.h"
@@ -10,6 +10,8 @@
 #include "SamplingProfiler.h"
 #include "Pdb.h"
 #include "App.h"
+
+using namespace std;
 
 //----------------------------------------------------------------------------
 CallStackDataView::CallStackDataView() : m_CallStack( nullptr )
@@ -41,7 +43,7 @@ void CallStackDataView::OnDataChanged()
 }
 
 //-----------------------------------------------------------------------------
-std::wstring CallStackDataView::GetValue(int a_Row, int a_Column)
+wstring CallStackDataView::GetValue(int a_Row, int a_Column)
 {
     if (a_Row >= GetNumElements())
     {
@@ -50,7 +52,7 @@ std::wstring CallStackDataView::GetValue(int a_Row, int a_Column)
 
     Function & function = GetFunction(a_Row);
 
-    std::wstring value;
+    wstring value;
 
     switch (s_HeaderMap[a_Column])
     {
@@ -79,24 +81,24 @@ std::wstring CallStackDataView::GetValue(int a_Row, int a_Column)
 }
 
 //-----------------------------------------------------------------------------
-void CallStackDataView::OnFilter( const std::wstring & a_Filter )
+void CallStackDataView::OnFilter( const wstring & a_Filter )
 {
     if( !m_CallStack )
         return;
     
-    std::vector<int> indices;
-    std::vector< std::wstring > tokens = Tokenize( ToLower( a_Filter ) );
+    vector<int> indices;
+    vector< wstring > tokens = Tokenize( ToLower( a_Filter ) );
      
     for( int i = 0; i < (int)m_CallStack->m_Depth; ++i )
     {
         const Function & function = GetFunction(i);
-        std::wstring name = ToLower( function.m_PrettyName );
+        wstring name = ToLower( function.m_PrettyName );
         bool match = true;
 
-        for( std::wstring & filterToken : tokens )
+        for( wstring & filterToken : tokens )
         {
-            if( !( name.find( filterToken ) != std::wstring::npos/* ||
-                   file.find( filterToken ) != std::string::npos*/ ) )
+            if( !( name.find( filterToken ) != wstring::npos/* ||
+                   file.find( filterToken ) != string::npos*/ ) )
             {
                 match = false;
                 break;

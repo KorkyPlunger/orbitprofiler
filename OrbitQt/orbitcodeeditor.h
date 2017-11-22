@@ -56,7 +56,7 @@
 #include <QSyntaxHighlighter>
 #include <QTextCharFormat>
 
-#include "../OrbitCore/RingBuffer.h"
+#include "RingBuffer.h"
 
 QT_BEGIN_NAMESPACE
 class QPaintEvent;

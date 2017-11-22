@@ -6,6 +6,8 @@
 #include <tlhelp32.h>
 #include "Log.h"
 
+using namespace std;
+
 // Is64BitProcess function taken from Very Sleepy
 #ifdef _WIN64
 typedef BOOL WINAPI Wow64GetThreadContext_t(__in     HANDLE hThread, __inout  PWOW64_CONTEXT lpContext);
@@ -69,7 +71,7 @@ void ProcessList::Clear()
 void ProcessList::Refresh()
 {
     m_Processes.clear();
-    std::unordered_map< DWORD, std::shared_ptr< Process > > previousProcessesMap = m_ProcessesMap;
+    unordered_map< DWORD, shared_ptr< Process > > previousProcessesMap = m_ProcessesMap;
     m_ProcessesMap.clear();
 
     HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS | TH32CS_SNAPMODULE/*| TH32CS_SNAPTHREAD*/, 0);
@@ -106,7 +108,7 @@ void ProcessList::Refresh()
             else
             {
                 // Process was not there previously
-                auto process = std::make_shared<Process>();
+                auto process = make_shared<Process>();
                 process->m_Name = processinfo.szExeFile;
                 process->SetID(processinfo.th32ProcessID);
                 
@@ -145,25 +147,25 @@ void ProcessList::Refresh()
 //-----------------------------------------------------------------------------
 void ProcessList::SortByID()
 {
-    std::sort( m_Processes.begin(), m_Processes.end(), []( std::shared_ptr<Process> & a_P1, std::shared_ptr<Process> & a_P2 ){ return a_P1->GetID() < a_P2->GetID(); } );
+    sort( m_Processes.begin(), m_Processes.end(), []( shared_ptr<Process> & a_P1, shared_ptr<Process> & a_P2 ){ return a_P1->GetID() < a_P2->GetID(); } );
 }
 
 //-----------------------------------------------------------------------------
 void ProcessList::SortByName()
 {
-    std::sort( m_Processes.begin(), m_Processes.end(), []( std::shared_ptr<Process> & a_P1, std::shared_ptr<Process> & a_P2 ){ return a_P1->m_Name < a_P2->m_Name; } );
+    sort( m_Processes.begin(), m_Processes.end(), []( shared_ptr<Process> & a_P1, shared_ptr<Process> & a_P2 ){ return a_P1->m_Name < a_P2->m_Name; } );
 }
 
 //-----------------------------------------------------------------------------
 void ProcessList::SortByCPU()
 {
-    std::sort(m_Processes.begin(), m_Processes.end(), []( std::shared_ptr<Process> & a_P1, std::shared_ptr<Process> & a_P2 ){ return a_P1->GetCpuUsage() < a_P2->GetCpuUsage(); });
+    sort(m_Processes.begin(), m_Processes.end(), []( shared_ptr<Process> & a_P1, shared_ptr<Process> & a_P2 ){ return a_P1->GetCpuUsage() < a_P2->GetCpuUsage(); });
 }
 
 //-----------------------------------------------------------------------------
 void ProcessList::UpdateCpuTimes()
 {
-    for( std::shared_ptr< Process > & process : m_Processes )
+    for( shared_ptr< Process > & process : m_Processes )
     {
         process->UpdateCpuTime();
     }

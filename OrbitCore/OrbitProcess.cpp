@@ -2,7 +2,7 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
+
 #include "OrbitProcess.h"
 #include "OrbitModule.h"
 #include "SymbolUtils.h"
@@ -16,6 +16,8 @@
 #include "Serialization.h"
 
 #include <tlhelp32.h>
+
+using namespace std;
 
 //-----------------------------------------------------------------------------
 Process::Process() : m_ID(0)
@@ -91,20 +93,21 @@ void Process::SetID( DWORD a_ID )
 }
 
 //-----------------------------------------------------------------------------
-void Process::ListModules()
+Process::ModuleMap_t Process::ListModules()
 {
     SCOPE_TIMER_LOG( L"ListModules" );
 
     ClearTransients();
-    SymUtils::ListModules( m_Handle, m_Modules );
+    m_Modules = SymUtils::ListModules(m_Handle);
 
     for( auto & pair : m_Modules )
     {
         shared_ptr<Module> & module = pair.second;
-        std::wstring name = ToLower( module->m_Name );
+        wstring name = ToLower( module->m_Name );
         m_NameToModuleMap[name] = module;
         module->LoadDebugInfo();
     }
+    return m_Modules;
 }
 
 //-----------------------------------------------------------------------------
@@ -148,7 +151,7 @@ void Process::EnumerateThreads()
 
                     if (te.th32OwnerProcessID == m_ID)
                     {
-                        std::shared_ptr<Thread> thread = std::make_shared<Thread>();
+                        shared_ptr<Thread> thread = make_shared<Thread>();
                         thread->m_Handle = thandle;
                         thread->m_TID = te.th32ThreadID;
                         m_Threads.push_back( thread );
@@ -161,7 +164,7 @@ void Process::EnumerateThreads()
         CloseHandle(h);
     }
 
-    for (std::shared_ptr<Thread> & thread : m_Threads)
+    for (shared_ptr<Thread> & thread : m_Threads)
     {
         m_ThreadIds.insert(thread->m_TID);
     }
@@ -180,7 +183,7 @@ void Process::UpdateCpuTime()
 
     if( GetProcessTimes( m_Handle, &creationTime, &exitTime, &kernTime, &userTime ) )
     {
-        unsigned numCores = std::thread::hardware_concurrency();
+        unsigned numCores = thread::hardware_concurrency();
         LONGLONG kernMs = FileTimeDiffInMillis( m_LastKernTime, kernTime );
         LONGLONG userMs = FileTimeDiffInMillis( m_LastUserTime, userTime );
         m_LastKernTime = kernTime;
@@ -201,9 +204,9 @@ void Process::UpdateThreadUsage()
 //-----------------------------------------------------------------------------
 void Process::SortThreadsByUsage()
 {
-    std::sort( m_Threads.begin()
+    sort( m_Threads.begin()
              , m_Threads.end()
-             , [](std::shared_ptr<Thread> & a_T0, std::shared_ptr<Thread> & a_T1)
+             , [](shared_ptr<Thread> & a_T0, shared_ptr<Thread> & a_T1)
              { 
                  return a_T1->m_Usage.Latest() < a_T0->m_Usage.Latest(); 
              } );
@@ -212,22 +215,22 @@ void Process::SortThreadsByUsage()
 //-----------------------------------------------------------------------------
 void Process::SortThreadsById()
 {
-    std::sort( m_Threads.begin()
+    sort( m_Threads.begin()
              , m_Threads.end()
-             , [](std::shared_ptr<Thread> & a_T1, std::shared_ptr<Thread> & a_T0)
+             , [](shared_ptr<Thread> & a_T1, shared_ptr<Thread> & a_T0)
              { 
                  return a_T1->m_TID < a_T0->m_TID; 
              } );
 }
 
 //-----------------------------------------------------------------------------
-std::shared_ptr<Module> Process::FindModule( const std::wstring & a_ModuleName )
+shared_ptr<Module> Process::FindModule( const wstring & a_ModuleName )
 {
-    std::wstring moduleName = ToLower( Path::GetFileNameNoExt( a_ModuleName ) );
+    wstring moduleName = ToLower( Path::GetFileNameNoExt( a_ModuleName ) );
 
     for( auto & it : m_Modules )
     {
-        std::shared_ptr<Module> & module = it.second;
+        shared_ptr<Module> & module = it.second;
         if( ToLower( Path::GetFileNameNoExt( module->m_Name ) ) == moduleName )
         {
             return module;
@@ -245,7 +248,7 @@ Function* Process::GetFunctionFromAddress( DWORD64 a_Address, bool a_IsExact )
     if( !m_Modules.empty() && it != m_Modules.begin() )
     {
         --it;
-        std::shared_ptr<Module> & module = it->second;
+        shared_ptr<Module> & module = it->second;
         if( address < module->m_AddressEnd )
         {
             if( module->m_Pdb != nullptr )
@@ -273,7 +276,7 @@ shared_ptr<Module> Process::GetModuleFromAddress( DWORD64 a_Address )
 	if (!m_Modules.empty() && it != m_Modules.begin())
 	{
 		--it;
-		std::shared_ptr<Module> & module = it->second;
+		shared_ptr<Module> & module = it->second;
 		return module;
 	}
 
@@ -304,7 +307,7 @@ bool Process::LineInfoFromAddress( DWORD64 a_Address, LineInfo & o_LineInfo )
 }
 
 //-----------------------------------------------------------------------------
-void Process::LoadSession( const Session & a_Session )
+void Process::LoadSession( const Session& )
 {
 
 }
@@ -318,7 +321,7 @@ void Process::SaveSession()
 //-----------------------------------------------------------------------------
 void Process::RefreshWatchedVariables()
 {
-    for( std::shared_ptr<Variable> var : m_WatchedVariables )
+    for( shared_ptr<Variable> var : m_WatchedVariables )
     {
         var->SyncValue();
     }
@@ -333,7 +336,7 @@ void Process::ClearWatchedVariables()
 //-----------------------------------------------------------------------------
 void Process::AddType(Type & a_Type)
 {
-    bool isPtr = a_Type.m_Name.find(L"Pointer to") != std::string::npos;
+    bool isPtr = a_Type.m_Name.find(L"Pointer to") != string::npos;
     if (!isPtr)
     {
         unsigned long long typeHash = a_Type.Hash();
@@ -352,15 +355,15 @@ void Process::AddModule( shared_ptr<Module> & a_Module )
 }
 
 //-----------------------------------------------------------------------------
-void Process::FindPdbs( const std::vector< std::wstring > & a_SearchLocations )
+void Process::FindPdbs( const vector< wstring > & a_SearchLocations )
 {
-    std::unordered_map< std::wstring, std::vector<std::wstring> > nameToPaths;
+    unordered_map< wstring, vector<wstring> > nameToPaths;
 
     // Populate list of all available pdb files
-    for( const std::wstring & dir : a_SearchLocations )
+    for( const wstring & dir : a_SearchLocations )
     {
-        std::vector< std::wstring > pdbFiles = Path::ListFiles( dir, L".pdb" );
-        for( const std::wstring & pdb : pdbFiles )
+        vector< wstring > pdbFiles = Path::ListFiles( dir, L".pdb" );
+        for( const wstring & pdb : pdbFiles )
         {
             wstring pdbLower = Path::GetFileName( ToLower( pdb ) );
             nameToPaths[pdbLower].push_back( pdb );
@@ -370,14 +373,14 @@ void Process::FindPdbs( const std::vector< std::wstring > & a_SearchLocations )
     // Find matching pdb
     for( auto & modulePair : m_Modules )
     {
-        std::shared_ptr<Module> module =  modulePair.second;
+        shared_ptr<Module> module =  modulePair.second;
 
         if( !module->m_FoundPdb )
         {
-            std::wstring moduleName = ToLower( module->m_Name );
-            std::wstring pdbName = Path::StripExtension( moduleName ) + L".pdb";
+            wstring moduleName = ToLower( module->m_Name );
+            wstring pdbName = Path::StripExtension( moduleName ) + L".pdb";
 
-            const std::vector< std::wstring > & pdbs = nameToPaths[pdbName];
+            const vector< wstring > & pdbs = nameToPaths[pdbName];
 
             for( const wstring & pdb : pdbs )
             {
@@ -386,7 +389,7 @@ void Process::FindPdbs( const std::vector< std::wstring > & a_SearchLocations )
                 module->m_FoundPdb = true;
                 module->LoadDebugInfo();
 
-                std::wstring signature = s2ws( GuidToString( module->m_Pdb->GetGuid() ) );
+                wstring signature = s2ws( GuidToString( module->m_Pdb->GetGuid() ) );
 
                 if( Contains( module->m_DebugSignature, signature ) )
                 {
@@ -498,16 +501,17 @@ DWORD64 Process::GetRaiseExceptionAddress()
 void Process::FindCoreFunctions()
 {
 	return;
+#if 0 // XXX: Unreachable code
     SCOPE_TIMER_LOG(L"FindCoreFunctions");
 
     const auto prio = oqpi::task_priority::normal;
-    auto numWorkers = oqpi_tk::scheduler().workersCount( prio );
+    oqpi_tk::scheduler().workersCount( prio );
     //int numWorkers = oqpi::thread::hardware_concurrency();
 
-    oqpi_tk::parallel_for( "FindAllocFreeFunctions", (int32_t)m_Functions.size(), [&]( int32_t a_BlockIndex, int32_t a_ElementIndex )
+    oqpi_tk::parallel_for( "FindAllocFreeFunctions", (int32_t)m_Functions.size(), [&]( int32_t, int32_t a_ElementIndex )
     {
         Function* func = m_Functions[a_ElementIndex];
-        const std::wstring & name = func->Lower();
+        const wstring & name = func->Lower();
 
         if( Contains( name, L"operator new" ) || Contains( name, L"FMallocBinned::Malloc" ) )
         {
@@ -525,6 +529,7 @@ void Process::FindCoreFunctions()
             func->m_OrbitType = Function::REALLOC;
         }
     } );
+#endif
 }
 
 //-----------------------------------------------------------------------------

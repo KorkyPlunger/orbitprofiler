@@ -3,7 +3,6 @@
 //-----------------------------------
 #pragma once
 
-#include "Core.h"
 #include "ScopeTimer.h"
 
 #include <unordered_map>

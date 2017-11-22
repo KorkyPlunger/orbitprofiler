@@ -4,9 +4,15 @@
 
 #include "DiaManager.h"
 #include "ScopeTimer.h"
+#include "Path.h"
+#include "Log.h"
 
 #include "external/DIA2Dump/dia2dump.h"
 #include "external/DIA2Dump/PrintSymbol.h"
+
+#include <Shellapi.h>
+
+using namespace std;
 
 //-----------------------------------------------------------------------------
 DiaManager GDiaManager;
@@ -47,7 +53,7 @@ bool DiaManager::InitDataSource()
 {
     SCOPE_TIMER_LOG( L"InitDataSource" );
 
-    DWORD dwMachType = 0;
+    //DWORD dwMachType = 0;
     HRESULT hr = CoInitialize( NULL );
     wstring dllFullPath = Path::GetExecutablePath() + L"msdia140.dll";
     
@@ -155,6 +161,6 @@ bool DiaManager::LoadDataFromPdb( const wchar_t* a_FileName, IDiaSession ** a_Se
 void DiaManager::InitMsDiaDll()
 {
     wstring dllFullPath = Path::GetExecutablePath() + L"msdia140.dll";
-    std::wstring args = L"/C regsvr32 /s " + dllFullPath;
+    wstring args = L"/C regsvr32 /s " + dllFullPath;
     ShellExecute( 0, L"open", L"cmd.exe", args.c_str(), 0, SW_HIDE );
 }

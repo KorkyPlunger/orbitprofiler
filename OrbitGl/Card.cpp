@@ -6,6 +6,8 @@
 #include "GlCanvas.h"
 #include "ImGuiOrbit.h"
 
+using namespace std;
+
 CardContainer GCardContainer;
 
 //-----------------------------------------------------------------------------
@@ -19,7 +21,7 @@ Card::Card() : m_Size(512, 64)
 }
 
 //-----------------------------------------------------------------------------
-Card::Card( const std::string & a_Name ) : Card()
+Card::Card( const string & a_Name ) : Card()
 {
     m_Name = a_Name;
 }
@@ -31,9 +33,9 @@ Card::~Card()
 }
 
 //-----------------------------------------------------------------------------
-std::map< int, std::string > & Card::GetTypeMap()
+map< int, string > & Card::GetTypeMap()
 {
-    static std::map< int, std::string > typeMap;
+    static map< int, string > typeMap;
     if( typeMap.size() == 0 )
     {
         typeMap[CARD_FLOAT] = "Float Card";
@@ -79,7 +81,7 @@ CardContainer::~CardContainer()
 }
 
 //-----------------------------------------------------------------------------
-void CardContainer::Update(const std::string & a_Name, float a_Value)
+void CardContainer::Update(const string & a_Name, float a_Value)
 {
     ScopeLock lock( m_Mutex );
 
@@ -94,14 +96,14 @@ void CardContainer::Update(const std::string & a_Name, float a_Value)
 }
 
 //-----------------------------------------------------------------------------
-void CardContainer::Update(const std::string & a_Name, double a_Value)
+void CardContainer::Update(const string & a_Name, double a_Value)
 {
     ScopeLock lock(m_Mutex);
     //m_DoubleCards[a_Name].Update(a_Value);
 }
 
 //-----------------------------------------------------------------------------
-void CardContainer::Update(const std::string & a_Name, int a_Value)
+void CardContainer::Update(const string & a_Name, int a_Value)
 {
     ScopeLock lock(m_Mutex);
     //m_IntCards[a_Name].Update(a_Value);
@@ -169,7 +171,7 @@ void FloatGraphCard::Draw( GlCanvas* a_Canvas )
 
     Color col(255, 255, 255, 255);
 
-    std::string cardValue = Format( "%s: %s  min(%s) max(%s)",  m_Name.c_str(), std::to_string(m_Data.Latest()).c_str(), to_string(m_Min).c_str(), to_string(m_Max).c_str() );
+    string cardValue = Format( "%s: %s  min(%s) max(%s)",  m_Name.c_str(), to_string(m_Data.Latest()).c_str(), to_string(m_Min).c_str(), to_string(m_Max).c_str() );
     a_Canvas->GetTextRenderer().AddText2D(cardValue.c_str(), (int)m_Pos[0], (int)m_Pos[1], GlCanvas::Z_VALUE_TEXT, col, -1.f, false, false);
 }
 

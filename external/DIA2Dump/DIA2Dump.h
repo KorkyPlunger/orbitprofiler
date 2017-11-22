@@ -1,15 +1,11 @@
-#define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
-#include <stdio.h>
-#include <tchar.h>
-#include <string.h>
+#include <dia2.h>
 
-#include "dia2.h"
-
-#include "../../OrbitCore/Core.h"
-#include "../../OrbitCore/Log.h"
-#include "../../OrbitCore/OrbitType.h"
 #include "../../OrbitCore/Pdb.h"
-#include "../../OrbitCore/Params.h"
+#include "../../OrbitBase/PrintVar.h"
+
+//#include <stdio.h>
+//#include <tchar.h>
+//#include <string.h>
 
 extern const wchar_t *g_szFilename;
 extern IDiaDataSource *g_pDiaDataSource;

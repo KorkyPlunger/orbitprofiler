@@ -2,11 +2,13 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
+
 #include "ModuleDataView.h"
 #include "OrbitModule.h"
 #include "SymbolUtils.h"
 #include "App.h"
+
+using namespace std;
 
 //-----------------------------------------------------------------------------
 ModulesDataView::ModulesDataView()
@@ -17,12 +19,12 @@ ModulesDataView::ModulesDataView()
 }
 
 //-----------------------------------------------------------------------------
-std::vector<float> ModulesDataView::s_HeaderRatios;
+vector<float> ModulesDataView::s_HeaderRatios;
 
 //-----------------------------------------------------------------------------
-const std::vector<std::wstring>& ModulesDataView::GetColumnHeaders()
+const vector<wstring>& ModulesDataView::GetColumnHeaders()
 {
-    static std::vector<std::wstring> Columns;
+    static vector<wstring> Columns;
     if( Columns.size() == 0 )
     { 
         Columns.push_back(L"Index");         s_HeaderRatios.push_back(0);
@@ -37,21 +39,21 @@ const std::vector<std::wstring>& ModulesDataView::GetColumnHeaders()
 }
 
 //-----------------------------------------------------------------------------
-const std::vector<float>& ModulesDataView::GetColumnHeadersRatios()
+const vector<float>& ModulesDataView::GetColumnHeadersRatios()
 {
     return s_HeaderRatios;
 }
 
 //-----------------------------------------------------------------------------
-std::wstring ModulesDataView::GetValue( int row, int col )
+wstring ModulesDataView::GetValue( int row, int col )
 {
-    const std::shared_ptr<Module> & module = GetModule(row);
-    std::wstring value;
+    const shared_ptr<Module> & module = GetModule(row);
+    wstring value;
     
     switch (col)
     {
     case MDV_Index:
-        value = std::to_wstring((long)row); break;
+        value = to_wstring((long)row); break;
     case MDV_ModuleName:
         value = module->m_Name; break;
     case MDV_Path:
@@ -85,7 +87,7 @@ void ModulesDataView::OnSort(int a_Column, bool a_Toggle)
     }
 
     bool ascending = m_SortingToggles[mdvColumn];
-    std::function<bool(int a, int b)> sorter = nullptr;
+    function<bool(int a, int b)> sorter = nullptr;
 
     switch (mdvColumn)
     {
@@ -99,7 +101,7 @@ void ModulesDataView::OnSort(int a_Column, bool a_Toggle)
 
     if (sorter)
     {
-        std::sort(m_Indices.begin(), m_Indices.end(), sorter);
+        sort(m_Indices.begin(), m_Indices.end(), sorter);
     }
 
     m_LastSortedColumn = a_Column;
@@ -113,11 +115,11 @@ enum ModulesContextMenuIDs
 };
 
 //-----------------------------------------------------------------------------
-const std::vector<std::wstring>& ModulesDataView::GetContextMenu( int a_Index )
+const vector<wstring>& ModulesDataView::GetContextMenu( int a_Index )
 {
-    static std::vector<std::wstring> Menu = { L"Load PDB" };
-    static std::vector<std::wstring> dllMenu = { L"Load dll exports", L"Find pdb" };
-    static std::vector<std::wstring> EmptyMenu;
+    static vector<wstring> Menu = { L"Load PDB" };
+    static vector<wstring> dllMenu = { L"Load dll exports", L"Find pdb" };
+    static vector<wstring> EmptyMenu;
 
     shared_ptr<Module> module = GetModule( a_Index );
     if( !module->m_Loaded )
@@ -140,7 +142,7 @@ const std::vector<std::wstring>& ModulesDataView::GetContextMenu( int a_Index )
 }
 
 //-----------------------------------------------------------------------------
-void ModulesDataView::OnContextMenu( int a_MenuIndex, std::vector<int> & a_ItemIndices )
+void ModulesDataView::OnContextMenu( int a_MenuIndex, vector<int> & a_ItemIndices )
 {
     switch (a_MenuIndex)
     {
@@ -148,15 +150,15 @@ void ModulesDataView::OnContextMenu( int a_MenuIndex, std::vector<int> & a_ItemI
     {
         for( int index : a_ItemIndices )
         {
-            const std::shared_ptr<Module> & module = GetModule(index);
+            const shared_ptr<Module> & module = GetModule(index);
 
             if( module->m_FoundPdb || module->IsDll() )
             {
-                std::map< DWORD64, std::shared_ptr<Module>  >& processModules = m_Process->GetModules();
+                Process::ModuleMap_t& processModules = m_Process->GetModules();
                 auto it = processModules.find( module->m_AddressStart );
                 if( it != processModules.end() )
                 {
-                    std::shared_ptr<Module> & module = it->second;
+                    shared_ptr<Module> & module = it->second;
 
                     if( !module->m_Loaded )
                     {
@@ -171,7 +173,7 @@ void ModulesDataView::OnContextMenu( int a_MenuIndex, std::vector<int> & a_ItemI
     }
     case FIND_PDB:
     {
-        std::wstring FileName = GOrbitApp->FindFile(L"Find Pdb File", L"", L"*.pdb" );
+        wstring FileName = GOrbitApp->FindFile(L"Find Pdb File", L"", L"*.pdb" );
     }
         break;
     default: break;
@@ -184,21 +186,21 @@ void ModulesDataView::OnTimer()
 }
 
 //-----------------------------------------------------------------------------
-void ModulesDataView::OnFilter(const std::wstring & a_Filter)
+void ModulesDataView::OnFilter(const wstring & a_Filter)
 {
-    std::vector<int> indices;
-    std::vector< std::wstring > tokens = Tokenize( ToLower( a_Filter ) );
+    vector<int> indices;
+    vector< wstring > tokens = Tokenize( ToLower( a_Filter ) );
 
     for (int i = 0; i < (int)m_Modules.size(); ++i)
     {
-        std::shared_ptr<Module> & module = m_Modules[i];
-        std::wstring name = ToLower( module->GetPrettyName() );
+        shared_ptr<Module> & module = m_Modules[i];
+        wstring name = ToLower( module->GetPrettyName() );
 
         bool match = true;
 
-        for( std::wstring & filterToken : tokens )
+        for( wstring & filterToken : tokens )
         {
-            if ( name.find(filterToken) == std::string::npos )
+            if ( name.find(filterToken) == string::npos )
             {
                 match = false;
                 break;
@@ -220,7 +222,7 @@ void ModulesDataView::OnFilter(const std::wstring & a_Filter)
 }
 
 //-----------------------------------------------------------------------------
-void ModulesDataView::SetProcess( std::shared_ptr<Process> a_Process )
+void ModulesDataView::SetProcess( shared_ptr<Process> a_Process )
 {
     m_Modules.clear();
     m_Process = a_Process;
@@ -242,7 +244,7 @@ void ModulesDataView::SetProcess( std::shared_ptr<Process> a_Process )
 }
 
 //-----------------------------------------------------------------------------
-const std::shared_ptr<Module> & ModulesDataView::GetModule( unsigned int a_Row ) const
+const shared_ptr<Module> & ModulesDataView::GetModule( unsigned int a_Row ) const
 {
     return m_Modules[m_Indices[a_Row]];
 }

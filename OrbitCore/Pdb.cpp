@@ -2,12 +2,13 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
+
 #include "Pdb.h"
 #include <algorithm>
 #include <functional>
 #include <fstream>
 #include <ppl.h>
+#include <tchar.h>
 
 #include "SymbolUtils.h"
 
@@ -22,11 +23,14 @@
 #include "OrbitType.h"
 #include "OrbitUnreal.h"
 #include "DiaManager.h"
+#include "Path.h"
 
 #include "external/DIA2Dump/dia2dump.h"
 #include "external/DIA2Dump/PrintSymbol.h"
 
-std::shared_ptr<Pdb> GPdbDbg;
+using namespace std;
+
+shared_ptr<Pdb> GPdbDbg;
 
 //-----------------------------------------------------------------------------
 Pdb::Pdb( const wchar_t* a_PdbName ) : m_FileName( a_PdbName )
@@ -115,7 +119,7 @@ void Pdb::AddGlobal( const Variable & a_Global )
 }
 
 //-----------------------------------------------------------------------------
-void Pdb::AddArgumentRegister( const std::string & a_Reg, const std::string & a_Function )
+void Pdb::AddArgumentRegister( const string & a_Reg, const string & a_Function )
 {
     m_ArgumentRegisters.insert(a_Reg);
 
@@ -208,26 +212,26 @@ void Pdb::PrintGlobals() const
 }
 
 //-----------------------------------------------------------------------------
-std::wstring Pdb::GetCachedName()
+wstring Pdb::GetCachedName()
 {
-    std::string pdbName = ws2s( Path::GetFileName( m_FileName ) );
-    std::tr2::sys::path fileName = GuidToString( m_ModuleInfo.PdbSig70 ) + "-" + ToHexString( m_ModuleInfo.PdbAge ) + "_" + pdbName;
+    string pdbName = ws2s( Path::GetFileName( m_FileName ) );
+    tr2::sys::path fileName = GuidToString( m_ModuleInfo.PdbSig70 ) + "-" + ToHexString( m_ModuleInfo.PdbAge ) + "_" + pdbName;
     fileName.replace_extension(".bin");
     return fileName.wstring();
 }
 
 //-----------------------------------------------------------------------------
-std::wstring Pdb::GetCachedKey()
+wstring Pdb::GetCachedKey()
 {
-    std::wstring cachedName = GetCachedName();
-    std::wstring cachedKey = cachedName.substr( 0, cachedName.find_first_of('_') );
+    wstring cachedName = GetCachedName();
+    wstring cachedKey = cachedName.substr( 0, cachedName.find_first_of('_') );
     return cachedKey;
 }
 
 //-----------------------------------------------------------------------------
-bool Pdb::Load( const std::string & a_CachedPdb )
+bool Pdb::Load( const string & /*a_CachedPdb*/ )
 {
-    /*ifstream is( a_CachedPdb, std::ios::binary );
+    /*ifstream is( a_CachedPdb, ios::binary );
     if( !is.fail() )
     {
         cereal::BinaryInputArchive Ar( is );
@@ -263,7 +267,7 @@ void Pdb::Update()
 //-----------------------------------------------------------------------------
 void Pdb::SendStatusToUi()
 {
-    std::wstring status = Format( L"status:Parsing %s\nFunctions: %i\nTypes: %i\nGlobals: %i\n"
+    wstring status = Format( L"status:Parsing %s\nFunctions: %i\nTypes: %i\nGlobals: %i\n"
                                 , m_Name.c_str()
                                 , m_Functions.size()
                                 , m_Types.size()
@@ -458,7 +462,7 @@ bool Pdb::LoadPdb( const wchar_t* a_PdbName )
     m_IsLoading = true;
     m_LoadTimer->Start();
 
-    std::string msg = "pdb:" + ws2s( a_PdbName );
+    string msg = "pdb:" + ws2s( a_PdbName );
     GTcpServer->SendToUiAsync( msg );
 
     string nameStr = ws2s( a_PdbName );
@@ -515,13 +519,13 @@ bool Pdb::LoadPdbDia()
 }
 
 //-----------------------------------------------------------------------------
-void Pdb::LoadPdbAsync( const wchar_t* a_PdbName, std::function<void()> a_CompletionCallback )
+void Pdb::LoadPdbAsync( const wchar_t* a_PdbName, function<void()> a_CompletionCallback )
 {
     m_FileName = a_PdbName;
     m_Name = Path::GetFileName( m_FileName );
 
     m_LoadingCompleteCallback = a_CompletionCallback;
-    m_LoadingThread = std::make_unique<std::thread>( &Pdb::LoadPdb, this, m_FileName.c_str() );
+    m_LoadingThread = make_unique<thread>( &Pdb::LoadPdb, this, m_FileName.c_str() );
     m_LoadingThread->detach();
 }
 
@@ -590,7 +594,7 @@ void Pdb::ApplyPresets()
 
     if (Capture::GSessionPresets)
     {
-        std::wstring pdbName = Path::GetFileName( m_Name );
+        wstring pdbName = Path::GetFileName( m_Name );
 
         auto it = Capture::GSessionPresets->m_Modules.find(pdbName);
         if (it != Capture::GSessionPresets->m_Modules.end())
@@ -671,7 +675,7 @@ bool Pdb::LineInfoFromAddress( DWORD64 a_Address, LineInfo & o_LineInfo )
 
     IDiaEnumLineNumbers * lineNumbers = nullptr;
     DWORD rva = DWORD(a_Address - (DWORD64)GetHModule());
-    std::wstring fileNameW;
+    wstring fileNameW;
     if( SUCCEEDED( m_DiaSession->findLinesByRVA( rva, 1, &lineNumbers ) ) )
     {
         IDiaLineNumber* pLineNumber;
@@ -685,7 +689,7 @@ bool Pdb::LineInfoFromAddress( DWORD64 a_Address, LineInfo & o_LineInfo )
                 BSTR fileName;
                 if( SUCCEEDED( sourceFile->get_fileName( &fileName ) ) )
                 {
-                    fileNameW = std::wstring( fileName );
+                    fileNameW = wstring( fileName );
                     o_LineInfo.m_Address = a_Address;
                     o_LineInfo.m_File = fileName;
                     o_LineInfo.m_Line = 0;
@@ -776,11 +780,11 @@ void Pdb::ProcessData()
 //-----------------------------------------------------------------------------
 void Pdb::Save()
 {
-    std::wstring fullName = Path::GetCachePath() + GetCachedName();
+    wstring fullName = Path::GetCachePath() + GetCachedName();
 
     SCOPE_TIMER_LOG( Format( L"Saving %s", fullName.c_str() ) );
 
-    //ofstream os( fullName, std::ios::binary );
+    //ofstream os( fullName, ios::binary );
     //cereal::BinaryOutputArchive Ar(os);
     //Ar( *this );
 }

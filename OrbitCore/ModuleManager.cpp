@@ -9,13 +9,17 @@
 #include "Capture.h"
 #include "OrbitProcess.h"
 #include "CoreApp.h"
+#include "Path.h"
+#include "Pdb.h"
+
+using namespace std;
 
 ModuleManager GModuleManager;
 
 //-----------------------------------------------------------------------------
 ModuleManager::ModuleManager()
 {
-    GPdbDbg = std::make_shared<Pdb>(L"");
+    GPdbDbg = make_shared<Pdb>(L"");
 }
 
 //-----------------------------------------------------------------------------
@@ -42,7 +46,7 @@ void ModuleManager::OnReceiveMessage( const Message & a_Msg )
         if( dataType == DataTransferHeader::Data )
         {
             // TODO: make access to watched vars thread safe
-            for (std::shared_ptr<Variable> var : Capture::GTargetProcess->GetWatchedVariables())
+            for (shared_ptr<Variable> var : Capture::GTargetProcess->GetWatchedVariables())
             {
                 if (var->m_Address == address)
                 {
@@ -62,14 +66,14 @@ void ModuleManager::OnReceiveMessage( const Message & a_Msg )
 }
 
 //-----------------------------------------------------------------------------
-void ModuleManager::LoadPdbAsync( const std::shared_ptr<Module> & a_Module, std::function<void()> a_CompletionCallback )
+void ModuleManager::LoadPdbAsync( const shared_ptr<Module> & a_Module, function<void()> a_CompletionCallback )
 {   
     if (!a_Module->m_Loaded)
     {
         bool loadExports = a_Module->IsDll() && !a_Module->m_FoundPdb;
         if( a_Module->m_FoundPdb || loadExports )
         {
-            std::wstring pdbName = loadExports ? a_Module->m_FullName : a_Module->m_PdbName;
+            wstring pdbName = loadExports ? a_Module->m_FullName : a_Module->m_PdbName;
             m_UserCompletionCallback = a_CompletionCallback;
 
             GPdbDbg = a_Module->m_Pdb;
@@ -83,7 +87,7 @@ void ModuleManager::LoadPdbAsync( const std::shared_ptr<Module> & a_Module, std:
 }
 
 //-----------------------------------------------------------------------------
-void ModuleManager::LoadPdbAsync(const std::vector<std::wstring> a_Modules, std::function<void()> a_CompletionCallback)
+void ModuleManager::LoadPdbAsync(const vector<wstring> a_Modules, function<void()> a_CompletionCallback)
 {
     m_UserCompletionCallback = a_CompletionCallback;
     m_ModulesQueue = a_Modules;
@@ -93,11 +97,11 @@ void ModuleManager::LoadPdbAsync(const std::vector<std::wstring> a_Modules, std:
 //-----------------------------------------------------------------------------
 void ModuleManager::DequeueAndLoad()
 {
-    std::shared_ptr<Module> module = nullptr;
+    shared_ptr<Module> module = nullptr;
     
     while( module == nullptr && !m_ModulesQueue.empty() )
     {
-        std::wstring pdbName = m_ModulesQueue.back();
+        wstring pdbName = m_ModulesQueue.back();
         m_ModulesQueue.pop_back();
     
         module = Capture::GTargetProcess->FindModule( Path::GetFileName( pdbName ) );
@@ -121,7 +125,7 @@ void ModuleManager::DequeueAndLoad()
 //-----------------------------------------------------------------------------
 void ModuleManager::OnPdbLoaded()
 {
-    std::shared_ptr<Pdb> lastPdb = GPdbDbg;
+    shared_ptr<Pdb> lastPdb = GPdbDbg;
     AddPdb( lastPdb );
 
     if( !m_ModulesQueue.empty() )
@@ -140,9 +144,9 @@ void ModuleManager::OnPdbLoaded()
 }
 
 //-----------------------------------------------------------------------------
-void ModuleManager::AddPdb( const std::shared_ptr<Pdb> & a_Pdb )
+void ModuleManager::AddPdb( const shared_ptr<Pdb> & a_Pdb )
 { 
-    std::map< DWORD64, shared_ptr<Module> >& modules = Capture::GTargetProcess->GetModules();
+    Process::ModuleMap_t& modules = Capture::GTargetProcess->GetModules();
 
     auto it = modules.find( (DWORD64)a_Pdb->GetHModule() );
     if( it != modules.end() )

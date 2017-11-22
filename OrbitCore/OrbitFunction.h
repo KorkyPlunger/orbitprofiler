@@ -4,12 +4,13 @@
 #pragma once
 
 #include <string>
-#include "TypeInfoStructs.h"
 #include "OrbitDbgHelp.h"
 #include "cvconst.h"
 #include "BaseTypes.h"
 #include "FunctionStats.h"
 #include "SerializationMacros.h"
+#include "Utils.h"
+#include "FunctionArgs.h"
 
 class Pdb;
 
@@ -17,35 +18,16 @@ class Pdb;
 struct FunctionParam
 {
     FunctionParam(){ memset( this, 0, sizeof( FunctionParam ) ); }
-    wstring     m_Name;
-    wstring     m_ParamType;
-    wstring     m_Type;
-    wstring     m_Address;
+    std::wstring     m_Name;
+    std::wstring     m_ParamType;
+    std::wstring     m_Type;
+    std::wstring     m_Address;
     SYMBOL_INFO m_SymbolInfo;
 
     bool InRegister( int a_Index );
-    bool IsPointer() { return m_Type.find( L"*" ) != wstring::npos; }
-    bool IsRef() { return m_Type.find( L"&" ) != wstring::npos; }
+    bool IsPointer() { return m_Type.find( L"*" ) != std::wstring::npos; }
+    bool IsRef() { return m_Type.find( L"&" ) != std::wstring::npos; }
     bool IsFloat();
-};
-
-//-----------------------------------------------------------------------------
-struct Argument
-{
-    Argument() { memset( this, 0, sizeof( *this ) ); }
-    DWORD      m_Index;
-    CV_HREG_e  m_Reg;
-    DWORD      m_Offset;
-    DWORD      m_NumBytes;
-};
-
-//-----------------------------------------------------------------------------
-struct FunctionArgInfo
-{
-    FunctionArgInfo() : m_NumStackBytes(0), m_ArgDataSize(0) {}
-    int m_NumStackBytes;
-    int m_ArgDataSize;
-    std::vector< Argument > m_Args;
 };
 
 //-----------------------------------------------------------------------------
@@ -129,21 +111,21 @@ public:
     ORBIT_SERIALIZABLE;
 
 public:
-    wstring  m_Name;
-    wstring  m_PrettyName;
-    string   m_PrettyNameStr;
-    wstring  m_PrettyNameLower;
+    std::wstring  m_Name;
+    std::wstring  m_PrettyName;
+    std::string   m_PrettyNameStr;
+    std::wstring  m_PrettyNameLower;
     DWORD64  m_Address;
     ULONG    m_Size;
-    wstring  m_Module;
-    wstring  m_File;
+    std::wstring  m_Module;
+    std::wstring  m_File;
     int      m_Line;
     ULONG64  m_ModBase;
     int      m_CallConv;
     ULONG    m_Id;
     DWORD    m_ParentId;
-    vector<FunctionParam> m_Params;
-    vector<Argument>      m_ArgInfo;
+    std::vector<FunctionParam> m_Params;
+    std::vector<Argument>      m_ArgInfo;
     Pdb*                  m_Pdb;
     unsigned long long    m_NameHash;
     OrbitType             m_OrbitType;

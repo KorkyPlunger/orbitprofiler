@@ -4,6 +4,7 @@
 #pragma once
 
 #include "Utils.h"
+#include "PrintVar.h"
 
 #include <cereal/access.hpp>
 #include <cereal/details/traits.hpp>
@@ -51,7 +52,7 @@ public:
     size_t Size() const { return m_Size; }
     void Reset() { m_Size = 0; }
 private:
-    int_type overflow( int_type C ){ return m_Size++; }
+    int_type overflow( int_type ){ return m_Size++; }
     int_type m_Size = 0;
 };
 extern CounterStreamBuffer GStreamCounter;
@@ -59,7 +60,7 @@ extern CounterStreamBuffer GStreamCounter;
 //-----------------------------------------------------------------------------
 struct ScopeCounter
 {
-    ScopeCounter( const string & a_Msg ) : m_Message( a_Msg )
+    ScopeCounter( const std::string & a_Msg ) : m_Message( a_Msg )
     {
         m_SizeBegin = GStreamCounter.Size();
     }
@@ -67,11 +68,11 @@ struct ScopeCounter
     ~ScopeCounter()
     {
         m_SizeEnd = GStreamCounter.Size();
-        wstring size = GetPrettySize(m_SizeEnd - m_SizeBegin);
+        std::wstring size = GetPrettySize(m_SizeEnd - m_SizeBegin);
         PRINT( L"%s size: %s\n", s2ws(m_Message).c_str(), size.c_str() );
     }
 
-    string m_Message;
+    std::string m_Message;
     size_t m_SizeBegin;
     size_t m_SizeEnd;
 };

@@ -3,17 +3,15 @@
 //-----------------------------------
 
 #include "EventUtils.h"
+#include "PrintVar.h"
 
 //Turns the DEFINE_GUID for EventTraceGuid into a const.
-#define INITGUID
+//#define INITGUID
 
-#include <windows.h>
-#include <stdio.h>
-#include <wbemidl.h>
-#include <wmistr.h>
 #include <evntrace.h>
 #include <tdh.h>
 #include <in6addr.h>
+#include <combaseapi.h>
 
 #pragma comment(lib, "tdh.lib")
 
@@ -166,7 +164,7 @@ PBYTE PrintProperties( PEVENT_RECORD pEvent, PTRACE_EVENT_INFO pInfo, DWORD Poin
     USHORT PropertyLength = 0;
     DWORD FormattedDataSize = 0;
     USHORT UserDataConsumed = 0;
-    USHORT UserDataLength = 0;
+    //USHORT UserDataLength = 0;
     LPWSTR pFormattedData = NULL;
     DWORD LastMember = 0;  // Last member of a structure
     USHORT ArraySize = 0;

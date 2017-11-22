@@ -2,7 +2,7 @@
 // Copyright Pierric Gimmig 2013-2017
 //-----------------------------------
 
-#include "Core.h"
+
 #include "GlobalDataView.h"
 #include "Capture.h"
 #include "OrbitType.h"
@@ -10,6 +10,8 @@
 #include "App.h"
 #include "Log.h"
 #include "Pdb.h"
+
+using namespace std;
 
 //-----------------------------------------------------------------------------
 GlobalsDataView::GlobalsDataView()
@@ -22,13 +24,13 @@ GlobalsDataView::GlobalsDataView()
 }
 
 //-----------------------------------------------------------------------------
-std::vector<int>   GlobalsDataView::s_HeaderMap;
-std::vector<float> GlobalsDataView::s_HeaderRatios;
+vector<int>   GlobalsDataView::s_HeaderMap;
+vector<float> GlobalsDataView::s_HeaderRatios;
 
 //-----------------------------------------------------------------------------
-const std::vector<std::wstring>& GlobalsDataView::GetColumnHeaders()
+const vector<wstring>& GlobalsDataView::GetColumnHeaders()
 {
-    static std::vector<std::wstring> Columns;
+    static vector<wstring> Columns;
 
     if (s_HeaderMap.size() == 0)
     {
@@ -45,19 +47,19 @@ const std::vector<std::wstring>& GlobalsDataView::GetColumnHeaders()
 }
 
 //-----------------------------------------------------------------------------
-const std::vector<float>& GlobalsDataView::GetColumnHeadersRatios()
+const vector<float>& GlobalsDataView::GetColumnHeadersRatios()
 {
     return s_HeaderRatios;
 }
 
 //-----------------------------------------------------------------------------
-std::wstring GlobalsDataView::GetValue( int a_Row, int a_Column )
+wstring GlobalsDataView::GetValue( int a_Row, int a_Column )
 {
     ScopeLock lock( Capture::GTargetProcess->GetDataMutex() );
 
     const Variable & variable = GetVariable( a_Row );
 
-    std::wstring value;
+    wstring value;
 
     switch ( s_HeaderMap[a_Column] )
     {
@@ -100,7 +102,7 @@ void GlobalsDataView::OnSort(int a_Column, bool a_Toggle)
     }
 
     bool ascending = m_SortingToggles[MemberID];
-    std::function<bool(int a, int b)> sorter = nullptr;
+    function<bool(int a, int b)> sorter = nullptr;
 
     switch (MemberID)
     {
@@ -114,7 +116,7 @@ void GlobalsDataView::OnSort(int a_Column, bool a_Toggle)
 
     if (sorter)
     {
-        std::sort(m_Indices.begin(), m_Indices.end(), sorter);
+        sort(m_Indices.begin(), m_Indices.end(), sorter);
     }
 
     m_LastSortedColumn = a_Column;
@@ -127,14 +129,14 @@ enum GlobalsContextMenu
 };
 
 //-----------------------------------------------------------------------------
-const std::vector<std::wstring>& GlobalsDataView::GetContextMenu(int a_Index)
+const vector<wstring>& GlobalsDataView::GetContextMenu(int a_Index)
 {
-    static std::vector<std::wstring> Menu = { L"Add to watch" };
+    static vector<wstring> Menu = { L"Add to watch" };
     return Menu;
 }
 
 //-----------------------------------------------------------------------------
-void GlobalsDataView::OnContextMenu( int a_MenuIndex, std::vector<int> & a_ItemIndices )
+void GlobalsDataView::OnContextMenu( int a_MenuIndex, vector<int> & a_ItemIndices )
 {
     switch (a_MenuIndex)
     {
@@ -144,13 +146,13 @@ void GlobalsDataView::OnContextMenu( int a_MenuIndex, std::vector<int> & a_ItemI
 }
 
 //-----------------------------------------------------------------------------
-void GlobalsDataView::OnAddToWatch( std::vector<int> & a_Items )
+void GlobalsDataView::OnAddToWatch( vector<int> & a_Items )
 {
     for(auto & item : a_Items)
     {
         Variable & variable = GetVariable(item);
         variable.Populate();
-        std::shared_ptr<Variable> var;
+        shared_ptr<Variable> var;
         
         Type* type = variable.GetType();
         if( type && type->HasMembers() )
@@ -160,7 +162,7 @@ void GlobalsDataView::OnAddToWatch( std::vector<int> & a_Items )
         }
         else
         {
-            var = std::make_shared<Variable>(variable);
+            var = make_shared<Variable>(variable);
         }
 
         Capture::GTargetProcess->AddWatchedVariable( var );
@@ -169,7 +171,7 @@ void GlobalsDataView::OnAddToWatch( std::vector<int> & a_Items )
 }
 
 //-----------------------------------------------------------------------------
-void GlobalsDataView::OnFilter( const std::wstring & a_Filter )
+void GlobalsDataView::OnFilter( const wstring & a_Filter )
 {
     m_FilterTokens = Tokenize( ToLower( a_Filter ) );
 
@@ -187,17 +189,17 @@ void GlobalsDataView::ParallelFilter()
     const vector<Variable*> & globals = Capture::GTargetProcess->GetGlobals();
     const auto prio = oqpi::task_priority::normal;
     auto numWorkers = oqpi_tk::scheduler().workersCount( prio );
-    std::vector< std::vector<int> > indicesArray;
+    vector< vector<int> > indicesArray;
     indicesArray.resize( numWorkers );
 
     oqpi_tk::parallel_for( "FunctionsDataViewParallelFor", (int)globals.size(), [&]( int32_t a_BlockIndex, int32_t a_ElementIndex )
     {
-        std::vector<int> & result = indicesArray[a_BlockIndex];
-        const std::wstring & name = globals[a_ElementIndex]->FilterString();
+        vector<int> & result = indicesArray[a_BlockIndex];
+        const wstring & name = globals[a_ElementIndex]->FilterString();
 
-        for( std::wstring & filterToken : m_FilterTokens )
+        for( wstring & filterToken : m_FilterTokens )
         {
-            if( name.find( filterToken ) == std::wstring::npos )
+            if( name.find( filterToken ) == wstring::npos )
             {
                 return;
             }
@@ -206,8 +208,8 @@ void GlobalsDataView::ParallelFilter()
         result.push_back( a_ElementIndex );
     } );
 
-    std::set< int > indicesSet;
-    for( std::vector<int> & results : indicesArray )
+    set< int > indicesSet;
+    for( vector<int> & results : indicesArray )
     {
         for( int index : results )
         {
