@@ -59,7 +59,7 @@ void TcpEntity::Stop()
 void TcpEntity::SendMsg( Message & a_Message, const void* a_Payload )
 {
     TcpPacket buffer( a_Message, a_Payload );
-    m_SendQueue.enqueue( buffer );
+    //m_SendQueue.enqueue( buffer );
     ++m_NumQueuedEntries;
     m_ConditionVariable.signal();
 }
@@ -75,7 +75,7 @@ void TcpEntity::FlushSendQueue()
 
     while( !m_ExitRequested )
     {
-        size_t numDequeued = m_SendQueue.try_dequeue_bulk( Timers, numItems );
+        size_t numDequeued = 0; // m_SendQueue.try_dequeue_bulk( Timers, numItems );
 
         if( numDequeued == 0 )
             break;
@@ -135,7 +135,7 @@ private:
 //-----------------------------------------------------------------------------
 void TcpEntity::SendData()
 {
-    SetThreadName( GetCurrentThreadId(), "TcpSender" );
+    //SetThreadName( GetCurrentThreadId(), "TcpSender" );
 
     while( !m_ExitRequested )
     {
@@ -147,7 +147,7 @@ void TcpEntity::SendData()
 
         // Send messages
         TcpPacket buffer;
-        while( !m_ExitRequested && !m_FlushRequested && m_SendQueue.try_dequeue( buffer ) )
+        while( !m_ExitRequested && !m_FlushRequested /*&& m_SendQueue.try_dequeue( buffer )*/ )
         {
             --m_NumQueuedEntries;
             //Message* msg = (Message*)buffer.Data()->data();

@@ -9,14 +9,15 @@
 #include "CallstackTypes.h"
 #include "SerializationMacros.h"
 
-#include <xxhash.h> // xxHash-r42
+#include <xxHash-r42/xxhash.h>
 
 #include <vector>
+#include <cstring>
 
 //-----------------------------------------------------------------------------
 struct CallStackPOD
 {
-    CallStackPOD(){ memset( this, 0, sizeof( CallStackPOD ) ); }
+    CallStackPOD(){ std::memset( this, 0, sizeof( CallStackPOD ) ); }
     static CallStackPOD Walk( DWORD64 a_Rip, DWORD64 a_Rsp );
     size_t GetSizeInBytes(){ return offsetof(CallStackPOD, m_Data) + m_Depth*sizeof(m_Data[0]); }
 
@@ -52,6 +53,7 @@ struct CallStack
     ORBIT_SERIALIZABLE;
 };
 
+#ifdef _WIN32
 //-----------------------------------------------------------------------------
 struct StackFrame
 {
@@ -171,5 +173,7 @@ inline CallStack GetCallStackAsm()
 
     return GetCallstackManual( c.Eip, c.Ebp + 4 );
 }
+
+#endif
 
 #endif

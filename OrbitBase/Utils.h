@@ -10,11 +10,13 @@
 #include <functional>
 #include <algorithm>
 #include <string.h>
-#include <wtypes.h>
+#include "OrbitTypes.h"
 #include <wchar.h>
 #include <sstream>
+#include <stdarg.h>
 
-#include <xxhash.h> // xxHash-r42
+#include <xxHash-r42/xxhash.h> // xxHash-r42O
+
 
 //-----------------------------------------------------------------------------
 inline std::string ws2s( const std::wstring& wstr )
@@ -46,6 +48,8 @@ inline std::wstring s2ws( const std::string& str )
 inline std::string GetEnvVar( const char* a_Var )
 {
     std::string var;
+
+#ifdef _WIN32
     char* buf = nullptr;
     size_t sz = 0;
     if( _dupenv_s( &buf, &sz, a_Var ) == 0 && buf != nullptr )
@@ -53,6 +57,7 @@ inline std::string GetEnvVar( const char* a_Var )
         var = buf;
         free( buf );
     }
+#endif
 
     return var;
 }
@@ -89,7 +94,7 @@ inline std::string Format( const char* msg, ... )
     const int BUFF_SIZE = 4096;
     char text[BUFF_SIZE] = { 0, };
     va_start( ap, msg );
-    vsnprintf_s( text, BUFF_SIZE-1, msg, ap );
+    vsnprintf( text, BUFF_SIZE-1, msg, ap );
     va_end( ap );
     return std::string( text );
 }
@@ -101,7 +106,7 @@ inline std::wstring Format( const WCHAR* msg, ... )
     const int BUFF_SIZE = 4096;
     WCHAR text[BUFF_SIZE] = { 0, };
     va_start(ap, msg);
-    _vsnwprintf_s(text, BUFF_SIZE-1, msg, ap);
+    VSNWPRINTF(text, BUFF_SIZE-1, msg, ap);
     va_end(ap);
     return text;
 }
@@ -119,6 +124,8 @@ inline T ToLower( const T & a_Str )
 inline std::vector< std::string > Tokenize( std::string a_String, const char* a_Delimiters = " " )
 {
     std::vector< std::string > tokens;
+
+#ifdef _WIN32
     char* next_token;
     char* token = strtok_s( &a_String[0], a_Delimiters, &next_token );
     while (token != NULL)
@@ -126,6 +133,7 @@ inline std::vector< std::string > Tokenize( std::string a_String, const char* a_
         tokens.push_back( token );
         token = strtok_s( NULL, a_Delimiters, &next_token );
     }
+#endif
 
     return tokens;
 }
@@ -134,6 +142,8 @@ inline std::vector< std::string > Tokenize( std::string a_String, const char* a_
 inline std::vector< std::wstring > Tokenize( std::wstring a_String, const wchar_t* a_Delimiters = L" " )
 {
     std::vector< std::wstring > tokens;
+
+#ifdef _WIN32
     wchar_t* next_token;
     wchar_t* token = wcstok_s(&a_String[0], a_Delimiters, &next_token);
     while (token != NULL)
@@ -141,6 +151,7 @@ inline std::vector< std::wstring > Tokenize( std::wstring a_String, const wchar_
         tokens.push_back(token);
         token = wcstok_s(NULL, a_Delimiters, &next_token);
     }
+#endif
 
     return tokens;
 }
@@ -336,6 +347,7 @@ template <typename T> inline std::string ToHexString( T a_Value )
     return l_StringStream.str();
 }
 
+#ifdef _WIN32
 //-----------------------------------------------------------------------------
 inline LONGLONG FileTimeDiffInMillis( const FILETIME & a_T0, const FILETIME & a_T1 )
 {
@@ -350,6 +362,7 @@ class CWindowsMessageToString
 public:
     static std::string GetStringFromMsg(DWORD dwMessage, bool = true);
 };
+#endif
 
 //-----------------------------------------------------------------------------
 inline std::wstring GetPrettySize( ULONG64 a_Size )

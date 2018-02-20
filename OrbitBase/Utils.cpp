@@ -7,12 +7,17 @@
 #include <algorithm>
 #include <thread>
 #include <mutex>
+#include <time.h>
+
+#ifdef _WIN32
 #include <AtlBase.h>
 #include <atlconv.h>
-#include <time.h>
+#include "dde.h"
+#endif
 
 using namespace std;
 
+#ifdef _WIN32
 //-----------------------------------------------------------------------------
 string GetLastErrorAsString()
 {
@@ -60,10 +65,6 @@ wstring GuidToStringW( GUID a_Guid )
 {
     return s2ws( GuidToString( a_Guid ) );
 }
-
-
-#include "dde.h"
-
 
 struct AFX_MAP_MESSAGE
 {
@@ -288,10 +289,12 @@ string CWindowsMessageToString::GetStringFromMsg(DWORD dwMessage, bool bShowFreq
 
     return to_string( dwMessage );
 }
+#endif
 
 //-----------------------------------------------------------------------------
 string OrbitUtils::GetTimeStamp()
 {
+#ifdef _WIN32
     time_t rawtime;
     struct tm timeinfo;
     char buffer[80];
@@ -302,4 +305,7 @@ string OrbitUtils::GetTimeStamp()
     strftime(buffer, 80, "%Y_%m_%d_%H_%M_%S", &timeinfo);
 
     return string(buffer);
+#else
+    return "TodoTimeStamp";
+#endif
 }

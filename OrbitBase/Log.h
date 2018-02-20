@@ -40,7 +40,7 @@ public:
     inline void LOGF( const wchar_t* const _Format, Args&&... args )
     {
         std::wstring log = Format( _Format, std::forward<Args>( args )... );
-        Log( log );
+        Log( ws2s( log ) );
     }
 
 protected:
@@ -89,8 +89,8 @@ public:
     template<class T>
     inline void Log(OrbitLog::Type a_Type, const char* a_VarName, const T& a_Value)
     {
-        stringstream l_StringStream;
-        l_StringStream << a_VarName << " = " << a_Value << endl;
+        std::stringstream l_StringStream;
+        l_StringStream << a_VarName << " = " << a_Value << std::endl;
         Log( a_Type, l_StringStream.str().c_str() );
     }
 

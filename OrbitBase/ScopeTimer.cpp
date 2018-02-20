@@ -9,8 +9,8 @@
 
 using namespace std;
 
-__declspec(thread) int CurrentDepth = 0;
-__declspec(thread) int CurrentDepthLocal = 0;
+thread_local int CurrentDepth = 0;
+thread_local int CurrentDepthLocal = 0;
 
 //-----------------------------------------------------------------------------
 void Timer::Start()
@@ -93,7 +93,7 @@ LocalScopeTimer::~LocalScopeTimer()
 //-----------------------------------------------------------------------------
 void ConditionalScopeTimer::Start( const char* a_Name )
 {
-    strcpy_s(m_Name, NameSize, a_Name);
+    //strcpy_s(m_Name, NameSize, a_Name);
     m_Timer.Start();
     m_Active = true;
 }

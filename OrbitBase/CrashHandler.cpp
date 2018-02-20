@@ -8,6 +8,7 @@
 #include "PrintVar.h"
 #include "Path.h"
 
+#ifdef _WIN32
 #include "client/windows/handler/exception_handler.h"
 
 #include <fstream>
@@ -99,3 +100,8 @@ void SendDumpInternal( const wstring & a_Dir, const wstring & a_Id )
 
     file.close();
 }
+#else
+CrashHandler::CrashHandler(){}
+void CrashHandler::SendMiniDump(){}
+
+#endif

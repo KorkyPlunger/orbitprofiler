@@ -6,22 +6,24 @@
 #include <mutex>
 #include <condition_variable>
 #include <thread>
-#include <concurrentqueue.h>
 #include <autoresetevent.h>
 #include "ScopeTimer.h"
 
+#ifdef _WIN32
 #define OQPI_USE_DEFAULT
 #include <oqpi.hpp>
+#include <concurrentqueue.h>
+
+template<typename T>
+using LockFreeQueue = moodycamel::ConcurrentQueue<T>;
+using oqpi_tk       = oqpi::default_helpers;
+#endif
 
 typedef std::recursive_mutex                    Mutex;
 typedef std::lock_guard<std::recursive_mutex>   ScopeLock;
 typedef std::unique_lock<std::recursive_mutex>  UniqueLock;
 typedef std::condition_variable                 ConditionVariable;
 typedef AutoResetEvent                          AutoResetEvent;
-
-template<typename T>
-using LockFreeQueue = moodycamel::ConcurrentQueue<T>;
-using oqpi_tk       = oqpi::default_helpers;
 
 //-----------------------------------------------------------------------------
 class ConditionalLock
@@ -45,8 +47,8 @@ private:
     bool                  m_Locked;
 };
 
+#ifdef _WIN32
 const DWORD MS_VC_EXCEPTION = 0x406D1388;
-
 #pragma pack(push,8)
 typedef struct tagTHREADNAME_INFO
 {
@@ -74,4 +76,4 @@ inline void SetThreadName( DWORD dwThreadID, char* threadName )
     {
     }
 }
-
+#endif

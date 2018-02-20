@@ -2,6 +2,7 @@
 
 using namespace std;
 
+#ifdef _WIN32
 //-----------------------------------------------------------------------------
 __declspec(noinline) CallStackPOD CallStackPOD::Walk(DWORD64 a_Rip, DWORD64 a_Rsp)
 {
@@ -71,4 +72,6 @@ __declspec(noinline) CallStackPOD CallStackPOD::Walk(DWORD64 a_Rip, DWORD64 a_Rs
     callstack.Hash();
     return callstack;
 }
+
+#endif
 

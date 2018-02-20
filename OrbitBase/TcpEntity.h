@@ -52,7 +52,7 @@ public:
     void FlushSendQueue();
 
     // Note: All Send methods can be called concurrently from multiple threads
-    inline void Send(MessageType a_Type) { SendMsg(Message(a_Type), nullptr); }
+    inline void Send(MessageType a_Type) { Message msg(a_Type); SendMsg(msg, nullptr); }
     inline void Send(Message & a_Message, void* a_Data);
     inline void Send(Message & a_Message);
     inline void Send(std::string& a_String);
@@ -75,11 +75,11 @@ protected:
     TcpSocket*                 m_TcpSocket;
     std::thread*               m_SenderThread;
     AutoResetEvent             m_ConditionVariable;
-    LockFreeQueue< TcpPacket > m_SendQueue;
+    //LockFreeQueue< TcpPacket > m_SendQueue;
     std::atomic<int>           m_NumQueuedEntries;
-    std::atomic<bool>          m_ExitRequested = false;
-    std::atomic<bool>          m_FlushRequested = false;
-    std::atomic<int>           m_NumFlushedItems = 0;
+    std::atomic<bool>          m_ExitRequested;
+    std::atomic<bool>          m_FlushRequested;
+    std::atomic<int>           m_NumFlushedItems;
 };
 
 //-----------------------------------------------------------------------------

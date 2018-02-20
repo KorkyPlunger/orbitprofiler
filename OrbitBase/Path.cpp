@@ -4,10 +4,10 @@
 
 #include "Path.h"
 #include "Utils.h"
-#include <direct.h>
+//#include <direct.h>
 #include <fstream>
-#include "Shlobj.h"
-
+//#include "Shlobj.h"
+#include "OrbitTypes.h"
 using namespace std;
 
 wstring Path::m_BasePath;
@@ -21,6 +21,7 @@ void Path::Init()
 //-----------------------------------------------------------------------------
 wstring Path::GetExecutableName()
 {
+#ifdef _WIN32
     WCHAR  cwBuffer[2048] = { 0 };
     LPWSTR pszBuffer = cwBuffer;
     DWORD  dwMaxChars = _countof(cwBuffer);
@@ -36,6 +37,9 @@ wstring Path::GetExecutableName()
 
     replace(exeFullName.begin(), exeFullName.end(), '\\', '/');
     return exeFullName;
+#else
+    return L"OrbitTodo";
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -49,20 +53,21 @@ wstring Path::GetExecutablePath()
 //-----------------------------------------------------------------------------
 bool Path::FileExists(const wstring & a_File)
 {
-    ifstream f( a_File.c_str() );
+    std::ifstream f( ws2s(a_File).c_str() );
     return f.good();
 }
 
 //-----------------------------------------------------------------------------
 bool Path::DirExists( const wstring & a_Dir )
 {
+#ifdef _WIN32
     DWORD ftyp = GetFileAttributesA( ws2s(a_Dir).c_str() );
     if( ftyp == INVALID_FILE_ATTRIBUTES )
         return false;
 
     if( ftyp & FILE_ATTRIBUTE_DIRECTORY )
         return true;
-
+#endif
     return false;
 }
 
@@ -243,6 +248,7 @@ wstring Path::GetDirectory( const wstring & a_FullName )
 //-----------------------------------------------------------------------------
 wstring Path::GetProgramFilesPath()
 {
+#ifdef WIN32
     TCHAR pf[MAX_PATH] = {0};
     SHGetSpecialFolderPath(
         0,
@@ -250,6 +256,9 @@ wstring Path::GetProgramFilesPath()
         CSIDL_PROGRAM_FILES,
         FALSE );
     return wstring(pf) + L"\\OrbitProfiler\\";
+#else
+    return L"TodoLinux";
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -279,6 +288,7 @@ vector< wstring > Path::ListFiles( const wstring & a_Dir, function< bool(const w
 {
     vector< wstring > files;
 
+#ifdef WIN32
     for( auto it = tr2::sys::recursive_directory_iterator( a_Dir );
         it != tr2::sys::recursive_directory_iterator(); ++it )
     {
@@ -289,6 +299,7 @@ vector< wstring > Path::ListFiles( const wstring & a_Dir, function< bool(const w
             files.push_back( file.wstring() );
         }
     }
+#endif
 
     return files;
 }

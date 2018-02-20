@@ -5,9 +5,10 @@
 
 #include "Profiling.h"
 #include <string>
+#include "OrbitTypes.h"
 
 #define SCOPE_TIMER_LOG( msg ) LocalScopeTimer timer(msg)
-extern __declspec(thread) int CurrentDepth;
+extern thread_local int CurrentDepth;
 
 //-----------------------------------------------------------------------------
 class Timer
@@ -136,28 +137,44 @@ protected:
 //-----------------------------------------------------------------------------
 inline double Timer::ElapsedMillis() const
 {
+#ifdef _WIN32
     IntervalType elapsedMicros = PerfCounter::get_microseconds(m_PerfCounter.get_start(), m_PerfCounter.get_end());
     return (double)elapsedMicros * 0.001;
+#else
+    return 0;
+#endif
 }
 
 //-----------------------------------------------------------------------------
 inline double Timer::ElapsedSeconds() const
 {
+#ifdef _WIN32
     IntervalType elapsedMicros = PerfCounter::get_microseconds(m_PerfCounter.get_start(), m_PerfCounter.get_end());
     return (double)elapsedMicros * 0.000001;
+#else
+    return 0;
+#endif
 }
 
 //-----------------------------------------------------------------------------
 inline double SimpleTimer::ElapsedMillis()
 {
+#ifdef _WIN32
     IntervalType elapsedMicros = PerfCounter::get_microseconds(m_PerfCounter.get_start(), m_PerfCounter.get_end());
     return (double)elapsedMicros * 0.001;
+#else
+    return 0;
+#endif
 }
 
 //-----------------------------------------------------------------------------
 inline double SimpleTimer::ElapsedSeconds()
 {
+#ifdef _WIN32
     IntervalType elapsedMicros = PerfCounter::get_microseconds(m_PerfCounter.get_start(), m_PerfCounter.get_end());
     return (double)elapsedMicros * 0.000001;
+#else
+    return 0;
+#endif
 }
 

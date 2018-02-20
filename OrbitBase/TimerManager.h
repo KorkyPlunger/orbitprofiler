@@ -45,8 +45,8 @@ public:
     std::atomic<int>        m_NumTimersFromPreviousSession;
     std::atomic<int>        m_NumFlushedTimers;
 
-    LockFreeQueue<Timer>    m_LockFreeQueue;
-    LockFreeQueue<Message>  m_LockFreeMessageQueue;
+    //LockFreeQueue<Timer>    m_LockFreeQueue;
+    //LockFreeQueue<Message>  m_LockFreeMessageQueue;
     std::thread*            m_ConsumerThread;
 
     typedef std::function<void(Timer&)> TimerAddedCallback;

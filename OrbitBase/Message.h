@@ -3,8 +3,10 @@
 //-----------------------------------
 #pragma once
 
+#include "OrbitTypes.h"
 #include "BaseTypes.h"
 #include <string>
+#include <cstring>
 
 #ifndef _WINDEF_
 typedef unsigned long DWORD;
@@ -155,7 +157,7 @@ struct OrbitWaitLoop
 //-----------------------------------------------------------------------------
 struct OrbitUnrealInfo
 {
-    OrbitUnrealInfo(){ memset(this, 0, sizeof(*this) ); }
+    OrbitUnrealInfo(){ std::memset(this, 0, sizeof(*this) ); }
     DWORD64       m_GetDisplayNameEntryAddress;
     DWORD         m_UobjectNameOffset;
     DWORD         m_EntryNameOffset;

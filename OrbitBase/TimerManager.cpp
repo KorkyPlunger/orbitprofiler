@@ -8,7 +8,7 @@
 #include "TcpForward.h"
 //#include "Params.h"
 
-#include <direct.h>
+//#include <direct.h>
 
 using namespace std;
 
@@ -17,7 +17,8 @@ TimerManager::TimerManager()
     : m_IsRecording(false)
     , m_ExitRequested(false)
     , m_FlushRequested(false)
-    , m_LockFreeQueue(65534)
+    //, m_LockFreeQueue(65534)
+    //, m_LockFreeMessageQueue(65534)
     , m_NumQueuedEntries(0)
     , m_NumQueuedMessages(0)
     , m_NumQueuedTimers(0)
@@ -60,7 +61,7 @@ void TimerManager::FlushQueue()
 
     while (!m_ExitRequested)
     {
-        size_t numDequeued = m_LockFreeQueue.try_dequeue_bulk(Timers, numTimers);
+        size_t numDequeued = 0; //m_LockFreeQueue.try_dequeue_bulk(Timers, numTimers);
 
         if (numDequeued == 0)
             break;
@@ -91,7 +92,7 @@ void TimerManager::Add( const Timer& a_Timer )
 {
     if( m_IsRecording )
     {
-        m_LockFreeQueue.enqueue(a_Timer);
+        //m_LockFreeQueue.enqueue(a_Timer);
         m_ConditionVariable.signal();
         ++m_NumQueuedEntries;
         ++m_NumQueuedTimers;
@@ -103,7 +104,7 @@ void TimerManager::Add( const Message& a_Message )
 {
     if( m_IsRecording )
     {
-        m_LockFreeMessageQueue.enqueue(a_Message);
+        //m_LockFreeMessageQueue.enqueue(a_Message);
         m_ConditionVariable.signal();
         ++m_NumQueuedEntries;
         ++m_NumQueuedMessages;
