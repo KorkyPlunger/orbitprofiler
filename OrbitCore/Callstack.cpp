@@ -59,6 +59,7 @@ wstring CallStack::GetString()
     return callstackString;
 }
 
+#ifdef _WIN32
 //-----------------------------------------------------------------------------
 StackFrame::StackFrame( HANDLE a_Thread )
 {
@@ -103,6 +104,7 @@ StackFrame::StackFrame( HANDLE a_Thread )
 #error "Platform not supported!"
 #endif
 }
+#endif
 
 //-----------------------------------------------------------------------------
 ORBIT_SERIALIZE( CallStack, 0 )

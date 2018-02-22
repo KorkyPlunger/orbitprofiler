@@ -15,7 +15,7 @@ CXX           = g++
 DEFINES       = -DQT_QML_DEBUG
 CFLAGS        = -pipe -g -fPIC -Wall -W -D_REENTRANT $(DEFINES)
 CXXFLAGS      = -pipe -g -fPIC -std=gnu++11 -Wall -W -D_REENTRANT $(DEFINES)
-INCPATH       = -I../OrbitCore -I. -I../../../Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++
+INCPATH       = -I../OrbitCore -I. -I../OrbitBase -I../external -I../external/xxHash-r42 -I../external/concurrentqueue -I../external/multicore/common -I../external/stlsoft-1.9.118/include -I../external/oqpi/include -I../external/asio/include -I../external/breakpad/src -I../external/curl-7.52.1/include -I../external/websocketpp -I../external/cereal-1.1.2/include -I../../../Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++
 QMAKE         = /home/pierric/Qt5.7.0/5.7/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -49,14 +49,11 @@ SOURCES       = ../OrbitCore/orbitcoreqt.cpp \
 		../OrbitCore/Version.cpp \
 		../OrbitCore/VariableTracing.cpp \
 		../OrbitCore/Variable.cpp \
-		../OrbitCore/TypeInfo.cpp \
 		../OrbitCore/TcpServer.cpp \
 		../OrbitCore/Tcp.cpp \
-		../OrbitCore/SymbolUtils.cpp \
 		../OrbitCore/Serialization.cpp \
 		../OrbitCore/SamplingProfiler.cpp \
 		../OrbitCore/ProcessUtils.cpp \
-		../OrbitCore/Pdb.cpp \
 		../OrbitCore/Params.cpp \
 		../OrbitCore/OrbitUnreal.cpp \
 		../OrbitCore/OrbitType.cpp \
@@ -66,20 +63,13 @@ SOURCES       = ../OrbitCore/orbitcoreqt.cpp \
 		../OrbitCore/OrbitProcess.cpp \
 		../OrbitCore/OrbitModule.cpp \
 		../OrbitCore/OrbitFunction.cpp \
-		../OrbitCore/OrbitDia.cpp \
 		../OrbitCore/ModuleManager.cpp \
 		../OrbitCore/MiniDump.cpp \
 		../OrbitCore/MemoryTracker.cpp \
 		../OrbitCore/LogInterface.cpp \
 		../OrbitCore/Injection.cpp \
 		../OrbitCore/FunctionStats.cpp \
-		../OrbitCore/EventUtils.cpp \
-		../OrbitCore/EventTracer.cpp \
-		../OrbitCore/EventCallbacks.cpp \
 		../OrbitCore/EventBuffer.cpp \
-		../OrbitCore/Diff.cpp \
-		../OrbitCore/DiaParser.cpp \
-		../OrbitCore/DiaManager.cpp \
 		../OrbitCore/CoreApp.cpp \
 		../OrbitCore/ContextSwitch.cpp \
 		../OrbitCore/Capture.cpp \
@@ -88,14 +78,11 @@ OBJECTS       = orbitcoreqt.o \
 		Version.o \
 		VariableTracing.o \
 		Variable.o \
-		TypeInfo.o \
 		TcpServer.o \
 		Tcp.o \
-		SymbolUtils.o \
 		Serialization.o \
 		SamplingProfiler.o \
 		ProcessUtils.o \
-		Pdb.o \
 		Params.o \
 		OrbitUnreal.o \
 		OrbitType.o \
@@ -105,20 +92,13 @@ OBJECTS       = orbitcoreqt.o \
 		OrbitProcess.o \
 		OrbitModule.o \
 		OrbitFunction.o \
-		OrbitDia.o \
 		ModuleManager.o \
 		MiniDump.o \
 		MemoryTracker.o \
 		LogInterface.o \
 		Injection.o \
 		FunctionStats.o \
-		EventUtils.o \
-		EventTracer.o \
-		EventCallbacks.o \
 		EventBuffer.o \
-		Diff.o \
-		DiaParser.o \
-		DiaManager.o \
 		CoreApp.o \
 		ContextSwitch.o \
 		Capture.o \
@@ -254,6 +234,7 @@ DIST          = ../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/qt_config.prf \
 		../../../Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++/qmake.conf \
 		../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_post.prf \
+		../OrbitCore/.qmake.stash \
 		../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/exclusive_builds.prf \
 		../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/default_pre.prf \
 		../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/resolve_config.prf \
@@ -273,22 +254,13 @@ DIST          = ../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_pre.prf \
 		ContextSwitch.h \
 		CoreApp.h \
 		cvconst.h \
-		DiaManager.h \
-		DiaParser.h \
-		Diff.h \
 		EventBuffer.h \
-		EventCallbacks.h \
-		EventClasses.h \
-		EventGuid.h \
-		EventTracer.h \
-		EventUtils.h \
 		Hashing.h \
 		Injection.h \
 		LogInterface.h \
 		MemoryTracker.h \
 		MiniDump.h \
 		ModuleManager.h \
-		OrbitDia.h \
 		OrbitFunction.h \
 		OrbitModule.h \
 		OrbitProcess.h \
@@ -304,7 +276,6 @@ DIST          = ../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_pre.prf \
 		SamplingProfiler.h \
 		Serialization.h \
 		ServerTimerManager.h \
-		SymbolUtils.h \
 		Tcp.h \
 		TcpServer.h \
 		Variable.h \
@@ -313,14 +284,11 @@ DIST          = ../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_pre.prf \
 		../OrbitCore/Version.cpp \
 		../OrbitCore/VariableTracing.cpp \
 		../OrbitCore/Variable.cpp \
-		../OrbitCore/TypeInfo.cpp \
 		../OrbitCore/TcpServer.cpp \
 		../OrbitCore/Tcp.cpp \
-		../OrbitCore/SymbolUtils.cpp \
 		../OrbitCore/Serialization.cpp \
 		../OrbitCore/SamplingProfiler.cpp \
 		../OrbitCore/ProcessUtils.cpp \
-		../OrbitCore/Pdb.cpp \
 		../OrbitCore/Params.cpp \
 		../OrbitCore/OrbitUnreal.cpp \
 		../OrbitCore/OrbitType.cpp \
@@ -330,20 +298,13 @@ DIST          = ../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_pre.prf \
 		../OrbitCore/OrbitProcess.cpp \
 		../OrbitCore/OrbitModule.cpp \
 		../OrbitCore/OrbitFunction.cpp \
-		../OrbitCore/OrbitDia.cpp \
 		../OrbitCore/ModuleManager.cpp \
 		../OrbitCore/MiniDump.cpp \
 		../OrbitCore/MemoryTracker.cpp \
 		../OrbitCore/LogInterface.cpp \
 		../OrbitCore/Injection.cpp \
 		../OrbitCore/FunctionStats.cpp \
-		../OrbitCore/EventUtils.cpp \
-		../OrbitCore/EventTracer.cpp \
-		../OrbitCore/EventCallbacks.cpp \
 		../OrbitCore/EventBuffer.cpp \
-		../OrbitCore/Diff.cpp \
-		../OrbitCore/DiaParser.cpp \
-		../OrbitCore/DiaManager.cpp \
 		../OrbitCore/CoreApp.cpp \
 		../OrbitCore/ContextSwitch.cpp \
 		../OrbitCore/Capture.cpp \
@@ -494,6 +455,7 @@ Makefile: ../OrbitCore/OrbitCore.pro ../../../Qt5.7.0/5.7/gcc_64/mkspecs/linux-g
 		../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/qt_config.prf \
 		../../../Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++/qmake.conf \
 		../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/exclusive_builds.prf \
 		../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/default_pre.prf \
 		../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/resolve_config.prf \
@@ -640,6 +602,7 @@ Makefile: ../OrbitCore/OrbitCore.pro ../../../Qt5.7.0/5.7/gcc_64/mkspecs/linux-g
 ../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/qt_config.prf:
 ../../../Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++/qmake.conf:
 ../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/exclusive_builds.prf:
 ../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/default_pre.prf:
 ../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/resolve_config.prf:
@@ -700,337 +663,3101 @@ compiler_clean:
 orbitcoreqt.o: ../OrbitCore/orbitcoreqt.cpp ../OrbitCore/orbitcoreqt.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o orbitcoreqt.o ../OrbitCore/orbitcoreqt.cpp
 
-Version.o: ../OrbitCore/Version.cpp ../OrbitCore/Version.h
+Version.o: ../OrbitCore/Version.cpp ../OrbitCore/Version.h \
+		../OrbitBase/Utils.h \
+		../OrbitBase/OrbitTypes.h \
+		../external/xxHash-r42/xxhash.h \
+		../external/curl-7.52.1/include/curl/curl.h \
+		../external/curl-7.52.1/include/curl/curlver.h \
+		../external/curl-7.52.1/include/curl/curlbuild.h \
+		../external/curl-7.52.1/include/curl/curlrules.h \
+		../external/curl-7.52.1/include/curl/easy.h \
+		../external/curl-7.52.1/include/curl/multi.h \
+		../external/curl-7.52.1/include/curl/typecheck-gcc.h \
+		../external/websocketpp/websocketpp/base64/base64.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Version.o ../OrbitCore/Version.cpp
 
-VariableTracing.o: ../OrbitCore/VariableTracing.cpp ../OrbitCore/VariableTracing.h
+VariableTracing.o: ../OrbitCore/VariableTracing.cpp ../OrbitCore/VariableTracing.h \
+		../OrbitBase/PrintVar.h \
+		../OrbitBase/Utils.h \
+		../OrbitBase/OrbitTypes.h \
+		../external/xxHash-r42/xxhash.h \
+		../OrbitBase/Threading.h \
+		../external/multicore/common/autoresetevent.h \
+		../external/multicore/common/sema.h \
+		../OrbitBase/ScopeTimer.h \
+		../OrbitBase/Profiling.h \
+		../external/stlsoft-1.9.118/include/winstl/performance/performance_counter.hpp \
+		../external/oqpi/include/oqpi.hpp \
+		../external/oqpi/include/oqpi/threading.hpp \
+		../external/oqpi/include/oqpi/threading/thread.hpp \
+		../external/oqpi/include/oqpi/platform.hpp \
+		../external/oqpi/include/oqpi/threading/interface_thread.hpp \
+		../external/oqpi/include/oqpi/empty_layer.hpp \
+		../external/oqpi/include/oqpi/threading/thread_attributes.hpp \
+		../external/oqpi/include/oqpi/threading/win_thread.hpp \
+		../external/oqpi/include/oqpi/error_handling.hpp \
+		../external/oqpi/include/oqpi/threading/this_thread.hpp \
+		../external/oqpi/include/oqpi/scheduling.hpp \
+		../external/oqpi/include/oqpi/scheduling_helpers.hpp \
+		../external/oqpi/include/oqpi/synchronization/event.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_event.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_event.hpp \
+		../external/oqpi/include/oqpi/scheduling/task.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_type.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_result.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_notifier.hpp \
+		../external/oqpi/include/oqpi/scheduling/scheduler.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_handle.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/context_container.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/group_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/parallel_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/sequence_group.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/parallel_for.hpp \
+		../external/oqpi/include/oqpi/concurrent_queue.hpp \
+		../external/oqpi/include/oqpi/synchronization.hpp \
+		../external/oqpi/include/oqpi/synchronization/semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_semaphore.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/simple_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/base_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/atomic_partitioner.hpp \
+		../external/concurrentqueue/concurrentqueue.h \
+		../external/concurrentqueue/internal/concurrentqueue_internal_debug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o VariableTracing.o ../OrbitCore/VariableTracing.cpp
 
 Variable.o: ../OrbitCore/Variable.cpp ../OrbitCore/Variable.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/Utils.h \
+		../OrbitBase/OrbitTypes.h \
+		../external/xxHash-r42/xxhash.h \
+		../OrbitBase/SerializationMacros.h \
 		../OrbitCore/Pdb.h \
+		../OrbitBase/OrbitDbgHelp.h \
 		../OrbitCore/OrbitType.h \
 		../OrbitCore/cvconst.h \
+		../OrbitBase/FunctionStats.h \
 		../OrbitCore/OrbitFunction.h \
+		../OrbitBase/FunctionArgs.h \
+		../OrbitBase/Log.h \
+		../OrbitBase/Threading.h \
+		../external/multicore/common/autoresetevent.h \
+		../external/multicore/common/sema.h \
+		../OrbitBase/ScopeTimer.h \
+		../OrbitBase/Profiling.h \
+		../external/stlsoft-1.9.118/include/winstl/performance/performance_counter.hpp \
+		../external/oqpi/include/oqpi.hpp \
+		../external/oqpi/include/oqpi/threading.hpp \
+		../external/oqpi/include/oqpi/threading/thread.hpp \
+		../external/oqpi/include/oqpi/platform.hpp \
+		../external/oqpi/include/oqpi/threading/interface_thread.hpp \
+		../external/oqpi/include/oqpi/empty_layer.hpp \
+		../external/oqpi/include/oqpi/threading/thread_attributes.hpp \
+		../external/oqpi/include/oqpi/threading/win_thread.hpp \
+		../external/oqpi/include/oqpi/error_handling.hpp \
+		../external/oqpi/include/oqpi/threading/this_thread.hpp \
+		../external/oqpi/include/oqpi/scheduling.hpp \
+		../external/oqpi/include/oqpi/scheduling_helpers.hpp \
+		../external/oqpi/include/oqpi/synchronization/event.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_event.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_event.hpp \
+		../external/oqpi/include/oqpi/scheduling/task.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_type.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_result.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_notifier.hpp \
+		../external/oqpi/include/oqpi/scheduling/scheduler.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_handle.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/context_container.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/group_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/parallel_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/sequence_group.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/parallel_for.hpp \
+		../external/oqpi/include/oqpi/concurrent_queue.hpp \
+		../external/oqpi/include/oqpi/synchronization.hpp \
+		../external/oqpi/include/oqpi/synchronization/semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_semaphore.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/simple_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/base_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/atomic_partitioner.hpp \
+		../external/concurrentqueue/concurrentqueue.h \
+		../external/concurrentqueue/internal/concurrentqueue_internal_debug.h \
 		../OrbitCore/TcpServer.h \
+		../OrbitBase/TcpEntity.h \
+		../OrbitBase/Message.h \
+		../OrbitBase/TcpForward.h \
+		../OrbitPlugin/OrbitUserData.h \
 		../OrbitCore/Capture.h \
+		../OrbitBase/CallstackTypes.h \
 		../OrbitCore/CoreApp.h \
 		../OrbitCore/Serialization.h \
+		../OrbitBase/PrintVar.h \
+		../external/cereal-1.1.2/include/cereal/access.hpp \
+		../external/cereal-1.1.2/include/cereal/macros.hpp \
+		../external/cereal-1.1.2/include/cereal/details/helpers.hpp \
+		../external/cereal-1.1.2/include/cereal/details/static_object.hpp \
+		../external/cereal-1.1.2/include/cereal/details/traits.hpp \
+		../external/cereal-1.1.2/include/cereal/types/base_class.hpp \
+		../external/cereal-1.1.2/include/cereal/cereal.hpp \
+		../external/cereal-1.1.2/include/cereal/types/common.hpp \
+		../external/cereal-1.1.2/include/cereal/types/array.hpp \
+		../external/cereal-1.1.2/include/cereal/types/bitset.hpp \
+		../external/cereal-1.1.2/include/cereal/types/chrono.hpp \
+		../external/cereal-1.1.2/include/cereal/types/complex.hpp \
+		../external/cereal-1.1.2/include/cereal/types/deque.hpp \
+		../external/cereal-1.1.2/include/cereal/types/forward_list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/memory.hpp \
+		../external/cereal-1.1.2/include/cereal/details/util.hpp \
+		../external/cereal-1.1.2/include/cereal/details/polymorphic_impl.hpp \
+		../external/cereal-1.1.2/include/cereal/types/string.hpp \
+		../external/cereal-1.1.2/include/cereal/types/polymorphic.hpp \
+		../external/cereal-1.1.2/include/cereal/types/queue.hpp \
+		../external/cereal-1.1.2/include/cereal/types/set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/stack.hpp \
+		../external/cereal-1.1.2/include/cereal/types/tuple.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/utility.hpp \
+		../external/cereal-1.1.2/include/cereal/types/vector.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/portable_binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/xml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml_print.hpp \
+		../external/cereal-1.1.2/include/cereal/external/base64.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/json.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/prettywriter.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/writer.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/rapidjson.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/stack.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/strfunc.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/genericstream.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/reader.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/pow10.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/document.h \
 		../OrbitCore/DiaParser.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Variable.o ../OrbitCore/Variable.cpp
 
-TypeInfo.o: ../OrbitCore/TypeInfo.cpp ../OrbitCore/Pdb.h \
-		../OrbitCore/OrbitType.h \
-		../OrbitCore/cvconst.h \
-		../OrbitCore/Variable.h \
-		../OrbitCore/OrbitFunction.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o TypeInfo.o ../OrbitCore/TypeInfo.cpp
-
 TcpServer.o: ../OrbitCore/TcpServer.cpp ../OrbitCore/TcpServer.h \
+		../OrbitBase/TcpEntity.h \
+		../OrbitBase/Message.h \
+		../OrbitBase/OrbitTypes.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/TcpForward.h \
+		../OrbitBase/Threading.h \
+		../external/multicore/common/autoresetevent.h \
+		../external/multicore/common/sema.h \
+		../OrbitBase/ScopeTimer.h \
+		../OrbitBase/Profiling.h \
+		../external/stlsoft-1.9.118/include/winstl/performance/performance_counter.hpp \
+		../external/oqpi/include/oqpi.hpp \
+		../external/oqpi/include/oqpi/threading.hpp \
+		../external/oqpi/include/oqpi/threading/thread.hpp \
+		../external/oqpi/include/oqpi/platform.hpp \
+		../external/oqpi/include/oqpi/threading/interface_thread.hpp \
+		../external/oqpi/include/oqpi/empty_layer.hpp \
+		../external/oqpi/include/oqpi/threading/thread_attributes.hpp \
+		../external/oqpi/include/oqpi/threading/win_thread.hpp \
+		../external/oqpi/include/oqpi/error_handling.hpp \
+		../external/oqpi/include/oqpi/threading/this_thread.hpp \
+		../external/oqpi/include/oqpi/scheduling.hpp \
+		../external/oqpi/include/oqpi/scheduling_helpers.hpp \
+		../external/oqpi/include/oqpi/synchronization/event.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_event.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_event.hpp \
+		../external/oqpi/include/oqpi/scheduling/task.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_type.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_result.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_notifier.hpp \
+		../external/oqpi/include/oqpi/scheduling/scheduler.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_handle.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/context_container.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/group_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/parallel_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/sequence_group.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/parallel_for.hpp \
+		../external/oqpi/include/oqpi/concurrent_queue.hpp \
+		../external/oqpi/include/oqpi/synchronization.hpp \
+		../external/oqpi/include/oqpi/synchronization/semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_semaphore.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/simple_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/base_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/atomic_partitioner.hpp \
+		../external/concurrentqueue/concurrentqueue.h \
+		../external/concurrentqueue/internal/concurrentqueue_internal_debug.h \
+		../OrbitPlugin/OrbitUserData.h \
+		../OrbitBase/Utils.h \
+		../external/xxHash-r42/xxhash.h \
 		../OrbitCore/Tcp.h \
+		../external/asio/include/asio.hpp \
+		../external/asio/include/asio/associated_allocator.hpp \
+		../external/asio/include/asio/detail/config.hpp \
+		../external/asio/include/asio/detail/type_traits.hpp \
+		../external/asio/include/asio/detail/push_options.hpp \
+		../external/asio/include/asio/detail/pop_options.hpp \
+		../external/asio/include/asio/associated_executor.hpp \
+		../external/asio/include/asio/is_executor.hpp \
+		../external/asio/include/asio/system_executor.hpp \
+		../external/asio/include/asio/detail/scheduler.hpp \
+		../external/asio/include/asio/error_code.hpp \
+		../external/asio/include/asio/detail/noncopyable.hpp \
+		../external/asio/include/asio/impl/error_code.ipp \
+		../external/asio/include/asio/detail/local_free_on_block_exit.hpp \
+		../external/asio/include/asio/detail/socket_types.hpp \
+		../external/asio/include/asio/detail/old_win_sdk_compat.hpp \
+		../external/asio/include/asio/execution_context.hpp \
+		../external/asio/include/asio/detail/variadic_templates.hpp \
+		../external/asio/include/asio/impl/execution_context.hpp \
+		../external/asio/include/asio/detail/handler_type_requirements.hpp \
+		../external/asio/include/asio/handler_type.hpp \
+		../external/asio/include/asio/detail/scoped_ptr.hpp \
+		../external/asio/include/asio/detail/service_registry.hpp \
+		../external/asio/include/asio/detail/mutex.hpp \
+		../external/asio/include/asio/detail/null_mutex.hpp \
+		../external/asio/include/asio/detail/scoped_lock.hpp \
+		../external/asio/include/asio/detail/win_mutex.hpp \
+		../external/asio/include/asio/detail/impl/win_mutex.ipp \
+		../external/asio/include/asio/detail/throw_error.hpp \
+		../external/asio/include/asio/detail/impl/throw_error.ipp \
+		../external/asio/include/asio/detail/throw_exception.hpp \
+		../external/asio/include/asio/system_error.hpp \
+		../external/asio/include/asio/error.hpp \
+		../external/asio/include/asio/impl/error.ipp \
+		../external/asio/include/asio/detail/posix_mutex.hpp \
+		../external/asio/include/asio/detail/impl/posix_mutex.ipp \
+		../external/asio/include/asio/detail/std_mutex.hpp \
+		../external/asio/include/asio/detail/impl/service_registry.hpp \
+		../external/asio/include/asio/detail/impl/service_registry.ipp \
+		../external/asio/include/asio/impl/execution_context.ipp \
+		../external/asio/include/asio/detail/atomic_count.hpp \
+		../external/asio/include/asio/detail/event.hpp \
+		../external/asio/include/asio/detail/null_event.hpp \
+		../external/asio/include/asio/detail/win_event.hpp \
+		../external/asio/include/asio/detail/assert.hpp \
+		../external/asio/include/asio/detail/impl/win_event.ipp \
+		../external/asio/include/asio/detail/posix_event.hpp \
+		../external/asio/include/asio/detail/impl/posix_event.ipp \
+		../external/asio/include/asio/detail/std_event.hpp \
+		../external/asio/include/asio/detail/op_queue.hpp \
+		../external/asio/include/asio/detail/reactor_fwd.hpp \
+		../external/asio/include/asio/detail/scheduler_operation.hpp \
+		../external/asio/include/asio/detail/handler_tracking.hpp \
+		../external/asio/include/asio/detail/cstdint.hpp \
+		../external/asio/include/asio/detail/static_mutex.hpp \
+		../external/asio/include/asio/detail/null_static_mutex.hpp \
+		../external/asio/include/asio/detail/win_static_mutex.hpp \
+		../external/asio/include/asio/detail/impl/win_static_mutex.ipp \
+		../external/asio/include/asio/detail/posix_static_mutex.hpp \
+		../external/asio/include/asio/detail/std_static_mutex.hpp \
+		../external/asio/include/asio/detail/tss_ptr.hpp \
+		../external/asio/include/asio/detail/null_tss_ptr.hpp \
+		../external/asio/include/asio/detail/keyword_tss_ptr.hpp \
+		../external/asio/include/asio/detail/win_tss_ptr.hpp \
+		../external/asio/include/asio/detail/impl/win_tss_ptr.ipp \
+		../external/asio/include/asio/detail/posix_tss_ptr.hpp \
+		../external/asio/include/asio/detail/impl/posix_tss_ptr.ipp \
+		../external/asio/include/asio/detail/impl/handler_tracking.ipp \
+		../external/asio/include/asio/time_traits.hpp \
+		../external/asio/include/asio/detail/chrono.hpp \
+		../external/asio/include/asio/detail/chrono_time_traits.hpp \
+		../external/asio/include/asio/wait_traits.hpp \
+		../external/asio/include/asio/detail/thread_context.hpp \
+		../external/asio/include/asio/detail/call_stack.hpp \
+		../external/asio/include/asio/detail/impl/scheduler.ipp \
+		../external/asio/include/asio/detail/limits.hpp \
+		../external/asio/include/asio/detail/reactor.hpp \
+		../external/asio/include/asio/detail/epoll_reactor.hpp \
+		../external/asio/include/asio/detail/object_pool.hpp \
+		../external/asio/include/asio/detail/reactor_op.hpp \
+		../external/asio/include/asio/detail/operation.hpp \
+		../external/asio/include/asio/detail/win_iocp_operation.hpp \
+		../external/asio/include/asio/detail/select_interrupter.hpp \
+		../external/asio/include/asio/detail/socket_select_interrupter.hpp \
+		../external/asio/include/asio/detail/impl/socket_select_interrupter.ipp \
+		../external/asio/include/asio/detail/socket_holder.hpp \
+		../external/asio/include/asio/detail/socket_ops.hpp \
+		../external/asio/include/asio/detail/memory.hpp \
+		../external/asio/include/asio/detail/impl/socket_ops.ipp \
+		../external/asio/include/asio/detail/eventfd_select_interrupter.hpp \
+		../external/asio/include/asio/detail/impl/eventfd_select_interrupter.ipp \
+		../external/asio/include/asio/detail/pipe_select_interrupter.hpp \
+		../external/asio/include/asio/detail/impl/pipe_select_interrupter.ipp \
+		../external/asio/include/asio/detail/timer_queue_base.hpp \
+		../external/asio/include/asio/detail/timer_queue_set.hpp \
+		../external/asio/include/asio/detail/impl/timer_queue_set.ipp \
+		../external/asio/include/asio/detail/wait_op.hpp \
+		../external/asio/include/asio/detail/impl/epoll_reactor.hpp \
+		../external/asio/include/asio/detail/impl/epoll_reactor.ipp \
+		../external/asio/include/asio/detail/kqueue_reactor.hpp \
+		../external/asio/include/asio/detail/impl/kqueue_reactor.hpp \
+		../external/asio/include/asio/detail/impl/kqueue_reactor.ipp \
+		../external/asio/include/asio/detail/dev_poll_reactor.hpp \
+		../external/asio/include/asio/detail/hash_map.hpp \
+		../external/asio/include/asio/detail/reactor_op_queue.hpp \
+		../external/asio/include/asio/detail/impl/dev_poll_reactor.hpp \
+		../external/asio/include/asio/detail/impl/dev_poll_reactor.ipp \
+		../external/asio/include/asio/detail/null_reactor.hpp \
+		../external/asio/include/asio/detail/select_reactor.hpp \
+		../external/asio/include/asio/detail/fd_set_adapter.hpp \
+		../external/asio/include/asio/detail/posix_fd_set_adapter.hpp \
+		../external/asio/include/asio/detail/win_fd_set_adapter.hpp \
+		../external/asio/include/asio/detail/thread.hpp \
+		../external/asio/include/asio/detail/null_thread.hpp \
+		../external/asio/include/asio/detail/wince_thread.hpp \
+		../external/asio/include/asio/detail/winapp_thread.hpp \
+		../external/asio/include/asio/detail/win_thread.hpp \
+		../external/asio/include/asio/detail/impl/win_thread.ipp \
+		../external/asio/include/asio/detail/posix_thread.hpp \
+		../external/asio/include/asio/detail/impl/posix_thread.ipp \
+		../external/asio/include/asio/detail/std_thread.hpp \
+		../external/asio/include/asio/detail/impl/select_reactor.hpp \
+		../external/asio/include/asio/detail/impl/select_reactor.ipp \
+		../external/asio/include/asio/detail/signal_blocker.hpp \
+		../external/asio/include/asio/detail/null_signal_blocker.hpp \
+		../external/asio/include/asio/detail/posix_signal_blocker.hpp \
+		../external/asio/include/asio/detail/scheduler_thread_info.hpp \
+		../external/asio/include/asio/detail/thread_info_base.hpp \
+		../external/asio/include/asio/detail/thread_group.hpp \
+		../external/asio/include/asio/impl/system_executor.hpp \
+		../external/asio/include/asio/detail/executor_op.hpp \
+		../external/asio/include/asio/detail/fenced_block.hpp \
+		../external/asio/include/asio/detail/null_fenced_block.hpp \
+		../external/asio/include/asio/detail/macos_fenced_block.hpp \
+		../external/asio/include/asio/detail/solaris_fenced_block.hpp \
+		../external/asio/include/asio/detail/gcc_arm_fenced_block.hpp \
+		../external/asio/include/asio/detail/gcc_hppa_fenced_block.hpp \
+		../external/asio/include/asio/detail/gcc_x86_fenced_block.hpp \
+		../external/asio/include/asio/detail/gcc_sync_fenced_block.hpp \
+		../external/asio/include/asio/detail/win_fenced_block.hpp \
+		../external/asio/include/asio/detail/handler_alloc_helpers.hpp \
+		../external/asio/include/asio/handler_alloc_hook.hpp \
+		../external/asio/include/asio/impl/handler_alloc_hook.ipp \
+		../external/asio/include/asio/detail/handler_invoke_helpers.hpp \
+		../external/asio/include/asio/handler_invoke_hook.hpp \
+		../external/asio/include/asio/detail/global.hpp \
+		../external/asio/include/asio/detail/null_global.hpp \
+		../external/asio/include/asio/detail/win_global.hpp \
+		../external/asio/include/asio/detail/posix_global.hpp \
+		../external/asio/include/asio/detail/std_global.hpp \
+		../external/asio/include/asio/detail/recycling_allocator.hpp \
+		../external/asio/include/asio/impl/system_executor.ipp \
+		../external/asio/include/asio/async_result.hpp \
+		../external/asio/include/asio/basic_datagram_socket.hpp \
+		../external/asio/include/asio/basic_socket.hpp \
+		../external/asio/include/asio/basic_io_object.hpp \
+		../external/asio/include/asio/io_context.hpp \
+		../external/asio/include/asio/detail/wrapped_handler.hpp \
+		../external/asio/include/asio/detail/bind_handler.hpp \
+		../external/asio/include/asio/detail/handler_cont_helpers.hpp \
+		../external/asio/include/asio/handler_continuation_hook.hpp \
+		../external/asio/include/asio/detail/winsock_init.hpp \
+		../external/asio/include/asio/detail/impl/winsock_init.ipp \
+		../external/asio/include/asio/detail/signal_init.hpp \
+		../external/asio/include/asio/impl/io_context.hpp \
+		../external/asio/include/asio/detail/completion_handler.hpp \
+		../external/asio/include/asio/detail/handler_work.hpp \
+		../external/asio/include/asio/detail/win_iocp_io_context.hpp \
+		../external/asio/include/asio/detail/win_iocp_thread_info.hpp \
+		../external/asio/include/asio/detail/impl/win_iocp_io_context.hpp \
+		../external/asio/include/asio/detail/impl/win_iocp_io_context.ipp \
+		../external/asio/include/asio/impl/io_context.ipp \
+		../external/asio/include/asio/io_context_strand.hpp \
+		../external/asio/include/asio/detail/strand_service.hpp \
+		../external/asio/include/asio/detail/impl/strand_service.hpp \
+		../external/asio/include/asio/detail/impl/strand_service.ipp \
+		../external/asio/include/asio/post.hpp \
+		../external/asio/include/asio/impl/post.hpp \
+		../external/asio/include/asio/detail/work_dispatcher.hpp \
+		../external/asio/include/asio/executor_work_guard.hpp \
+		../external/asio/include/asio/socket_base.hpp \
+		../external/asio/include/asio/detail/io_control.hpp \
+		../external/asio/include/asio/detail/socket_option.hpp \
+		../external/asio/include/asio/datagram_socket_service.hpp \
+		../external/asio/include/asio/detail/null_socket_service.hpp \
+		../external/asio/include/asio/buffer.hpp \
+		../external/asio/include/asio/detail/array_fwd.hpp \
+		../external/asio/include/asio/detail/is_buffer_sequence.hpp \
+		../external/asio/include/asio/detail/functional.hpp \
+		../external/asio/include/asio/detail/win_iocp_socket_service.hpp \
+		../external/asio/include/asio/detail/buffer_sequence_adapter.hpp \
+		../external/asio/include/asio/detail/impl/buffer_sequence_adapter.ipp \
+		../external/asio/include/asio/detail/win_iocp_null_buffers_op.hpp \
+		../external/asio/include/asio/detail/win_iocp_socket_accept_op.hpp \
+		../external/asio/include/asio/detail/win_iocp_socket_service_base.hpp \
+		../external/asio/include/asio/detail/win_iocp_socket_connect_op.hpp \
+		../external/asio/include/asio/detail/win_iocp_socket_send_op.hpp \
+		../external/asio/include/asio/detail/win_iocp_socket_recv_op.hpp \
+		../external/asio/include/asio/detail/win_iocp_socket_recvmsg_op.hpp \
+		../external/asio/include/asio/detail/win_iocp_wait_op.hpp \
+		../external/asio/include/asio/detail/impl/win_iocp_socket_service_base.ipp \
+		../external/asio/include/asio/detail/win_iocp_socket_recvfrom_op.hpp \
+		../external/asio/include/asio/detail/reactive_socket_service.hpp \
+		../external/asio/include/asio/detail/reactive_null_buffers_op.hpp \
+		../external/asio/include/asio/detail/reactive_socket_accept_op.hpp \
+		../external/asio/include/asio/detail/reactive_socket_connect_op.hpp \
+		../external/asio/include/asio/detail/reactive_socket_recvfrom_op.hpp \
+		../external/asio/include/asio/detail/reactive_socket_sendto_op.hpp \
+		../external/asio/include/asio/detail/reactive_socket_service_base.hpp \
+		../external/asio/include/asio/detail/reactive_socket_recv_op.hpp \
+		../external/asio/include/asio/detail/reactive_socket_recvmsg_op.hpp \
+		../external/asio/include/asio/detail/reactive_socket_send_op.hpp \
+		../external/asio/include/asio/detail/reactive_wait_op.hpp \
+		../external/asio/include/asio/detail/impl/reactive_socket_service_base.ipp \
+		../external/asio/include/asio/basic_deadline_timer.hpp \
+		../external/asio/include/asio/deadline_timer_service.hpp \
+		../external/asio/include/asio/detail/deadline_timer_service.hpp \
+		../external/asio/include/asio/detail/timer_queue.hpp \
+		../external/asio/include/asio/detail/date_time_fwd.hpp \
+		../external/asio/include/asio/detail/timer_scheduler.hpp \
+		../external/asio/include/asio/detail/timer_scheduler_fwd.hpp \
+		../external/asio/include/asio/detail/winrt_timer_scheduler.hpp \
+		../external/asio/include/asio/detail/impl/winrt_timer_scheduler.hpp \
+		../external/asio/include/asio/detail/impl/winrt_timer_scheduler.ipp \
+		../external/asio/include/asio/detail/wait_handler.hpp \
+		../external/asio/include/asio/detail/timer_queue_ptime.hpp \
+		../external/asio/include/asio/detail/impl/timer_queue_ptime.ipp \
+		../external/asio/include/asio/basic_raw_socket.hpp \
+		../external/asio/include/asio/raw_socket_service.hpp \
+		../external/asio/include/asio/basic_seq_packet_socket.hpp \
+		../external/asio/include/asio/seq_packet_socket_service.hpp \
+		../external/asio/include/asio/basic_serial_port.hpp \
+		../external/asio/include/asio/serial_port_base.hpp \
+		../external/asio/include/asio/impl/serial_port_base.hpp \
+		../external/asio/include/asio/impl/serial_port_base.ipp \
+		../external/asio/include/asio/serial_port_service.hpp \
+		../external/asio/include/asio/detail/reactive_serial_port_service.hpp \
+		../external/asio/include/asio/detail/descriptor_ops.hpp \
+		../external/asio/include/asio/detail/impl/descriptor_ops.ipp \
+		../external/asio/include/asio/detail/reactive_descriptor_service.hpp \
+		../external/asio/include/asio/detail/descriptor_read_op.hpp \
+		../external/asio/include/asio/detail/descriptor_write_op.hpp \
+		../external/asio/include/asio/posix/descriptor_base.hpp \
+		../external/asio/include/asio/detail/impl/reactive_descriptor_service.ipp \
+		../external/asio/include/asio/detail/impl/reactive_serial_port_service.ipp \
+		../external/asio/include/asio/detail/win_iocp_serial_port_service.hpp \
+		../external/asio/include/asio/detail/win_iocp_handle_service.hpp \
+		../external/asio/include/asio/detail/win_iocp_handle_read_op.hpp \
+		../external/asio/include/asio/detail/win_iocp_handle_write_op.hpp \
+		../external/asio/include/asio/detail/impl/win_iocp_handle_service.ipp \
+		../external/asio/include/asio/detail/impl/win_iocp_serial_port_service.ipp \
+		../external/asio/include/asio/basic_signal_set.hpp \
+		../external/asio/include/asio/signal_set_service.hpp \
+		../external/asio/include/asio/detail/signal_set_service.hpp \
+		../external/asio/include/asio/detail/signal_handler.hpp \
+		../external/asio/include/asio/detail/signal_op.hpp \
+		../external/asio/include/asio/detail/impl/signal_set_service.ipp \
+		../external/asio/include/asio/basic_socket_acceptor.hpp \
+		../external/asio/include/asio/socket_acceptor_service.hpp \
+		../external/asio/include/asio/basic_socket_iostream.hpp \
+		../external/asio/include/asio/basic_socket_streambuf.hpp \
+		../external/asio/include/asio/detail/array.hpp \
+		../external/asio/include/asio/stream_socket_service.hpp \
+		../external/asio/include/asio/detail/winrt_ssocket_service.hpp \
+		../external/asio/include/asio/detail/winrt_socket_connect_op.hpp \
+		../external/asio/include/asio/detail/winrt_async_op.hpp \
+		../external/asio/include/asio/detail/winrt_ssocket_service_base.hpp \
+		../external/asio/include/asio/detail/winrt_async_manager.hpp \
+		../external/asio/include/asio/detail/winrt_socket_recv_op.hpp \
+		../external/asio/include/asio/detail/winrt_socket_send_op.hpp \
+		../external/asio/include/asio/detail/impl/winrt_ssocket_service_base.ipp \
+		../external/asio/include/asio/detail/winrt_utils.hpp \
+		../external/asio/include/asio/deadline_timer.hpp \
+		../external/asio/include/asio/steady_timer.hpp \
+		../external/asio/include/asio/basic_waitable_timer.hpp \
+		../external/asio/include/asio/waitable_timer_service.hpp \
+		../external/asio/include/asio/basic_stream_socket.hpp \
+		../external/asio/include/asio/basic_streambuf.hpp \
+		../external/asio/include/asio/basic_streambuf_fwd.hpp \
+		../external/asio/include/asio/bind_executor.hpp \
+		../external/asio/include/asio/uses_executor.hpp \
+		../external/asio/include/asio/buffered_read_stream_fwd.hpp \
+		../external/asio/include/asio/buffered_read_stream.hpp \
+		../external/asio/include/asio/detail/buffer_resize_guard.hpp \
+		../external/asio/include/asio/detail/buffered_stream_storage.hpp \
+		../external/asio/include/asio/impl/buffered_read_stream.hpp \
+		../external/asio/include/asio/buffered_stream_fwd.hpp \
+		../external/asio/include/asio/buffered_stream.hpp \
+		../external/asio/include/asio/buffered_write_stream.hpp \
+		../external/asio/include/asio/buffered_write_stream_fwd.hpp \
+		../external/asio/include/asio/completion_condition.hpp \
+		../external/asio/include/asio/write.hpp \
+		../external/asio/include/asio/impl/write.hpp \
+		../external/asio/include/asio/detail/base_from_completion_cond.hpp \
+		../external/asio/include/asio/detail/consuming_buffers.hpp \
+		../external/asio/include/asio/detail/dependent_type.hpp \
+		../external/asio/include/asio/impl/buffered_write_stream.hpp \
+		../external/asio/include/asio/buffers_iterator.hpp \
+		../external/asio/include/asio/connect.hpp \
+		../external/asio/include/asio/impl/connect.hpp \
+		../external/asio/include/asio/coroutine.hpp \
+		../external/asio/include/asio/defer.hpp \
+		../external/asio/include/asio/impl/defer.hpp \
+		../external/asio/include/asio/dispatch.hpp \
+		../external/asio/include/asio/impl/dispatch.hpp \
+		../external/asio/include/asio/executor.hpp \
+		../external/asio/include/asio/detail/cstddef.hpp \
+		../external/asio/include/asio/impl/executor.hpp \
+		../external/asio/include/asio/impl/executor.ipp \
+		../external/asio/include/asio/generic/basic_endpoint.hpp \
+		../external/asio/include/asio/generic/detail/endpoint.hpp \
+		../external/asio/include/asio/generic/detail/impl/endpoint.ipp \
+		../external/asio/include/asio/generic/datagram_protocol.hpp \
+		../external/asio/include/asio/generic/raw_protocol.hpp \
+		../external/asio/include/asio/generic/seq_packet_protocol.hpp \
+		../external/asio/include/asio/generic/stream_protocol.hpp \
+		../external/asio/include/asio/io_service.hpp \
+		../external/asio/include/asio/io_service_strand.hpp \
+		../external/asio/include/asio/ip/address.hpp \
+		../external/asio/include/asio/ip/address_v4.hpp \
+		../external/asio/include/asio/ip/impl/address_v4.hpp \
+		../external/asio/include/asio/ip/impl/address_v4.ipp \
+		../external/asio/include/asio/ip/address_v6.hpp \
+		../external/asio/include/asio/ip/impl/address_v6.hpp \
+		../external/asio/include/asio/ip/impl/address_v6.ipp \
+		../external/asio/include/asio/ip/bad_address_cast.hpp \
+		../external/asio/include/asio/ip/impl/address.hpp \
+		../external/asio/include/asio/ip/impl/address.ipp \
+		../external/asio/include/asio/ip/address_v4_iterator.hpp \
+		../external/asio/include/asio/ip/address_v4_range.hpp \
+		../external/asio/include/asio/ip/address_v6_iterator.hpp \
+		../external/asio/include/asio/ip/address_v6_range.hpp \
+		../external/asio/include/asio/ip/basic_endpoint.hpp \
+		../external/asio/include/asio/ip/detail/endpoint.hpp \
+		../external/asio/include/asio/ip/detail/impl/endpoint.ipp \
+		../external/asio/include/asio/ip/impl/basic_endpoint.hpp \
+		../external/asio/include/asio/ip/basic_resolver.hpp \
+		../external/asio/include/asio/ip/basic_resolver_iterator.hpp \
+		../external/asio/include/asio/ip/basic_resolver_entry.hpp \
+		../external/asio/include/asio/ip/basic_resolver_query.hpp \
+		../external/asio/include/asio/ip/resolver_query_base.hpp \
+		../external/asio/include/asio/ip/resolver_base.hpp \
+		../external/asio/include/asio/ip/basic_resolver_results.hpp \
+		../external/asio/include/asio/ip/resolver_service.hpp \
+		../external/asio/include/asio/detail/winrt_resolver_service.hpp \
+		../external/asio/include/asio/detail/winrt_resolve_op.hpp \
+		../external/asio/include/asio/detail/resolver_service.hpp \
+		../external/asio/include/asio/detail/resolve_endpoint_op.hpp \
+		../external/asio/include/asio/detail/resolve_op.hpp \
+		../external/asio/include/asio/detail/resolver_service_base.hpp \
+		../external/asio/include/asio/detail/impl/resolver_service_base.ipp \
+		../external/asio/include/asio/ip/host_name.hpp \
+		../external/asio/include/asio/ip/impl/host_name.ipp \
+		../external/asio/include/asio/ip/icmp.hpp \
+		../external/asio/include/asio/ip/multicast.hpp \
+		../external/asio/include/asio/ip/detail/socket_option.hpp \
+		../external/asio/include/asio/ip/tcp.hpp \
+		../external/asio/include/asio/ip/udp.hpp \
+		../external/asio/include/asio/ip/unicast.hpp \
+		../external/asio/include/asio/ip/v6_only.hpp \
+		../external/asio/include/asio/is_read_buffered.hpp \
+		../external/asio/include/asio/is_write_buffered.hpp \
+		../external/asio/include/asio/local/basic_endpoint.hpp \
+		../external/asio/include/asio/local/detail/endpoint.hpp \
+		../external/asio/include/asio/local/detail/impl/endpoint.ipp \
+		../external/asio/include/asio/local/connect_pair.hpp \
+		../external/asio/include/asio/local/datagram_protocol.hpp \
+		../external/asio/include/asio/local/stream_protocol.hpp \
+		../external/asio/include/asio/placeholders.hpp \
+		../external/asio/include/asio/posix/basic_descriptor.hpp \
+		../external/asio/include/asio/posix/basic_stream_descriptor.hpp \
+		../external/asio/include/asio/posix/stream_descriptor_service.hpp \
+		../external/asio/include/asio/posix/stream_descriptor.hpp \
+		../external/asio/include/asio/read.hpp \
+		../external/asio/include/asio/impl/read.hpp \
+		../external/asio/include/asio/read_at.hpp \
+		../external/asio/include/asio/impl/read_at.hpp \
+		../external/asio/include/asio/read_until.hpp \
+		../external/asio/include/asio/detail/regex_fwd.hpp \
+		../external/asio/include/asio/impl/read_until.hpp \
+		../external/asio/include/asio/serial_port.hpp \
+		../external/asio/include/asio/signal_set.hpp \
+		../external/asio/include/asio/strand.hpp \
+		../external/asio/include/asio/detail/strand_executor_service.hpp \
+		../external/asio/include/asio/detail/impl/strand_executor_service.hpp \
+		../external/asio/include/asio/detail/impl/strand_executor_service.ipp \
+		../external/asio/include/asio/streambuf.hpp \
+		../external/asio/include/asio/thread.hpp \
+		../external/asio/include/asio/thread_pool.hpp \
+		../external/asio/include/asio/impl/thread_pool.hpp \
+		../external/asio/include/asio/impl/thread_pool.ipp \
+		../external/asio/include/asio/version.hpp \
+		../external/asio/include/asio/windows/basic_handle.hpp \
+		../external/asio/include/asio/windows/basic_object_handle.hpp \
+		../external/asio/include/asio/windows/object_handle_service.hpp \
+		../external/asio/include/asio/detail/win_object_handle_service.hpp \
+		../external/asio/include/asio/detail/impl/win_object_handle_service.ipp \
+		../external/asio/include/asio/windows/basic_random_access_handle.hpp \
+		../external/asio/include/asio/windows/random_access_handle_service.hpp \
+		../external/asio/include/asio/windows/basic_stream_handle.hpp \
+		../external/asio/include/asio/windows/stream_handle_service.hpp \
+		../external/asio/include/asio/windows/object_handle.hpp \
+		../external/asio/include/asio/windows/overlapped_ptr.hpp \
+		../external/asio/include/asio/detail/win_iocp_overlapped_ptr.hpp \
+		../external/asio/include/asio/detail/win_iocp_overlapped_op.hpp \
+		../external/asio/include/asio/windows/random_access_handle.hpp \
+		../external/asio/include/asio/windows/stream_handle.hpp \
+		../external/asio/include/asio/write_at.hpp \
+		../external/asio/include/asio/impl/write_at.hpp \
+		../OrbitBase/OrbitAsio.h \
 		../OrbitCore/VariableTracing.h \
+		../OrbitBase/PrintVar.h \
+		../OrbitBase/Log.h \
+		../OrbitBase/Context.h \
 		../OrbitCore/Capture.h \
+		../OrbitBase/CallstackTypes.h \
 		../OrbitCore/OrbitType.h \
 		../OrbitCore/cvconst.h \
+		../OrbitBase/OrbitDbgHelp.h \
 		../OrbitCore/Variable.h \
+		../OrbitBase/SerializationMacros.h \
+		../OrbitBase/FunctionStats.h \
 		../OrbitCore/OrbitFunction.h \
+		../OrbitBase/FunctionArgs.h \
+		../OrbitBase/Callstack.h \
 		../OrbitCore/SamplingProfiler.h \
 		../OrbitCore/Pdb.h \
 		../OrbitCore/BlockChain.h \
 		../OrbitCore/OrbitUnreal.h \
-		../OrbitCore/ServerTimerManager.h
+		../OrbitCore/ServerTimerManager.h \
+		../OrbitBase/TimerManager.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o TcpServer.o ../OrbitCore/TcpServer.cpp
 
 Tcp.o: ../OrbitCore/Tcp.cpp ../OrbitCore/Tcp.h \
+		../external/asio/include/asio.hpp \
+		../external/asio/include/asio/associated_allocator.hpp \
+		../external/asio/include/asio/detail/config.hpp \
+		../external/asio/include/asio/detail/type_traits.hpp \
+		../external/asio/include/asio/detail/push_options.hpp \
+		../external/asio/include/asio/detail/pop_options.hpp \
+		../external/asio/include/asio/associated_executor.hpp \
+		../external/asio/include/asio/is_executor.hpp \
+		../external/asio/include/asio/system_executor.hpp \
+		../external/asio/include/asio/detail/scheduler.hpp \
+		../external/asio/include/asio/error_code.hpp \
+		../external/asio/include/asio/detail/noncopyable.hpp \
+		../external/asio/include/asio/impl/error_code.ipp \
+		../external/asio/include/asio/detail/local_free_on_block_exit.hpp \
+		../external/asio/include/asio/detail/socket_types.hpp \
+		../external/asio/include/asio/detail/old_win_sdk_compat.hpp \
+		../external/asio/include/asio/execution_context.hpp \
+		../external/asio/include/asio/detail/variadic_templates.hpp \
+		../external/asio/include/asio/impl/execution_context.hpp \
+		../external/asio/include/asio/detail/handler_type_requirements.hpp \
+		../external/asio/include/asio/handler_type.hpp \
+		../external/asio/include/asio/detail/scoped_ptr.hpp \
+		../external/asio/include/asio/detail/service_registry.hpp \
+		../external/asio/include/asio/detail/mutex.hpp \
+		../external/asio/include/asio/detail/null_mutex.hpp \
+		../external/asio/include/asio/detail/scoped_lock.hpp \
+		../external/asio/include/asio/detail/win_mutex.hpp \
+		../external/asio/include/asio/detail/impl/win_mutex.ipp \
+		../external/asio/include/asio/detail/throw_error.hpp \
+		../external/asio/include/asio/detail/impl/throw_error.ipp \
+		../external/asio/include/asio/detail/throw_exception.hpp \
+		../external/asio/include/asio/system_error.hpp \
+		../external/asio/include/asio/error.hpp \
+		../external/asio/include/asio/impl/error.ipp \
+		../external/asio/include/asio/detail/posix_mutex.hpp \
+		../external/asio/include/asio/detail/impl/posix_mutex.ipp \
+		../external/asio/include/asio/detail/std_mutex.hpp \
+		../external/asio/include/asio/detail/impl/service_registry.hpp \
+		../external/asio/include/asio/detail/impl/service_registry.ipp \
+		../external/asio/include/asio/impl/execution_context.ipp \
+		../external/asio/include/asio/detail/atomic_count.hpp \
+		../external/asio/include/asio/detail/event.hpp \
+		../external/asio/include/asio/detail/null_event.hpp \
+		../external/asio/include/asio/detail/win_event.hpp \
+		../external/asio/include/asio/detail/assert.hpp \
+		../external/asio/include/asio/detail/impl/win_event.ipp \
+		../external/asio/include/asio/detail/posix_event.hpp \
+		../external/asio/include/asio/detail/impl/posix_event.ipp \
+		../external/asio/include/asio/detail/std_event.hpp \
+		../external/asio/include/asio/detail/op_queue.hpp \
+		../external/asio/include/asio/detail/reactor_fwd.hpp \
+		../external/asio/include/asio/detail/scheduler_operation.hpp \
+		../external/asio/include/asio/detail/handler_tracking.hpp \
+		../external/asio/include/asio/detail/cstdint.hpp \
+		../external/asio/include/asio/detail/static_mutex.hpp \
+		../external/asio/include/asio/detail/null_static_mutex.hpp \
+		../external/asio/include/asio/detail/win_static_mutex.hpp \
+		../external/asio/include/asio/detail/impl/win_static_mutex.ipp \
+		../external/asio/include/asio/detail/posix_static_mutex.hpp \
+		../external/asio/include/asio/detail/std_static_mutex.hpp \
+		../external/asio/include/asio/detail/tss_ptr.hpp \
+		../external/asio/include/asio/detail/null_tss_ptr.hpp \
+		../external/asio/include/asio/detail/keyword_tss_ptr.hpp \
+		../external/asio/include/asio/detail/win_tss_ptr.hpp \
+		../external/asio/include/asio/detail/impl/win_tss_ptr.ipp \
+		../external/asio/include/asio/detail/posix_tss_ptr.hpp \
+		../external/asio/include/asio/detail/impl/posix_tss_ptr.ipp \
+		../external/asio/include/asio/detail/impl/handler_tracking.ipp \
+		../external/asio/include/asio/time_traits.hpp \
+		../external/asio/include/asio/detail/chrono.hpp \
+		../external/asio/include/asio/detail/chrono_time_traits.hpp \
+		../external/asio/include/asio/wait_traits.hpp \
+		../external/asio/include/asio/detail/thread_context.hpp \
+		../external/asio/include/asio/detail/call_stack.hpp \
+		../external/asio/include/asio/detail/impl/scheduler.ipp \
+		../external/asio/include/asio/detail/limits.hpp \
+		../external/asio/include/asio/detail/reactor.hpp \
+		../external/asio/include/asio/detail/epoll_reactor.hpp \
+		../external/asio/include/asio/detail/object_pool.hpp \
+		../external/asio/include/asio/detail/reactor_op.hpp \
+		../external/asio/include/asio/detail/operation.hpp \
+		../external/asio/include/asio/detail/win_iocp_operation.hpp \
+		../external/asio/include/asio/detail/select_interrupter.hpp \
+		../external/asio/include/asio/detail/socket_select_interrupter.hpp \
+		../external/asio/include/asio/detail/impl/socket_select_interrupter.ipp \
+		../external/asio/include/asio/detail/socket_holder.hpp \
+		../external/asio/include/asio/detail/socket_ops.hpp \
+		../external/asio/include/asio/detail/memory.hpp \
+		../external/asio/include/asio/detail/impl/socket_ops.ipp \
+		../external/asio/include/asio/detail/eventfd_select_interrupter.hpp \
+		../external/asio/include/asio/detail/impl/eventfd_select_interrupter.ipp \
+		../external/asio/include/asio/detail/pipe_select_interrupter.hpp \
+		../external/asio/include/asio/detail/impl/pipe_select_interrupter.ipp \
+		../external/asio/include/asio/detail/timer_queue_base.hpp \
+		../external/asio/include/asio/detail/timer_queue_set.hpp \
+		../external/asio/include/asio/detail/impl/timer_queue_set.ipp \
+		../external/asio/include/asio/detail/wait_op.hpp \
+		../external/asio/include/asio/detail/impl/epoll_reactor.hpp \
+		../external/asio/include/asio/detail/impl/epoll_reactor.ipp \
+		../external/asio/include/asio/detail/kqueue_reactor.hpp \
+		../external/asio/include/asio/detail/impl/kqueue_reactor.hpp \
+		../external/asio/include/asio/detail/impl/kqueue_reactor.ipp \
+		../external/asio/include/asio/detail/dev_poll_reactor.hpp \
+		../external/asio/include/asio/detail/hash_map.hpp \
+		../external/asio/include/asio/detail/reactor_op_queue.hpp \
+		../external/asio/include/asio/detail/impl/dev_poll_reactor.hpp \
+		../external/asio/include/asio/detail/impl/dev_poll_reactor.ipp \
+		../external/asio/include/asio/detail/null_reactor.hpp \
+		../external/asio/include/asio/detail/select_reactor.hpp \
+		../external/asio/include/asio/detail/fd_set_adapter.hpp \
+		../external/asio/include/asio/detail/posix_fd_set_adapter.hpp \
+		../external/asio/include/asio/detail/win_fd_set_adapter.hpp \
+		../external/asio/include/asio/detail/thread.hpp \
+		../external/asio/include/asio/detail/null_thread.hpp \
+		../external/asio/include/asio/detail/wince_thread.hpp \
+		../external/asio/include/asio/detail/winapp_thread.hpp \
+		../external/asio/include/asio/detail/win_thread.hpp \
+		../external/asio/include/asio/detail/impl/win_thread.ipp \
+		../external/asio/include/asio/detail/posix_thread.hpp \
+		../external/asio/include/asio/detail/impl/posix_thread.ipp \
+		../external/asio/include/asio/detail/std_thread.hpp \
+		../external/asio/include/asio/detail/impl/select_reactor.hpp \
+		../external/asio/include/asio/detail/impl/select_reactor.ipp \
+		../external/asio/include/asio/detail/signal_blocker.hpp \
+		../external/asio/include/asio/detail/null_signal_blocker.hpp \
+		../external/asio/include/asio/detail/posix_signal_blocker.hpp \
+		../external/asio/include/asio/detail/scheduler_thread_info.hpp \
+		../external/asio/include/asio/detail/thread_info_base.hpp \
+		../external/asio/include/asio/detail/thread_group.hpp \
+		../external/asio/include/asio/impl/system_executor.hpp \
+		../external/asio/include/asio/detail/executor_op.hpp \
+		../external/asio/include/asio/detail/fenced_block.hpp \
+		../external/asio/include/asio/detail/null_fenced_block.hpp \
+		../external/asio/include/asio/detail/macos_fenced_block.hpp \
+		../external/asio/include/asio/detail/solaris_fenced_block.hpp \
+		../external/asio/include/asio/detail/gcc_arm_fenced_block.hpp \
+		../external/asio/include/asio/detail/gcc_hppa_fenced_block.hpp \
+		../external/asio/include/asio/detail/gcc_x86_fenced_block.hpp \
+		../external/asio/include/asio/detail/gcc_sync_fenced_block.hpp \
+		../external/asio/include/asio/detail/win_fenced_block.hpp \
+		../external/asio/include/asio/detail/handler_alloc_helpers.hpp \
+		../external/asio/include/asio/handler_alloc_hook.hpp \
+		../external/asio/include/asio/impl/handler_alloc_hook.ipp \
+		../external/asio/include/asio/detail/handler_invoke_helpers.hpp \
+		../external/asio/include/asio/handler_invoke_hook.hpp \
+		../external/asio/include/asio/detail/global.hpp \
+		../external/asio/include/asio/detail/null_global.hpp \
+		../external/asio/include/asio/detail/win_global.hpp \
+		../external/asio/include/asio/detail/posix_global.hpp \
+		../external/asio/include/asio/detail/std_global.hpp \
+		../external/asio/include/asio/detail/recycling_allocator.hpp \
+		../external/asio/include/asio/impl/system_executor.ipp \
+		../external/asio/include/asio/async_result.hpp \
+		../external/asio/include/asio/basic_datagram_socket.hpp \
+		../external/asio/include/asio/basic_socket.hpp \
+		../external/asio/include/asio/basic_io_object.hpp \
+		../external/asio/include/asio/io_context.hpp \
+		../external/asio/include/asio/detail/wrapped_handler.hpp \
+		../external/asio/include/asio/detail/bind_handler.hpp \
+		../external/asio/include/asio/detail/handler_cont_helpers.hpp \
+		../external/asio/include/asio/handler_continuation_hook.hpp \
+		../external/asio/include/asio/detail/winsock_init.hpp \
+		../external/asio/include/asio/detail/impl/winsock_init.ipp \
+		../external/asio/include/asio/detail/signal_init.hpp \
+		../external/asio/include/asio/impl/io_context.hpp \
+		../external/asio/include/asio/detail/completion_handler.hpp \
+		../external/asio/include/asio/detail/handler_work.hpp \
+		../external/asio/include/asio/detail/win_iocp_io_context.hpp \
+		../external/asio/include/asio/detail/win_iocp_thread_info.hpp \
+		../external/asio/include/asio/detail/impl/win_iocp_io_context.hpp \
+		../external/asio/include/asio/detail/impl/win_iocp_io_context.ipp \
+		../external/asio/include/asio/impl/io_context.ipp \
+		../external/asio/include/asio/io_context_strand.hpp \
+		../external/asio/include/asio/detail/strand_service.hpp \
+		../external/asio/include/asio/detail/impl/strand_service.hpp \
+		../external/asio/include/asio/detail/impl/strand_service.ipp \
+		../external/asio/include/asio/post.hpp \
+		../external/asio/include/asio/impl/post.hpp \
+		../external/asio/include/asio/detail/work_dispatcher.hpp \
+		../external/asio/include/asio/executor_work_guard.hpp \
+		../external/asio/include/asio/socket_base.hpp \
+		../external/asio/include/asio/detail/io_control.hpp \
+		../external/asio/include/asio/detail/socket_option.hpp \
+		../external/asio/include/asio/datagram_socket_service.hpp \
+		../external/asio/include/asio/detail/null_socket_service.hpp \
+		../external/asio/include/asio/buffer.hpp \
+		../external/asio/include/asio/detail/array_fwd.hpp \
+		../external/asio/include/asio/detail/is_buffer_sequence.hpp \
+		../external/asio/include/asio/detail/functional.hpp \
+		../external/asio/include/asio/detail/win_iocp_socket_service.hpp \
+		../external/asio/include/asio/detail/buffer_sequence_adapter.hpp \
+		../external/asio/include/asio/detail/impl/buffer_sequence_adapter.ipp \
+		../external/asio/include/asio/detail/win_iocp_null_buffers_op.hpp \
+		../external/asio/include/asio/detail/win_iocp_socket_accept_op.hpp \
+		../external/asio/include/asio/detail/win_iocp_socket_service_base.hpp \
+		../external/asio/include/asio/detail/win_iocp_socket_connect_op.hpp \
+		../external/asio/include/asio/detail/win_iocp_socket_send_op.hpp \
+		../external/asio/include/asio/detail/win_iocp_socket_recv_op.hpp \
+		../external/asio/include/asio/detail/win_iocp_socket_recvmsg_op.hpp \
+		../external/asio/include/asio/detail/win_iocp_wait_op.hpp \
+		../external/asio/include/asio/detail/impl/win_iocp_socket_service_base.ipp \
+		../external/asio/include/asio/detail/win_iocp_socket_recvfrom_op.hpp \
+		../external/asio/include/asio/detail/reactive_socket_service.hpp \
+		../external/asio/include/asio/detail/reactive_null_buffers_op.hpp \
+		../external/asio/include/asio/detail/reactive_socket_accept_op.hpp \
+		../external/asio/include/asio/detail/reactive_socket_connect_op.hpp \
+		../external/asio/include/asio/detail/reactive_socket_recvfrom_op.hpp \
+		../external/asio/include/asio/detail/reactive_socket_sendto_op.hpp \
+		../external/asio/include/asio/detail/reactive_socket_service_base.hpp \
+		../external/asio/include/asio/detail/reactive_socket_recv_op.hpp \
+		../external/asio/include/asio/detail/reactive_socket_recvmsg_op.hpp \
+		../external/asio/include/asio/detail/reactive_socket_send_op.hpp \
+		../external/asio/include/asio/detail/reactive_wait_op.hpp \
+		../external/asio/include/asio/detail/impl/reactive_socket_service_base.ipp \
+		../external/asio/include/asio/basic_deadline_timer.hpp \
+		../external/asio/include/asio/deadline_timer_service.hpp \
+		../external/asio/include/asio/detail/deadline_timer_service.hpp \
+		../external/asio/include/asio/detail/timer_queue.hpp \
+		../external/asio/include/asio/detail/date_time_fwd.hpp \
+		../external/asio/include/asio/detail/timer_scheduler.hpp \
+		../external/asio/include/asio/detail/timer_scheduler_fwd.hpp \
+		../external/asio/include/asio/detail/winrt_timer_scheduler.hpp \
+		../external/asio/include/asio/detail/impl/winrt_timer_scheduler.hpp \
+		../external/asio/include/asio/detail/impl/winrt_timer_scheduler.ipp \
+		../external/asio/include/asio/detail/wait_handler.hpp \
+		../external/asio/include/asio/detail/timer_queue_ptime.hpp \
+		../external/asio/include/asio/detail/impl/timer_queue_ptime.ipp \
+		../external/asio/include/asio/basic_raw_socket.hpp \
+		../external/asio/include/asio/raw_socket_service.hpp \
+		../external/asio/include/asio/basic_seq_packet_socket.hpp \
+		../external/asio/include/asio/seq_packet_socket_service.hpp \
+		../external/asio/include/asio/basic_serial_port.hpp \
+		../external/asio/include/asio/serial_port_base.hpp \
+		../external/asio/include/asio/impl/serial_port_base.hpp \
+		../external/asio/include/asio/impl/serial_port_base.ipp \
+		../external/asio/include/asio/serial_port_service.hpp \
+		../external/asio/include/asio/detail/reactive_serial_port_service.hpp \
+		../external/asio/include/asio/detail/descriptor_ops.hpp \
+		../external/asio/include/asio/detail/impl/descriptor_ops.ipp \
+		../external/asio/include/asio/detail/reactive_descriptor_service.hpp \
+		../external/asio/include/asio/detail/descriptor_read_op.hpp \
+		../external/asio/include/asio/detail/descriptor_write_op.hpp \
+		../external/asio/include/asio/posix/descriptor_base.hpp \
+		../external/asio/include/asio/detail/impl/reactive_descriptor_service.ipp \
+		../external/asio/include/asio/detail/impl/reactive_serial_port_service.ipp \
+		../external/asio/include/asio/detail/win_iocp_serial_port_service.hpp \
+		../external/asio/include/asio/detail/win_iocp_handle_service.hpp \
+		../external/asio/include/asio/detail/win_iocp_handle_read_op.hpp \
+		../external/asio/include/asio/detail/win_iocp_handle_write_op.hpp \
+		../external/asio/include/asio/detail/impl/win_iocp_handle_service.ipp \
+		../external/asio/include/asio/detail/impl/win_iocp_serial_port_service.ipp \
+		../external/asio/include/asio/basic_signal_set.hpp \
+		../external/asio/include/asio/signal_set_service.hpp \
+		../external/asio/include/asio/detail/signal_set_service.hpp \
+		../external/asio/include/asio/detail/signal_handler.hpp \
+		../external/asio/include/asio/detail/signal_op.hpp \
+		../external/asio/include/asio/detail/impl/signal_set_service.ipp \
+		../external/asio/include/asio/basic_socket_acceptor.hpp \
+		../external/asio/include/asio/socket_acceptor_service.hpp \
+		../external/asio/include/asio/basic_socket_iostream.hpp \
+		../external/asio/include/asio/basic_socket_streambuf.hpp \
+		../external/asio/include/asio/detail/array.hpp \
+		../external/asio/include/asio/stream_socket_service.hpp \
+		../external/asio/include/asio/detail/winrt_ssocket_service.hpp \
+		../external/asio/include/asio/detail/winrt_socket_connect_op.hpp \
+		../external/asio/include/asio/detail/winrt_async_op.hpp \
+		../external/asio/include/asio/detail/winrt_ssocket_service_base.hpp \
+		../external/asio/include/asio/detail/winrt_async_manager.hpp \
+		../external/asio/include/asio/detail/winrt_socket_recv_op.hpp \
+		../external/asio/include/asio/detail/winrt_socket_send_op.hpp \
+		../external/asio/include/asio/detail/impl/winrt_ssocket_service_base.ipp \
+		../external/asio/include/asio/detail/winrt_utils.hpp \
+		../external/asio/include/asio/deadline_timer.hpp \
+		../external/asio/include/asio/steady_timer.hpp \
+		../external/asio/include/asio/basic_waitable_timer.hpp \
+		../external/asio/include/asio/waitable_timer_service.hpp \
+		../external/asio/include/asio/basic_stream_socket.hpp \
+		../external/asio/include/asio/basic_streambuf.hpp \
+		../external/asio/include/asio/basic_streambuf_fwd.hpp \
+		../external/asio/include/asio/bind_executor.hpp \
+		../external/asio/include/asio/uses_executor.hpp \
+		../external/asio/include/asio/buffered_read_stream_fwd.hpp \
+		../external/asio/include/asio/buffered_read_stream.hpp \
+		../external/asio/include/asio/detail/buffer_resize_guard.hpp \
+		../external/asio/include/asio/detail/buffered_stream_storage.hpp \
+		../external/asio/include/asio/impl/buffered_read_stream.hpp \
+		../external/asio/include/asio/buffered_stream_fwd.hpp \
+		../external/asio/include/asio/buffered_stream.hpp \
+		../external/asio/include/asio/buffered_write_stream.hpp \
+		../external/asio/include/asio/buffered_write_stream_fwd.hpp \
+		../external/asio/include/asio/completion_condition.hpp \
+		../external/asio/include/asio/write.hpp \
+		../external/asio/include/asio/impl/write.hpp \
+		../external/asio/include/asio/detail/base_from_completion_cond.hpp \
+		../external/asio/include/asio/detail/consuming_buffers.hpp \
+		../external/asio/include/asio/detail/dependent_type.hpp \
+		../external/asio/include/asio/impl/buffered_write_stream.hpp \
+		../external/asio/include/asio/buffers_iterator.hpp \
+		../external/asio/include/asio/connect.hpp \
+		../external/asio/include/asio/impl/connect.hpp \
+		../external/asio/include/asio/coroutine.hpp \
+		../external/asio/include/asio/defer.hpp \
+		../external/asio/include/asio/impl/defer.hpp \
+		../external/asio/include/asio/dispatch.hpp \
+		../external/asio/include/asio/impl/dispatch.hpp \
+		../external/asio/include/asio/executor.hpp \
+		../external/asio/include/asio/detail/cstddef.hpp \
+		../external/asio/include/asio/impl/executor.hpp \
+		../external/asio/include/asio/impl/executor.ipp \
+		../external/asio/include/asio/generic/basic_endpoint.hpp \
+		../external/asio/include/asio/generic/detail/endpoint.hpp \
+		../external/asio/include/asio/generic/detail/impl/endpoint.ipp \
+		../external/asio/include/asio/generic/datagram_protocol.hpp \
+		../external/asio/include/asio/generic/raw_protocol.hpp \
+		../external/asio/include/asio/generic/seq_packet_protocol.hpp \
+		../external/asio/include/asio/generic/stream_protocol.hpp \
+		../external/asio/include/asio/io_service.hpp \
+		../external/asio/include/asio/io_service_strand.hpp \
+		../external/asio/include/asio/ip/address.hpp \
+		../external/asio/include/asio/ip/address_v4.hpp \
+		../external/asio/include/asio/ip/impl/address_v4.hpp \
+		../external/asio/include/asio/ip/impl/address_v4.ipp \
+		../external/asio/include/asio/ip/address_v6.hpp \
+		../external/asio/include/asio/ip/impl/address_v6.hpp \
+		../external/asio/include/asio/ip/impl/address_v6.ipp \
+		../external/asio/include/asio/ip/bad_address_cast.hpp \
+		../external/asio/include/asio/ip/impl/address.hpp \
+		../external/asio/include/asio/ip/impl/address.ipp \
+		../external/asio/include/asio/ip/address_v4_iterator.hpp \
+		../external/asio/include/asio/ip/address_v4_range.hpp \
+		../external/asio/include/asio/ip/address_v6_iterator.hpp \
+		../external/asio/include/asio/ip/address_v6_range.hpp \
+		../external/asio/include/asio/ip/basic_endpoint.hpp \
+		../external/asio/include/asio/ip/detail/endpoint.hpp \
+		../external/asio/include/asio/ip/detail/impl/endpoint.ipp \
+		../external/asio/include/asio/ip/impl/basic_endpoint.hpp \
+		../external/asio/include/asio/ip/basic_resolver.hpp \
+		../external/asio/include/asio/ip/basic_resolver_iterator.hpp \
+		../external/asio/include/asio/ip/basic_resolver_entry.hpp \
+		../external/asio/include/asio/ip/basic_resolver_query.hpp \
+		../external/asio/include/asio/ip/resolver_query_base.hpp \
+		../external/asio/include/asio/ip/resolver_base.hpp \
+		../external/asio/include/asio/ip/basic_resolver_results.hpp \
+		../external/asio/include/asio/ip/resolver_service.hpp \
+		../external/asio/include/asio/detail/winrt_resolver_service.hpp \
+		../external/asio/include/asio/detail/winrt_resolve_op.hpp \
+		../external/asio/include/asio/detail/resolver_service.hpp \
+		../external/asio/include/asio/detail/resolve_endpoint_op.hpp \
+		../external/asio/include/asio/detail/resolve_op.hpp \
+		../external/asio/include/asio/detail/resolver_service_base.hpp \
+		../external/asio/include/asio/detail/impl/resolver_service_base.ipp \
+		../external/asio/include/asio/ip/host_name.hpp \
+		../external/asio/include/asio/ip/impl/host_name.ipp \
+		../external/asio/include/asio/ip/icmp.hpp \
+		../external/asio/include/asio/ip/multicast.hpp \
+		../external/asio/include/asio/ip/detail/socket_option.hpp \
+		../external/asio/include/asio/ip/tcp.hpp \
+		../external/asio/include/asio/ip/udp.hpp \
+		../external/asio/include/asio/ip/unicast.hpp \
+		../external/asio/include/asio/ip/v6_only.hpp \
+		../external/asio/include/asio/is_read_buffered.hpp \
+		../external/asio/include/asio/is_write_buffered.hpp \
+		../external/asio/include/asio/local/basic_endpoint.hpp \
+		../external/asio/include/asio/local/detail/endpoint.hpp \
+		../external/asio/include/asio/local/detail/impl/endpoint.ipp \
+		../external/asio/include/asio/local/connect_pair.hpp \
+		../external/asio/include/asio/local/datagram_protocol.hpp \
+		../external/asio/include/asio/local/stream_protocol.hpp \
+		../external/asio/include/asio/placeholders.hpp \
+		../external/asio/include/asio/posix/basic_descriptor.hpp \
+		../external/asio/include/asio/posix/basic_stream_descriptor.hpp \
+		../external/asio/include/asio/posix/stream_descriptor_service.hpp \
+		../external/asio/include/asio/posix/stream_descriptor.hpp \
+		../external/asio/include/asio/read.hpp \
+		../external/asio/include/asio/impl/read.hpp \
+		../external/asio/include/asio/read_at.hpp \
+		../external/asio/include/asio/impl/read_at.hpp \
+		../external/asio/include/asio/read_until.hpp \
+		../external/asio/include/asio/detail/regex_fwd.hpp \
+		../external/asio/include/asio/impl/read_until.hpp \
+		../external/asio/include/asio/serial_port.hpp \
+		../external/asio/include/asio/signal_set.hpp \
+		../external/asio/include/asio/strand.hpp \
+		../external/asio/include/asio/detail/strand_executor_service.hpp \
+		../external/asio/include/asio/detail/impl/strand_executor_service.hpp \
+		../external/asio/include/asio/detail/impl/strand_executor_service.ipp \
+		../external/asio/include/asio/streambuf.hpp \
+		../external/asio/include/asio/thread.hpp \
+		../external/asio/include/asio/thread_pool.hpp \
+		../external/asio/include/asio/impl/thread_pool.hpp \
+		../external/asio/include/asio/impl/thread_pool.ipp \
+		../external/asio/include/asio/version.hpp \
+		../external/asio/include/asio/windows/basic_handle.hpp \
+		../external/asio/include/asio/windows/basic_object_handle.hpp \
+		../external/asio/include/asio/windows/object_handle_service.hpp \
+		../external/asio/include/asio/detail/win_object_handle_service.hpp \
+		../external/asio/include/asio/detail/impl/win_object_handle_service.ipp \
+		../external/asio/include/asio/windows/basic_random_access_handle.hpp \
+		../external/asio/include/asio/windows/random_access_handle_service.hpp \
+		../external/asio/include/asio/windows/basic_stream_handle.hpp \
+		../external/asio/include/asio/windows/stream_handle_service.hpp \
+		../external/asio/include/asio/windows/object_handle.hpp \
+		../external/asio/include/asio/windows/overlapped_ptr.hpp \
+		../external/asio/include/asio/detail/win_iocp_overlapped_ptr.hpp \
+		../external/asio/include/asio/detail/win_iocp_overlapped_op.hpp \
+		../external/asio/include/asio/windows/random_access_handle.hpp \
+		../external/asio/include/asio/windows/stream_handle.hpp \
+		../external/asio/include/asio/write_at.hpp \
+		../external/asio/include/asio/impl/write_at.hpp \
+		../OrbitBase/Message.h \
+		../OrbitBase/OrbitTypes.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/TcpEntity.h \
+		../OrbitBase/TcpForward.h \
+		../OrbitBase/Threading.h \
+		../external/multicore/common/autoresetevent.h \
+		../external/multicore/common/sema.h \
+		../OrbitBase/ScopeTimer.h \
+		../OrbitBase/Profiling.h \
+		../external/stlsoft-1.9.118/include/winstl/performance/performance_counter.hpp \
+		../external/oqpi/include/oqpi.hpp \
+		../external/oqpi/include/oqpi/threading.hpp \
+		../external/oqpi/include/oqpi/threading/thread.hpp \
+		../external/oqpi/include/oqpi/platform.hpp \
+		../external/oqpi/include/oqpi/threading/interface_thread.hpp \
+		../external/oqpi/include/oqpi/empty_layer.hpp \
+		../external/oqpi/include/oqpi/threading/thread_attributes.hpp \
+		../external/oqpi/include/oqpi/threading/win_thread.hpp \
+		../external/oqpi/include/oqpi/error_handling.hpp \
+		../external/oqpi/include/oqpi/threading/this_thread.hpp \
+		../external/oqpi/include/oqpi/scheduling.hpp \
+		../external/oqpi/include/oqpi/scheduling_helpers.hpp \
+		../external/oqpi/include/oqpi/synchronization/event.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_event.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_event.hpp \
+		../external/oqpi/include/oqpi/scheduling/task.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_type.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_result.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_notifier.hpp \
+		../external/oqpi/include/oqpi/scheduling/scheduler.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_handle.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/context_container.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/group_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/parallel_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/sequence_group.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/parallel_for.hpp \
+		../external/oqpi/include/oqpi/concurrent_queue.hpp \
+		../external/oqpi/include/oqpi/synchronization.hpp \
+		../external/oqpi/include/oqpi/synchronization/semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_semaphore.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/simple_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/base_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/atomic_partitioner.hpp \
+		../external/concurrentqueue/concurrentqueue.h \
+		../external/concurrentqueue/internal/concurrentqueue_internal_debug.h \
+		../OrbitPlugin/OrbitUserData.h \
+		../OrbitBase/OrbitAsio.h \
 		../OrbitCore/TcpServer.h \
+		../OrbitBase/Utils.h \
+		../external/xxHash-r42/xxhash.h \
 		../OrbitCore/Capture.h \
+		../OrbitBase/CallstackTypes.h \
 		../OrbitCore/OrbitType.h \
 		../OrbitCore/cvconst.h \
+		../OrbitBase/OrbitDbgHelp.h \
 		../OrbitCore/Variable.h \
-		../OrbitCore/OrbitFunction.h
+		../OrbitBase/SerializationMacros.h \
+		../OrbitBase/FunctionStats.h \
+		../OrbitCore/OrbitFunction.h \
+		../OrbitBase/FunctionArgs.h \
+		../OrbitBase/PrintVar.h \
+		../external/websocketpp/websocketpp/frame.hpp \
+		../external/websocketpp/websocketpp/common/system_error.hpp \
+		../external/websocketpp/websocketpp/common/cpp11.hpp \
+		../external/websocketpp/websocketpp/common/network.hpp \
+		../external/websocketpp/websocketpp/common/stdint.hpp \
+		../external/websocketpp/websocketpp/utilities.hpp \
+		../external/websocketpp/websocketpp/impl/utilities_impl.hpp \
+		../external/websocketpp/websocketpp/sha1/sha1.hpp \
+		../external/websocketpp/websocketpp/base64/base64.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Tcp.o ../OrbitCore/Tcp.cpp
 
-SymbolUtils.o: ../OrbitCore/SymbolUtils.cpp ../OrbitCore/SymbolUtils.h \
-		../OrbitCore/OrbitType.h \
-		../OrbitCore/cvconst.h \
-		../OrbitCore/Variable.h \
-		../OrbitCore/OrbitFunction.h \
-		../OrbitCore/ProcessUtils.h \
-		../OrbitCore/OrbitProcess.h \
-		../OrbitCore/SamplingProfiler.h \
-		../OrbitCore/Pdb.h \
-		../OrbitCore/BlockChain.h \
-		../OrbitCore/Capture.h \
-		../OrbitCore/OrbitDia.h \
-		../OrbitCore/OrbitModule.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SymbolUtils.o ../OrbitCore/SymbolUtils.cpp
-
-Serialization.o: ../OrbitCore/Serialization.cpp ../OrbitCore/Serialization.h
+Serialization.o: ../OrbitCore/Serialization.cpp ../OrbitCore/Serialization.h \
+		../OrbitBase/Utils.h \
+		../OrbitBase/OrbitTypes.h \
+		../external/xxHash-r42/xxhash.h \
+		../OrbitBase/PrintVar.h \
+		../external/cereal-1.1.2/include/cereal/access.hpp \
+		../external/cereal-1.1.2/include/cereal/macros.hpp \
+		../external/cereal-1.1.2/include/cereal/details/helpers.hpp \
+		../external/cereal-1.1.2/include/cereal/details/static_object.hpp \
+		../external/cereal-1.1.2/include/cereal/details/traits.hpp \
+		../external/cereal-1.1.2/include/cereal/types/base_class.hpp \
+		../external/cereal-1.1.2/include/cereal/cereal.hpp \
+		../external/cereal-1.1.2/include/cereal/types/common.hpp \
+		../external/cereal-1.1.2/include/cereal/types/array.hpp \
+		../external/cereal-1.1.2/include/cereal/types/bitset.hpp \
+		../external/cereal-1.1.2/include/cereal/types/chrono.hpp \
+		../external/cereal-1.1.2/include/cereal/types/complex.hpp \
+		../external/cereal-1.1.2/include/cereal/types/deque.hpp \
+		../external/cereal-1.1.2/include/cereal/types/forward_list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/memory.hpp \
+		../external/cereal-1.1.2/include/cereal/details/util.hpp \
+		../external/cereal-1.1.2/include/cereal/details/polymorphic_impl.hpp \
+		../external/cereal-1.1.2/include/cereal/types/string.hpp \
+		../external/cereal-1.1.2/include/cereal/types/polymorphic.hpp \
+		../external/cereal-1.1.2/include/cereal/types/queue.hpp \
+		../external/cereal-1.1.2/include/cereal/types/set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/stack.hpp \
+		../external/cereal-1.1.2/include/cereal/types/tuple.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/utility.hpp \
+		../external/cereal-1.1.2/include/cereal/types/vector.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/portable_binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/xml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml_print.hpp \
+		../external/cereal-1.1.2/include/cereal/external/base64.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/json.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/prettywriter.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/writer.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/rapidjson.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/stack.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/strfunc.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/genericstream.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/reader.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/pow10.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/document.h \
+		../OrbitBase/SerializationMacros.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Serialization.o ../OrbitCore/Serialization.cpp
 
 SamplingProfiler.o: ../OrbitCore/SamplingProfiler.cpp ../OrbitCore/SamplingProfiler.h \
 		../OrbitCore/Pdb.h \
+		../OrbitBase/OrbitDbgHelp.h \
 		../OrbitCore/OrbitType.h \
 		../OrbitCore/cvconst.h \
 		../OrbitCore/Variable.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/Utils.h \
+		../OrbitBase/OrbitTypes.h \
+		../external/xxHash-r42/xxhash.h \
+		../OrbitBase/SerializationMacros.h \
+		../OrbitBase/FunctionStats.h \
 		../OrbitCore/OrbitFunction.h \
+		../OrbitBase/FunctionArgs.h \
+		../OrbitBase/Callstack.h \
+		../OrbitBase/ScopeTimer.h \
+		../OrbitBase/Profiling.h \
+		../external/stlsoft-1.9.118/include/winstl/performance/performance_counter.hpp \
+		../OrbitBase/CallstackTypes.h \
 		../OrbitCore/BlockChain.h \
+		../OrbitBase/Threading.h \
+		../external/multicore/common/autoresetevent.h \
+		../external/multicore/common/sema.h \
+		../external/oqpi/include/oqpi.hpp \
+		../external/oqpi/include/oqpi/threading.hpp \
+		../external/oqpi/include/oqpi/threading/thread.hpp \
+		../external/oqpi/include/oqpi/platform.hpp \
+		../external/oqpi/include/oqpi/threading/interface_thread.hpp \
+		../external/oqpi/include/oqpi/empty_layer.hpp \
+		../external/oqpi/include/oqpi/threading/thread_attributes.hpp \
+		../external/oqpi/include/oqpi/threading/win_thread.hpp \
+		../external/oqpi/include/oqpi/error_handling.hpp \
+		../external/oqpi/include/oqpi/threading/this_thread.hpp \
+		../external/oqpi/include/oqpi/scheduling.hpp \
+		../external/oqpi/include/oqpi/scheduling_helpers.hpp \
+		../external/oqpi/include/oqpi/synchronization/event.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_event.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_event.hpp \
+		../external/oqpi/include/oqpi/scheduling/task.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_type.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_result.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_notifier.hpp \
+		../external/oqpi/include/oqpi/scheduling/scheduler.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_handle.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/context_container.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/group_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/parallel_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/sequence_group.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/parallel_for.hpp \
+		../external/oqpi/include/oqpi/concurrent_queue.hpp \
+		../external/oqpi/include/oqpi/synchronization.hpp \
+		../external/oqpi/include/oqpi/synchronization/semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_semaphore.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/simple_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/base_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/atomic_partitioner.hpp \
+		../external/concurrentqueue/concurrentqueue.h \
+		../external/concurrentqueue/internal/concurrentqueue_internal_debug.h \
 		../OrbitCore/Injection.h \
 		../OrbitCore/ProcessUtils.h \
 		../OrbitCore/OrbitProcess.h \
 		../OrbitCore/Capture.h \
-		../OrbitCore/SymbolUtils.h \
+		../OrbitBase/Log.h \
 		../OrbitCore/Params.h \
 		../OrbitCore/OrbitThread.h \
 		../OrbitCore/RingBuffer.h \
 		../OrbitCore/Serialization.h \
-		../OrbitCore/OrbitModule.h
+		../OrbitBase/PrintVar.h \
+		../external/cereal-1.1.2/include/cereal/access.hpp \
+		../external/cereal-1.1.2/include/cereal/macros.hpp \
+		../external/cereal-1.1.2/include/cereal/details/helpers.hpp \
+		../external/cereal-1.1.2/include/cereal/details/static_object.hpp \
+		../external/cereal-1.1.2/include/cereal/details/traits.hpp \
+		../external/cereal-1.1.2/include/cereal/types/base_class.hpp \
+		../external/cereal-1.1.2/include/cereal/cereal.hpp \
+		../external/cereal-1.1.2/include/cereal/types/common.hpp \
+		../external/cereal-1.1.2/include/cereal/types/array.hpp \
+		../external/cereal-1.1.2/include/cereal/types/bitset.hpp \
+		../external/cereal-1.1.2/include/cereal/types/chrono.hpp \
+		../external/cereal-1.1.2/include/cereal/types/complex.hpp \
+		../external/cereal-1.1.2/include/cereal/types/deque.hpp \
+		../external/cereal-1.1.2/include/cereal/types/forward_list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/memory.hpp \
+		../external/cereal-1.1.2/include/cereal/details/util.hpp \
+		../external/cereal-1.1.2/include/cereal/details/polymorphic_impl.hpp \
+		../external/cereal-1.1.2/include/cereal/types/string.hpp \
+		../external/cereal-1.1.2/include/cereal/types/polymorphic.hpp \
+		../external/cereal-1.1.2/include/cereal/types/queue.hpp \
+		../external/cereal-1.1.2/include/cereal/types/set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/stack.hpp \
+		../external/cereal-1.1.2/include/cereal/types/tuple.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/utility.hpp \
+		../external/cereal-1.1.2/include/cereal/types/vector.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/portable_binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/xml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml_print.hpp \
+		../external/cereal-1.1.2/include/cereal/external/base64.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/json.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/prettywriter.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/writer.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/rapidjson.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/stack.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/strfunc.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/genericstream.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/reader.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/pow10.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/document.h \
+		../OrbitCore/OrbitModule.h \
+		../OrbitCore/SymbolUtils.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SamplingProfiler.o ../OrbitCore/SamplingProfiler.cpp
 
 ProcessUtils.o: ../OrbitCore/ProcessUtils.cpp ../OrbitCore/ProcessUtils.h \
-		../OrbitCore/OrbitProcess.h
+		../OrbitCore/OrbitProcess.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/SerializationMacros.h \
+		../OrbitBase/Threading.h \
+		../external/multicore/common/autoresetevent.h \
+		../external/multicore/common/sema.h \
+		../OrbitBase/ScopeTimer.h \
+		../OrbitBase/Profiling.h \
+		../external/stlsoft-1.9.118/include/winstl/performance/performance_counter.hpp \
+		../OrbitBase/OrbitTypes.h \
+		../external/oqpi/include/oqpi.hpp \
+		../external/oqpi/include/oqpi/threading.hpp \
+		../external/oqpi/include/oqpi/threading/thread.hpp \
+		../external/oqpi/include/oqpi/platform.hpp \
+		../external/oqpi/include/oqpi/threading/interface_thread.hpp \
+		../external/oqpi/include/oqpi/empty_layer.hpp \
+		../external/oqpi/include/oqpi/threading/thread_attributes.hpp \
+		../external/oqpi/include/oqpi/threading/win_thread.hpp \
+		../external/oqpi/include/oqpi/error_handling.hpp \
+		../external/oqpi/include/oqpi/threading/this_thread.hpp \
+		../external/oqpi/include/oqpi/scheduling.hpp \
+		../external/oqpi/include/oqpi/scheduling_helpers.hpp \
+		../external/oqpi/include/oqpi/synchronization/event.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_event.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_event.hpp \
+		../external/oqpi/include/oqpi/scheduling/task.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_type.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_result.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_notifier.hpp \
+		../external/oqpi/include/oqpi/scheduling/scheduler.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_handle.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/context_container.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/group_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/parallel_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/sequence_group.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/parallel_for.hpp \
+		../external/oqpi/include/oqpi/concurrent_queue.hpp \
+		../external/oqpi/include/oqpi/synchronization.hpp \
+		../external/oqpi/include/oqpi/synchronization/semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_semaphore.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/simple_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/base_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/atomic_partitioner.hpp \
+		../external/concurrentqueue/concurrentqueue.h \
+		../external/concurrentqueue/internal/concurrentqueue_internal_debug.h \
+		../OrbitBase/Log.h \
+		../OrbitBase/Utils.h \
+		../external/xxHash-r42/xxhash.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ProcessUtils.o ../OrbitCore/ProcessUtils.cpp
 
-Pdb.o: ../OrbitCore/Pdb.cpp ../OrbitCore/Pdb.h \
-		../OrbitCore/OrbitType.h \
-		../OrbitCore/cvconst.h \
-		../OrbitCore/Variable.h \
-		../OrbitCore/OrbitFunction.h \
-		../OrbitCore/SymbolUtils.h \
-		../OrbitCore/ProcessUtils.h \
-		../OrbitCore/OrbitProcess.h \
-		../OrbitCore/SamplingProfiler.h \
-		../OrbitCore/BlockChain.h \
-		../OrbitCore/Params.h \
-		../OrbitCore/Tcp.h \
-		../OrbitCore/TcpServer.h \
-		../OrbitCore/Capture.h \
-		../OrbitCore/Serialization.h \
-		../OrbitCore/OrbitSession.h \
-		../OrbitCore/OrbitUnreal.h \
-		../OrbitCore/DiaManager.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Pdb.o ../OrbitCore/Pdb.cpp
-
 Params.o: ../OrbitCore/Params.cpp ../OrbitCore/Params.h \
+		../OrbitBase/SerializationMacros.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/OrbitTypes.h \
 		../OrbitCore/CoreApp.h \
-		../OrbitCore/Serialization.h
+		../OrbitBase/ScopeTimer.h \
+		../OrbitBase/Profiling.h \
+		../external/stlsoft-1.9.118/include/winstl/performance/performance_counter.hpp \
+		../OrbitCore/Serialization.h \
+		../OrbitBase/Utils.h \
+		../external/xxHash-r42/xxhash.h \
+		../OrbitBase/PrintVar.h \
+		../external/cereal-1.1.2/include/cereal/access.hpp \
+		../external/cereal-1.1.2/include/cereal/macros.hpp \
+		../external/cereal-1.1.2/include/cereal/details/helpers.hpp \
+		../external/cereal-1.1.2/include/cereal/details/static_object.hpp \
+		../external/cereal-1.1.2/include/cereal/details/traits.hpp \
+		../external/cereal-1.1.2/include/cereal/types/base_class.hpp \
+		../external/cereal-1.1.2/include/cereal/cereal.hpp \
+		../external/cereal-1.1.2/include/cereal/types/common.hpp \
+		../external/cereal-1.1.2/include/cereal/types/array.hpp \
+		../external/cereal-1.1.2/include/cereal/types/bitset.hpp \
+		../external/cereal-1.1.2/include/cereal/types/chrono.hpp \
+		../external/cereal-1.1.2/include/cereal/types/complex.hpp \
+		../external/cereal-1.1.2/include/cereal/types/deque.hpp \
+		../external/cereal-1.1.2/include/cereal/types/forward_list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/memory.hpp \
+		../external/cereal-1.1.2/include/cereal/details/util.hpp \
+		../external/cereal-1.1.2/include/cereal/details/polymorphic_impl.hpp \
+		../external/cereal-1.1.2/include/cereal/types/string.hpp \
+		../external/cereal-1.1.2/include/cereal/types/polymorphic.hpp \
+		../external/cereal-1.1.2/include/cereal/types/queue.hpp \
+		../external/cereal-1.1.2/include/cereal/types/set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/stack.hpp \
+		../external/cereal-1.1.2/include/cereal/types/tuple.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/utility.hpp \
+		../external/cereal-1.1.2/include/cereal/types/vector.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/portable_binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/xml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml_print.hpp \
+		../external/cereal-1.1.2/include/cereal/external/base64.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/json.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/prettywriter.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/writer.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/rapidjson.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/stack.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/strfunc.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/genericstream.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/reader.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/pow10.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/document.h \
+		../OrbitBase/Path.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Params.o ../OrbitCore/Params.cpp
 
 OrbitUnreal.o: ../OrbitCore/OrbitUnreal.cpp ../OrbitCore/OrbitUnreal.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/Message.h \
+		../OrbitBase/OrbitTypes.h \
 		../OrbitCore/OrbitType.h \
 		../OrbitCore/cvconst.h \
+		../OrbitBase/OrbitDbgHelp.h \
 		../OrbitCore/Variable.h \
-		../OrbitCore/OrbitFunction.h
+		../OrbitBase/Utils.h \
+		../external/xxHash-r42/xxhash.h \
+		../OrbitBase/SerializationMacros.h \
+		../OrbitBase/FunctionStats.h \
+		../OrbitCore/OrbitFunction.h \
+		../OrbitBase/FunctionArgs.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o OrbitUnreal.o ../OrbitCore/OrbitUnreal.cpp
 
 OrbitType.o: ../OrbitCore/OrbitType.cpp ../OrbitCore/OrbitType.h \
 		../OrbitCore/cvconst.h \
+		../OrbitBase/OrbitDbgHelp.h \
 		../OrbitCore/Variable.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/Utils.h \
+		../OrbitBase/OrbitTypes.h \
+		../external/xxHash-r42/xxhash.h \
+		../OrbitBase/SerializationMacros.h \
+		../OrbitBase/FunctionStats.h \
 		../OrbitCore/OrbitFunction.h \
+		../OrbitBase/FunctionArgs.h \
 		../OrbitCore/Pdb.h \
+		../OrbitBase/Log.h \
+		../OrbitBase/Threading.h \
+		../external/multicore/common/autoresetevent.h \
+		../external/multicore/common/sema.h \
+		../OrbitBase/ScopeTimer.h \
+		../OrbitBase/Profiling.h \
+		../external/stlsoft-1.9.118/include/winstl/performance/performance_counter.hpp \
+		../external/oqpi/include/oqpi.hpp \
+		../external/oqpi/include/oqpi/threading.hpp \
+		../external/oqpi/include/oqpi/threading/thread.hpp \
+		../external/oqpi/include/oqpi/platform.hpp \
+		../external/oqpi/include/oqpi/threading/interface_thread.hpp \
+		../external/oqpi/include/oqpi/empty_layer.hpp \
+		../external/oqpi/include/oqpi/threading/thread_attributes.hpp \
+		../external/oqpi/include/oqpi/threading/win_thread.hpp \
+		../external/oqpi/include/oqpi/error_handling.hpp \
+		../external/oqpi/include/oqpi/threading/this_thread.hpp \
+		../external/oqpi/include/oqpi/scheduling.hpp \
+		../external/oqpi/include/oqpi/scheduling_helpers.hpp \
+		../external/oqpi/include/oqpi/synchronization/event.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_event.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_event.hpp \
+		../external/oqpi/include/oqpi/scheduling/task.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_type.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_result.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_notifier.hpp \
+		../external/oqpi/include/oqpi/scheduling/scheduler.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_handle.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/context_container.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/group_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/parallel_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/sequence_group.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/parallel_for.hpp \
+		../external/oqpi/include/oqpi/concurrent_queue.hpp \
+		../external/oqpi/include/oqpi/synchronization.hpp \
+		../external/oqpi/include/oqpi/synchronization/semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_semaphore.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/simple_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/base_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/atomic_partitioner.hpp \
+		../external/concurrentqueue/concurrentqueue.h \
+		../external/concurrentqueue/internal/concurrentqueue_internal_debug.h \
 		../OrbitCore/Capture.h \
+		../OrbitBase/CallstackTypes.h \
 		../OrbitCore/SamplingProfiler.h \
+		../OrbitBase/Callstack.h \
 		../OrbitCore/BlockChain.h \
+		../OrbitBase/PrintVar.h \
+		../OrbitCore/DiaManager.h \
+		../OrbitCore/Params.h \
+		../OrbitCore/Serialization.h \
+		../external/cereal-1.1.2/include/cereal/access.hpp \
+		../external/cereal-1.1.2/include/cereal/macros.hpp \
+		../external/cereal-1.1.2/include/cereal/details/helpers.hpp \
+		../external/cereal-1.1.2/include/cereal/details/static_object.hpp \
+		../external/cereal-1.1.2/include/cereal/details/traits.hpp \
+		../external/cereal-1.1.2/include/cereal/types/base_class.hpp \
+		../external/cereal-1.1.2/include/cereal/cereal.hpp \
+		../external/cereal-1.1.2/include/cereal/types/common.hpp \
+		../external/cereal-1.1.2/include/cereal/types/array.hpp \
+		../external/cereal-1.1.2/include/cereal/types/bitset.hpp \
+		../external/cereal-1.1.2/include/cereal/types/chrono.hpp \
+		../external/cereal-1.1.2/include/cereal/types/complex.hpp \
+		../external/cereal-1.1.2/include/cereal/types/deque.hpp \
+		../external/cereal-1.1.2/include/cereal/types/forward_list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/memory.hpp \
+		../external/cereal-1.1.2/include/cereal/details/util.hpp \
+		../external/cereal-1.1.2/include/cereal/details/polymorphic_impl.hpp \
+		../external/cereal-1.1.2/include/cereal/types/string.hpp \
+		../external/cereal-1.1.2/include/cereal/types/polymorphic.hpp \
+		../external/cereal-1.1.2/include/cereal/types/queue.hpp \
+		../external/cereal-1.1.2/include/cereal/types/set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/stack.hpp \
+		../external/cereal-1.1.2/include/cereal/types/tuple.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/utility.hpp \
+		../external/cereal-1.1.2/include/cereal/types/vector.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/portable_binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/xml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml_print.hpp \
+		../external/cereal-1.1.2/include/cereal/external/base64.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/json.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/prettywriter.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/writer.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/rapidjson.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/stack.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/strfunc.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/genericstream.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/reader.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/pow10.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/document.h \
+		../OrbitCore/TcpServer.h \
+		../OrbitBase/TcpEntity.h \
+		../OrbitBase/Message.h \
+		../OrbitBase/TcpForward.h \
+		../OrbitPlugin/OrbitUserData.h \
 		../OrbitCore/SymbolUtils.h \
 		../OrbitCore/ProcessUtils.h \
 		../OrbitCore/OrbitProcess.h \
-		../OrbitCore/OrbitDia.h \
-		../OrbitCore/DiaManager.h \
-		../OrbitCore/DiaParser.h \
-		../OrbitCore/Params.h \
-		../OrbitCore/Serialization.h \
-		../OrbitCore/TcpServer.h
+		../OrbitCore/DiaParser.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o OrbitType.o ../OrbitCore/OrbitType.cpp
 
 OrbitThread.o: ../OrbitCore/OrbitThread.cpp ../OrbitCore/OrbitThread.h \
-		../OrbitCore/RingBuffer.h
+		../OrbitBase/ScopeTimer.h \
+		../OrbitBase/Profiling.h \
+		../external/stlsoft-1.9.118/include/winstl/performance/performance_counter.hpp \
+		../OrbitBase/OrbitTypes.h \
+		../OrbitCore/RingBuffer.h \
+		../OrbitBase/Utils.h \
+		../external/xxHash-r42/xxhash.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o OrbitThread.o ../OrbitCore/OrbitThread.cpp
 
 OrbitSession.o: ../OrbitCore/OrbitSession.cpp ../OrbitCore/OrbitSession.h \
-		../OrbitCore/Serialization.h
+		../OrbitCore/Serialization.h \
+		../OrbitBase/Utils.h \
+		../OrbitBase/OrbitTypes.h \
+		../external/xxHash-r42/xxhash.h \
+		../OrbitBase/PrintVar.h \
+		../external/cereal-1.1.2/include/cereal/access.hpp \
+		../external/cereal-1.1.2/include/cereal/macros.hpp \
+		../external/cereal-1.1.2/include/cereal/details/helpers.hpp \
+		../external/cereal-1.1.2/include/cereal/details/static_object.hpp \
+		../external/cereal-1.1.2/include/cereal/details/traits.hpp \
+		../external/cereal-1.1.2/include/cereal/types/base_class.hpp \
+		../external/cereal-1.1.2/include/cereal/cereal.hpp \
+		../external/cereal-1.1.2/include/cereal/types/common.hpp \
+		../external/cereal-1.1.2/include/cereal/types/array.hpp \
+		../external/cereal-1.1.2/include/cereal/types/bitset.hpp \
+		../external/cereal-1.1.2/include/cereal/types/chrono.hpp \
+		../external/cereal-1.1.2/include/cereal/types/complex.hpp \
+		../external/cereal-1.1.2/include/cereal/types/deque.hpp \
+		../external/cereal-1.1.2/include/cereal/types/forward_list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/memory.hpp \
+		../external/cereal-1.1.2/include/cereal/details/util.hpp \
+		../external/cereal-1.1.2/include/cereal/details/polymorphic_impl.hpp \
+		../external/cereal-1.1.2/include/cereal/types/string.hpp \
+		../external/cereal-1.1.2/include/cereal/types/polymorphic.hpp \
+		../external/cereal-1.1.2/include/cereal/types/queue.hpp \
+		../external/cereal-1.1.2/include/cereal/types/set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/stack.hpp \
+		../external/cereal-1.1.2/include/cereal/types/tuple.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/utility.hpp \
+		../external/cereal-1.1.2/include/cereal/types/vector.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/portable_binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/xml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml_print.hpp \
+		../external/cereal-1.1.2/include/cereal/external/base64.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/json.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/prettywriter.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/writer.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/rapidjson.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/stack.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/strfunc.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/genericstream.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/reader.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/pow10.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/document.h \
+		../OrbitBase/SerializationMacros.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o OrbitSession.o ../OrbitCore/OrbitSession.cpp
 
 OrbitRule.o: ../OrbitCore/OrbitRule.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o OrbitRule.o ../OrbitCore/OrbitRule.cpp
 
 OrbitProcess.o: ../OrbitCore/OrbitProcess.cpp ../OrbitCore/OrbitProcess.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/SerializationMacros.h \
+		../OrbitBase/Threading.h \
+		../external/multicore/common/autoresetevent.h \
+		../external/multicore/common/sema.h \
+		../OrbitBase/ScopeTimer.h \
+		../OrbitBase/Profiling.h \
+		../external/stlsoft-1.9.118/include/winstl/performance/performance_counter.hpp \
+		../OrbitBase/OrbitTypes.h \
+		../external/oqpi/include/oqpi.hpp \
+		../external/oqpi/include/oqpi/threading.hpp \
+		../external/oqpi/include/oqpi/threading/thread.hpp \
+		../external/oqpi/include/oqpi/platform.hpp \
+		../external/oqpi/include/oqpi/threading/interface_thread.hpp \
+		../external/oqpi/include/oqpi/empty_layer.hpp \
+		../external/oqpi/include/oqpi/threading/thread_attributes.hpp \
+		../external/oqpi/include/oqpi/threading/win_thread.hpp \
+		../external/oqpi/include/oqpi/error_handling.hpp \
+		../external/oqpi/include/oqpi/threading/this_thread.hpp \
+		../external/oqpi/include/oqpi/scheduling.hpp \
+		../external/oqpi/include/oqpi/scheduling_helpers.hpp \
+		../external/oqpi/include/oqpi/synchronization/event.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_event.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_event.hpp \
+		../external/oqpi/include/oqpi/scheduling/task.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_type.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_result.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_notifier.hpp \
+		../external/oqpi/include/oqpi/scheduling/scheduler.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_handle.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/context_container.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/group_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/parallel_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/sequence_group.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/parallel_for.hpp \
+		../external/oqpi/include/oqpi/concurrent_queue.hpp \
+		../external/oqpi/include/oqpi/synchronization.hpp \
+		../external/oqpi/include/oqpi/synchronization/semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_semaphore.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/simple_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/base_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/atomic_partitioner.hpp \
+		../external/concurrentqueue/concurrentqueue.h \
+		../external/concurrentqueue/internal/concurrentqueue_internal_debug.h \
 		../OrbitCore/OrbitModule.h \
-		../OrbitCore/SymbolUtils.h \
+		../OrbitCore/Pdb.h \
+		../OrbitBase/OrbitDbgHelp.h \
 		../OrbitCore/OrbitType.h \
 		../OrbitCore/cvconst.h \
 		../OrbitCore/Variable.h \
+		../OrbitBase/Utils.h \
+		../external/xxHash-r42/xxhash.h \
+		../OrbitBase/FunctionStats.h \
 		../OrbitCore/OrbitFunction.h \
-		../OrbitCore/ProcessUtils.h \
-		../OrbitCore/SamplingProfiler.h \
-		../OrbitCore/Pdb.h \
-		../OrbitCore/BlockChain.h \
+		../OrbitBase/FunctionArgs.h \
+		../OrbitBase/Path.h \
 		../OrbitCore/OrbitSession.h \
 		../OrbitCore/Serialization.h \
+		../OrbitBase/PrintVar.h \
+		../external/cereal-1.1.2/include/cereal/access.hpp \
+		../external/cereal-1.1.2/include/cereal/macros.hpp \
+		../external/cereal-1.1.2/include/cereal/details/helpers.hpp \
+		../external/cereal-1.1.2/include/cereal/details/static_object.hpp \
+		../external/cereal-1.1.2/include/cereal/details/traits.hpp \
+		../external/cereal-1.1.2/include/cereal/types/base_class.hpp \
+		../external/cereal-1.1.2/include/cereal/cereal.hpp \
+		../external/cereal-1.1.2/include/cereal/types/common.hpp \
+		../external/cereal-1.1.2/include/cereal/types/array.hpp \
+		../external/cereal-1.1.2/include/cereal/types/bitset.hpp \
+		../external/cereal-1.1.2/include/cereal/types/chrono.hpp \
+		../external/cereal-1.1.2/include/cereal/types/complex.hpp \
+		../external/cereal-1.1.2/include/cereal/types/deque.hpp \
+		../external/cereal-1.1.2/include/cereal/types/forward_list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/memory.hpp \
+		../external/cereal-1.1.2/include/cereal/details/util.hpp \
+		../external/cereal-1.1.2/include/cereal/details/polymorphic_impl.hpp \
+		../external/cereal-1.1.2/include/cereal/types/string.hpp \
+		../external/cereal-1.1.2/include/cereal/types/polymorphic.hpp \
+		../external/cereal-1.1.2/include/cereal/types/queue.hpp \
+		../external/cereal-1.1.2/include/cereal/types/set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/stack.hpp \
+		../external/cereal-1.1.2/include/cereal/types/tuple.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/utility.hpp \
+		../external/cereal-1.1.2/include/cereal/types/vector.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/portable_binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/xml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml_print.hpp \
+		../external/cereal-1.1.2/include/cereal/external/base64.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/json.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/prettywriter.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/writer.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/rapidjson.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/stack.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/strfunc.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/genericstream.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/reader.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/pow10.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/document.h \
 		../OrbitCore/OrbitThread.h \
 		../OrbitCore/RingBuffer.h \
-		../OrbitCore/Injection.h
+		../OrbitCore/Injection.h \
+		../OrbitCore/ProcessUtils.h \
+		../OrbitCore/SymbolUtils.h \
+		../OrbitBase/Log.h \
+		../OrbitCore/SamplingProfiler.h \
+		../OrbitBase/Callstack.h \
+		../OrbitBase/CallstackTypes.h \
+		../OrbitCore/BlockChain.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o OrbitProcess.o ../OrbitCore/OrbitProcess.cpp
 
 OrbitModule.o: ../OrbitCore/OrbitModule.cpp ../OrbitCore/OrbitModule.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/OrbitTypes.h \
+		../OrbitBase/SerializationMacros.h \
 		../OrbitCore/Serialization.h \
+		../OrbitBase/Utils.h \
+		../external/xxHash-r42/xxhash.h \
+		../OrbitBase/PrintVar.h \
+		../external/cereal-1.1.2/include/cereal/access.hpp \
+		../external/cereal-1.1.2/include/cereal/macros.hpp \
+		../external/cereal-1.1.2/include/cereal/details/helpers.hpp \
+		../external/cereal-1.1.2/include/cereal/details/static_object.hpp \
+		../external/cereal-1.1.2/include/cereal/details/traits.hpp \
+		../external/cereal-1.1.2/include/cereal/types/base_class.hpp \
+		../external/cereal-1.1.2/include/cereal/cereal.hpp \
+		../external/cereal-1.1.2/include/cereal/types/common.hpp \
+		../external/cereal-1.1.2/include/cereal/types/array.hpp \
+		../external/cereal-1.1.2/include/cereal/types/bitset.hpp \
+		../external/cereal-1.1.2/include/cereal/types/chrono.hpp \
+		../external/cereal-1.1.2/include/cereal/types/complex.hpp \
+		../external/cereal-1.1.2/include/cereal/types/deque.hpp \
+		../external/cereal-1.1.2/include/cereal/types/forward_list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/memory.hpp \
+		../external/cereal-1.1.2/include/cereal/details/util.hpp \
+		../external/cereal-1.1.2/include/cereal/details/polymorphic_impl.hpp \
+		../external/cereal-1.1.2/include/cereal/types/string.hpp \
+		../external/cereal-1.1.2/include/cereal/types/polymorphic.hpp \
+		../external/cereal-1.1.2/include/cereal/types/queue.hpp \
+		../external/cereal-1.1.2/include/cereal/types/set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/stack.hpp \
+		../external/cereal-1.1.2/include/cereal/types/tuple.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/utility.hpp \
+		../external/cereal-1.1.2/include/cereal/types/vector.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/portable_binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/xml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml_print.hpp \
+		../external/cereal-1.1.2/include/cereal/external/base64.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/json.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/prettywriter.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/writer.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/rapidjson.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/stack.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/strfunc.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/genericstream.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/reader.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/pow10.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/document.h \
 		../OrbitCore/Pdb.h \
+		../OrbitBase/OrbitDbgHelp.h \
 		../OrbitCore/OrbitType.h \
 		../OrbitCore/cvconst.h \
 		../OrbitCore/Variable.h \
-		../OrbitCore/OrbitFunction.h
+		../OrbitBase/FunctionStats.h \
+		../OrbitCore/OrbitFunction.h \
+		../OrbitBase/FunctionArgs.h \
+		../OrbitBase/Path.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o OrbitModule.o ../OrbitCore/OrbitModule.cpp
 
 OrbitFunction.o: ../OrbitCore/OrbitFunction.cpp ../OrbitCore/OrbitFunction.h \
+		../OrbitBase/OrbitDbgHelp.h \
 		../OrbitCore/cvconst.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/FunctionStats.h \
+		../OrbitBase/OrbitTypes.h \
+		../OrbitBase/SerializationMacros.h \
+		../OrbitBase/Utils.h \
+		../external/xxHash-r42/xxhash.h \
+		../OrbitBase/FunctionArgs.h \
 		../OrbitCore/OrbitModule.h \
 		../OrbitCore/Serialization.h \
+		../OrbitBase/PrintVar.h \
+		../external/cereal-1.1.2/include/cereal/access.hpp \
+		../external/cereal-1.1.2/include/cereal/macros.hpp \
+		../external/cereal-1.1.2/include/cereal/details/helpers.hpp \
+		../external/cereal-1.1.2/include/cereal/details/static_object.hpp \
+		../external/cereal-1.1.2/include/cereal/details/traits.hpp \
+		../external/cereal-1.1.2/include/cereal/types/base_class.hpp \
+		../external/cereal-1.1.2/include/cereal/cereal.hpp \
+		../external/cereal-1.1.2/include/cereal/types/common.hpp \
+		../external/cereal-1.1.2/include/cereal/types/array.hpp \
+		../external/cereal-1.1.2/include/cereal/types/bitset.hpp \
+		../external/cereal-1.1.2/include/cereal/types/chrono.hpp \
+		../external/cereal-1.1.2/include/cereal/types/complex.hpp \
+		../external/cereal-1.1.2/include/cereal/types/deque.hpp \
+		../external/cereal-1.1.2/include/cereal/types/forward_list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/memory.hpp \
+		../external/cereal-1.1.2/include/cereal/details/util.hpp \
+		../external/cereal-1.1.2/include/cereal/details/polymorphic_impl.hpp \
+		../external/cereal-1.1.2/include/cereal/types/string.hpp \
+		../external/cereal-1.1.2/include/cereal/types/polymorphic.hpp \
+		../external/cereal-1.1.2/include/cereal/types/queue.hpp \
+		../external/cereal-1.1.2/include/cereal/types/set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/stack.hpp \
+		../external/cereal-1.1.2/include/cereal/types/tuple.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/utility.hpp \
+		../external/cereal-1.1.2/include/cereal/types/vector.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/portable_binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/xml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml_print.hpp \
+		../external/cereal-1.1.2/include/cereal/external/base64.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/json.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/prettywriter.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/writer.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/rapidjson.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/stack.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/strfunc.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/genericstream.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/reader.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/pow10.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/document.h \
 		../OrbitCore/Pdb.h \
 		../OrbitCore/OrbitType.h \
 		../OrbitCore/Variable.h \
 		../OrbitCore/Capture.h \
+		../OrbitBase/CallstackTypes.h \
+		../OrbitBase/Threading.h \
+		../external/multicore/common/autoresetevent.h \
+		../external/multicore/common/sema.h \
+		../OrbitBase/ScopeTimer.h \
+		../OrbitBase/Profiling.h \
+		../external/stlsoft-1.9.118/include/winstl/performance/performance_counter.hpp \
+		../external/oqpi/include/oqpi.hpp \
+		../external/oqpi/include/oqpi/threading.hpp \
+		../external/oqpi/include/oqpi/threading/thread.hpp \
+		../external/oqpi/include/oqpi/platform.hpp \
+		../external/oqpi/include/oqpi/threading/interface_thread.hpp \
+		../external/oqpi/include/oqpi/empty_layer.hpp \
+		../external/oqpi/include/oqpi/threading/thread_attributes.hpp \
+		../external/oqpi/include/oqpi/threading/win_thread.hpp \
+		../external/oqpi/include/oqpi/error_handling.hpp \
+		../external/oqpi/include/oqpi/threading/this_thread.hpp \
+		../external/oqpi/include/oqpi/scheduling.hpp \
+		../external/oqpi/include/oqpi/scheduling_helpers.hpp \
+		../external/oqpi/include/oqpi/synchronization/event.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_event.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_event.hpp \
+		../external/oqpi/include/oqpi/scheduling/task.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_type.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_result.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_notifier.hpp \
+		../external/oqpi/include/oqpi/scheduling/scheduler.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_handle.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/context_container.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/group_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/parallel_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/sequence_group.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/parallel_for.hpp \
+		../external/oqpi/include/oqpi/concurrent_queue.hpp \
+		../external/oqpi/include/oqpi/synchronization.hpp \
+		../external/oqpi/include/oqpi/synchronization/semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_semaphore.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/simple_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/base_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/atomic_partitioner.hpp \
+		../external/concurrentqueue/concurrentqueue.h \
+		../external/concurrentqueue/internal/concurrentqueue_internal_debug.h \
+		../OrbitBase/Log.h \
 		../OrbitCore/Params.h \
 		../OrbitCore/OrbitProcess.h \
 		../OrbitCore/TcpServer.h \
-		../OrbitCore/OrbitDia.h \
+		../OrbitBase/TcpEntity.h \
+		../OrbitBase/Message.h \
+		../OrbitBase/TcpForward.h \
+		../OrbitPlugin/OrbitUserData.h \
 		../OrbitCore/SamplingProfiler.h \
+		../OrbitBase/Callstack.h \
 		../OrbitCore/BlockChain.h \
 		../OrbitCore/SymbolUtils.h \
 		../OrbitCore/ProcessUtils.h \
 		../OrbitCore/DiaParser.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o OrbitFunction.o ../OrbitCore/OrbitFunction.cpp
 
-OrbitDia.o: ../OrbitCore/OrbitDia.cpp ../OrbitCore/OrbitDia.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o OrbitDia.o ../OrbitCore/OrbitDia.cpp
-
 ModuleManager.o: ../OrbitCore/ModuleManager.cpp ../OrbitCore/ModuleManager.h \
 		../OrbitCore/OrbitModule.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/OrbitTypes.h \
+		../OrbitBase/SerializationMacros.h \
 		../OrbitCore/Tcp.h \
+		../external/asio/include/asio.hpp \
+		../external/asio/include/asio/associated_allocator.hpp \
+		../external/asio/include/asio/detail/config.hpp \
+		../external/asio/include/asio/detail/type_traits.hpp \
+		../external/asio/include/asio/detail/push_options.hpp \
+		../external/asio/include/asio/detail/pop_options.hpp \
+		../external/asio/include/asio/associated_executor.hpp \
+		../external/asio/include/asio/is_executor.hpp \
+		../external/asio/include/asio/system_executor.hpp \
+		../external/asio/include/asio/detail/scheduler.hpp \
+		../external/asio/include/asio/error_code.hpp \
+		../external/asio/include/asio/detail/noncopyable.hpp \
+		../external/asio/include/asio/impl/error_code.ipp \
+		../external/asio/include/asio/detail/local_free_on_block_exit.hpp \
+		../external/asio/include/asio/detail/socket_types.hpp \
+		../external/asio/include/asio/detail/old_win_sdk_compat.hpp \
+		../external/asio/include/asio/execution_context.hpp \
+		../external/asio/include/asio/detail/variadic_templates.hpp \
+		../external/asio/include/asio/impl/execution_context.hpp \
+		../external/asio/include/asio/detail/handler_type_requirements.hpp \
+		../external/asio/include/asio/handler_type.hpp \
+		../external/asio/include/asio/detail/scoped_ptr.hpp \
+		../external/asio/include/asio/detail/service_registry.hpp \
+		../external/asio/include/asio/detail/mutex.hpp \
+		../external/asio/include/asio/detail/null_mutex.hpp \
+		../external/asio/include/asio/detail/scoped_lock.hpp \
+		../external/asio/include/asio/detail/win_mutex.hpp \
+		../external/asio/include/asio/detail/impl/win_mutex.ipp \
+		../external/asio/include/asio/detail/throw_error.hpp \
+		../external/asio/include/asio/detail/impl/throw_error.ipp \
+		../external/asio/include/asio/detail/throw_exception.hpp \
+		../external/asio/include/asio/system_error.hpp \
+		../external/asio/include/asio/error.hpp \
+		../external/asio/include/asio/impl/error.ipp \
+		../external/asio/include/asio/detail/posix_mutex.hpp \
+		../external/asio/include/asio/detail/impl/posix_mutex.ipp \
+		../external/asio/include/asio/detail/std_mutex.hpp \
+		../external/asio/include/asio/detail/impl/service_registry.hpp \
+		../external/asio/include/asio/detail/impl/service_registry.ipp \
+		../external/asio/include/asio/impl/execution_context.ipp \
+		../external/asio/include/asio/detail/atomic_count.hpp \
+		../external/asio/include/asio/detail/event.hpp \
+		../external/asio/include/asio/detail/null_event.hpp \
+		../external/asio/include/asio/detail/win_event.hpp \
+		../external/asio/include/asio/detail/assert.hpp \
+		../external/asio/include/asio/detail/impl/win_event.ipp \
+		../external/asio/include/asio/detail/posix_event.hpp \
+		../external/asio/include/asio/detail/impl/posix_event.ipp \
+		../external/asio/include/asio/detail/std_event.hpp \
+		../external/asio/include/asio/detail/op_queue.hpp \
+		../external/asio/include/asio/detail/reactor_fwd.hpp \
+		../external/asio/include/asio/detail/scheduler_operation.hpp \
+		../external/asio/include/asio/detail/handler_tracking.hpp \
+		../external/asio/include/asio/detail/cstdint.hpp \
+		../external/asio/include/asio/detail/static_mutex.hpp \
+		../external/asio/include/asio/detail/null_static_mutex.hpp \
+		../external/asio/include/asio/detail/win_static_mutex.hpp \
+		../external/asio/include/asio/detail/impl/win_static_mutex.ipp \
+		../external/asio/include/asio/detail/posix_static_mutex.hpp \
+		../external/asio/include/asio/detail/std_static_mutex.hpp \
+		../external/asio/include/asio/detail/tss_ptr.hpp \
+		../external/asio/include/asio/detail/null_tss_ptr.hpp \
+		../external/asio/include/asio/detail/keyword_tss_ptr.hpp \
+		../external/asio/include/asio/detail/win_tss_ptr.hpp \
+		../external/asio/include/asio/detail/impl/win_tss_ptr.ipp \
+		../external/asio/include/asio/detail/posix_tss_ptr.hpp \
+		../external/asio/include/asio/detail/impl/posix_tss_ptr.ipp \
+		../external/asio/include/asio/detail/impl/handler_tracking.ipp \
+		../external/asio/include/asio/time_traits.hpp \
+		../external/asio/include/asio/detail/chrono.hpp \
+		../external/asio/include/asio/detail/chrono_time_traits.hpp \
+		../external/asio/include/asio/wait_traits.hpp \
+		../external/asio/include/asio/detail/thread_context.hpp \
+		../external/asio/include/asio/detail/call_stack.hpp \
+		../external/asio/include/asio/detail/impl/scheduler.ipp \
+		../external/asio/include/asio/detail/limits.hpp \
+		../external/asio/include/asio/detail/reactor.hpp \
+		../external/asio/include/asio/detail/epoll_reactor.hpp \
+		../external/asio/include/asio/detail/object_pool.hpp \
+		../external/asio/include/asio/detail/reactor_op.hpp \
+		../external/asio/include/asio/detail/operation.hpp \
+		../external/asio/include/asio/detail/win_iocp_operation.hpp \
+		../external/asio/include/asio/detail/select_interrupter.hpp \
+		../external/asio/include/asio/detail/socket_select_interrupter.hpp \
+		../external/asio/include/asio/detail/impl/socket_select_interrupter.ipp \
+		../external/asio/include/asio/detail/socket_holder.hpp \
+		../external/asio/include/asio/detail/socket_ops.hpp \
+		../external/asio/include/asio/detail/memory.hpp \
+		../external/asio/include/asio/detail/impl/socket_ops.ipp \
+		../external/asio/include/asio/detail/eventfd_select_interrupter.hpp \
+		../external/asio/include/asio/detail/impl/eventfd_select_interrupter.ipp \
+		../external/asio/include/asio/detail/pipe_select_interrupter.hpp \
+		../external/asio/include/asio/detail/impl/pipe_select_interrupter.ipp \
+		../external/asio/include/asio/detail/timer_queue_base.hpp \
+		../external/asio/include/asio/detail/timer_queue_set.hpp \
+		../external/asio/include/asio/detail/impl/timer_queue_set.ipp \
+		../external/asio/include/asio/detail/wait_op.hpp \
+		../external/asio/include/asio/detail/impl/epoll_reactor.hpp \
+		../external/asio/include/asio/detail/impl/epoll_reactor.ipp \
+		../external/asio/include/asio/detail/kqueue_reactor.hpp \
+		../external/asio/include/asio/detail/impl/kqueue_reactor.hpp \
+		../external/asio/include/asio/detail/impl/kqueue_reactor.ipp \
+		../external/asio/include/asio/detail/dev_poll_reactor.hpp \
+		../external/asio/include/asio/detail/hash_map.hpp \
+		../external/asio/include/asio/detail/reactor_op_queue.hpp \
+		../external/asio/include/asio/detail/impl/dev_poll_reactor.hpp \
+		../external/asio/include/asio/detail/impl/dev_poll_reactor.ipp \
+		../external/asio/include/asio/detail/null_reactor.hpp \
+		../external/asio/include/asio/detail/select_reactor.hpp \
+		../external/asio/include/asio/detail/fd_set_adapter.hpp \
+		../external/asio/include/asio/detail/posix_fd_set_adapter.hpp \
+		../external/asio/include/asio/detail/win_fd_set_adapter.hpp \
+		../external/asio/include/asio/detail/thread.hpp \
+		../external/asio/include/asio/detail/null_thread.hpp \
+		../external/asio/include/asio/detail/wince_thread.hpp \
+		../external/asio/include/asio/detail/winapp_thread.hpp \
+		../external/asio/include/asio/detail/win_thread.hpp \
+		../external/asio/include/asio/detail/impl/win_thread.ipp \
+		../external/asio/include/asio/detail/posix_thread.hpp \
+		../external/asio/include/asio/detail/impl/posix_thread.ipp \
+		../external/asio/include/asio/detail/std_thread.hpp \
+		../external/asio/include/asio/detail/impl/select_reactor.hpp \
+		../external/asio/include/asio/detail/impl/select_reactor.ipp \
+		../external/asio/include/asio/detail/signal_blocker.hpp \
+		../external/asio/include/asio/detail/null_signal_blocker.hpp \
+		../external/asio/include/asio/detail/posix_signal_blocker.hpp \
+		../external/asio/include/asio/detail/scheduler_thread_info.hpp \
+		../external/asio/include/asio/detail/thread_info_base.hpp \
+		../external/asio/include/asio/detail/thread_group.hpp \
+		../external/asio/include/asio/impl/system_executor.hpp \
+		../external/asio/include/asio/detail/executor_op.hpp \
+		../external/asio/include/asio/detail/fenced_block.hpp \
+		../external/asio/include/asio/detail/null_fenced_block.hpp \
+		../external/asio/include/asio/detail/macos_fenced_block.hpp \
+		../external/asio/include/asio/detail/solaris_fenced_block.hpp \
+		../external/asio/include/asio/detail/gcc_arm_fenced_block.hpp \
+		../external/asio/include/asio/detail/gcc_hppa_fenced_block.hpp \
+		../external/asio/include/asio/detail/gcc_x86_fenced_block.hpp \
+		../external/asio/include/asio/detail/gcc_sync_fenced_block.hpp \
+		../external/asio/include/asio/detail/win_fenced_block.hpp \
+		../external/asio/include/asio/detail/handler_alloc_helpers.hpp \
+		../external/asio/include/asio/handler_alloc_hook.hpp \
+		../external/asio/include/asio/impl/handler_alloc_hook.ipp \
+		../external/asio/include/asio/detail/handler_invoke_helpers.hpp \
+		../external/asio/include/asio/handler_invoke_hook.hpp \
+		../external/asio/include/asio/detail/global.hpp \
+		../external/asio/include/asio/detail/null_global.hpp \
+		../external/asio/include/asio/detail/win_global.hpp \
+		../external/asio/include/asio/detail/posix_global.hpp \
+		../external/asio/include/asio/detail/std_global.hpp \
+		../external/asio/include/asio/detail/recycling_allocator.hpp \
+		../external/asio/include/asio/impl/system_executor.ipp \
+		../external/asio/include/asio/async_result.hpp \
+		../external/asio/include/asio/basic_datagram_socket.hpp \
+		../external/asio/include/asio/basic_socket.hpp \
+		../external/asio/include/asio/basic_io_object.hpp \
+		../external/asio/include/asio/io_context.hpp \
+		../external/asio/include/asio/detail/wrapped_handler.hpp \
+		../external/asio/include/asio/detail/bind_handler.hpp \
+		../external/asio/include/asio/detail/handler_cont_helpers.hpp \
+		../external/asio/include/asio/handler_continuation_hook.hpp \
+		../external/asio/include/asio/detail/winsock_init.hpp \
+		../external/asio/include/asio/detail/impl/winsock_init.ipp \
+		../external/asio/include/asio/detail/signal_init.hpp \
+		../external/asio/include/asio/impl/io_context.hpp \
+		../external/asio/include/asio/detail/completion_handler.hpp \
+		../external/asio/include/asio/detail/handler_work.hpp \
+		../external/asio/include/asio/detail/win_iocp_io_context.hpp \
+		../external/asio/include/asio/detail/win_iocp_thread_info.hpp \
+		../external/asio/include/asio/detail/impl/win_iocp_io_context.hpp \
+		../external/asio/include/asio/detail/impl/win_iocp_io_context.ipp \
+		../external/asio/include/asio/impl/io_context.ipp \
+		../external/asio/include/asio/io_context_strand.hpp \
+		../external/asio/include/asio/detail/strand_service.hpp \
+		../external/asio/include/asio/detail/impl/strand_service.hpp \
+		../external/asio/include/asio/detail/impl/strand_service.ipp \
+		../external/asio/include/asio/post.hpp \
+		../external/asio/include/asio/impl/post.hpp \
+		../external/asio/include/asio/detail/work_dispatcher.hpp \
+		../external/asio/include/asio/executor_work_guard.hpp \
+		../external/asio/include/asio/socket_base.hpp \
+		../external/asio/include/asio/detail/io_control.hpp \
+		../external/asio/include/asio/detail/socket_option.hpp \
+		../external/asio/include/asio/datagram_socket_service.hpp \
+		../external/asio/include/asio/detail/null_socket_service.hpp \
+		../external/asio/include/asio/buffer.hpp \
+		../external/asio/include/asio/detail/array_fwd.hpp \
+		../external/asio/include/asio/detail/is_buffer_sequence.hpp \
+		../external/asio/include/asio/detail/functional.hpp \
+		../external/asio/include/asio/detail/win_iocp_socket_service.hpp \
+		../external/asio/include/asio/detail/buffer_sequence_adapter.hpp \
+		../external/asio/include/asio/detail/impl/buffer_sequence_adapter.ipp \
+		../external/asio/include/asio/detail/win_iocp_null_buffers_op.hpp \
+		../external/asio/include/asio/detail/win_iocp_socket_accept_op.hpp \
+		../external/asio/include/asio/detail/win_iocp_socket_service_base.hpp \
+		../external/asio/include/asio/detail/win_iocp_socket_connect_op.hpp \
+		../external/asio/include/asio/detail/win_iocp_socket_send_op.hpp \
+		../external/asio/include/asio/detail/win_iocp_socket_recv_op.hpp \
+		../external/asio/include/asio/detail/win_iocp_socket_recvmsg_op.hpp \
+		../external/asio/include/asio/detail/win_iocp_wait_op.hpp \
+		../external/asio/include/asio/detail/impl/win_iocp_socket_service_base.ipp \
+		../external/asio/include/asio/detail/win_iocp_socket_recvfrom_op.hpp \
+		../external/asio/include/asio/detail/reactive_socket_service.hpp \
+		../external/asio/include/asio/detail/reactive_null_buffers_op.hpp \
+		../external/asio/include/asio/detail/reactive_socket_accept_op.hpp \
+		../external/asio/include/asio/detail/reactive_socket_connect_op.hpp \
+		../external/asio/include/asio/detail/reactive_socket_recvfrom_op.hpp \
+		../external/asio/include/asio/detail/reactive_socket_sendto_op.hpp \
+		../external/asio/include/asio/detail/reactive_socket_service_base.hpp \
+		../external/asio/include/asio/detail/reactive_socket_recv_op.hpp \
+		../external/asio/include/asio/detail/reactive_socket_recvmsg_op.hpp \
+		../external/asio/include/asio/detail/reactive_socket_send_op.hpp \
+		../external/asio/include/asio/detail/reactive_wait_op.hpp \
+		../external/asio/include/asio/detail/impl/reactive_socket_service_base.ipp \
+		../external/asio/include/asio/basic_deadline_timer.hpp \
+		../external/asio/include/asio/deadline_timer_service.hpp \
+		../external/asio/include/asio/detail/deadline_timer_service.hpp \
+		../external/asio/include/asio/detail/timer_queue.hpp \
+		../external/asio/include/asio/detail/date_time_fwd.hpp \
+		../external/asio/include/asio/detail/timer_scheduler.hpp \
+		../external/asio/include/asio/detail/timer_scheduler_fwd.hpp \
+		../external/asio/include/asio/detail/winrt_timer_scheduler.hpp \
+		../external/asio/include/asio/detail/impl/winrt_timer_scheduler.hpp \
+		../external/asio/include/asio/detail/impl/winrt_timer_scheduler.ipp \
+		../external/asio/include/asio/detail/wait_handler.hpp \
+		../external/asio/include/asio/detail/timer_queue_ptime.hpp \
+		../external/asio/include/asio/detail/impl/timer_queue_ptime.ipp \
+		../external/asio/include/asio/basic_raw_socket.hpp \
+		../external/asio/include/asio/raw_socket_service.hpp \
+		../external/asio/include/asio/basic_seq_packet_socket.hpp \
+		../external/asio/include/asio/seq_packet_socket_service.hpp \
+		../external/asio/include/asio/basic_serial_port.hpp \
+		../external/asio/include/asio/serial_port_base.hpp \
+		../external/asio/include/asio/impl/serial_port_base.hpp \
+		../external/asio/include/asio/impl/serial_port_base.ipp \
+		../external/asio/include/asio/serial_port_service.hpp \
+		../external/asio/include/asio/detail/reactive_serial_port_service.hpp \
+		../external/asio/include/asio/detail/descriptor_ops.hpp \
+		../external/asio/include/asio/detail/impl/descriptor_ops.ipp \
+		../external/asio/include/asio/detail/reactive_descriptor_service.hpp \
+		../external/asio/include/asio/detail/descriptor_read_op.hpp \
+		../external/asio/include/asio/detail/descriptor_write_op.hpp \
+		../external/asio/include/asio/posix/descriptor_base.hpp \
+		../external/asio/include/asio/detail/impl/reactive_descriptor_service.ipp \
+		../external/asio/include/asio/detail/impl/reactive_serial_port_service.ipp \
+		../external/asio/include/asio/detail/win_iocp_serial_port_service.hpp \
+		../external/asio/include/asio/detail/win_iocp_handle_service.hpp \
+		../external/asio/include/asio/detail/win_iocp_handle_read_op.hpp \
+		../external/asio/include/asio/detail/win_iocp_handle_write_op.hpp \
+		../external/asio/include/asio/detail/impl/win_iocp_handle_service.ipp \
+		../external/asio/include/asio/detail/impl/win_iocp_serial_port_service.ipp \
+		../external/asio/include/asio/basic_signal_set.hpp \
+		../external/asio/include/asio/signal_set_service.hpp \
+		../external/asio/include/asio/detail/signal_set_service.hpp \
+		../external/asio/include/asio/detail/signal_handler.hpp \
+		../external/asio/include/asio/detail/signal_op.hpp \
+		../external/asio/include/asio/detail/impl/signal_set_service.ipp \
+		../external/asio/include/asio/basic_socket_acceptor.hpp \
+		../external/asio/include/asio/socket_acceptor_service.hpp \
+		../external/asio/include/asio/basic_socket_iostream.hpp \
+		../external/asio/include/asio/basic_socket_streambuf.hpp \
+		../external/asio/include/asio/detail/array.hpp \
+		../external/asio/include/asio/stream_socket_service.hpp \
+		../external/asio/include/asio/detail/winrt_ssocket_service.hpp \
+		../external/asio/include/asio/detail/winrt_socket_connect_op.hpp \
+		../external/asio/include/asio/detail/winrt_async_op.hpp \
+		../external/asio/include/asio/detail/winrt_ssocket_service_base.hpp \
+		../external/asio/include/asio/detail/winrt_async_manager.hpp \
+		../external/asio/include/asio/detail/winrt_socket_recv_op.hpp \
+		../external/asio/include/asio/detail/winrt_socket_send_op.hpp \
+		../external/asio/include/asio/detail/impl/winrt_ssocket_service_base.ipp \
+		../external/asio/include/asio/detail/winrt_utils.hpp \
+		../external/asio/include/asio/deadline_timer.hpp \
+		../external/asio/include/asio/steady_timer.hpp \
+		../external/asio/include/asio/basic_waitable_timer.hpp \
+		../external/asio/include/asio/waitable_timer_service.hpp \
+		../external/asio/include/asio/basic_stream_socket.hpp \
+		../external/asio/include/asio/basic_streambuf.hpp \
+		../external/asio/include/asio/basic_streambuf_fwd.hpp \
+		../external/asio/include/asio/bind_executor.hpp \
+		../external/asio/include/asio/uses_executor.hpp \
+		../external/asio/include/asio/buffered_read_stream_fwd.hpp \
+		../external/asio/include/asio/buffered_read_stream.hpp \
+		../external/asio/include/asio/detail/buffer_resize_guard.hpp \
+		../external/asio/include/asio/detail/buffered_stream_storage.hpp \
+		../external/asio/include/asio/impl/buffered_read_stream.hpp \
+		../external/asio/include/asio/buffered_stream_fwd.hpp \
+		../external/asio/include/asio/buffered_stream.hpp \
+		../external/asio/include/asio/buffered_write_stream.hpp \
+		../external/asio/include/asio/buffered_write_stream_fwd.hpp \
+		../external/asio/include/asio/completion_condition.hpp \
+		../external/asio/include/asio/write.hpp \
+		../external/asio/include/asio/impl/write.hpp \
+		../external/asio/include/asio/detail/base_from_completion_cond.hpp \
+		../external/asio/include/asio/detail/consuming_buffers.hpp \
+		../external/asio/include/asio/detail/dependent_type.hpp \
+		../external/asio/include/asio/impl/buffered_write_stream.hpp \
+		../external/asio/include/asio/buffers_iterator.hpp \
+		../external/asio/include/asio/connect.hpp \
+		../external/asio/include/asio/impl/connect.hpp \
+		../external/asio/include/asio/coroutine.hpp \
+		../external/asio/include/asio/defer.hpp \
+		../external/asio/include/asio/impl/defer.hpp \
+		../external/asio/include/asio/dispatch.hpp \
+		../external/asio/include/asio/impl/dispatch.hpp \
+		../external/asio/include/asio/executor.hpp \
+		../external/asio/include/asio/detail/cstddef.hpp \
+		../external/asio/include/asio/impl/executor.hpp \
+		../external/asio/include/asio/impl/executor.ipp \
+		../external/asio/include/asio/generic/basic_endpoint.hpp \
+		../external/asio/include/asio/generic/detail/endpoint.hpp \
+		../external/asio/include/asio/generic/detail/impl/endpoint.ipp \
+		../external/asio/include/asio/generic/datagram_protocol.hpp \
+		../external/asio/include/asio/generic/raw_protocol.hpp \
+		../external/asio/include/asio/generic/seq_packet_protocol.hpp \
+		../external/asio/include/asio/generic/stream_protocol.hpp \
+		../external/asio/include/asio/io_service.hpp \
+		../external/asio/include/asio/io_service_strand.hpp \
+		../external/asio/include/asio/ip/address.hpp \
+		../external/asio/include/asio/ip/address_v4.hpp \
+		../external/asio/include/asio/ip/impl/address_v4.hpp \
+		../external/asio/include/asio/ip/impl/address_v4.ipp \
+		../external/asio/include/asio/ip/address_v6.hpp \
+		../external/asio/include/asio/ip/impl/address_v6.hpp \
+		../external/asio/include/asio/ip/impl/address_v6.ipp \
+		../external/asio/include/asio/ip/bad_address_cast.hpp \
+		../external/asio/include/asio/ip/impl/address.hpp \
+		../external/asio/include/asio/ip/impl/address.ipp \
+		../external/asio/include/asio/ip/address_v4_iterator.hpp \
+		../external/asio/include/asio/ip/address_v4_range.hpp \
+		../external/asio/include/asio/ip/address_v6_iterator.hpp \
+		../external/asio/include/asio/ip/address_v6_range.hpp \
+		../external/asio/include/asio/ip/basic_endpoint.hpp \
+		../external/asio/include/asio/ip/detail/endpoint.hpp \
+		../external/asio/include/asio/ip/detail/impl/endpoint.ipp \
+		../external/asio/include/asio/ip/impl/basic_endpoint.hpp \
+		../external/asio/include/asio/ip/basic_resolver.hpp \
+		../external/asio/include/asio/ip/basic_resolver_iterator.hpp \
+		../external/asio/include/asio/ip/basic_resolver_entry.hpp \
+		../external/asio/include/asio/ip/basic_resolver_query.hpp \
+		../external/asio/include/asio/ip/resolver_query_base.hpp \
+		../external/asio/include/asio/ip/resolver_base.hpp \
+		../external/asio/include/asio/ip/basic_resolver_results.hpp \
+		../external/asio/include/asio/ip/resolver_service.hpp \
+		../external/asio/include/asio/detail/winrt_resolver_service.hpp \
+		../external/asio/include/asio/detail/winrt_resolve_op.hpp \
+		../external/asio/include/asio/detail/resolver_service.hpp \
+		../external/asio/include/asio/detail/resolve_endpoint_op.hpp \
+		../external/asio/include/asio/detail/resolve_op.hpp \
+		../external/asio/include/asio/detail/resolver_service_base.hpp \
+		../external/asio/include/asio/detail/impl/resolver_service_base.ipp \
+		../external/asio/include/asio/ip/host_name.hpp \
+		../external/asio/include/asio/ip/impl/host_name.ipp \
+		../external/asio/include/asio/ip/icmp.hpp \
+		../external/asio/include/asio/ip/multicast.hpp \
+		../external/asio/include/asio/ip/detail/socket_option.hpp \
+		../external/asio/include/asio/ip/tcp.hpp \
+		../external/asio/include/asio/ip/udp.hpp \
+		../external/asio/include/asio/ip/unicast.hpp \
+		../external/asio/include/asio/ip/v6_only.hpp \
+		../external/asio/include/asio/is_read_buffered.hpp \
+		../external/asio/include/asio/is_write_buffered.hpp \
+		../external/asio/include/asio/local/basic_endpoint.hpp \
+		../external/asio/include/asio/local/detail/endpoint.hpp \
+		../external/asio/include/asio/local/detail/impl/endpoint.ipp \
+		../external/asio/include/asio/local/connect_pair.hpp \
+		../external/asio/include/asio/local/datagram_protocol.hpp \
+		../external/asio/include/asio/local/stream_protocol.hpp \
+		../external/asio/include/asio/placeholders.hpp \
+		../external/asio/include/asio/posix/basic_descriptor.hpp \
+		../external/asio/include/asio/posix/basic_stream_descriptor.hpp \
+		../external/asio/include/asio/posix/stream_descriptor_service.hpp \
+		../external/asio/include/asio/posix/stream_descriptor.hpp \
+		../external/asio/include/asio/read.hpp \
+		../external/asio/include/asio/impl/read.hpp \
+		../external/asio/include/asio/read_at.hpp \
+		../external/asio/include/asio/impl/read_at.hpp \
+		../external/asio/include/asio/read_until.hpp \
+		../external/asio/include/asio/detail/regex_fwd.hpp \
+		../external/asio/include/asio/impl/read_until.hpp \
+		../external/asio/include/asio/serial_port.hpp \
+		../external/asio/include/asio/signal_set.hpp \
+		../external/asio/include/asio/strand.hpp \
+		../external/asio/include/asio/detail/strand_executor_service.hpp \
+		../external/asio/include/asio/detail/impl/strand_executor_service.hpp \
+		../external/asio/include/asio/detail/impl/strand_executor_service.ipp \
+		../external/asio/include/asio/streambuf.hpp \
+		../external/asio/include/asio/thread.hpp \
+		../external/asio/include/asio/thread_pool.hpp \
+		../external/asio/include/asio/impl/thread_pool.hpp \
+		../external/asio/include/asio/impl/thread_pool.ipp \
+		../external/asio/include/asio/version.hpp \
+		../external/asio/include/asio/windows/basic_handle.hpp \
+		../external/asio/include/asio/windows/basic_object_handle.hpp \
+		../external/asio/include/asio/windows/object_handle_service.hpp \
+		../external/asio/include/asio/detail/win_object_handle_service.hpp \
+		../external/asio/include/asio/detail/impl/win_object_handle_service.ipp \
+		../external/asio/include/asio/windows/basic_random_access_handle.hpp \
+		../external/asio/include/asio/windows/random_access_handle_service.hpp \
+		../external/asio/include/asio/windows/basic_stream_handle.hpp \
+		../external/asio/include/asio/windows/stream_handle_service.hpp \
+		../external/asio/include/asio/windows/object_handle.hpp \
+		../external/asio/include/asio/windows/overlapped_ptr.hpp \
+		../external/asio/include/asio/detail/win_iocp_overlapped_ptr.hpp \
+		../external/asio/include/asio/detail/win_iocp_overlapped_op.hpp \
+		../external/asio/include/asio/windows/random_access_handle.hpp \
+		../external/asio/include/asio/windows/stream_handle.hpp \
+		../external/asio/include/asio/write_at.hpp \
+		../external/asio/include/asio/impl/write_at.hpp \
+		../OrbitBase/Message.h \
+		../OrbitBase/TcpEntity.h \
+		../OrbitBase/TcpForward.h \
+		../OrbitBase/Threading.h \
+		../external/multicore/common/autoresetevent.h \
+		../external/multicore/common/sema.h \
+		../OrbitBase/ScopeTimer.h \
+		../OrbitBase/Profiling.h \
+		../external/stlsoft-1.9.118/include/winstl/performance/performance_counter.hpp \
+		../external/oqpi/include/oqpi.hpp \
+		../external/oqpi/include/oqpi/threading.hpp \
+		../external/oqpi/include/oqpi/threading/thread.hpp \
+		../external/oqpi/include/oqpi/platform.hpp \
+		../external/oqpi/include/oqpi/threading/interface_thread.hpp \
+		../external/oqpi/include/oqpi/empty_layer.hpp \
+		../external/oqpi/include/oqpi/threading/thread_attributes.hpp \
+		../external/oqpi/include/oqpi/threading/win_thread.hpp \
+		../external/oqpi/include/oqpi/error_handling.hpp \
+		../external/oqpi/include/oqpi/threading/this_thread.hpp \
+		../external/oqpi/include/oqpi/scheduling.hpp \
+		../external/oqpi/include/oqpi/scheduling_helpers.hpp \
+		../external/oqpi/include/oqpi/synchronization/event.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_event.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_event.hpp \
+		../external/oqpi/include/oqpi/scheduling/task.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_type.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_result.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_notifier.hpp \
+		../external/oqpi/include/oqpi/scheduling/scheduler.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_handle.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/context_container.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/group_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/parallel_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/sequence_group.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/parallel_for.hpp \
+		../external/oqpi/include/oqpi/concurrent_queue.hpp \
+		../external/oqpi/include/oqpi/synchronization.hpp \
+		../external/oqpi/include/oqpi/synchronization/semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_semaphore.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/simple_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/base_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/atomic_partitioner.hpp \
+		../external/concurrentqueue/concurrentqueue.h \
+		../external/concurrentqueue/internal/concurrentqueue_internal_debug.h \
+		../OrbitPlugin/OrbitUserData.h \
+		../OrbitBase/OrbitAsio.h \
 		../OrbitCore/TcpServer.h \
+		../OrbitBase/Utils.h \
+		../external/xxHash-r42/xxhash.h \
 		../OrbitCore/Capture.h \
+		../OrbitBase/CallstackTypes.h \
 		../OrbitCore/OrbitType.h \
 		../OrbitCore/cvconst.h \
+		../OrbitBase/OrbitDbgHelp.h \
 		../OrbitCore/Variable.h \
+		../OrbitBase/FunctionStats.h \
 		../OrbitCore/OrbitFunction.h \
+		../OrbitBase/FunctionArgs.h \
 		../OrbitCore/OrbitProcess.h \
 		../OrbitCore/CoreApp.h \
+		../OrbitBase/Path.h \
 		../OrbitCore/Pdb.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ModuleManager.o ../OrbitCore/ModuleManager.cpp
 
 MiniDump.o: ../OrbitCore/MiniDump.cpp ../OrbitCore/MiniDump.h \
 		../OrbitCore/OrbitType.h \
 		../OrbitCore/cvconst.h \
+		../OrbitBase/OrbitDbgHelp.h \
 		../OrbitCore/Variable.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/Utils.h \
+		../OrbitBase/OrbitTypes.h \
+		../external/xxHash-r42/xxhash.h \
+		../OrbitBase/SerializationMacros.h \
+		../OrbitBase/FunctionStats.h \
 		../OrbitCore/OrbitFunction.h \
+		../OrbitBase/FunctionArgs.h \
 		../OrbitCore/OrbitModule.h \
 		../OrbitCore/OrbitProcess.h \
-		../OrbitCore/CoreApp.h
+		../OrbitBase/Threading.h \
+		../external/multicore/common/autoresetevent.h \
+		../external/multicore/common/sema.h \
+		../OrbitBase/ScopeTimer.h \
+		../OrbitBase/Profiling.h \
+		../external/stlsoft-1.9.118/include/winstl/performance/performance_counter.hpp \
+		../external/oqpi/include/oqpi.hpp \
+		../external/oqpi/include/oqpi/threading.hpp \
+		../external/oqpi/include/oqpi/threading/thread.hpp \
+		../external/oqpi/include/oqpi/platform.hpp \
+		../external/oqpi/include/oqpi/threading/interface_thread.hpp \
+		../external/oqpi/include/oqpi/empty_layer.hpp \
+		../external/oqpi/include/oqpi/threading/thread_attributes.hpp \
+		../external/oqpi/include/oqpi/threading/win_thread.hpp \
+		../external/oqpi/include/oqpi/error_handling.hpp \
+		../external/oqpi/include/oqpi/threading/this_thread.hpp \
+		../external/oqpi/include/oqpi/scheduling.hpp \
+		../external/oqpi/include/oqpi/scheduling_helpers.hpp \
+		../external/oqpi/include/oqpi/synchronization/event.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_event.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_event.hpp \
+		../external/oqpi/include/oqpi/scheduling/task.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_type.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_result.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_notifier.hpp \
+		../external/oqpi/include/oqpi/scheduling/scheduler.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_handle.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/context_container.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/group_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/parallel_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/sequence_group.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/parallel_for.hpp \
+		../external/oqpi/include/oqpi/concurrent_queue.hpp \
+		../external/oqpi/include/oqpi/synchronization.hpp \
+		../external/oqpi/include/oqpi/synchronization/semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_semaphore.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/simple_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/base_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/atomic_partitioner.hpp \
+		../external/concurrentqueue/concurrentqueue.h \
+		../external/concurrentqueue/internal/concurrentqueue_internal_debug.h \
+		../OrbitCore/CoreApp.h \
+		../OrbitBase/PrintVar.h \
+		../OrbitBase/Path.h \
+		../external/breakpad/src/google_breakpad/processor/minidump.h \
+		../external/breakpad/src/common/basictypes.h \
+		../external/breakpad/src/common/using_std_string.h \
+		../external/breakpad/src/google_breakpad/processor/code_module.h \
+		../external/breakpad/src/google_breakpad/common/breakpad_types.h \
+		../external/breakpad/src/google_breakpad/processor/code_modules.h \
+		../external/breakpad/src/processor/linked_ptr.h \
+		../external/breakpad/src/google_breakpad/processor/dump_context.h \
+		../external/breakpad/src/google_breakpad/common/minidump_format.h \
+		../external/breakpad/src/google_breakpad/common/minidump_cpu_amd64.h \
+		../external/breakpad/src/google_breakpad/common/minidump_cpu_arm.h \
+		../external/breakpad/src/google_breakpad/common/minidump_cpu_arm64.h \
+		../external/breakpad/src/google_breakpad/common/minidump_cpu_mips.h \
+		../external/breakpad/src/google_breakpad/common/minidump_cpu_ppc.h \
+		../external/breakpad/src/google_breakpad/common/minidump_cpu_ppc64.h \
+		../external/breakpad/src/google_breakpad/common/minidump_cpu_sparc.h \
+		../external/breakpad/src/google_breakpad/common/minidump_cpu_x86.h \
+		../external/breakpad/src/google_breakpad/common/minidump_exception_linux.h \
+		../external/breakpad/src/google_breakpad/common/minidump_exception_mac.h \
+		../external/breakpad/src/google_breakpad/common/minidump_exception_ps3.h \
+		../external/breakpad/src/google_breakpad/common/minidump_exception_solaris.h \
+		../external/breakpad/src/google_breakpad/common/minidump_exception_win32.h \
+		../external/breakpad/src/google_breakpad/processor/dump_object.h \
+		../external/breakpad/src/google_breakpad/processor/memory_region.h \
+		../external/breakpad/src/google_breakpad/processor/proc_maps_linux.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MiniDump.o ../OrbitCore/MiniDump.cpp
 
 MemoryTracker.o: ../OrbitCore/MemoryTracker.cpp ../OrbitCore/MemoryTracker.h \
+		../OrbitBase/ScopeTimer.h \
+		../OrbitBase/Profiling.h \
+		../external/stlsoft-1.9.118/include/winstl/performance/performance_counter.hpp \
+		../OrbitBase/OrbitTypes.h \
+		../OrbitBase/Callstack.h \
+		../OrbitBase/OrbitDbgHelp.h \
+		../OrbitBase/CallstackTypes.h \
+		../OrbitBase/SerializationMacros.h \
+		../external/xxHash-r42/xxhash.h \
 		../OrbitCore/Capture.h \
 		../OrbitCore/OrbitType.h \
 		../OrbitCore/cvconst.h \
 		../OrbitCore/Variable.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/Utils.h \
+		../OrbitBase/FunctionStats.h \
 		../OrbitCore/OrbitFunction.h \
-		../OrbitCore/OrbitProcess.h
+		../OrbitBase/FunctionArgs.h \
+		../OrbitBase/Threading.h \
+		../external/multicore/common/autoresetevent.h \
+		../external/multicore/common/sema.h \
+		../external/oqpi/include/oqpi.hpp \
+		../external/oqpi/include/oqpi/threading.hpp \
+		../external/oqpi/include/oqpi/threading/thread.hpp \
+		../external/oqpi/include/oqpi/platform.hpp \
+		../external/oqpi/include/oqpi/threading/interface_thread.hpp \
+		../external/oqpi/include/oqpi/empty_layer.hpp \
+		../external/oqpi/include/oqpi/threading/thread_attributes.hpp \
+		../external/oqpi/include/oqpi/threading/win_thread.hpp \
+		../external/oqpi/include/oqpi/error_handling.hpp \
+		../external/oqpi/include/oqpi/threading/this_thread.hpp \
+		../external/oqpi/include/oqpi/scheduling.hpp \
+		../external/oqpi/include/oqpi/scheduling_helpers.hpp \
+		../external/oqpi/include/oqpi/synchronization/event.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_event.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_event.hpp \
+		../external/oqpi/include/oqpi/scheduling/task.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_type.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_result.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_notifier.hpp \
+		../external/oqpi/include/oqpi/scheduling/scheduler.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_handle.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/context_container.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/group_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/parallel_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/sequence_group.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/parallel_for.hpp \
+		../external/oqpi/include/oqpi/concurrent_queue.hpp \
+		../external/oqpi/include/oqpi/synchronization.hpp \
+		../external/oqpi/include/oqpi/synchronization/semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_semaphore.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/simple_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/base_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/atomic_partitioner.hpp \
+		../external/concurrentqueue/concurrentqueue.h \
+		../external/concurrentqueue/internal/concurrentqueue_internal_debug.h \
+		../OrbitCore/OrbitProcess.h \
+		../OrbitBase/Log.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MemoryTracker.o ../OrbitCore/MemoryTracker.cpp
 
-LogInterface.o: ../OrbitCore/LogInterface.cpp ../OrbitCore/LogInterface.h
+LogInterface.o: ../OrbitCore/LogInterface.cpp ../OrbitCore/LogInterface.h \
+		../OrbitBase/Log.h \
+		../OrbitBase/Threading.h \
+		../external/multicore/common/autoresetevent.h \
+		../external/multicore/common/sema.h \
+		../OrbitBase/ScopeTimer.h \
+		../OrbitBase/Profiling.h \
+		../external/stlsoft-1.9.118/include/winstl/performance/performance_counter.hpp \
+		../OrbitBase/OrbitTypes.h \
+		../external/oqpi/include/oqpi.hpp \
+		../external/oqpi/include/oqpi/threading.hpp \
+		../external/oqpi/include/oqpi/threading/thread.hpp \
+		../external/oqpi/include/oqpi/platform.hpp \
+		../external/oqpi/include/oqpi/threading/interface_thread.hpp \
+		../external/oqpi/include/oqpi/empty_layer.hpp \
+		../external/oqpi/include/oqpi/threading/thread_attributes.hpp \
+		../external/oqpi/include/oqpi/threading/win_thread.hpp \
+		../external/oqpi/include/oqpi/error_handling.hpp \
+		../external/oqpi/include/oqpi/threading/this_thread.hpp \
+		../external/oqpi/include/oqpi/scheduling.hpp \
+		../external/oqpi/include/oqpi/scheduling_helpers.hpp \
+		../external/oqpi/include/oqpi/synchronization/event.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_event.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_event.hpp \
+		../external/oqpi/include/oqpi/scheduling/task.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_type.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_result.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_notifier.hpp \
+		../external/oqpi/include/oqpi/scheduling/scheduler.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_handle.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/context_container.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/group_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/parallel_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/sequence_group.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/parallel_for.hpp \
+		../external/oqpi/include/oqpi/concurrent_queue.hpp \
+		../external/oqpi/include/oqpi/synchronization.hpp \
+		../external/oqpi/include/oqpi/synchronization/semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_semaphore.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/simple_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/base_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/atomic_partitioner.hpp \
+		../external/concurrentqueue/concurrentqueue.h \
+		../external/concurrentqueue/internal/concurrentqueue_internal_debug.h \
+		../OrbitBase/Utils.h \
+		../external/xxHash-r42/xxhash.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o LogInterface.o ../OrbitCore/LogInterface.cpp
 
 Injection.o: ../OrbitCore/Injection.cpp ../OrbitCore/Injection.h \
 		../OrbitCore/ProcessUtils.h \
 		../OrbitCore/OrbitProcess.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/SerializationMacros.h \
+		../OrbitBase/Threading.h \
+		../external/multicore/common/autoresetevent.h \
+		../external/multicore/common/sema.h \
+		../OrbitBase/ScopeTimer.h \
+		../OrbitBase/Profiling.h \
+		../external/stlsoft-1.9.118/include/winstl/performance/performance_counter.hpp \
+		../OrbitBase/OrbitTypes.h \
+		../external/oqpi/include/oqpi.hpp \
+		../external/oqpi/include/oqpi/threading.hpp \
+		../external/oqpi/include/oqpi/threading/thread.hpp \
+		../external/oqpi/include/oqpi/platform.hpp \
+		../external/oqpi/include/oqpi/threading/interface_thread.hpp \
+		../external/oqpi/include/oqpi/empty_layer.hpp \
+		../external/oqpi/include/oqpi/threading/thread_attributes.hpp \
+		../external/oqpi/include/oqpi/threading/win_thread.hpp \
+		../external/oqpi/include/oqpi/error_handling.hpp \
+		../external/oqpi/include/oqpi/threading/this_thread.hpp \
+		../external/oqpi/include/oqpi/scheduling.hpp \
+		../external/oqpi/include/oqpi/scheduling_helpers.hpp \
+		../external/oqpi/include/oqpi/synchronization/event.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_event.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_event.hpp \
+		../external/oqpi/include/oqpi/scheduling/task.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_type.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_result.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_notifier.hpp \
+		../external/oqpi/include/oqpi/scheduling/scheduler.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_handle.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/context_container.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/group_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/parallel_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/sequence_group.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/parallel_for.hpp \
+		../external/oqpi/include/oqpi/concurrent_queue.hpp \
+		../external/oqpi/include/oqpi/synchronization.hpp \
+		../external/oqpi/include/oqpi/synchronization/semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_semaphore.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/simple_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/base_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/atomic_partitioner.hpp \
+		../external/concurrentqueue/concurrentqueue.h \
+		../external/concurrentqueue/internal/concurrentqueue_internal_debug.h \
+		../OrbitBase/TcpForward.h \
 		../OrbitCore/SamplingProfiler.h \
 		../OrbitCore/Pdb.h \
+		../OrbitBase/OrbitDbgHelp.h \
 		../OrbitCore/OrbitType.h \
 		../OrbitCore/cvconst.h \
 		../OrbitCore/Variable.h \
+		../OrbitBase/Utils.h \
+		../external/xxHash-r42/xxhash.h \
+		../OrbitBase/FunctionStats.h \
 		../OrbitCore/OrbitFunction.h \
-		../OrbitCore/BlockChain.h
+		../OrbitBase/FunctionArgs.h \
+		../OrbitBase/Callstack.h \
+		../OrbitBase/CallstackTypes.h \
+		../OrbitCore/BlockChain.h \
+		../OrbitBase/Log.h \
+		../OrbitBase/PrintVar.h \
+		../OrbitBase/Path.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Injection.o ../OrbitCore/Injection.cpp
 
-FunctionStats.o: ../OrbitCore/FunctionStats.cpp ../OrbitCore/Serialization.h
+FunctionStats.o: ../OrbitCore/FunctionStats.cpp ../OrbitBase/FunctionStats.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/OrbitTypes.h \
+		../OrbitBase/SerializationMacros.h \
+		../OrbitCore/Serialization.h \
+		../OrbitBase/Utils.h \
+		../external/xxHash-r42/xxhash.h \
+		../OrbitBase/PrintVar.h \
+		../external/cereal-1.1.2/include/cereal/access.hpp \
+		../external/cereal-1.1.2/include/cereal/macros.hpp \
+		../external/cereal-1.1.2/include/cereal/details/helpers.hpp \
+		../external/cereal-1.1.2/include/cereal/details/static_object.hpp \
+		../external/cereal-1.1.2/include/cereal/details/traits.hpp \
+		../external/cereal-1.1.2/include/cereal/types/base_class.hpp \
+		../external/cereal-1.1.2/include/cereal/cereal.hpp \
+		../external/cereal-1.1.2/include/cereal/types/common.hpp \
+		../external/cereal-1.1.2/include/cereal/types/array.hpp \
+		../external/cereal-1.1.2/include/cereal/types/bitset.hpp \
+		../external/cereal-1.1.2/include/cereal/types/chrono.hpp \
+		../external/cereal-1.1.2/include/cereal/types/complex.hpp \
+		../external/cereal-1.1.2/include/cereal/types/deque.hpp \
+		../external/cereal-1.1.2/include/cereal/types/forward_list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/memory.hpp \
+		../external/cereal-1.1.2/include/cereal/details/util.hpp \
+		../external/cereal-1.1.2/include/cereal/details/polymorphic_impl.hpp \
+		../external/cereal-1.1.2/include/cereal/types/string.hpp \
+		../external/cereal-1.1.2/include/cereal/types/polymorphic.hpp \
+		../external/cereal-1.1.2/include/cereal/types/queue.hpp \
+		../external/cereal-1.1.2/include/cereal/types/set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/stack.hpp \
+		../external/cereal-1.1.2/include/cereal/types/tuple.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/utility.hpp \
+		../external/cereal-1.1.2/include/cereal/types/vector.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/portable_binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/xml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml_print.hpp \
+		../external/cereal-1.1.2/include/cereal/external/base64.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/json.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/prettywriter.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/writer.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/rapidjson.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/stack.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/strfunc.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/genericstream.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/reader.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/pow10.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/document.h \
+		../OrbitBase/ScopeTimer.h \
+		../OrbitBase/Profiling.h \
+		../external/stlsoft-1.9.118/include/winstl/performance/performance_counter.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o FunctionStats.o ../OrbitCore/FunctionStats.cpp
 
-EventUtils.o: ../OrbitCore/EventUtils.cpp ../OrbitCore/EventUtils.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o EventUtils.o ../OrbitCore/EventUtils.cpp
-
-EventTracer.o: ../OrbitCore/EventTracer.cpp ../OrbitCore/EventTracer.h \
-		../OrbitCore/EventGuid.h \
-		../OrbitCore/EventBuffer.h \
-		../OrbitCore/SamplingProfiler.h \
-		../OrbitCore/Pdb.h \
-		../OrbitCore/OrbitType.h \
-		../OrbitCore/cvconst.h \
-		../OrbitCore/Variable.h \
-		../OrbitCore/OrbitFunction.h \
-		../OrbitCore/BlockChain.h \
-		../OrbitCore/Capture.h \
-		../OrbitCore/OrbitProcess.h \
-		../OrbitCore/EventCallbacks.h \
-		../OrbitCore/EventClasses.h \
-		../OrbitCore/Params.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o EventTracer.o ../OrbitCore/EventTracer.cpp
-
-EventCallbacks.o: ../OrbitCore/EventCallbacks.cpp ../OrbitCore/EventTracer.h \
-		../OrbitCore/EventGuid.h \
-		../OrbitCore/EventBuffer.h \
-		../OrbitCore/EventCallbacks.h \
-		../OrbitCore/EventClasses.h \
-		../OrbitCore/EventUtils.h \
-		../OrbitCore/Capture.h \
-		../OrbitCore/OrbitType.h \
-		../OrbitCore/cvconst.h \
-		../OrbitCore/Variable.h \
-		../OrbitCore/OrbitFunction.h \
-		../OrbitCore/ContextSwitch.h \
-		../OrbitCore/OrbitProcess.h \
-		../OrbitCore/SamplingProfiler.h \
-		../OrbitCore/Pdb.h \
-		../OrbitCore/BlockChain.h \
-		../OrbitCore/ServerTimerManager.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o EventCallbacks.o ../OrbitCore/EventCallbacks.cpp
-
 EventBuffer.o: ../OrbitCore/EventBuffer.cpp ../OrbitCore/EventBuffer.h \
-		../OrbitCore/Serialization.h
+		../OrbitBase/Callstack.h \
+		../OrbitBase/OrbitDbgHelp.h \
+		../OrbitBase/ScopeTimer.h \
+		../OrbitBase/Profiling.h \
+		../external/stlsoft-1.9.118/include/winstl/performance/performance_counter.hpp \
+		../OrbitBase/OrbitTypes.h \
+		../OrbitBase/CallstackTypes.h \
+		../OrbitBase/SerializationMacros.h \
+		../external/xxHash-r42/xxhash.h \
+		../OrbitBase/Threading.h \
+		../external/multicore/common/autoresetevent.h \
+		../external/multicore/common/sema.h \
+		../external/oqpi/include/oqpi.hpp \
+		../external/oqpi/include/oqpi/threading.hpp \
+		../external/oqpi/include/oqpi/threading/thread.hpp \
+		../external/oqpi/include/oqpi/platform.hpp \
+		../external/oqpi/include/oqpi/threading/interface_thread.hpp \
+		../external/oqpi/include/oqpi/empty_layer.hpp \
+		../external/oqpi/include/oqpi/threading/thread_attributes.hpp \
+		../external/oqpi/include/oqpi/threading/win_thread.hpp \
+		../external/oqpi/include/oqpi/error_handling.hpp \
+		../external/oqpi/include/oqpi/threading/this_thread.hpp \
+		../external/oqpi/include/oqpi/scheduling.hpp \
+		../external/oqpi/include/oqpi/scheduling_helpers.hpp \
+		../external/oqpi/include/oqpi/synchronization/event.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_event.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_event.hpp \
+		../external/oqpi/include/oqpi/scheduling/task.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_type.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_result.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_notifier.hpp \
+		../external/oqpi/include/oqpi/scheduling/scheduler.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_handle.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/context_container.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/group_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/parallel_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/sequence_group.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/parallel_for.hpp \
+		../external/oqpi/include/oqpi/concurrent_queue.hpp \
+		../external/oqpi/include/oqpi/synchronization.hpp \
+		../external/oqpi/include/oqpi/synchronization/semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_semaphore.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/simple_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/base_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/atomic_partitioner.hpp \
+		../external/concurrentqueue/concurrentqueue.h \
+		../external/concurrentqueue/internal/concurrentqueue_internal_debug.h \
+		../OrbitCore/Serialization.h \
+		../OrbitBase/Utils.h \
+		../OrbitBase/PrintVar.h \
+		../external/cereal-1.1.2/include/cereal/access.hpp \
+		../external/cereal-1.1.2/include/cereal/macros.hpp \
+		../external/cereal-1.1.2/include/cereal/details/helpers.hpp \
+		../external/cereal-1.1.2/include/cereal/details/static_object.hpp \
+		../external/cereal-1.1.2/include/cereal/details/traits.hpp \
+		../external/cereal-1.1.2/include/cereal/types/base_class.hpp \
+		../external/cereal-1.1.2/include/cereal/cereal.hpp \
+		../external/cereal-1.1.2/include/cereal/types/common.hpp \
+		../external/cereal-1.1.2/include/cereal/types/array.hpp \
+		../external/cereal-1.1.2/include/cereal/types/bitset.hpp \
+		../external/cereal-1.1.2/include/cereal/types/chrono.hpp \
+		../external/cereal-1.1.2/include/cereal/types/complex.hpp \
+		../external/cereal-1.1.2/include/cereal/types/deque.hpp \
+		../external/cereal-1.1.2/include/cereal/types/forward_list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/memory.hpp \
+		../external/cereal-1.1.2/include/cereal/details/util.hpp \
+		../external/cereal-1.1.2/include/cereal/details/polymorphic_impl.hpp \
+		../external/cereal-1.1.2/include/cereal/types/string.hpp \
+		../external/cereal-1.1.2/include/cereal/types/polymorphic.hpp \
+		../external/cereal-1.1.2/include/cereal/types/queue.hpp \
+		../external/cereal-1.1.2/include/cereal/types/set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/stack.hpp \
+		../external/cereal-1.1.2/include/cereal/types/tuple.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/utility.hpp \
+		../external/cereal-1.1.2/include/cereal/types/vector.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/portable_binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/xml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml_print.hpp \
+		../external/cereal-1.1.2/include/cereal/external/base64.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/json.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/prettywriter.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/writer.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/rapidjson.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/stack.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/strfunc.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/genericstream.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/reader.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/pow10.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/document.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o EventBuffer.o ../OrbitCore/EventBuffer.cpp
 
-Diff.o: ../OrbitCore/Diff.cpp ../OrbitCore/Diff.h \
-		../OrbitCore/Params.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Diff.o ../OrbitCore/Diff.cpp
-
-DiaParser.o: ../OrbitCore/DiaParser.cpp ../OrbitCore/DiaParser.h \
-		../OrbitCore/OrbitType.h \
-		../OrbitCore/cvconst.h \
-		../OrbitCore/Variable.h \
-		../OrbitCore/OrbitFunction.h \
-		../OrbitCore/Pdb.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o DiaParser.o ../OrbitCore/DiaParser.cpp
-
-DiaManager.o: ../OrbitCore/DiaManager.cpp ../OrbitCore/DiaManager.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o DiaManager.o ../OrbitCore/DiaManager.cpp
-
-CoreApp.o: ../OrbitCore/CoreApp.cpp ../OrbitCore/CoreApp.h
+CoreApp.o: ../OrbitCore/CoreApp.cpp ../OrbitCore/CoreApp.h \
+		../OrbitBase/BaseTypes.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o CoreApp.o ../OrbitCore/CoreApp.cpp
 
-ContextSwitch.o: ../OrbitCore/ContextSwitch.cpp ../OrbitCore/ContextSwitch.h
+ContextSwitch.o: ../OrbitCore/ContextSwitch.cpp ../OrbitCore/ContextSwitch.h \
+		../OrbitBase/BaseTypes.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ContextSwitch.o ../OrbitCore/ContextSwitch.cpp
 
 Capture.o: ../OrbitCore/Capture.cpp ../OrbitCore/Capture.h \
+		../OrbitBase/CallstackTypes.h \
 		../OrbitCore/OrbitType.h \
 		../OrbitCore/cvconst.h \
+		../OrbitBase/OrbitDbgHelp.h \
 		../OrbitCore/Variable.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/Utils.h \
+		../OrbitBase/OrbitTypes.h \
+		../external/xxHash-r42/xxhash.h \
+		../OrbitBase/SerializationMacros.h \
+		../OrbitBase/FunctionStats.h \
 		../OrbitCore/OrbitFunction.h \
+		../OrbitBase/FunctionArgs.h \
+		../OrbitBase/Threading.h \
+		../external/multicore/common/autoresetevent.h \
+		../external/multicore/common/sema.h \
+		../OrbitBase/ScopeTimer.h \
+		../OrbitBase/Profiling.h \
+		../external/stlsoft-1.9.118/include/winstl/performance/performance_counter.hpp \
+		../external/oqpi/include/oqpi.hpp \
+		../external/oqpi/include/oqpi/threading.hpp \
+		../external/oqpi/include/oqpi/threading/thread.hpp \
+		../external/oqpi/include/oqpi/platform.hpp \
+		../external/oqpi/include/oqpi/threading/interface_thread.hpp \
+		../external/oqpi/include/oqpi/empty_layer.hpp \
+		../external/oqpi/include/oqpi/threading/thread_attributes.hpp \
+		../external/oqpi/include/oqpi/threading/win_thread.hpp \
+		../external/oqpi/include/oqpi/error_handling.hpp \
+		../external/oqpi/include/oqpi/threading/this_thread.hpp \
+		../external/oqpi/include/oqpi/scheduling.hpp \
+		../external/oqpi/include/oqpi/scheduling_helpers.hpp \
+		../external/oqpi/include/oqpi/synchronization/event.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_event.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_event.hpp \
+		../external/oqpi/include/oqpi/scheduling/task.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_type.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_result.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_notifier.hpp \
+		../external/oqpi/include/oqpi/scheduling/scheduler.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_handle.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/context_container.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/group_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/parallel_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/sequence_group.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/parallel_for.hpp \
+		../external/oqpi/include/oqpi/concurrent_queue.hpp \
+		../external/oqpi/include/oqpi/synchronization.hpp \
+		../external/oqpi/include/oqpi/synchronization/semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_semaphore.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/simple_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/base_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/atomic_partitioner.hpp \
+		../external/concurrentqueue/concurrentqueue.h \
+		../external/concurrentqueue/internal/concurrentqueue_internal_debug.h \
 		../OrbitCore/ServerTimerManager.h \
+		../OrbitBase/TimerManager.h \
+		../OrbitBase/Message.h \
 		../OrbitCore/TcpServer.h \
+		../OrbitBase/TcpEntity.h \
+		../OrbitBase/TcpForward.h \
+		../OrbitPlugin/OrbitUserData.h \
+		../OrbitBase/Path.h \
 		../OrbitCore/Injection.h \
 		../OrbitCore/ProcessUtils.h \
 		../OrbitCore/OrbitProcess.h \
 		../OrbitCore/SamplingProfiler.h \
 		../OrbitCore/Pdb.h \
+		../OrbitBase/Callstack.h \
 		../OrbitCore/BlockChain.h \
 		../OrbitCore/OrbitSession.h \
 		../OrbitCore/Serialization.h \
+		../OrbitBase/PrintVar.h \
+		../external/cereal-1.1.2/include/cereal/access.hpp \
+		../external/cereal-1.1.2/include/cereal/macros.hpp \
+		../external/cereal-1.1.2/include/cereal/details/helpers.hpp \
+		../external/cereal-1.1.2/include/cereal/details/static_object.hpp \
+		../external/cereal-1.1.2/include/cereal/details/traits.hpp \
+		../external/cereal-1.1.2/include/cereal/types/base_class.hpp \
+		../external/cereal-1.1.2/include/cereal/cereal.hpp \
+		../external/cereal-1.1.2/include/cereal/types/common.hpp \
+		../external/cereal-1.1.2/include/cereal/types/array.hpp \
+		../external/cereal-1.1.2/include/cereal/types/bitset.hpp \
+		../external/cereal-1.1.2/include/cereal/types/chrono.hpp \
+		../external/cereal-1.1.2/include/cereal/types/complex.hpp \
+		../external/cereal-1.1.2/include/cereal/types/deque.hpp \
+		../external/cereal-1.1.2/include/cereal/types/forward_list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/memory.hpp \
+		../external/cereal-1.1.2/include/cereal/details/util.hpp \
+		../external/cereal-1.1.2/include/cereal/details/polymorphic_impl.hpp \
+		../external/cereal-1.1.2/include/cereal/types/string.hpp \
+		../external/cereal-1.1.2/include/cereal/types/polymorphic.hpp \
+		../external/cereal-1.1.2/include/cereal/types/queue.hpp \
+		../external/cereal-1.1.2/include/cereal/types/set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/stack.hpp \
+		../external/cereal-1.1.2/include/cereal/types/tuple.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/utility.hpp \
+		../external/cereal-1.1.2/include/cereal/types/vector.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/portable_binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/xml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml_print.hpp \
+		../external/cereal-1.1.2/include/cereal/external/base64.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/json.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/prettywriter.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/writer.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/rapidjson.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/stack.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/strfunc.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/genericstream.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/reader.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/pow10.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/document.h \
+		../OrbitBase/Log.h \
 		../OrbitCore/Params.h \
 		../OrbitCore/EventTracer.h \
 		../OrbitCore/EventGuid.h \
@@ -1041,13 +3768,119 @@ Capture.o: ../OrbitCore/Capture.cpp ../OrbitCore/Capture.h \
 		../OrbitCore/VariableTracing.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Capture.o ../OrbitCore/Capture.cpp
 
-Callstack.o: ../OrbitCore/Callstack.cpp ../OrbitCore/OrbitProcess.h \
+Callstack.o: ../OrbitCore/Callstack.cpp ../OrbitBase/Callstack.h \
+		../OrbitBase/OrbitDbgHelp.h \
+		../OrbitBase/ScopeTimer.h \
+		../OrbitBase/Profiling.h \
+		../external/stlsoft-1.9.118/include/winstl/performance/performance_counter.hpp \
+		../OrbitBase/OrbitTypes.h \
+		../OrbitBase/CallstackTypes.h \
+		../OrbitBase/SerializationMacros.h \
+		../external/xxHash-r42/xxhash.h \
+		../OrbitBase/PrintVar.h \
+		../OrbitBase/Utils.h \
+		../OrbitCore/OrbitProcess.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/Threading.h \
+		../external/multicore/common/autoresetevent.h \
+		../external/multicore/common/sema.h \
+		../external/oqpi/include/oqpi.hpp \
+		../external/oqpi/include/oqpi/threading.hpp \
+		../external/oqpi/include/oqpi/threading/thread.hpp \
+		../external/oqpi/include/oqpi/platform.hpp \
+		../external/oqpi/include/oqpi/threading/interface_thread.hpp \
+		../external/oqpi/include/oqpi/empty_layer.hpp \
+		../external/oqpi/include/oqpi/threading/thread_attributes.hpp \
+		../external/oqpi/include/oqpi/threading/win_thread.hpp \
+		../external/oqpi/include/oqpi/error_handling.hpp \
+		../external/oqpi/include/oqpi/threading/this_thread.hpp \
+		../external/oqpi/include/oqpi/scheduling.hpp \
+		../external/oqpi/include/oqpi/scheduling_helpers.hpp \
+		../external/oqpi/include/oqpi/synchronization/event.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_event.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_event.hpp \
+		../external/oqpi/include/oqpi/scheduling/task.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_type.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_result.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_notifier.hpp \
+		../external/oqpi/include/oqpi/scheduling/scheduler.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_handle.hpp \
+		../external/oqpi/include/oqpi/scheduling/worker_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/context_container.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group_base.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/group_context.hpp \
+		../external/oqpi/include/oqpi/scheduling/parallel_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/task_group.hpp \
+		../external/oqpi/include/oqpi/scheduling/sequence_group.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/parallel_for.hpp \
+		../external/oqpi/include/oqpi/concurrent_queue.hpp \
+		../external/oqpi/include/oqpi/synchronization.hpp \
+		../external/oqpi/include/oqpi/synchronization/semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/interface/interface_semaphore.hpp \
+		../external/oqpi/include/oqpi/synchronization/win/win_semaphore.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/simple_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/base_partitioner.hpp \
+		../external/oqpi/include/oqpi/parallel_algorithms/atomic_partitioner.hpp \
+		../external/concurrentqueue/concurrentqueue.h \
+		../external/concurrentqueue/internal/concurrentqueue_internal_debug.h \
 		../OrbitCore/Capture.h \
 		../OrbitCore/OrbitType.h \
 		../OrbitCore/cvconst.h \
 		../OrbitCore/Variable.h \
+		../OrbitBase/FunctionStats.h \
 		../OrbitCore/OrbitFunction.h \
-		../OrbitCore/Serialization.h
+		../OrbitBase/FunctionArgs.h \
+		../OrbitCore/Serialization.h \
+		../external/cereal-1.1.2/include/cereal/access.hpp \
+		../external/cereal-1.1.2/include/cereal/macros.hpp \
+		../external/cereal-1.1.2/include/cereal/details/helpers.hpp \
+		../external/cereal-1.1.2/include/cereal/details/static_object.hpp \
+		../external/cereal-1.1.2/include/cereal/details/traits.hpp \
+		../external/cereal-1.1.2/include/cereal/types/base_class.hpp \
+		../external/cereal-1.1.2/include/cereal/cereal.hpp \
+		../external/cereal-1.1.2/include/cereal/types/common.hpp \
+		../external/cereal-1.1.2/include/cereal/types/array.hpp \
+		../external/cereal-1.1.2/include/cereal/types/bitset.hpp \
+		../external/cereal-1.1.2/include/cereal/types/chrono.hpp \
+		../external/cereal-1.1.2/include/cereal/types/complex.hpp \
+		../external/cereal-1.1.2/include/cereal/types/deque.hpp \
+		../external/cereal-1.1.2/include/cereal/types/forward_list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/list.hpp \
+		../external/cereal-1.1.2/include/cereal/types/map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/memory.hpp \
+		../external/cereal-1.1.2/include/cereal/details/util.hpp \
+		../external/cereal-1.1.2/include/cereal/details/polymorphic_impl.hpp \
+		../external/cereal-1.1.2/include/cereal/types/string.hpp \
+		../external/cereal-1.1.2/include/cereal/types/polymorphic.hpp \
+		../external/cereal-1.1.2/include/cereal/types/queue.hpp \
+		../external/cereal-1.1.2/include/cereal/types/set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/stack.hpp \
+		../external/cereal-1.1.2/include/cereal/types/tuple.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_map.hpp \
+		../external/cereal-1.1.2/include/cereal/types/unordered_set.hpp \
+		../external/cereal-1.1.2/include/cereal/types/utility.hpp \
+		../external/cereal-1.1.2/include/cereal/types/vector.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/portable_binary.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/xml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidxml/rapidxml_print.hpp \
+		../external/cereal-1.1.2/include/cereal/external/base64.hpp \
+		../external/cereal-1.1.2/include/cereal/archives/json.hpp \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/prettywriter.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/writer.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/rapidjson.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/stack.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/strfunc.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/genericstream.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/reader.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/internal/pow10.h \
+		../external/cereal-1.1.2/include/cereal/external/rapidjson/document.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Callstack.o ../OrbitCore/Callstack.cpp
 
 ####### Install

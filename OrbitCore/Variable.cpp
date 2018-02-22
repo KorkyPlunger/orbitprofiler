@@ -11,7 +11,10 @@
 #include "Capture.h"
 #include "CoreApp.h"
 #include "Serialization.h"
+
+#ifdef _WIN32
 #include "DiaParser.h"
+#endif
 
 using namespace std;
 
@@ -198,6 +201,7 @@ void Variable::PrintHierarchy( int a_Indent )
 //-----------------------------------------------------------------------------
 void Variable::PrintDetails()
 {
+#ifdef _WIN32
     if( Type* type = GetType() )
     {
         DiaParser parser;
@@ -206,6 +210,7 @@ void Variable::PrintDetails()
         ORBIT_VIZ("\n\nDetails:\n");
         ORBIT_VIZ(parser.m_Log);
     }
+#endif
 }
 
 //-----------------------------------------------------------------------------

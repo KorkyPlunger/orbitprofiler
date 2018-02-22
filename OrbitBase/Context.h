@@ -25,7 +25,7 @@ struct IntReg
 
     IntReg & operator=(void* a_Ptr) { m_Ptr = a_Ptr; return *this; }
 };
-static_assert(sizeof(IntReg) == 8, "IntReg must be 64 bits");
+//static_assert(sizeof(IntReg) == 8, "IntReg must be 64 bits");
 
 // Floating point register
 //-----------------------------------------------------------------------------
@@ -41,7 +41,7 @@ struct XmmReg
         XmmRegDouble m_RegDouble;
     };
 };
-static_assert(sizeof(XmmReg) == 16, "XmmReg must be 128 bits");
+//static_assert(sizeof(XmmReg) == 16, "XmmReg must be 128 bits");
 
 // Return value
 //-----------------------------------------------------------------------------

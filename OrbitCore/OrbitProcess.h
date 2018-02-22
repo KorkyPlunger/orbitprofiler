@@ -11,6 +11,7 @@
 #include <unordered_set>
 #include <memory>
 #include <map>
+#include <vector>
 
 class Function;
 class Type;
@@ -47,7 +48,10 @@ public:
     void FindPdbs( const std::vector< std::wstring > & a_SearchLocations );
 
     static bool IsElevated( HANDLE a_Process );
+
+#ifdef _WIN32
     static bool SetPrivilege( LPCTSTR a_Name, bool a_Enable );
+#endif
 
     ModuleMap_t& GetModules() { return m_Modules; }
     ModuleMapByName_t& GetNameToModulesMap() { return m_NameToModuleMap; }

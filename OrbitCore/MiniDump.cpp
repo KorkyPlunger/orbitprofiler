@@ -8,6 +8,7 @@
 #include "PrintVar.h"
 #include "Path.h"
 
+#ifdef _WIN32
 #include <memory>
 #include <google_breakpad/processor/minidump.h>
 
@@ -72,3 +73,8 @@ shared_ptr<Process> MiniDump::ToOrbitProcess()
 
     return nullptr;
 }
+#else
+MiniDump::MiniDump( std::wstring a_FileName ){}
+MiniDump::~MiniDump(){}
+std::shared_ptr<Process> MiniDump::ToOrbitProcess(){}
+#endif

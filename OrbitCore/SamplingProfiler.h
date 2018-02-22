@@ -139,7 +139,7 @@ protected:
 
 protected:
     std::shared_ptr<Process>        m_Process;
-    std::unique_ptr<std::thread>    m_SamplingThread;
+    std::shared_ptr<std::thread>    m_SamplingThread;
     std::atomic<SamplingState>      m_State;
     BlockChain<CallStack, 16*1024 > m_Callstacks;
     Timer                           m_SamplingTimer;

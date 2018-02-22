@@ -12,13 +12,16 @@
 #include "Params.h"
 #include "OrbitProcess.h"
 #include "TcpServer.h"
-#include "OrbitDia.h"
 #include "SamplingProfiler.h"
 #include "Utils.h"
+#include "OrbitTypes.h"
+
+#ifdef _WIN32
+#include "OrbitDia.h"
 #include "SymbolUtils.h"
 #include "DiaParser.h"
-
 #include <dia2.h>
+#endif
 
 using namespace std;
 
@@ -226,6 +229,7 @@ bool FunctionParam::IsFloat()
 //-----------------------------------------------------------------------------
 void Function::ProcessArgumentInfo()
 {
+#ifdef _WIN32
     m_ArgInfo.clear();
     m_ArgInfo.reserve( m_Params.size() );
 
@@ -242,6 +246,7 @@ void Function::ProcessArgumentInfo()
 
         ++argIndex;
     }
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -254,6 +259,7 @@ bool Function::IsMemberFunction()
 //-----------------------------------------------------------------------------
 void Function::Print()
 {
+#ifdef _WIN32
     if( !m_Pdb )
     {
         return;
@@ -283,6 +289,7 @@ void Function::Print()
     ORBIT_VIZV( lineInfo.m_File );
     ORBIT_VIZV( lineInfo.m_Line );
     ORBIT_VIZV( lineInfo.m_Address );
+#endif
 
     ORBIT_VIZV( m_Address );
     ORBIT_VIZV( m_Selected );

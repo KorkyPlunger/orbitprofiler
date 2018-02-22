@@ -11,6 +11,7 @@
 #include "PrintVar.h"
 #include "Path.h"
 
+#ifdef _WIN32
 #include <cstdio>
 #include <tlhelp32.h>
 #include <psapi.h>
@@ -721,3 +722,8 @@ GRPA_FAIL_JMP:
     /* Falure... */
     return NULL;
 }
+#else
+Injection::Injection(){}
+bool Injection::Inject( const std::wstring & a_Dll, const Process & a_Process, const std::string & ProcName, const std::wstring& captureHost, int capturePort){return false;}
+HANDLE Injection::GetTargetProcessHandle( const std::string & a_Target, DWORD & o_ProcessID ){return 0;}
+#endif

@@ -6,7 +6,7 @@
 
 QT       -= core gui
 
-TARGET = OrbitBaseQt
+TARGET = OrbitBase
 TEMPLATE = lib
 CONFIG += staticlib
 

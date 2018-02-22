@@ -15,7 +15,11 @@
 #include "FunctionStats.h"
 #include "SerializationMacros.h"
 #include "OrbitFunction.h"
-#include "TypeInfoStructs.h"
+#include "OrbitTypes.h"
+
+#ifdef _WIN32
+#include "TypeInfoStructs.orh"
+#endif
 
 //-----------------------------------------------------------------------------
 struct Parent

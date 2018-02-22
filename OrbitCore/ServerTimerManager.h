@@ -27,7 +27,10 @@ public:
     void ConsumeTimers()
     {
         SetThreadName(GetCurrentThreadId(), "OrbitConsumeTimers");
+
+#ifdef _WIN32
         SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_TIME_CRITICAL);
+#endif
 
         Timer Timer;
 
@@ -35,7 +38,7 @@ public:
         {
             m_ConditionVariable.wait();
 
-            while (!m_ExitRequested && !m_FlushRequested && m_LockFreeQueue.try_dequeue(Timer))
+            while (!m_ExitRequested && !m_FlushRequested /*&& m_LockFreeQueue.try_dequeue(Timer)*/)
             {
                 --m_NumQueuedEntries;
                 --m_NumQueuedTimers;

@@ -152,7 +152,8 @@ template<class T> void TcpEntity::Send( Message & a_Message, const std::vector<T
 //-----------------------------------------------------------------------------
 template<class T> void TcpEntity::Send( MessageType a_Type, const std::vector<T> & a_Vector )
 {
-    Send(Message(a_Type), a_Vector);
+    Message msg(a_Type);
+    Send(msg, a_Vector);
 }
 
 //-----------------------------------------------------------------------------
@@ -165,7 +166,8 @@ template<class T> void TcpEntity::Send( Message & a_Message, const T& a_Item )
 //-----------------------------------------------------------------------------
 template<class T> void TcpEntity::Send( MessageType a_Type, const T& a_Item )
 {
-    Send( Message(a_Type), a_Item );
+    Message msg(a_Type);
+    Send( msg, a_Item );
 }
 
 //-----------------------------------------------------------------------------

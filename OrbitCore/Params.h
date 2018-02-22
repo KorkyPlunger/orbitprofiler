@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include "SerializationMacros.h"
 #include "BaseTypes.h"
+#include "OrbitTypes.h"
 
 struct Params
 {
@@ -34,8 +35,8 @@ public:
     DWORD64 m_NumBytesAssembly;
     std::string m_DiffExe;
     std::string m_DiffArgs;
-    std::vector< string > m_PdbHistory;
-    std::unordered_map< string, string > m_CachedPdbsMap;
+    std::vector< std::string > m_PdbHistory;
+    std::unordered_map< std::string, std::string > m_CachedPdbsMap;
     std::string m_ProcessPath;
     std::string m_Arguments;
     std::string m_WorkingDirectory;

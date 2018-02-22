@@ -4,7 +4,9 @@
 #pragma once
 
 #include "BaseTypes.h"
+#include "OrbitTypes.h"
 #include "SerializationMacros.h"
+#include <cstring>
 
 #include <memory>
 
@@ -12,7 +14,7 @@
 struct FunctionStats
 {
     FunctionStats() { Reset(); }
-    void Reset() { memset(this, 0, sizeof(*this)); }
+    void Reset() { std::memset(this, 0, sizeof(*this)); }
     void Update( const class Timer & a_Timer );
     
     DWORD64 m_Address;

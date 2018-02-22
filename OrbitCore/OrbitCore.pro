@@ -14,14 +14,11 @@ SOURCES += orbitcoreqt.cpp \
     Version.cpp \
     VariableTracing.cpp \
     Variable.cpp \
-    TypeInfo.cpp \
     TcpServer.cpp \
     Tcp.cpp \
-    SymbolUtils.cpp \
     Serialization.cpp \
     SamplingProfiler.cpp \
     ProcessUtils.cpp \
-    Pdb.cpp \
     Params.cpp \
     OrbitUnreal.cpp \
     OrbitType.cpp \
@@ -31,20 +28,13 @@ SOURCES += orbitcoreqt.cpp \
     OrbitProcess.cpp \
     OrbitModule.cpp \
     OrbitFunction.cpp \
-    OrbitDia.cpp \
     ModuleManager.cpp \
     MiniDump.cpp \
     MemoryTracker.cpp \
     LogInterface.cpp \
     Injection.cpp \
     FunctionStats.cpp \
-    EventUtils.cpp \
-    EventTracer.cpp \
-    EventCallbacks.cpp \
     EventBuffer.cpp \
-    Diff.cpp \
-    DiaParser.cpp \
-    DiaManager.cpp \
     CoreApp.cpp \
     ContextSwitch.cpp \
     Capture.cpp \
@@ -56,22 +46,13 @@ HEADERS += orbitcoreqt.h \
     ContextSwitch.h \
     CoreApp.h \
     cvconst.h \
-    DiaManager.h \
-    DiaParser.h \
-    Diff.h \
     EventBuffer.h \
-    EventCallbacks.h \
-    EventClasses.h \
-    EventGuid.h \
-    EventTracer.h \
-    EventUtils.h \
     Hashing.h \
     Injection.h \
     LogInterface.h \
     MemoryTracker.h \
     MiniDump.h \
     ModuleManager.h \
-    OrbitDia.h \
     OrbitFunction.h \
     OrbitModule.h \
     OrbitProcess.h \
@@ -87,12 +68,26 @@ HEADERS += orbitcoreqt.h \
     SamplingProfiler.h \
     Serialization.h \
     ServerTimerManager.h \
-    SymbolUtils.h \
     Tcp.h \
     TcpServer.h \
     Variable.h \
     VariableTracing.h \
     Version.h
+
+INCLUDEPATH += \
+    ../OrbitBase \
+    ../external \
+    ../external/xxHash-r42 \
+    ../external/concurrentqueue \
+    ../external/multicore/common \
+    ../external/stlsoft-1.9.118/include \
+    ../external/oqpi/include \
+    ../external/asio/include \
+    ../external/breakpad/src \
+    ../external/curl-7.52.1/include \
+    ../external/websocketpp \
+    ../external/cereal-1.1.2/include
+
 unix {
     target.path = /usr/lib
     INSTALLS += target

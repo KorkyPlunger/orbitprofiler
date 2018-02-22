@@ -12,22 +12,25 @@
 #include <xxhash.h> // xxHash-r42
 
 #include "SamplingProfiler.h"
-#include "SymbolUtils.h"
 #include "PrintVar.h"
-#include "OrbitDia.h"
-#include "DiaManager.h"
-#include "DiaParser.h"
 #include "Params.h"
 #include "Serialization.h"
 #include "TcpServer.h"
 
+#ifdef _WIN32
+#include "OrbitDia.h"
+#include "DiaManager.h"
+#include "SymbolUtils.h"
+#include "DiaParser.h"
 #include <dia2.h>
+#endif
 
 using namespace std;
 
 //-----------------------------------------------------------------------------
 void Type::LoadDiaInfo()
 {
+#ifdef _WIN32
     if( !m_DiaInfoLoaded )
     {
         if( IDiaSymbol* diaSymbol = GetDiaSymbol() )
@@ -40,11 +43,13 @@ void Type::LoadDiaInfo()
             GenerateDataLayout();
         }
     }
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void Type::GenerateDiaHierarchy()
 {
+#ifdef _WIN32
     if( m_HierarchyGenerated )
         return;
 
@@ -67,11 +72,13 @@ void Type::GenerateDiaHierarchy()
     }
 
     m_HierarchyGenerated = true;
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void Type::AddParent( IDiaSymbol* a_Parent )
 {
+#ifdef _WIN32
     LONG offset;
     if( a_Parent->get_offset( &offset ) == S_OK )
     {
@@ -95,11 +102,13 @@ void Type::AddParent( IDiaSymbol* a_Parent )
             }
         }
     }
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void Type::GenerateDiaHierarchy( IDiaSymbol* a_DiaSymbol )
 {
+#ifdef _WIN32
     IDiaEnumSymbols *pEnumChildren;
     IDiaSymbol *pChild;
     DWORD dwSymTag;
@@ -130,6 +139,7 @@ void Type::GenerateDiaHierarchy( IDiaSymbol* a_DiaSymbol )
         Type & type = m_Pdb->GetTypeFromId( parent.m_TypeId );
         type.GenerateDiaHierarchy();
     }
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -263,7 +273,7 @@ void Type::OutputPadding() const
         const Variable& member = pair.second;
         const Type & memberType = m_Pdb->GetTypeFromId(member.m_TypeIndex);
 
-        auto & nextIt = m_DataMembersFull.upper_bound( pair.first );
+        const auto & nextIt = m_DataMembersFull.upper_bound( pair.first );
         nextOffset = nextIt != m_DataMembersFull.end() ? nextIt->first : m_Length;
         
         idealNextOffset = offset + memberType.m_Length;

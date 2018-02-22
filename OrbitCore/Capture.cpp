@@ -14,7 +14,6 @@
 #include "Pdb.h"
 #include "Log.h"
 #include "Params.h"
-#include "EventTracer.h"
 #include "OrbitUnreal.h"
 #include "CoreApp.h"
 #include "Params.h"
@@ -24,6 +23,13 @@
 
 #include <fstream>
 #include <ostream>
+
+#ifdef _WIN32
+#include "EventTracer.h"
+#else
+struct EventTracer{ void Start(){}; void Stop(){}; };
+EventTracer GEventTracer;
+#endif
 
 using namespace std;
 
@@ -465,7 +471,9 @@ void Capture::Update()
         GInjected = false;
     }
 
+#ifdef _WIN32
     Capture::GHasSamples = GEventTracer.GetEventBuffer().HasEvent();
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -549,7 +557,7 @@ void Capture::SaveSession( const wstring & a_FileName )
     }
 
     SCOPE_TIMER_LOG( Format( L"Saving Orbit session in %s", saveFileName.c_str() ) );
-    ofstream file( saveFileName, ios::binary );
+    std::ofstream file( ws2s(saveFileName), ios::binary );
     cereal::BinaryOutputArchive archive(file);
     archive( cereal::make_nvp("Session", session) );
 }

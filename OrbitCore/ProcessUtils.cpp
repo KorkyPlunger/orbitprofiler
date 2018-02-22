@@ -3,8 +3,11 @@
 //-----------------------------------
 
 #include "ProcessUtils.h"
-#include <tlhelp32.h>
 #include "Log.h"
+
+#ifdef _WIN32
+#include <tlhelp32.h>
+#endif
 
 using namespace std;
 
@@ -19,6 +22,7 @@ Wow64SuspendThread_t *fn_Wow64SuspendThread = (Wow64SuspendThread_t *)GetProcAdd
 //-----------------------------------------------------------------------------
 bool ProcessUtils::Is64Bit(HANDLE hProcess)
 {
+#ifdef _WIN32
     // https://github.com/VerySleepy/verysleepy/blob/master/src/utils/osutils.cpp
 
     typedef BOOL WINAPI IsWow64Process_t(__in   HANDLE hProcess, __out  PBOOL Wow64Process);
@@ -51,6 +55,7 @@ bool ProcessUtils::Is64Bit(HANDLE hProcess)
             return true;
         }
     }
+#endif
     return false;
 }
 
@@ -70,6 +75,7 @@ void ProcessList::Clear()
 //-----------------------------------------------------------------------------
 void ProcessList::Refresh()
 {
+#ifdef _WIN32
     m_Processes.clear();
     unordered_map< DWORD, shared_ptr< Process > > previousProcessesMap = m_ProcessesMap;
     m_ProcessesMap.clear();
@@ -142,6 +148,7 @@ void ProcessList::Refresh()
 
     SortByCPU();
     CloseHandle(snapshot);
+#endif
 }
 
 //-----------------------------------------------------------------------------

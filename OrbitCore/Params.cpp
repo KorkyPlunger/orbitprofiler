@@ -9,7 +9,7 @@
 #include "Path.h"
 
 #include <algorithm>
-#include <filesystem>
+#include <experimental/filesystem>
 #include <fstream>
 
 using namespace std;
@@ -61,18 +61,21 @@ ORBIT_SERIALIZE( Params, 10 )
 //-----------------------------------------------------------------------------
 void Params::Save()
 {
+#ifdef _WIN32
     GCoreApp->SendToUiNow(L"UpdateProcessParams");
     std::wstring fileName = Path::GetParamsFileName();
     SCOPE_TIMER_LOG( Format( L"Saving hook params in %s", fileName.c_str() ) );
-    ofstream file( fileName );
+    std::ofstream file( fileName );
     cereal::XMLOutputArchive archive( file );
     archive( cereal::make_nvp("Params", *this) );
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void Params::Load()
 {
-    ifstream file( Path::GetParamsFileName() );
+#ifdef _WIN32
+    std::ifstream file( Path::GetParamsFileName() );
     if( !file.fail() )
     {
         cereal::XMLInputArchive archive( file );
@@ -82,6 +85,7 @@ void Params::Load()
     {
         Save();
     }
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -96,6 +100,7 @@ void Params::AddToPdbHistory( const string & a_PdbName )
 //-----------------------------------------------------------------------------
 void Params::ScanPdbCache()
 {
+#ifdef _WIN32
     wstring cachePath = Path::GetCachePath();
     SCOPE_TIMER_LOG( Format( L"Scanning cache (%s)", cachePath.c_str() ) );
 
@@ -109,4 +114,5 @@ void Params::ScanPdbCache()
             m_CachedPdbsMap.insert( make_pair( fileName, ws2s(cachePath + file.filename().wstring()) ) );
         }
     }
+#endif
 }

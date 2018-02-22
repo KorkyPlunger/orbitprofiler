@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "BaseTypes.h"
+#include "OrbitTypes.h"
 #include "SerializationMacros.h"
 
 class Pdb;

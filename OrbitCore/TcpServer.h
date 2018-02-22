@@ -6,6 +6,7 @@
 
 #include "TcpEntity.h"
 #include "Utils.h" // s2ws
+#include "concurrentqueue.h"
 
 #include <functional>
 #include <unordered_map>
@@ -43,7 +44,7 @@ public:
     std::vector< std::string > GetStats();
 
 protected:
-    class TcpSocket* TcpServer::GetSocket() override final;
+    class TcpSocket* GetSocket() override final;
     void ServerThread();
 
 private:

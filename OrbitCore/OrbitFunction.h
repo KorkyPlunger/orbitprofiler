@@ -22,7 +22,10 @@ struct FunctionParam
     std::wstring     m_ParamType;
     std::wstring     m_Type;
     std::wstring     m_Address;
-    SYMBOL_INFO m_SymbolInfo;
+
+#ifdef _WIN32
+    SYMBOL_INFO      m_SymbolInfo;
+#endif
 
     bool InRegister( int a_Index );
     bool IsPointer() { return m_Type.find( L"*" ) != std::wstring::npos; }
