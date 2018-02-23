@@ -89,7 +89,7 @@ public:
 
 public:
     PerfCounter m_PerfCounter;
-    bool            m_IsRunning;
+    bool        m_IsRunning;
 };
 
 //-----------------------------------------------------------------------------

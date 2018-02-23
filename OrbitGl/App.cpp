@@ -27,7 +27,6 @@
 #include "DiaManager.h"
 #include "MiniDump.h"
 #include "CaptureSerializer.h"
-#include "Disassembler.h"
 #include "PluginManager.h"
 #include "RuleEditor.h"
 
@@ -40,7 +39,6 @@
 #include "Tcp.h"
 #include "PrintVar.h"
 #include "Version.h"
-#include "EventTracer.h"
 #include "Debugger.h"
 #include "Path.h"
 #include "VariableTracing.h"
@@ -50,6 +48,11 @@
 #include <fstream>
 
 #include <GL/freeglut.h>
+//#include "EventTracer.h"
+
+#ifdef _WIN32
+#include "Disassembler.h"
+#endif
 
 using namespace std;
 
@@ -68,7 +71,9 @@ OrbitApp::OrbitApp() : m_FindFileCallback(nullptr)
 //-----------------------------------------------------------------------------
 OrbitApp::~OrbitApp()
 {
+#ifdef _WIN32
     oqpi_tk::stop_scheduler();
+#endif
     delete m_Debugger;
     GOrbitApp = nullptr;
 }
@@ -127,6 +132,7 @@ void OrbitApp::SetCommandLineArguments(const vector< string > & a_Args)
 //-----------------------------------------------------------------------------
 void GetDesktopResolution(int& horizontal, int& vertical)
 {
+#ifdef _WIN32
     RECT desktop;
     // Get a handle to the desktop window
     const HWND hDesktop = GetDesktopWindow();
@@ -137,6 +143,7 @@ void GetDesktopResolution(int& horizontal, int& vertical)
     // (horizontal, vertical)
     horizontal = desktop.right;
     vertical = desktop.bottom;
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -160,7 +167,11 @@ bool OrbitApp::Init()
     Capture::Init();
     Capture::GSamplingDoneCallback = &OrbitApp::AddSamplingReport;
     Capture::SetLoadPdbAsyncFunc( GLoadPdbAsync );
+
+#ifdef _WIN32
     oqpi_tk::start_default_scheduler();
+#endif
+
     GPluginManager.Initialize();
 
     int my_argc = 0;
@@ -200,7 +211,7 @@ void OrbitApp::LoadFileMapping()
     wstring fileName = Path::GetFileMappingFileName();
     if ( !Path::FileExists( fileName ) )
     {
-        ofstream outfile( fileName );
+        std::ofstream outfile( ws2s(fileName) );
         outfile << "//-------------------" << endl
                 << "// Orbit File Mapping" << endl
                 << "//-------------------" << endl
@@ -214,7 +225,7 @@ void OrbitApp::LoadFileMapping()
         outfile.close();
     }
 
-    wfstream infile(fileName);
+    std::wfstream infile( ws2s(fileName));
     if( !infile.fail())
     {
         wstring line;
@@ -258,7 +269,7 @@ void OrbitApp::LoadSymbolsFile()
     wstring fileName = Path::GetSymbolsFileName();
     if( !Path::FileExists( fileName ) )
     {
-        ofstream outfile( fileName );
+        ofstream outfile( ws2s(fileName) );
         outfile << "//-------------------" << endl
             << "// Orbit Symbol Locations" << endl
             << "//-------------------" << endl
@@ -271,7 +282,7 @@ void OrbitApp::LoadSymbolsFile()
         outfile.close();
     }
 
-    wfstream infile( fileName );
+    wfstream infile( ws2s(fileName) );
     if( !infile.fail() )
     {
         wstring line;
@@ -298,7 +309,7 @@ void OrbitApp::ListSessions()
     {
         shared_ptr<Session> session = make_shared<Session>();
 
-        ifstream file( fileName.c_str(), ios::binary );
+        ifstream file( ws2s(fileName).c_str(), ios::binary );
         if( !file.fail() )
         {
             cereal::BinaryInputArchive archive( file );
@@ -360,11 +371,13 @@ void OrbitApp::RefreshWatch()
 //-----------------------------------------------------------------------------
 void OrbitApp::Disassemble( Function * a_Function, const char * a_MachineCode, int a_Size )
 {
+#ifdef _WIN32
     Disassembler disasm;
     disasm.LOGF( "asm: /* %s */\n", a_Function->PrettyNameStr().c_str() );
     const unsigned char* code = (const unsigned char*)a_MachineCode;
     disasm.Disassemble( code, a_Size, a_Function->GetVirtualAddress(), Capture::GTargetProcess->GetIs64Bit() );
     SendToUiAsync(disasm.GetResult());
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -396,7 +409,7 @@ void OrbitApp::CallHomeThread()
     if( stream.fail() )
     {
         asio::error_code error = stream.error();
-        OutputDebugStringA( error.message().c_str() );
+        //OutputDebugStringA( error.message().c_str() );
         return;
     }
 
@@ -425,7 +438,7 @@ void OrbitApp::CallHomeThread()
 void OrbitApp::CheckLicense()
 {
     m_License.clear();
-    wifstream infile( Path::GetLicenseName() );
+    wifstream infile( ws2s( Path::GetLicenseName()) );
     
     if( !infile.fail() )
     {
@@ -442,7 +455,7 @@ void OrbitApp::CheckLicense()
             SendToUiNow( L"license" );
         } while( !OrbitVersion::CheckLicense( m_License ) );
 
-        wofstream outFile( Path::GetLicenseName() );
+        wofstream outFile( ws2s(Path::GetLicenseName()) );
         if( !outFile.fail() )
         {
             outFile << m_License;
@@ -708,7 +721,7 @@ void OrbitApp::OnLoadSession( const wstring a_FileName )
 
     wstring fileName = Path::GetDirectory( a_FileName ) == L"" ? Path::GetPresetPath() + a_FileName : a_FileName; 
 
-    ifstream file( fileName.c_str() );
+    ifstream file( ws2s(fileName.c_str()) );
     if (!file.fail())
     {
         cereal::BinaryInputArchive archive( file );
@@ -998,7 +1011,7 @@ void OrbitApp::OnMiniDump( const Message & a_Message )
 {
     wstring dumpPath = Path::GetDumpPath();
     wstring o_File = dumpPath + L"a_received.dmp";
-    ofstream out( o_File, ios::binary );
+    ofstream out( ws2s(o_File), ios::binary );
     out.write( a_Message.m_Data, a_Message.m_Size );
     out.close();
 

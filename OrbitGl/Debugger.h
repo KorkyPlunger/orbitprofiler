@@ -9,6 +9,7 @@
 #include <vector>
 #include <atomic>
 
+#ifdef _WIN32
 class Debugger
 {
 public:
@@ -27,3 +28,18 @@ private:
     std::atomic<bool> m_LoopReady;
     DWORD             m_ProcessID;
 };
+
+#else
+
+class Debugger
+{
+public:
+    Debugger(){}
+    ~Debugger(){}
+
+    void LaunchProcess( const std::wstring & a_ProcessName, const std::wstring & a_WorkingDir, const std::wstring & a_Args ){}
+    void MainTick(){}
+    void SendThawMessage(){}
+};
+
+#endif

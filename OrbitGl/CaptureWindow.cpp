@@ -6,10 +6,13 @@
 #include "Capture.h"
 #include "GlUtils.h"
 #include "App.h"
-#include "SymbolUtils.h"
 #include "TcpServer.h"
 #include "ServerTimerManager.h"
 #include "PrintVar.h"
+
+#ifdef _WIN32
+#include "SymbolUtils.h"
+#endif
 
 using namespace std;
 
@@ -267,6 +270,7 @@ void CaptureWindow::Hover( int a_X, int a_Y )
 //-----------------------------------------------------------------------------
 void CaptureWindow::FindCode( DWORD64 address )
 {
+#ifdef _WIN32
     SCOPE_TIMER_LOG( L"FindCode" );
 
     LineInfo lineInfo;
@@ -287,6 +291,7 @@ void CaptureWindow::FindCode( DWORD64 address )
             GOrbitApp->SendToUiAsync( Format(L"code^%s^%i", lineInfo.m_File.c_str(), lineInfo.m_Line ) );
         }
     }
+#endif
 }
 
 //-----------------------------------------------------------------------------

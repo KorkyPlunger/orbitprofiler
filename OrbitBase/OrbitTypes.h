@@ -19,8 +19,9 @@
 #define ULONG64 unsigned long long
 #define DWORD64 ULONG64
 typedef unsigned long DWORD;
-#define IntervalType DWORD64
-#define __int64 int64_t
+typedef DWORD64 IntervalType;
+typedef DWORD64 EpochType;
+typedef int64_t __int64;
 #define _mkdir( x )
 #define TCHAR wchar_t
 #define MAX_PATH PATH_MAX
@@ -37,15 +38,6 @@ inline void SetThreadName(int, const char*){}
 #define USHORT unsigned short
 #define UCHAR unsigned char
 inline void Sleep(int millis){ usleep( (float)millis*1000.f ); }
-
-
 #define GetCurrentThreadId pthread_self
-
-
-struct PerfCounter
-{
-    void start(){};
-    void stop(){};
-};
 
 #endif

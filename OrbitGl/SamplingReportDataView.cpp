@@ -5,7 +5,6 @@
 
 #include "SamplingReportDataView.h"
 #include "CallStackDataView.h"
-#include "SymbolUtils.h"
 #include "SamplingReport.h"
 #include "App.h"
 #include "Capture.h"
@@ -13,6 +12,9 @@
 #include "OrbitModule.h"
 #include <memory>
 
+#ifdef _WIN32
+#include "SymbolUtils.h"
+#endif
 using namespace std;
 
 //-----------------------------------------------------------------------------
@@ -86,7 +88,7 @@ wstring SamplingReportDataView::GetValue( int a_Row, int a_Column )
 }
 
 //-----------------------------------------------------------------------------
-#define ORBIT_PROC_SORT( Member ) [&](int a, int b) { return OrbitUtils::Compare(functions[a].##Member, functions[b].##Member, ascending); }
+#define ORBIT_PROC_SORT( Member ) [&](int a, int b) { return OrbitUtils::Compare(functions[a].Member, functions[b].Member, ascending); }
 
 //-----------------------------------------------------------------------------
 void SamplingReportDataView::OnSort(int a_Column, bool a_Toggle)
@@ -108,7 +110,7 @@ void SamplingReportDataView::OnSort(int a_Column, bool a_Toggle)
         case SamplingColumn::FunctionName: sorter = ORBIT_PROC_SORT(m_Name);        break;
         case SamplingColumn::Exclusive   : sorter = ORBIT_PROC_SORT(m_Exclusive);   break;
         case SamplingColumn::Inclusive   : sorter = ORBIT_PROC_SORT(m_Inclusive);   break;
-        case SamplingColumn::ModuleName      : sorter = ORBIT_PROC_SORT(m_Module);      break;
+        case SamplingColumn::ModuleName  : sorter = ORBIT_PROC_SORT(m_Module);      break;
         case SamplingColumn::SourceFile  : sorter = ORBIT_PROC_SORT(m_File);        break;
         case SamplingColumn::SourceLine  : sorter = ORBIT_PROC_SORT(m_Line);        break;
         case SamplingColumn::Address     : sorter = ORBIT_PROC_SORT(m_Address);     break;

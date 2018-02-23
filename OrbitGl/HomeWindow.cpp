@@ -101,10 +101,12 @@ void HomeWindow::RenderUI()
 
     if (m_DrawLog)
     {
+#ifdef _WIN32
         GLogger.GetLockedLog(OrbitLog::Global, [&](const vector<string> & a_Entries)
         {
             m_LogWindow.Draw("Log", a_Entries, &m_LogWindow.m_Open);
         });
+#endif
     }
 
     // Rendering

@@ -94,7 +94,7 @@ wstring FunctionsDataView::GetValue( int a_Row, int a_Column )
 }
 
 //-----------------------------------------------------------------------------
-#define ORBIT_FUNC_SORT( Member ) [&](int a, int b) { return OrbitUtils::Compare(functions[a]->##Member, functions[b]->##Member, ascending); }
+#define ORBIT_FUNC_SORT( Member ) [&](int a, int b) { return OrbitUtils::Compare(functions[a]->Member, functions[b]->Member, ascending); }
 
 //-----------------------------------------------------------------------------
 void FunctionsDataView::OnSort( int a_Column, bool a_Toggle )
@@ -123,7 +123,7 @@ void FunctionsDataView::OnSort( int a_Column, bool a_Toggle )
     case Function::FILE:     sorter = ORBIT_FUNC_SORT( m_File );           break;
     case Function::LINE:     sorter = ORBIT_FUNC_SORT( m_Line );           break;
     case Function::SIZE:     sorter = ORBIT_FUNC_SORT( m_Size );           break;
-    case Function::SELECTED: sorter = ORBIT_FUNC_SORT( IsSelected() );       break;
+    case Function::SELECTED: sorter = ORBIT_FUNC_SORT( IsSelected() );     break;
     case Function::CALL_CONV:sorter = ORBIT_FUNC_SORT( m_CallConv );       break;
     }
 
@@ -222,6 +222,7 @@ void FunctionsDataView::OnFilter( const wstring & a_Filter )
 //-----------------------------------------------------------------------------
 void FunctionsDataView::ParallelFilter()
 {
+#ifdef _WIN32
     vector<Function*> & functions = Capture::GTargetProcess->GetFunctions();
     const auto prio = oqpi::task_priority::normal;
     auto numWorkers = oqpi_tk::scheduler().workersCount( prio );
@@ -259,6 +260,7 @@ void FunctionsDataView::ParallelFilter()
     {
         m_Indices.push_back( i );
     }
+#endif
 }
 
 //-----------------------------------------------------------------------------

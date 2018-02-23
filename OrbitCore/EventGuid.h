@@ -7,7 +7,7 @@
 #include <windows.h>
 
 #define INITGUID
-#include <evntrace.h>
+#include <evntrace.h>Fe
 #include <Guiddef.h>
 
 #include <xxhash.h> // xxHash-r42

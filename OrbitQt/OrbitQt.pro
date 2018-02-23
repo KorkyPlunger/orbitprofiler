@@ -150,3 +150,6 @@ QMAKE_LFLAGS_RELEASE += /debug /opt:ref
 RESOURCES += \
     qtpropertybrowser/qtpropertybrowser.qrc
 
+SUBDIRS += \
+    ../OrbitBase/OrbitBase.pro
+

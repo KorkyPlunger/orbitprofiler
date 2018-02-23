@@ -15,6 +15,7 @@ using namespace std;
 //-----------------------------------------------------------------------------
 void PluginManager::Initialize()
 {
+#ifdef _WIN32
     wstring dir = Path::GetPluginPath();
     vector< wstring > plugins = Path::ListFiles( dir, L".dll" );
 
@@ -34,6 +35,7 @@ void PluginManager::Initialize()
 
     GTcpServer->SetCallback( Msg_UserData, [=]( const Message & a_Msg ){ this->OnReceiveUserData(a_Msg); } );
     GTcpServer->SetCallback( Msg_OrbitData, [=]( const Message & a_Msg ){ this->OnReceiveOrbitData(a_Msg); } );
+#endif
 }
 
 //-----------------------------------------------------------------------------

@@ -66,7 +66,7 @@ shared_ptr<Variable> RuleEditorWindow::GetLastVariable( const string & a_Chain )
 
         for( int i = tokens[0] == "this" ? 1 : 0; var && type && i < tokens.size(); ++i )
         {
-            wstring & varName = s2ws(tokens[i]);
+            wstring varName = s2ws(tokens[i]);
             shared_ptr<Variable> child = var->FindImmediateChild(varName);
             if( child )
             { 
@@ -221,7 +221,7 @@ int RuleEditorWindow::InputCallback( ImGuiTextEditCallbackData* data )
     case ImGuiInputTextFlags_CallbackCharFilter:
         if( data->EventChar == '.' )
         {
-            ImVec2 & pos = ImGui::GetCursorPos();
+            ImVec2 pos = ImGui::GetCursorPos();
             m_PopupPos = pos;
             m_PopupPos.y += ImGui::GetFontSize();
             m_State.m_PopupOpen = true;

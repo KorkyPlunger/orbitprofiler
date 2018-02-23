@@ -5,8 +5,11 @@
 
 #include "ModuleDataView.h"
 #include "OrbitModule.h"
-#include "SymbolUtils.h"
 #include "App.h"
+
+#ifdef _WIN32
+#include "SymbolUtils.h"
+#endif
 
 using namespace std;
 
@@ -74,7 +77,7 @@ wstring ModulesDataView::GetValue( int row, int col )
 }
 
 //-----------------------------------------------------------------------------
-#define ORBIT_PROC_SORT( Member ) [&](int a, int b) { return OrbitUtils::Compare(m_Modules[a]->##Member, m_Modules[b]->##Member, ascending); }
+#define ORBIT_PROC_SORT( Member ) [&](int a, int b) { return OrbitUtils::Compare(m_Modules[a]->Member, m_Modules[b]->Member, ascending); }
 
 //-----------------------------------------------------------------------------
 void ModulesDataView::OnSort(int a_Column, bool a_Toggle)
