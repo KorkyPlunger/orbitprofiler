@@ -15,7 +15,7 @@ CXX           = g++
 DEFINES       = -DORBIT_PROFILER -DUNICODE -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++11 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../OrbitQt -I. -I../../orbitprofiler -I../../../Qt5.7.0/5.7/gcc_64/include -I../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets -I../../../Qt5.7.0/5.7/gcc_64/include/QtGui -I../../../Qt5.7.0/5.7/gcc_64/include/QtCore -I../OrbitQt/GeneratedFiles/debug -I../OrbitQt/GeneratedFiles/debug -I../../../Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++
+INCPATH       = -I../OrbitQt -I. -I../../orbitprofiler -I../OrbitBase -I../OrbitCore -I../OrbitGl -I../external -I../external/xxHash-r42 -I../external/concurrentqueue -I../external/multicore/common -I../external/stlsoft-1.9.118/include -I../external/oqpi/include -I../external/asio/include -I../external/breakpad/src -I../external/curl-7.52.1/include -I../external/websocketpp -I../external/cereal-1.1.2/include -I../external/freetype-gl -I../external/glew-2.0.0/include -I../external/freeglut-2.8.1/include -I../external/imgui -I../external/qt -I../../../Qt5.7.0/5.7/gcc_64/include -I../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets -I../../../Qt5.7.0/5.7/gcc_64/include/QtGui -I../../../Qt5.7.0/5.7/gcc_64/include/QtCore -I../OrbitQt/GeneratedFiles/debug -I../OrbitQt/GeneratedFiles/debug -I../../../Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++
 QMAKE         = /home/pierric/Qt5.7.0/5.7/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -838,7 +838,7 @@ compiler_moc_header_clean:
 		../OrbitGl/DataViewTypes.h \
 		../OrbitQt/orbitmainwindow.h \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbitmainwindow.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbitmainwindow.cpp
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbitmainwindow.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbitmainwindow.cpp
 
 ../OrbitQt/GeneratedFiles/debug/moc_orbitglwidget.cpp: ../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QOpenGLWidget \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qopenglwidget.h \
@@ -954,7 +954,7 @@ compiler_moc_header_clean:
 		../OrbitGl/GlPanel.h \
 		../OrbitQt/orbitglwidget.h \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbitglwidget.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbitglwidget.cpp
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbitglwidget.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbitglwidget.cpp
 
 ../OrbitQt/GeneratedFiles/debug/moc_orbittreeview.cpp: ../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QTreeView \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qtreeview.h \
@@ -1097,7 +1097,7 @@ compiler_moc_header_clean:
 		../OrbitGl/GlPanel.h \
 		../OrbitQt/orbittreeview.h \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbittreeview.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbittreeview.cpp
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbittreeview.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbittreeview.cpp
 
 ../OrbitQt/GeneratedFiles/debug/moc_orbittablemodel.cpp: ../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QAbstractTableModel \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qabstractitemmodel.h \
@@ -1166,7 +1166,7 @@ compiler_moc_header_clean:
 		../OrbitGl/DataViewTypes.h \
 		../OrbitQt/orbittablemodel.h \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbittablemodel.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbittablemodel.cpp
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbittablemodel.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbittablemodel.cpp
 
 ../OrbitQt/GeneratedFiles/debug/moc_orbitdataviewpanel.cpp: ../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QWidget \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qwidget.h \
@@ -1272,7 +1272,7 @@ compiler_moc_header_clean:
 		../OrbitGl/DataViewTypes.h \
 		../OrbitQt/orbitdataviewpanel.h \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbitdataviewpanel.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbitdataviewpanel.cpp
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbitdataviewpanel.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbitdataviewpanel.cpp
 
 ../OrbitQt/GeneratedFiles/debug/moc_orbitsamplingreport.cpp: ../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QWidget \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qwidget.h \
@@ -1373,7 +1373,7 @@ compiler_moc_header_clean:
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtouchdevice.h \
 		../OrbitQt/orbitsamplingreport.h \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbitsamplingreport.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbitsamplingreport.cpp
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbitsamplingreport.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbitsamplingreport.cpp
 
 ../OrbitQt/GeneratedFiles/debug/moc_orbitglwidgetwithheader.cpp: ../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QWidget \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qwidget.h \
@@ -1474,7 +1474,7 @@ compiler_moc_header_clean:
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtouchdevice.h \
 		../OrbitQt/orbitglwidgetwithheader.h \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbitglwidgetwithheader.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbitglwidgetwithheader.cpp
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbitglwidgetwithheader.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbitglwidgetwithheader.cpp
 
 ../OrbitQt/GeneratedFiles/debug/moc_orbitcodeeditor.cpp: ../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QPlainTextEdit \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qplaintextedit.h \
@@ -1592,9 +1592,10 @@ compiler_moc_header_clean:
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qsyntaxhighlighter.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtextobject.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QTextCharFormat \
+		../OrbitCore/RingBuffer.h \
 		../OrbitQt/orbitcodeeditor.h \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbitcodeeditor.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbitcodeeditor.cpp
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbitcodeeditor.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbitcodeeditor.cpp
 
 ../OrbitQt/GeneratedFiles/debug/moc_licensedialog.cpp: ../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QDialog \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qdialog.h \
@@ -1696,7 +1697,7 @@ compiler_moc_header_clean:
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtouchdevice.h \
 		../OrbitQt/licensedialog.h \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/licensedialog.h -o ../OrbitQt/GeneratedFiles/debug/moc_licensedialog.cpp
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/licensedialog.h -o ../OrbitQt/GeneratedFiles/debug/moc_licensedialog.cpp
 
 ../OrbitQt/GeneratedFiles/debug/moc_outputdialog.cpp: ../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QDialog \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qdialog.h \
@@ -1798,7 +1799,7 @@ compiler_moc_header_clean:
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtouchdevice.h \
 		../OrbitQt/outputdialog.h \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/outputdialog.h -o ../OrbitQt/GeneratedFiles/debug/moc_outputdialog.cpp
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/outputdialog.h -o ../OrbitQt/GeneratedFiles/debug/moc_outputdialog.cpp
 
 ../OrbitQt/GeneratedFiles/debug/moc_processlauncherwidget.cpp: ../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QWidget \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qwidget.h \
@@ -1899,7 +1900,7 @@ compiler_moc_header_clean:
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtouchdevice.h \
 		../OrbitQt/processlauncherwidget.h \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/processlauncherwidget.h -o ../OrbitQt/GeneratedFiles/debug/moc_processlauncherwidget.cpp
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/processlauncherwidget.h -o ../OrbitQt/GeneratedFiles/debug/moc_processlauncherwidget.cpp
 
 ../OrbitQt/GeneratedFiles/debug/moc_showincludesdialog.cpp: ../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QDialog \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qdialog.h \
@@ -2003,7 +2004,7 @@ compiler_moc_header_clean:
 		../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qabstractitemmodel.h \
 		../OrbitQt/showincludesdialog.h \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/showincludesdialog.h -o ../OrbitQt/GeneratedFiles/debug/moc_showincludesdialog.cpp
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/showincludesdialog.h -o ../OrbitQt/GeneratedFiles/debug/moc_showincludesdialog.cpp
 
 ../OrbitQt/GeneratedFiles/debug/moc_orbittreemodel.cpp: ../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QAbstractItemModel \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qabstractitemmodel.h \
@@ -2072,7 +2073,7 @@ compiler_moc_header_clean:
 		../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QVariant \
 		../OrbitQt/orbittreemodel.h \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbittreemodel.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbittreemodel.cpp
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbittreemodel.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbittreemodel.cpp
 
 ../OrbitQt/GeneratedFiles/debug/moc_orbitdiffdialog.cpp: ../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QDialog \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qdialog.h \
@@ -2174,7 +2175,7 @@ compiler_moc_header_clean:
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtouchdevice.h \
 		../OrbitQt/orbitdiffdialog.h \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbitdiffdialog.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbitdiffdialog.cpp
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbitdiffdialog.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbitdiffdialog.cpp
 
 ../OrbitQt/GeneratedFiles/debug/moc_qtbuttonpropertybrowser.cpp: ../OrbitQt/qtpropertybrowser/qtpropertybrowser.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QWidget \
@@ -2284,7 +2285,7 @@ compiler_moc_header_clean:
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtextoption.h \
 		../OrbitQt/qtpropertybrowser/qtbuttonpropertybrowser.h \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/qtpropertybrowser/qtbuttonpropertybrowser.h -o ../OrbitQt/GeneratedFiles/debug/moc_qtbuttonpropertybrowser.cpp
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/qtpropertybrowser/qtbuttonpropertybrowser.h -o ../OrbitQt/GeneratedFiles/debug/moc_qtbuttonpropertybrowser.cpp
 
 ../OrbitQt/GeneratedFiles/debug/moc_qteditorfactory.cpp: ../OrbitQt/qtpropertybrowser/qtpropertymanager.h \
 		../OrbitQt/qtpropertybrowser/qtpropertybrowser.h \
@@ -2395,7 +2396,7 @@ compiler_moc_header_clean:
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtextoption.h \
 		../OrbitQt/qtpropertybrowser/qteditorfactory.h \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/qtpropertybrowser/qteditorfactory.h -o ../OrbitQt/GeneratedFiles/debug/moc_qteditorfactory.cpp
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/qtpropertybrowser/qteditorfactory.h -o ../OrbitQt/GeneratedFiles/debug/moc_qteditorfactory.cpp
 
 ../OrbitQt/GeneratedFiles/debug/moc_qtgroupboxpropertybrowser.cpp: ../OrbitQt/qtpropertybrowser/qtpropertybrowser.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QWidget \
@@ -2505,7 +2506,7 @@ compiler_moc_header_clean:
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtextoption.h \
 		../OrbitQt/qtpropertybrowser/qtgroupboxpropertybrowser.h \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/qtpropertybrowser/qtgroupboxpropertybrowser.h -o ../OrbitQt/GeneratedFiles/debug/moc_qtgroupboxpropertybrowser.cpp
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/qtpropertybrowser/qtgroupboxpropertybrowser.h -o ../OrbitQt/GeneratedFiles/debug/moc_qtgroupboxpropertybrowser.cpp
 
 ../OrbitQt/GeneratedFiles/debug/moc_qtpropertybrowser.cpp: ../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QWidget \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qwidget.h \
@@ -2614,7 +2615,7 @@ compiler_moc_header_clean:
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtextoption.h \
 		../OrbitQt/qtpropertybrowser/qtpropertybrowser.h \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/qtpropertybrowser/qtpropertybrowser.h -o ../OrbitQt/GeneratedFiles/debug/moc_qtpropertybrowser.cpp
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/qtpropertybrowser/qtpropertybrowser.h -o ../OrbitQt/GeneratedFiles/debug/moc_qtpropertybrowser.cpp
 
 ../OrbitQt/GeneratedFiles/debug/moc_qtpropertybrowserutils_p.cpp: ../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QMap \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qmap.h \
@@ -2719,7 +2720,7 @@ compiler_moc_header_clean:
 		../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QStringList \
 		../OrbitQt/qtpropertybrowser/qtpropertybrowserutils_p.h \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/qtpropertybrowser/qtpropertybrowserutils_p.h -o ../OrbitQt/GeneratedFiles/debug/moc_qtpropertybrowserutils_p.cpp
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/qtpropertybrowser/qtpropertybrowserutils_p.h -o ../OrbitQt/GeneratedFiles/debug/moc_qtpropertybrowserutils_p.cpp
 
 ../OrbitQt/GeneratedFiles/debug/moc_qtpropertymanager.cpp: ../OrbitQt/qtpropertybrowser/qtpropertybrowser.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QWidget \
@@ -2829,7 +2830,7 @@ compiler_moc_header_clean:
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtextoption.h \
 		../OrbitQt/qtpropertybrowser/qtpropertymanager.h \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/qtpropertybrowser/qtpropertymanager.h -o ../OrbitQt/GeneratedFiles/debug/moc_qtpropertymanager.cpp
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/qtpropertybrowser/qtpropertymanager.h -o ../OrbitQt/GeneratedFiles/debug/moc_qtpropertymanager.cpp
 
 ../OrbitQt/GeneratedFiles/debug/moc_qttreepropertybrowser.cpp: ../OrbitQt/qtpropertybrowser/qtpropertybrowser.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QWidget \
@@ -2939,7 +2940,7 @@ compiler_moc_header_clean:
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtextoption.h \
 		../OrbitQt/qtpropertybrowser/qttreepropertybrowser.h \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/qtpropertybrowser/qttreepropertybrowser.h -o ../OrbitQt/GeneratedFiles/debug/moc_qttreepropertybrowser.cpp
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/qtpropertybrowser/qttreepropertybrowser.h -o ../OrbitQt/GeneratedFiles/debug/moc_qttreepropertybrowser.cpp
 
 ../OrbitQt/GeneratedFiles/debug/moc_qtvariantproperty.cpp: ../OrbitQt/qtpropertybrowser/qtpropertybrowser.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QWidget \
@@ -3052,7 +3053,7 @@ compiler_moc_header_clean:
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qicon.h \
 		../OrbitQt/qtpropertybrowser/qtvariantproperty.h \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/qtpropertybrowser/qtvariantproperty.h -o ../OrbitQt/GeneratedFiles/debug/moc_qtvariantproperty.cpp
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/qtpropertybrowser/qtvariantproperty.h -o ../OrbitQt/GeneratedFiles/debug/moc_qtvariantproperty.cpp
 
 ../OrbitQt/GeneratedFiles/debug/moc_orbitwatchwidget.cpp: ../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QWidget \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qwidget.h \
@@ -3153,7 +3154,7 @@ compiler_moc_header_clean:
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtouchdevice.h \
 		../OrbitQt/orbitwatchwidget.h \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbitwatchwidget.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbitwatchwidget.cpp
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbitwatchwidget.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbitwatchwidget.cpp
 
 ../OrbitQt/GeneratedFiles/debug/moc_orbitdisassemblydialog.cpp: ../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QDialog \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qdialog.h \
@@ -3255,7 +3256,7 @@ compiler_moc_header_clean:
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtouchdevice.h \
 		../OrbitQt/orbitdisassemblydialog.h \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbitdisassemblydialog.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbitdisassemblydialog.cpp
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbitdisassemblydialog.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbitdisassemblydialog.cpp
 
 ../OrbitQt/GeneratedFiles/debug/moc_orbitvisualizer.cpp: ../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QMainWindow \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qmainwindow.h \
@@ -3359,7 +3360,7 @@ compiler_moc_header_clean:
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qicon.h \
 		../OrbitQt/orbitvisualizer.h \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbitvisualizer.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbitvisualizer.cpp
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/orbitvisualizer.h -o ../OrbitQt/GeneratedFiles/debug/moc_orbitvisualizer.cpp
 
 compiler_moc_source_make_all: ../OrbitQt/GeneratedFiles/debug/qteditorfactory.moc ../OrbitQt/GeneratedFiles/debug/qtpropertymanager.moc ../OrbitQt/GeneratedFiles/debug/qttreepropertybrowser.moc
 compiler_moc_source_clean:
@@ -3536,7 +3537,7 @@ compiler_moc_source_clean:
 		../OrbitQt/GeneratedFiles/debug/moc_qteditorfactory.cpp \
 		../OrbitQt/qtpropertybrowser/qteditorfactory.cpp \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/qtpropertybrowser/qteditorfactory.cpp -o ../OrbitQt/GeneratedFiles/debug/qteditorfactory.moc
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/qtpropertybrowser/qteditorfactory.cpp -o ../OrbitQt/GeneratedFiles/debug/qteditorfactory.moc
 
 ../OrbitQt/GeneratedFiles/debug/qtpropertymanager.moc: ../OrbitQt/qtpropertybrowser/qtpropertymanager.h \
 		../OrbitQt/qtpropertybrowser/qtpropertybrowser.h \
@@ -3690,7 +3691,7 @@ compiler_moc_source_clean:
 		../OrbitQt/GeneratedFiles/debug/moc_qtpropertymanager.cpp \
 		../OrbitQt/qtpropertybrowser/qtpropertymanager.cpp \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/qtpropertybrowser/qtpropertymanager.cpp -o ../OrbitQt/GeneratedFiles/debug/qtpropertymanager.moc
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/qtpropertybrowser/qtpropertymanager.cpp -o ../OrbitQt/GeneratedFiles/debug/qtpropertymanager.moc
 
 ../OrbitQt/GeneratedFiles/debug/qttreepropertybrowser.moc: ../OrbitQt/qtpropertybrowser/qttreepropertybrowser.h \
 		../OrbitQt/qtpropertybrowser/qtpropertybrowser.h \
@@ -3844,7 +3845,7 @@ compiler_moc_source_clean:
 		../OrbitQt/GeneratedFiles/debug/moc_qttreepropertybrowser.cpp \
 		../OrbitQt/qtpropertybrowser/qttreepropertybrowser.cpp \
 		../../../Qt5.7.0/5.7/gcc_64/bin/moc
-	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/qtpropertybrowser/qttreepropertybrowser.cpp -o ../OrbitQt/GeneratedFiles/debug/qttreepropertybrowser.moc
+	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/pierric/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I/home/pierric/git/orbitprofiler/OrbitQt -I/home/pierric/git/orbitprofiler -I/home/pierric/git/orbitprofiler/OrbitBase -I/home/pierric/git/orbitprofiler/OrbitCore -I/home/pierric/git/orbitprofiler/OrbitGl -I/home/pierric/git/orbitprofiler/external -I/home/pierric/git/orbitprofiler/external/xxHash-r42 -I/home/pierric/git/orbitprofiler/external/concurrentqueue -I/home/pierric/git/orbitprofiler/external/multicore/common -I/home/pierric/git/orbitprofiler/external/stlsoft-1.9.118/include -I/home/pierric/git/orbitprofiler/external/oqpi/include -I/home/pierric/git/orbitprofiler/external/asio/include -I/home/pierric/git/orbitprofiler/external/breakpad/src -I/home/pierric/git/orbitprofiler/external/curl-7.52.1/include -I/home/pierric/git/orbitprofiler/external/websocketpp -I/home/pierric/git/orbitprofiler/external/cereal-1.1.2/include -I/home/pierric/git/orbitprofiler/external/freetype-gl -I/home/pierric/git/orbitprofiler/external/glew-2.0.0/include -I/home/pierric/git/orbitprofiler/external/freeglut-2.8.1/include -I/home/pierric/git/orbitprofiler/external/imgui -I/home/pierric/git/orbitprofiler/external/qt -I/home/pierric/Qt5.7.0/5.7/gcc_64/include -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/pierric/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OrbitQt/qtpropertybrowser/qttreepropertybrowser.cpp -o ../OrbitQt/GeneratedFiles/debug/qttreepropertybrowser.moc
 
 compiler_uic_make_all: ../OrbitQt/GeneratedFiles/debug/ui_orbitmainwindow.h ../OrbitQt/GeneratedFiles/debug/ui_orbitdataviewpanel.h ../OrbitQt/GeneratedFiles/debug/ui_orbitsamplingreport.h ../OrbitQt/GeneratedFiles/debug/ui_orbitglwidgetwithheader.h ../OrbitQt/GeneratedFiles/debug/ui_licensedialog.h ../OrbitQt/GeneratedFiles/debug/ui_outputdialog.h ../OrbitQt/GeneratedFiles/debug/ui_processlauncherwidget.h ../OrbitQt/GeneratedFiles/debug/ui_showincludesdialog.h ../OrbitQt/GeneratedFiles/debug/ui_orbitdiffdialog.h ../OrbitQt/GeneratedFiles/debug/ui_orbitwatchwidget.h ../OrbitQt/GeneratedFiles/debug/ui_orbitdisassemblydialog.h ../OrbitQt/GeneratedFiles/debug/ui_orbitvisualizer.h
 compiler_uic_clean:
@@ -3972,6 +3973,7 @@ compiler_uic_clean:
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qsyntaxhighlighter.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtextobject.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QTextCharFormat \
+		../OrbitCore/RingBuffer.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QOpenGLWidget \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qopenglwidget.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qglobal.h \
@@ -5123,7 +5125,8 @@ compiler_uic_clean:
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QSyntaxHighlighter \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qsyntaxhighlighter.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtextobject.h \
-		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QTextCharFormat
+		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QTextCharFormat \
+		../OrbitCore/RingBuffer.h
 	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/uic ../OrbitQt/showincludesdialog.ui -o ../OrbitQt/GeneratedFiles/debug/ui_showincludesdialog.h
 
 ../OrbitQt/GeneratedFiles/debug/ui_orbitdiffdialog.h: ../OrbitQt/orbitdiffdialog.ui \
@@ -5244,7 +5247,8 @@ compiler_uic_clean:
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QSyntaxHighlighter \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qsyntaxhighlighter.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtextobject.h \
-		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QTextCharFormat
+		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QTextCharFormat \
+		../OrbitCore/RingBuffer.h
 	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/uic ../OrbitQt/orbitdiffdialog.ui -o ../OrbitQt/GeneratedFiles/debug/ui_orbitdiffdialog.h
 
 ../OrbitQt/GeneratedFiles/debug/ui_orbitwatchwidget.h: ../OrbitQt/orbitwatchwidget.ui \
@@ -5369,7 +5373,8 @@ compiler_uic_clean:
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QSyntaxHighlighter \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qsyntaxhighlighter.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtextobject.h \
-		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QTextCharFormat
+		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QTextCharFormat \
+		../OrbitCore/RingBuffer.h
 	/home/pierric/Qt5.7.0/5.7/gcc_64/bin/uic ../OrbitQt/orbitdisassemblydialog.ui -o ../OrbitQt/GeneratedFiles/debug/ui_orbitdisassemblydialog.h
 
 ../OrbitQt/GeneratedFiles/debug/ui_orbitvisualizer.h: ../OrbitQt/orbitvisualizer.ui \
@@ -5611,7 +5616,13 @@ compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_moc_source
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QStyleFactory \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qstylefactory.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QFontDatabase \
-		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qfontdatabase.h
+		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qfontdatabase.h \
+		../OrbitGl/App.h \
+		../OrbitCore/CoreApp.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/OrbitTypes.h \
+		../OrbitBase/CrashHandler.h \
+		../OrbitBase/Message.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../intermediate/x64/OrbitQt/debug/main.o ../OrbitQt/main.cpp
 
 ../intermediate/x64/OrbitQt/debug/licensedialog.o: ../OrbitQt/licensedialog.cpp ../OrbitQt/licensedialog.h \
@@ -5882,7 +5893,13 @@ compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_moc_source
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QStyleFactory \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qstylefactory.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QFontDatabase \
-		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qfontdatabase.h
+		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qfontdatabase.h \
+		../OrbitGl/App.h \
+		../OrbitCore/CoreApp.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/OrbitTypes.h \
+		../OrbitBase/CrashHandler.h \
+		../OrbitBase/Message.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../intermediate/x64/OrbitQt/debug/main.o ../OrbitQt/main.cpp
 
 ../intermediate/x64/OrbitQt/debug/orbitcodeeditor.o: ../OrbitQt/orbitcodeeditor.cpp ../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QtWidgets \
@@ -6329,7 +6346,20 @@ compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_moc_source
 		../OrbitQt/orbitcodeeditor.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QPlainTextEdit \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QSyntaxHighlighter \
-		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QTextCharFormat
+		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QTextCharFormat \
+		../OrbitCore/RingBuffer.h \
+		../OrbitBase/PrintVar.h \
+		../OrbitBase/Utils.h \
+		../OrbitBase/OrbitTypes.h \
+		../external/xxHash-r42/xxhash.h \
+		../OrbitBase/Path.h \
+		../OrbitCore/LogInterface.h \
+		../OrbitGl/App.h \
+		../OrbitGl/DataViewTypes.h \
+		../OrbitCore/CoreApp.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/CrashHandler.h \
+		../OrbitBase/Message.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../intermediate/x64/OrbitQt/debug/orbitcodeeditor.o ../OrbitQt/orbitcodeeditor.cpp
 
 ../intermediate/x64/OrbitQt/debug/orbitdataviewpanel.o: ../OrbitQt/orbitdataviewpanel.cpp ../OrbitQt/orbitdataviewpanel.h \
@@ -6642,7 +6672,11 @@ compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_moc_source
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qactiongroup.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QOpenGLDebugLogger \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qopengldebug.h \
-		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QOpenGLDebugMessage
+		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QOpenGLDebugMessage \
+		../OrbitBase/PrintVar.h \
+		../OrbitBase/Utils.h \
+		../OrbitBase/OrbitTypes.h \
+		../external/xxHash-r42/xxhash.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../intermediate/x64/OrbitQt/debug/orbitglwidget.o ../OrbitQt/orbitglwidget.cpp
 
 ../intermediate/x64/OrbitQt/debug/orbitglwidgetwithheader.o: ../OrbitQt/orbitglwidgetwithheader.cpp ../OrbitQt/orbitglwidgetwithheader.h \
@@ -6992,6 +7026,7 @@ compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_moc_source
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qsyntaxhighlighter.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtextobject.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QTextCharFormat \
+		../OrbitCore/RingBuffer.h \
 		../OrbitQt/orbitdataviewpanel.h \
 		../OrbitQt/orbittablemodel.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QAbstractTableModel \
@@ -7027,9 +7062,24 @@ compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_moc_source
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QMouseEvent \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QToolTip \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qtooltip.h \
+		../OrbitGl/SamplingReport.h \
+		../OrbitGl/App.h \
+		../OrbitCore/CoreApp.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/OrbitTypes.h \
+		../OrbitBase/CrashHandler.h \
+		../OrbitBase/Message.h \
+		../OrbitGl/PluginManager.h \
+		../OrbitBase/Path.h \
+		../OrbitCore/Version.h \
+		../OrbitBase/PrintVar.h \
+		../OrbitBase/Utils.h \
+		../external/xxHash-r42/xxhash.h \
 		../OrbitPlugin/OrbitSDK.h \
 		../OrbitPlugin/OrbitData.h \
 		../OrbitPlugin/OrbitUserData.h \
+		../external/imgui/imgui.h \
+		../external/imgui/imconfig.h \
 		../external/concurrentqueue/concurrentqueue.h \
 		../external/concurrentqueue/internal/concurrentqueue_internal_debug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../intermediate/x64/OrbitQt/debug/orbitmainwindow.o ../OrbitQt/orbitmainwindow.cpp
@@ -7438,7 +7488,13 @@ compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_moc_source
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QScrollBar \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qscrollbar.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QFontDatabase \
-		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qfontdatabase.h
+		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qfontdatabase.h \
+		../OrbitGl/App.h \
+		../OrbitCore/CoreApp.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/OrbitTypes.h \
+		../OrbitBase/CrashHandler.h \
+		../OrbitBase/Message.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../intermediate/x64/OrbitQt/debug/orbittreeview.o ../OrbitQt/orbittreeview.cpp
 
 ../intermediate/x64/OrbitQt/debug/outputdialog.o: ../OrbitQt/outputdialog.cpp ../OrbitQt/outputdialog.h \
@@ -7756,7 +7812,15 @@ compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_moc_source
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qfiledialog.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qdir.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qfileinfo.h \
-		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qdialog.h
+		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qdialog.h \
+		../OrbitCore/Params.h \
+		../OrbitBase/SerializationMacros.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/OrbitTypes.h \
+		../OrbitGl/App.h \
+		../OrbitCore/CoreApp.h \
+		../OrbitBase/CrashHandler.h \
+		../OrbitBase/Message.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../intermediate/x64/OrbitQt/debug/processlauncherwidget.o ../OrbitQt/processlauncherwidget.cpp
 
 ../intermediate/x64/OrbitQt/debug/showincludesdialog.o: ../OrbitQt/showincludesdialog.cpp ../OrbitQt/showincludesdialog.h \
@@ -7932,6 +7996,7 @@ compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_moc_source
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qsyntaxhighlighter.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtextobject.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QTextCharFormat \
+		../OrbitCore/RingBuffer.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QMenu \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qmenu.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QSignalMapper \
@@ -8002,7 +8067,10 @@ compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_moc_source
 		../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qcontiguouscache.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qsharedpointer.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QStringList
+		../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QStringList \
+		../OrbitBase/Utils.h \
+		../OrbitBase/OrbitTypes.h \
+		../external/xxHash-r42/xxhash.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../intermediate/x64/OrbitQt/debug/orbittreeitem.o ../OrbitQt/orbittreeitem.cpp
 
 ../intermediate/x64/OrbitQt/debug/orbittreemodel.o: ../OrbitQt/orbittreemodel.cpp ../OrbitQt/orbittreeitem.h \
@@ -8248,10 +8316,17 @@ compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_moc_source
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qsyntaxhighlighter.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtextobject.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QTextCharFormat \
+		../OrbitCore/RingBuffer.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QFileDialog \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qfiledialog.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qdir.h \
-		../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qfileinfo.h
+		../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qfileinfo.h \
+		../OrbitCore/Params.h \
+		../OrbitBase/SerializationMacros.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/OrbitTypes.h \
+		../OrbitBase/Path.h \
+		../OrbitCore/Diff.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../intermediate/x64/OrbitQt/debug/orbitdiffdialog.o ../OrbitQt/orbitdiffdialog.cpp
 
 ../intermediate/x64/OrbitQt/debug/qtbuttonpropertybrowser.o: ../OrbitQt/qtpropertybrowser/qtbuttonpropertybrowser.cpp ../OrbitQt/qtpropertybrowser/qtbuttonpropertybrowser.h \
@@ -9508,13 +9583,32 @@ compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_moc_source
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QSpacerItem \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QScrollArea \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qscrollarea.h \
-		../OrbitQt/qtpropertybrowser/qtpropertymanager.h \
-		../OrbitQt/qtpropertybrowser/qtpropertybrowser.h \
+		../external/qt/qtpropertybrowser/src/qtpropertymanager.h \
+		../external/qt/qtpropertybrowser/src/qtpropertybrowser.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QSet \
-		../OrbitQt/qtpropertybrowser/qteditorfactory.h \
-		../OrbitQt/qtpropertybrowser/qttreepropertybrowser.h \
-		../OrbitQt/qtpropertybrowser/qtbuttonpropertybrowser.h \
-		../OrbitQt/qtpropertybrowser/qtgroupboxpropertybrowser.h
+		../external/qt/qtpropertybrowser/src/qteditorfactory.h \
+		../external/qt/qtpropertybrowser/src/qttreepropertybrowser.h \
+		../external/qt/qtpropertybrowser/src/qtbuttonpropertybrowser.h \
+		../external/qt/qtpropertybrowser/src/qtgroupboxpropertybrowser.h \
+		../OrbitCore/Variable.h \
+		../OrbitBase/BaseTypes.h \
+		../OrbitBase/OrbitTypes.h \
+		../OrbitBase/Utils.h \
+		../external/xxHash-r42/xxhash.h \
+		../OrbitBase/SerializationMacros.h \
+		../OrbitCore/OrbitType.h \
+		../OrbitCore/cvconst.h \
+		../OrbitBase/OrbitDbgHelp.h \
+		../OrbitBase/FunctionStats.h \
+		../OrbitCore/OrbitFunction.h \
+		../OrbitBase/FunctionArgs.h \
+		../OrbitCore/Pdb.h \
+		../OrbitBase/PrintVar.h \
+		../OrbitGl/App.h \
+		../OrbitGl/DataViewTypes.h \
+		../OrbitCore/CoreApp.h \
+		../OrbitBase/CrashHandler.h \
+		../OrbitBase/Message.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../intermediate/x64/OrbitQt/debug/orbitwatchwidget.o ../OrbitQt/orbitwatchwidget.cpp
 
 ../intermediate/x64/OrbitQt/debug/orbitdisassemblydialog.o: ../OrbitQt/orbitdisassemblydialog.cpp ../OrbitQt/orbitdisassemblydialog.h \
@@ -9672,7 +9766,8 @@ compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_moc_source
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QSyntaxHighlighter \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qsyntaxhighlighter.h \
 		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtextobject.h \
-		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QTextCharFormat
+		../../../Qt5.7.0/5.7/gcc_64/include/QtGui/QTextCharFormat \
+		../OrbitCore/RingBuffer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../intermediate/x64/OrbitQt/debug/orbitdisassemblydialog.o ../OrbitQt/orbitdisassemblydialog.cpp
 
 ../intermediate/x64/OrbitQt/debug/orbitvisualizer.o: ../OrbitQt/orbitvisualizer.cpp ../OrbitQt/orbitvisualizer.h \

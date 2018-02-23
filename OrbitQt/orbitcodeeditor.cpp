@@ -376,7 +376,7 @@ void OrbitCodeEditor::keyPressEvent( QKeyEvent *e )
 void OrbitCodeEditor::saveFileMap()
 {
     wstring fileName = Path::GetFileMappingFileName();
-    wofstream outFile( fileName );
+    wofstream outFile( ws2s( fileName ) );
     if (!outFile.fail())
     {
         outFile << document()->toPlainText().toStdWString();

@@ -327,7 +327,10 @@ void OrbitMainWindow::OnReceiveMessage( const wstring & a_Message )
         pixMap.save( &file, "PNG" );
 
         wstring fileName = file.fileName().toStdWString();
+
+#ifdef _WIN32
         ShellExecute(0, 0, fileName.c_str(), 0, 0 , SW_SHOW );
+#endif
     }
     else if( StartsWith( a_Message, L"code" ) )
     {
@@ -534,7 +537,7 @@ void OrbitMainWindow::on_actionQuit_triggered()
 }
 
 //-----------------------------------------------------------------------------
-__declspec(noinline) QPixmap QtGrab( OrbitMainWindow* a_Window )
+QPixmap QtGrab( OrbitMainWindow* a_Window )
 {
     QPixmap pixMap = a_Window->grab();
     if (GContextMenu)

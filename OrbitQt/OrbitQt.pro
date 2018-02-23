@@ -42,8 +42,8 @@ SOURCES += main.cpp \
            qtpropertybrowser/qttreepropertybrowser.cpp \
            qtpropertybrowser/qtvariantproperty.cpp \
            orbitwatchwidget.cpp \
-    orbitdisassemblydialog.cpp \
-    orbitvisualizer.cpp
+           orbitdisassemblydialog.cpp \
+           orbitvisualizer.cpp
 
 HEADERS  += \
     orbitmainwindow.h \
@@ -86,6 +86,27 @@ FORMS    += \
     orbitwatchwidget.ui \
     orbitdisassemblydialog.ui \
     orbitvisualizer.ui
+
+INCLUDEPATH += \
+    ../OrbitBase \
+    ../OrbitCore \
+    ../OrbitGl \
+    ../external \
+    ../external/xxHash-r42 \
+    ../external/concurrentqueue \
+    ../external/multicore/common \
+    ../external/stlsoft-1.9.118/include \
+    ../external/oqpi/include \
+    ../external/asio/include \
+    ../external/breakpad/src \
+    ../external/curl-7.52.1/include \
+    ../external/websocketpp \
+    ../external/cereal-1.1.2/include \
+    ../external/freetype-gl \
+    ../external/glew-2.0.0/include \
+    ../external/freeglut-2.8.1/include \
+    ../external/imgui \
+    ../external/qt \
 
 RC_FILE  += \
     OrbitQt.rc

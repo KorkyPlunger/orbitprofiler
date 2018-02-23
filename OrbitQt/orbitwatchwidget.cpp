@@ -5,11 +5,11 @@
 #include <QGridLayout>
 #include <QLabel>
 
-#include "qtpropertybrowser\qtpropertymanager.h"
-#include "qtpropertybrowser\qteditorfactory.h"
-#include "qtpropertybrowser\qttreepropertybrowser.h"
-#include "qtpropertybrowser\qtbuttonpropertybrowser.h"
-#include "qtpropertybrowser\qtgroupboxpropertybrowser.h"
+#include "qtpropertybrowser/src/qtpropertymanager.h"
+#include "qtpropertybrowser/src/qteditorfactory.h"
+#include "qtpropertybrowser/src/qttreepropertybrowser.h"
+#include "qtpropertybrowser/src/qtbuttonpropertybrowser.h"
+#include "qtpropertybrowser/src/qtgroupboxpropertybrowser.h"
 
 #include "Variable.h"
 #include "OrbitType.h"
@@ -22,40 +22,48 @@ using namespace std;
 //-----------------------------------------------------------------------------
 void OrbitWatchWidget::valueChanged( QtProperty *property, int val )
 {
+#ifdef _WIN32
     if( Variable* var = static_cast<Variable*>(property->GetUserData()) )
     {
         var->m_Int = val;
         var->SendValue();
     }
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void OrbitWatchWidget::valueChanged( QtProperty *property, bool val )
 {
+#ifdef _WIN32
     if( Variable* var = static_cast<Variable*>(property->GetUserData()) )
     {
         var->m_Bool = val;
         var->SendValue();
     }
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void OrbitWatchWidget::valueChanged( QtProperty *property, double val )
 {
+#ifdef _WIN32
     if( Variable* var = static_cast<Variable*>( property->GetUserData() ) )
     {
         var->SetDouble( val );
         var->SendValue();
     }
+#endif
 }
 
 //-----------------------------------------------------------------------------
 void OrbitWatchWidget::valueChanged( QtProperty *property, const QString & /*val*/ )
 {
+#ifdef _WIN32
     if( Variable* var = static_cast<Variable*>( property->GetUserData() ) )
     {
         var->SetDouble(0);
     }
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -213,6 +221,7 @@ QtProperty* OrbitWatchWidget::GetProperty( const Variable* a_Variable )
 //-----------------------------------------------------------------------------
 QtProperty* OrbitWatchWidget::AddProp( QtProperty* a_Parent, const Variable* a_Variable )
 {
+#ifdef _WIN32
     QtAbstractPropertyManager* manager = GetManager(a_Variable);
     QtProperty* newProperty = nullptr;
     wstring typeName = a_Variable->m_Type == L"" ? a_Variable->GetTypeName() : a_Variable->m_Type;
@@ -244,6 +253,9 @@ QtProperty* OrbitWatchWidget::AddProp( QtProperty* a_Parent, const Variable* a_V
     }
 
     return newProperty;
+#else
+    return nullptr;
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -274,6 +286,7 @@ void OrbitWatchWidget::UpdateVariable( const Variable * a_Variable )
 //-----------------------------------------------------------------------------
 void OrbitWatchWidget::UpdateProperty( const Variable * a_Variable )
 {
+#ifdef _WIN32
     lock_guard<recursive_mutex> lock(m_Mutex);
     QtProperty* prop = GetProperty( a_Variable );
 
@@ -311,6 +324,7 @@ void OrbitWatchWidget::UpdateProperty( const Variable * a_Variable )
             }
         }
     }
+#endif
 }
 
 //-----------------------------------------------------------------------------
