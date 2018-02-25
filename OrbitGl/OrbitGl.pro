@@ -48,7 +48,10 @@ SOURCES += \
     TimeGraphLayout.cpp \
     TypeDataView.cpp \
     mat4.c \
-    shader.c
+    shader.c \
+    ../external/imgui/imgui_draw.cpp \
+    ../external/imgui/imgui.cpp \
+    ../external/imgui/imgui_demo.cpp
 
 HEADERS += \
     App.h \
@@ -95,7 +98,10 @@ HEADERS += \
     ThreadView.h \
     TimeGraph.h \
     TimeGraphLayout.h \
-    TypeDataView.h
+    TypeDataView.h \
+    ../external/imgui/imgui.h \
+    ../external/imgui/imgui_internal.h \
+    ../external/imgui/imconfig.h
 
 INCLUDEPATH += \
     ../OrbitBase \
@@ -121,11 +127,15 @@ CONFIG( debug, debug|release ) {
     DESTDIR     = $$PWD/../bin/x64/debug/
     UI_DIR      = $$PWD/GeneratedFiles/OrbitGl/debug/
     MOC_DIR     = $$PWD/GeneratedFiles/OrbitGl/debug/
+
+    LIBS        += -L$$PWD/../bin/x64/debug/ -lOrbitCore
 } else {
     OBJECTS_DIR = $$PWD/../intermediate/x64/OrbitGl/release/
     DESTDIR     = $$PWD/../bin/x64/release/
     UI_DIR      = $$PWD/GeneratedFiles/OrbitGl/release/
     MOC_DIR     = $$PWD/GeneratedFiles/OrbitGl/release/
+
+LIBS        += -L$$PWD/../bin/x64/release/ -lOrbitCore
 }
 
 unix {

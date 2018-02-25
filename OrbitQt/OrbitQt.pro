@@ -171,8 +171,30 @@ QMAKE_LFLAGS_RELEASE += /debug /opt:ref
 }
 
 linux{
-    LIBS += -L$$PWD/../bin/x64/release/                                      -lOrbitCore
-    LIBS += -L$$PWD/../bin/x64/release/                                      -lOrbitGl
+
+CONFIG( debug, debug|release ) {
+    # debug
+    LIBS += -L$$PWD/../bin/x64/debug/ -lOrbitBase
+    LIBS += -L$$PWD/../bin/x64/debug/ -lOrbitCore
+    LIBS += -L$$PWD/../bin/x64/debug/ -lOrbitGl
+    LIBS += -usr/lib/x86_64-linux-gnu/ -lcurl
+
+    OBJECTS_DIR = $$PWD/../intermediate/x64/OrbitQt/debug/
+    DESTDIR     = $$PWD/../bin/x64/debug/
+    UI_DIR      = $$PWD/GeneratedFiles/OrbitQt/debug/
+    MOC_DIR     = $$PWD/GeneratedFiles/OrbitQt/debug/
+} else {
+    # release
+    LIBS += -L$$PWD/../bin/x64/release/ -lOrbitBase
+    LIBS += -L$$PWD/../bin/x64/release/ -lOrbitCore
+    LIBS += -L$$PWD/../bin/x64/release/ -lOrbitGl
+    LIBS += -usr/lib/x86_64-linux-gnu/ -lcurl
+
+    OBJECTS_DIR = $$PWD/../intermediate/x64/OrbitQt/release/
+    DESTDIR     = $$PWD/../bin/x64/release/
+    UI_DIR      = $$PWD/GeneratedFiles/OrbitQt/release/
+    MOC_DIR     = $$PWD/GeneratedFiles/OrbitQt/release/
+}
 
 }
 

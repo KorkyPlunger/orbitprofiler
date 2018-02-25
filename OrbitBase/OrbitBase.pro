@@ -20,7 +20,9 @@ SOURCES += \
     Message.cpp \
     Log.cpp \
     CrashHandler.cpp \
-    CallstackPOD.cpp
+    CallstackPOD.cpp \
+    ../external/xxHash-r42/xxhash.c \
+    ../external/xxHash-r42/xxhsum.c
 
 HEADERS += \
     BaseTypes.h \
@@ -45,7 +47,8 @@ HEADERS += \
     TimerManager.h \
     TypeInfoStructs.h \
     Utils.h \
-    OrbitTypes.h
+    OrbitTypes.h \
+    ../external/xxHash-r42/xxhash.h
 
 INCLUDEPATH += \
     ../external \
@@ -56,10 +59,18 @@ INCLUDEPATH += \
     ../external/asio/include \
     ../external/breakpad/src
 
-OBJECTS_DIR = $$PWD/../intermediate/x64/OrbitBase/debug/
-DESTDIR     = $$PWD/../bin/x64/debug/
-UI_DIR      = $$PWD/GeneratedFiles/OrbitBase/debug/
-MOC_DIR     = $$PWD/GeneratedFiles/OrbitBase/debug/
+CONFIG( debug, debug|release ) {
+    OBJECTS_DIR = $$PWD/../intermediate/x64/OrbitBase/debug/
+    DESTDIR     = $$PWD/../bin/x64/debug/
+    UI_DIR      = $$PWD/GeneratedFiles/OrbitBase/debug/
+    MOC_DIR     = $$PWD/GeneratedFiles/OrbitBase/debug/
+} else {
+    OBJECTS_DIR = $$PWD/../intermediate/x64/OrbitBase/release/
+    DESTDIR     = $$PWD/../bin/x64/release/
+    UI_DIR      = $$PWD/GeneratedFiles/OrbitBase/release/
+    MOC_DIR     = $$PWD/GeneratedFiles/OrbitBase/release/
+}
+
 
 unix {
     target.path = /usr/lib

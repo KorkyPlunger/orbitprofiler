@@ -21,3 +21,9 @@ build/
 OrbitGl/build-OrbitGl-Desktop_Qt_5_7_0_GCC_64bit-Debug/
 
 build-OrbitCoreQt-Desktop_Qt_5_7_0_GCC_64bit-Debug/
+
+build-Orbit-Desktop_Qt_5_7_0_GCC_64bit-Debug/
+
+build-Orbit-Desktop_Qt_5_7_0_GCC_64bit-Release/
+
+OrbitBase/OrbitBase\.pro\.autosave

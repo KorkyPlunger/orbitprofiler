@@ -29,6 +29,7 @@
 #else
 struct EventTracer{ void Start(){}; void Stop(){}; };
 EventTracer GEventTracer;
+std::shared_ptr<Pdb> GPdbDbg;
 #endif
 
 using namespace std;

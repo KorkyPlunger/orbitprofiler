@@ -38,7 +38,8 @@ SOURCES += orbitcoreqt.cpp \
     CoreApp.cpp \
     ContextSwitch.cpp \
     Capture.cpp \
-    Callstack.cpp
+    Callstack.cpp \
+    Diff.cpp
 
 HEADERS += orbitcoreqt.h \
     BlockChain.h \
@@ -103,4 +104,8 @@ CONFIG( debug, debug|release ) {
 unix {
     target.path = /usr/lib
     INSTALLS += target
+}
+
+linux{
+    LIBS += -L$$PWD/../bin/x64/debug/ -lOrbitBase
 }
