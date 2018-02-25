@@ -6,7 +6,7 @@
 
 QT       -= core gui
 
-TARGET = OrbitCoreQt
+TARGET = OrbitCore
 TEMPLATE = lib
 CONFIG += staticlib
 
@@ -87,6 +87,18 @@ INCLUDEPATH += \
     ../external/curl-7.52.1/include \
     ../external/websocketpp \
     ../external/cereal-1.1.2/include
+
+CONFIG( debug, debug|release ) {
+    OBJECTS_DIR = $$PWD/../intermediate/x64/OrbitCore/debug/
+    DESTDIR     = $$PWD/../bin/x64/debug/
+    UI_DIR      = $$PWD/GeneratedFiles/OrbitCore/debug/
+    MOC_DIR     = $$PWD/GeneratedFiles/OrbitCore/debug/
+} else {
+    OBJECTS_DIR = $$PWD/../intermediate/x64/OrbitCore/release/
+    DESTDIR     = $$PWD/../bin/x64/release/
+    UI_DIR      = $$PWD/GeneratedFiles/OrbitCore/release/
+    MOC_DIR     = $$PWD/GeneratedFiles/OrbitCore/release/
+}
 
 unix {
     target.path = /usr/lib

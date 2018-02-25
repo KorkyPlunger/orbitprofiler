@@ -18,7 +18,6 @@ INCLUDEPATH += $$PWD/../
 
 SOURCES += main.cpp \
            licensedialog.cpp \
-           main.cpp \
            orbitcodeeditor.cpp \
            orbitdataviewpanel.cpp \
            orbitglwidget.cpp \
@@ -45,33 +44,32 @@ SOURCES += main.cpp \
            orbitdisassemblydialog.cpp \
            orbitvisualizer.cpp
 
-HEADERS  += \
-    orbitmainwindow.h \
-    orbitglwidget.h \
-    orbittreeview.h \
-    orbittablemodel.h \
-    orbitdataviewpanel.h \
-    orbitsamplingreport.h \
-    orbitglwidgetwithheader.h \
-    orbitcodeeditor.h \
-    licensedialog.h \
-    outputdialog.h \
-    processlauncherwidget.h \
-    showincludesdialog.h \
-    orbittreeitem.h \
-    orbittreemodel.h \
-    orbitdiffdialog.h \
-    qtpropertybrowser/qtbuttonpropertybrowser.h \
-    qtpropertybrowser/qteditorfactory.h \
-    qtpropertybrowser/qtgroupboxpropertybrowser.h \
-    qtpropertybrowser/qtpropertybrowser.h \
-    qtpropertybrowser/qtpropertybrowserutils_p.h \
-    qtpropertybrowser/qtpropertymanager.h \
-    qtpropertybrowser/qttreepropertybrowser.h \
-    qtpropertybrowser/qtvariantproperty.h \
-    orbitwatchwidget.h \
-    orbitdisassemblydialog.h \
-    orbitvisualizer.h
+HEADERS  += orbitmainwindow.h \
+            orbitglwidget.h \
+            orbittreeview.h \
+            orbittablemodel.h \
+            orbitdataviewpanel.h \
+            orbitsamplingreport.h \
+            orbitglwidgetwithheader.h \
+            orbitcodeeditor.h \
+            licensedialog.h \
+            outputdialog.h \
+            processlauncherwidget.h \
+            showincludesdialog.h \
+            orbittreeitem.h \
+            orbittreemodel.h \
+            orbitdiffdialog.h \
+            qtpropertybrowser/qtbuttonpropertybrowser.h \
+            qtpropertybrowser/qteditorfactory.h \
+            qtpropertybrowser/qtgroupboxpropertybrowser.h \
+            qtpropertybrowser/qtpropertybrowser.h \
+            qtpropertybrowser/qtpropertybrowserutils_p.h \
+            qtpropertybrowser/qtpropertymanager.h \
+            qtpropertybrowser/qttreepropertybrowser.h \
+            qtpropertybrowser/qtvariantproperty.h \
+            orbitwatchwidget.h \
+            orbitdisassemblydialog.h \
+            orbitvisualizer.h
 
 FORMS    += \
     orbitmainwindow.ui \
@@ -115,6 +113,8 @@ DISTFILES += \
     orbit_16_32_48_256.ico \
     qtpropertybrowser/qtpropertybrowser.pri
 
+win32{
+
 LIBS += -L$$PWD/../external/curl-7.52.1/lib/                  -llibcurl_imp
 LIBS += -L$$PWD/../external/glew-2.0.0/lib/Release/x64/       -lglew32
 LIBS +=                                                       -lopengl32
@@ -139,8 +139,8 @@ CONFIG( debug, debug|release ) {
 
     OBJECTS_DIR = $$PWD/../intermediate/x64/OrbitQt/debug/
     DESTDIR     = $$PWD/../bin/x64/debug/
-    UI_DIR      = $$PWD/GeneratedFiles/debug/
-    MOC_DIR     = $$PWD/GeneratedFiles/debug/
+    UI_DIR      = $$PWD/GeneratedFiles/OrbitQt/debug/
+    MOC_DIR     = $$PWD/GeneratedFiles/OrbitQt/debug/
 } else {
     # release
     LIBS += -L$$PWD/../bin/x64/release/                                      -lOrbitCore
@@ -157,8 +157,8 @@ CONFIG( debug, debug|release ) {
 
     OBJECTS_DIR = $$PWD/../intermediate/x64/OrbitQt/release/
     DESTDIR     = $$PWD/../bin/x64/release/
-    UI_DIR      = $$PWD/GeneratedFiles/release/
-    MOC_DIR     = $$PWD/GeneratedFiles/release/
+    UI_DIR      = $$PWD/GeneratedFiles/OrbitQt/release/
+    MOC_DIR     = $$PWD/GeneratedFiles/OrbitQt/release/
 }
 
 CONFIG += embed_manifest_exe
@@ -167,6 +167,14 @@ QMAKE_LFLAGS_WINDOWS += /MANIFESTUAC:level=\'requireAdministrator\'
 QMAKE_LFLAGS_RELEASE += /MAP
 QMAKE_CFLAGS_RELEASE += /Zi
 QMAKE_LFLAGS_RELEASE += /debug /opt:ref
+
+}
+
+linux{
+    LIBS += -L$$PWD/../bin/x64/release/                                      -lOrbitCore
+    LIBS += -L$$PWD/../bin/x64/release/                                      -lOrbitGl
+
+}
 
 RESOURCES += \
     qtpropertybrowser/qtpropertybrowser.qrc

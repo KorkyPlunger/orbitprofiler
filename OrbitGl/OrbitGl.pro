@@ -116,6 +116,18 @@ INCLUDEPATH += \
     ../external/freeglut-2.8.1/include \
     ../external/imgui \
 
+CONFIG( debug, debug|release ) {
+    OBJECTS_DIR = $$PWD/../intermediate/x64/OrbitGl/debug/
+    DESTDIR     = $$PWD/../bin/x64/debug/
+    UI_DIR      = $$PWD/GeneratedFiles/OrbitGl/debug/
+    MOC_DIR     = $$PWD/GeneratedFiles/OrbitGl/debug/
+} else {
+    OBJECTS_DIR = $$PWD/../intermediate/x64/OrbitGl/release/
+    DESTDIR     = $$PWD/../bin/x64/release/
+    UI_DIR      = $$PWD/GeneratedFiles/OrbitGl/release/
+    MOC_DIR     = $$PWD/GeneratedFiles/OrbitGl/release/
+}
+
 unix {
     target.path = /usr/lib
     INSTALLS += target
