@@ -254,6 +254,7 @@ shared_ptr<Module> Process::FindModule( const wstring & a_ModuleName )
 //-----------------------------------------------------------------------------
 Function* Process::GetFunctionFromAddress( DWORD64 a_Address, bool a_IsExact )
 {
+#ifdef _WIN32
     DWORD64 address = (DWORD64)a_Address;
     auto it = m_Modules.upper_bound( address );
     if( !m_Modules.empty() && it != m_Modules.begin() )
@@ -275,6 +276,7 @@ Function* Process::GetFunctionFromAddress( DWORD64 a_Address, bool a_IsExact )
             }
         }
     }
+#endif
 
     return nullptr;
 }
@@ -297,22 +299,26 @@ shared_ptr<Module> Process::GetModuleFromAddress( DWORD64 a_Address )
 //-----------------------------------------------------------------------------
 IDiaSymbol * Process::SymbolFromAddress( DWORD64 a_Address )
 {
+#ifdef _WIN32
     shared_ptr<Module> module = GetModuleFromAddress( a_Address );
     if( module && module->m_Pdb )
     {
         return module->m_Pdb->SymbolFromAddress( a_Address );
     }
+#endif
     return nullptr;
 }
 
 //-----------------------------------------------------------------------------
 bool Process::LineInfoFromAddress( DWORD64 a_Address, LineInfo & o_LineInfo )
 {
+#ifdef _WIN32
     shared_ptr<Module> module = GetModuleFromAddress( a_Address );
     if( module && module->m_Pdb )
     {
         return module->m_Pdb->LineInfoFromAddress( a_Address, o_LineInfo );
     }
+#endif
 
     return false;
 }

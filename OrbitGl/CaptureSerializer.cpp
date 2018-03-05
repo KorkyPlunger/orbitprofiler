@@ -121,6 +121,7 @@ void CaptureSerializer::Load( const wstring a_FileName )
 {
     SCOPE_TIMER_LOG( Format( L"Loading capture %s", a_FileName.c_str() ) );
 
+#ifdef _WIN32
     // Binary
     ifstream file( ws2s(a_FileName), ios::binary );
     if( !file.fail() )
@@ -132,10 +133,12 @@ void CaptureSerializer::Load( const wstring a_FileName )
         // functions
         shared_ptr<Module> module = make_shared<Module>();
         Capture::GTargetProcess->AddModule(module);
+
         module->m_Pdb = make_shared<Pdb>( a_FileName.c_str() );
         archive( module->m_Pdb->GetFunctions() );
         module->m_Pdb->ProcessData();
         GPdbDbg = module->m_Pdb;
+
         Capture::GSelectedFunctionsMap.clear();
         for( Function & func : module->m_Pdb->GetFunctions() )
         {
@@ -171,6 +174,8 @@ void CaptureSerializer::Load( const wstring a_FileName )
 
         GOrbitApp->FireRefreshCallbacks();
     }
+
+#endif
 }
 
 //-----------------------------------------------------------------------------

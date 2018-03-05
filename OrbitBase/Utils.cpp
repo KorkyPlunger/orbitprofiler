@@ -289,6 +289,12 @@ string CWindowsMessageToString::GetStringFromMsg(DWORD dwMessage, bool bShowFreq
 
     return to_string( dwMessage );
 }
+#else
+string GetLastErrorAsString()
+{
+    return "";
+}
+
 #endif
 
 //-----------------------------------------------------------------------------

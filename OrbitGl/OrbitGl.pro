@@ -114,29 +114,28 @@ INCLUDEPATH += \
     ../external/oqpi/include \
     ../external/asio/include \
     ../external/breakpad/src \
-    ../external/curl-7.52.1/include \
+    #../external/curl-7.52.1/include \
     ../external/websocketpp \
     ../external/cereal-1.1.2/include \
     ../external/freetype-gl \
-    ../external/glew-2.0.0/include \
-    ../external/freeglut-2.8.1/include \
+    #../external/glew-2.0.0/include \
+    #../external/freeglut-2.8.1/include \
     ../external/imgui \
 
-CONFIG( debug, debug|release ) {
-    OBJECTS_DIR = $$PWD/../intermediate/x64/OrbitGl/debug/
-    DESTDIR     = $$PWD/../bin/x64/debug/
-    UI_DIR      = $$PWD/GeneratedFiles/OrbitGl/debug/
-    MOC_DIR     = $$PWD/GeneratedFiles/OrbitGl/debug/
-
-    LIBS        += -L$$PWD/../bin/x64/debug/ -lOrbitCore
+config_dir = release
+CONFIG( debug, debug|release ){
+    config_dir = debug
 } else {
-    OBJECTS_DIR = $$PWD/../intermediate/x64/OrbitGl/release/
-    DESTDIR     = $$PWD/../bin/x64/release/
-    UI_DIR      = $$PWD/GeneratedFiles/OrbitGl/release/
-    MOC_DIR     = $$PWD/GeneratedFiles/OrbitGl/release/
-
-LIBS        += -L$$PWD/../bin/x64/release/ -lOrbitCore
+    config_dir = release
 }
+
+OBJECTS_DIR = $$PWD/../intermediate/x64/OrbitGl/$$config_dir/
+DESTDIR     = $$PWD/../intermediate/x64/OrbitGl/$$config_dir/
+UI_DIR      = $$PWD/../GeneratedFiles/OrbitGl/$$config_dir/
+MOC_DIR     = $$PWD/../GeneratedFiles/OrbitGl/$$config_dir/
+
+PRE_TARGETDEPS += $$PWD/../intermediate/x64/OrbitBase/$$config_dir/libOrbitBase.a
+PRE_TARGETDEPS += $$PWD/../intermediate/x64/OrbitCore/$$config_dir/libOrbitCore.a
 
 unix {
     target.path = /usr/lib

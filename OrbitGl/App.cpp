@@ -56,17 +56,20 @@
 
 using namespace std;
 
-class OrbitApp* GOrbitApp;
+class OrbitApp*     GOrbitApp;
 ServerTimerManager* GTimerManager;
-float GFontSize;
+ModuleManager       GModuleManager;
+float               GFontSize;
 
+OrbitApp::OrbitApp(){}
+/*
 //-----------------------------------------------------------------------------
 OrbitApp::OrbitApp() : m_FindFileCallback(nullptr)
                      , m_RuleEditor(nullptr)
                      , m_CallStackDataView(nullptr)
 {
-    m_Debugger = new Debugger();
-}
+    //m_Debugger = new Debugger();
+}*/
 
 //-----------------------------------------------------------------------------
 OrbitApp::~OrbitApp()
@@ -91,7 +94,7 @@ wstring OrbitApp::FindFile( const wstring & a_Caption, const wstring & a_Dir, co
 
 //-----------------------------------------------------------------------------
 void OrbitApp::SetCommandLineArguments(const vector< string > & a_Args)
-{ 
+{ /*
     m_Arguments = a_Args;
     bool inject = false;
 
@@ -125,7 +128,7 @@ void OrbitApp::SetCommandLineArguments(const vector< string > & a_Args)
             }
             inject = true;
         }
-    }
+    }*/
 }
 
 // Get the horizontal and vertical screen sizes in pixel
@@ -149,7 +152,8 @@ void GetDesktopResolution(int& horizontal, int& vertical)
 //-----------------------------------------------------------------------------
 void GLoadPdbAsync( const vector<wstring> & a_Modules )
 {
-    GModuleManager.LoadPdbAsync( a_Modules, [](){ GOrbitApp->OnPdbLoaded(); } );
+    GModuleManager = ModuleManager();
+    //GModuleManager.LoadPdbAsync( a_Modules, [](){ GOrbitApp->OnPdbLoaded(); } );
 }
 
 //-----------------------------------------------------------------------------
@@ -162,13 +166,13 @@ bool OrbitApp::Init()
 
     Path::Init();
 
-    DiaManager::InitMsDiaDll();
     GModuleManager.Init();
     Capture::Init();
     Capture::GSamplingDoneCallback = &OrbitApp::AddSamplingReport;
     Capture::SetLoadPdbAsyncFunc( GLoadPdbAsync );
 
 #ifdef _WIN32
+    DiaManager::InitMsDiaDll();
     oqpi_tk::start_default_scheduler();
 #endif
 
@@ -332,6 +336,7 @@ void OrbitApp::SetRemoteProcess( shared_ptr<Process> a_Process )
 //-----------------------------------------------------------------------------
 void OrbitApp::AddWatchedVariable( Variable * a_Variable )
 {
+#ifdef _WIN32
     // Make sure type hierarchy has been generated
     if( Type* type = a_Variable->m_Pdb->GetTypePtrFromId( a_Variable->m_TypeIndex ) )
     {
@@ -342,6 +347,7 @@ void OrbitApp::AddWatchedVariable( Variable * a_Variable )
     {
         callback( a_Variable );
     }
+#endif
 }
 
 //-----------------------------------------------------------------------------

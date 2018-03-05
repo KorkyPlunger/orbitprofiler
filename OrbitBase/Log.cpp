@@ -5,3 +5,8 @@
 #include "Log.h"
 
 Logger GLogger;
+
+Logger & Logger::GetLogger()
+{
+    return GLogger;
+}

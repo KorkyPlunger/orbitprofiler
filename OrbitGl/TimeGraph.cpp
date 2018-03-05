@@ -747,6 +747,8 @@ void TimeGraph::Draw( bool a_Picking )
 //-----------------------------------------------------------------------------
 void TimeGraph::UpdateThreadIds()
 {
+    //TODO-Linux: fix crash
+    return;
     {
         ScopeLock lock( GEventTracer.GetEventBuffer().GetMutex() );
         m_EventCount.clear();

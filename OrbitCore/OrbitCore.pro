@@ -85,27 +85,25 @@ INCLUDEPATH += \
     ../external/oqpi/include \
     ../external/asio/include \
     ../external/breakpad/src \
-    ../external/curl-7.52.1/include \
+    #../external/curl-7.52.1/include \
     ../external/websocketpp \
     ../external/cereal-1.1.2/include
 
-CONFIG( debug, debug|release ) {
-    OBJECTS_DIR = $$PWD/../intermediate/x64/OrbitCore/debug/
-    DESTDIR     = $$PWD/../bin/x64/debug/
-    UI_DIR      = $$PWD/GeneratedFiles/OrbitCore/debug/
-    MOC_DIR     = $$PWD/GeneratedFiles/OrbitCore/debug/
-} else {
-    OBJECTS_DIR = $$PWD/../intermediate/x64/OrbitCore/release/
-    DESTDIR     = $$PWD/../bin/x64/release/
-    UI_DIR      = $$PWD/GeneratedFiles/OrbitCore/release/
-    MOC_DIR     = $$PWD/GeneratedFiles/OrbitCore/release/
+config_dir = release
+CONFIG( debug, debug|release ){
+    config_dir = debug
 }
+
+OBJECTS_DIR = $$PWD/../intermediate/x64/OrbitCore/$$config_dir/
+DESTDIR     = $$PWD/../intermediate/x64/OrbitCore/$$config_dir/
+UI_DIR      = $$PWD/../GeneratedFiles/OrbitCore/$$config_dir/
+MOC_DIR     = $$PWD/../GeneratedFiles/OrbitCore/$$config_dir/
+
+PRE_TARGETDEPS += $$PWD/../intermediate/x64/OrbitBase/$$config_dir/libOrbitBase.a
 
 unix {
     target.path = /usr/lib
     INSTALLS += target
 }
 
-linux{
-    LIBS += -L$$PWD/../bin/x64/debug/ -lOrbitBase
-}
+

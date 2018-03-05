@@ -7,10 +7,6 @@
 
 using namespace std;
 
-#ifdef __linux
-EventTracer GEventTracer;
-#endif
-
 //-----------------------------------------------------------------------------
 void EventBuffer::Print()
 {

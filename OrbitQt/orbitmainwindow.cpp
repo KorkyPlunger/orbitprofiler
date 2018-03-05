@@ -417,8 +417,8 @@ void OrbitMainWindow::OnReceiveMessage( const wstring & a_Message )
 //-----------------------------------------------------------------------------
 void OrbitMainWindow::OnAddToWatch( const class Variable* a_Variable )
 {
-    ui->WatchWidget->AddToWatch( a_Variable );
-    ui->MainTabWidget->setCurrentWidget( ui->WatchTab );
+    //ui->WatchWidget->AddToWatch( a_Variable );
+    //ui->MainTabWidget->setCurrentWidget( ui->WatchTab );
 }
 
 //-----------------------------------------------------------------------------

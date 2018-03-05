@@ -59,18 +59,15 @@ INCLUDEPATH += \
     ../external/asio/include \
     ../external/breakpad/src
 
-CONFIG( debug, debug|release ) {
-    OBJECTS_DIR = $$PWD/../intermediate/x64/OrbitBase/debug/
-    DESTDIR     = $$PWD/../bin/x64/debug/
-    UI_DIR      = $$PWD/GeneratedFiles/OrbitBase/debug/
-    MOC_DIR     = $$PWD/GeneratedFiles/OrbitBase/debug/
-} else {
-    OBJECTS_DIR = $$PWD/../intermediate/x64/OrbitBase/release/
-    DESTDIR     = $$PWD/../bin/x64/release/
-    UI_DIR      = $$PWD/GeneratedFiles/OrbitBase/release/
-    MOC_DIR     = $$PWD/GeneratedFiles/OrbitBase/release/
+config_dir = release
+CONFIG( debug, debug|release ){
+    config_dir = debug
 }
 
+OBJECTS_DIR = $$PWD/../intermediate/x64/OrbitBase/$$config_dir/
+DESTDIR     = $$PWD/../intermediate/x64/OrbitBase/$$config_dir/
+UI_DIR      = $$PWD/../GeneratedFiles/OrbitBase/$$config_dir/
+MOC_DIR     = $$PWD/../GeneratedFiles/OrbitBase/$$config_dir/
 
 unix {
     target.path = /usr/lib

@@ -270,13 +270,21 @@ shared_ptr<Variable> Variable::FindImmediateChild( const wstring & a_Name )
 //-----------------------------------------------------------------------------
 const Type * Variable::GetType() const
 {
+#ifdef _WIN32
      return m_Pdb ? m_Pdb->GetTypePtrFromId(m_TypeIndex) : nullptr;
+#else
+    return nullptr;
+#endif
 }
 
 //-----------------------------------------------------------------------------
 Type * Variable::GetType()
 {
+#ifdef _WIN32
     return m_Pdb ? m_Pdb->GetTypePtrFromId( m_TypeIndex ) : nullptr;
+#else
+    return nullptr;
+#endif;
 }
 
 //-----------------------------------------------------------------------------

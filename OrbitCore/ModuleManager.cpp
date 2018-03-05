@@ -14,8 +14,6 @@
 
 using namespace std;
 
-ModuleManager GModuleManager;
-
 //-----------------------------------------------------------------------------
 ModuleManager::ModuleManager()
 {
@@ -134,8 +132,10 @@ void ModuleManager::OnPdbLoaded()
         DequeueAndLoad();
     }
     
+#ifdef _WIN32
     // Apply presets on last pdb
     lastPdb->ApplyPresets();
+#endif
 
     if( m_ModulesQueue.empty() )
     {

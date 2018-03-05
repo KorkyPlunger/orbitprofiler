@@ -119,6 +119,8 @@ public:
         return entries;
     }
 
+    static Logger & GetLogger();
+
 protected:
     OrbitLog m_Logs[OrbitLog::NumLogTypes];
     Mutex    m_Mutexes[OrbitLog::NumLogTypes];

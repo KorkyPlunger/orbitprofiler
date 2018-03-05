@@ -173,7 +173,7 @@ private:
     class EventTracer* m_EventTracer = nullptr;
     class Debugger*    m_Debugger = nullptr;
     int m_NumTicks = 0;
-    CrashHandler       m_CrashHandler;
+    //CrashHandler       m_CrashHandler;
 };
 
 //-----------------------------------------------------------------------------

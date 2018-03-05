@@ -194,12 +194,16 @@ IDiaSymbol* Type::GetDiaSymbol()
         return nullptr;
     }
 
+#ifdef _WIN32
     IDiaSymbol* sym = m_Pdb->GetDiaSymbolFromId( m_Id );
     if( sym == nullptr )
     {
         sym = m_Pdb->GetDiaSymbolFromId( m_UnmodifiedId );
     }
     return sym;
+#else
+    return nullptr;
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -356,6 +360,8 @@ shared_ptr<Variable> Type::GenerateVariable( DWORD64 a_Address, const wstring* a
     LoadDiaInfo();
 
     shared_ptr<Variable> var = make_shared<Variable>();
+
+#ifdef _WIN32
     var->m_Pdb = this->m_Pdb;
     var->m_Address = a_Address;
     var->m_TypeIndex = m_Id;
@@ -396,6 +402,7 @@ shared_ptr<Variable> Type::GenerateVariable( DWORD64 a_Address, const wstring* a
             var->AddChild( newMember );
         }
     }
+#endif
 
     return var;
 }

@@ -38,7 +38,10 @@ wstring Path::GetExecutableName()
     replace(exeFullName.begin(), exeFullName.end(), '\\', '/');
     return exeFullName;
 #else
-    return L"OrbitTodo";
+    char result[ PATH_MAX ];
+     ssize_t count = readlink( "/proc/self/exe", result, PATH_MAX );
+     std::string fullPath = std::string( result, (count > 0) ? count : 0 );
+     return s2ws(fullPath);
 #endif
 }
 
