@@ -16,7 +16,8 @@ macro(CREATE_DEMO _target _sources)
         )
     endif()
     target_link_libraries(${_target}
-        ${GLFW3_LIBRARY}
+        ${
+3_LIBRARY}
         ${OPENGL_LIBRARY}
         ${FREETYPE_LIBRARIES}
         ${MATH_LIBRARY}
@@ -37,7 +38,7 @@ if(WIN32 OR WIN64)
 endif()
 
 # Find dependencies
-find_package(glfw3 3.2 REQUIRED)
+find_package(glfw3 3.1.2 REQUIRED)
 find_package(AntTweakBar)
 find_package(FontConfig)
 

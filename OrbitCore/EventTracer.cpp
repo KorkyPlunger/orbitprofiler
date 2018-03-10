@@ -21,9 +21,6 @@
 using namespace std;
 
 //-----------------------------------------------------------------------------
-EventTracer GEventTracer;
-
-//-----------------------------------------------------------------------------
 EventTracer::EventTracer() : m_SessionProperties( nullptr ), m_IsTracing( false )
 {
 }

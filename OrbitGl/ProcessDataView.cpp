@@ -234,6 +234,9 @@ bool ProcessesDataView::SelectProcess( DWORD a_ProcessId )
 //-----------------------------------------------------------------------------
 void ProcessesDataView::OnFilter( const wstring & a_Filter )
 {
+    if( a_Filter == L"" )
+        return;
+
     vector<int> indices;
     const vector<shared_ptr<Process>> & processes = m_ProcessList.m_Processes;
 

@@ -69,6 +69,9 @@ struct EventTracer
 {
     EventBuffer & GetEventBuffer(){ return m_EventBuffer; }
     EventBuffer m_EventBuffer;
+    void Start(){}
+    void Stop(){}
 };
+
 extern EventTracer GEventTracer;
 #endif

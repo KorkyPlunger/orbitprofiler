@@ -13,6 +13,7 @@
 #include "App.h"
 #include "OrbitProcess.h"
 #include "OrbitModule.h"
+#include "EventBuffer.h"
 
 #include <fstream>
 #include <memory>

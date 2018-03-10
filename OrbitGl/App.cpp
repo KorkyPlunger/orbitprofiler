@@ -59,6 +59,7 @@ using namespace std;
 class OrbitApp*     GOrbitApp;
 ServerTimerManager* GTimerManager;
 ModuleManager       GModuleManager;
+EventTracer         GEventTracer;
 float               GFontSize;
 
 OrbitApp::OrbitApp(){}

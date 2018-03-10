@@ -142,14 +142,21 @@ inline std::vector< std::string > Tokenize( std::string a_String, const char* a_
 inline std::vector< std::wstring > Tokenize( std::wstring a_String, const wchar_t* a_Delimiters = L" " )
 {
     std::vector< std::wstring > tokens;
+    wchar_t* next_token;
 
 #ifdef _WIN32
-    wchar_t* next_token;
     wchar_t* token = wcstok_s(&a_String[0], a_Delimiters, &next_token);
     while (token != NULL)
     {
         tokens.push_back(token);
         token = wcstok_s(NULL, a_Delimiters, &next_token);
+    }
+#else
+    wchar_t* token = wcstok(&a_String[0], a_Delimiters, &next_token);
+    while (token != NULL)
+    {
+        tokens.push_back(token);
+        token = wcstok(NULL, a_Delimiters, &next_token);
     }
 #endif
 

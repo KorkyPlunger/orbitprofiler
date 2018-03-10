@@ -3,6 +3,7 @@
 //-----------------------------------
 
 #include "Capture.h"
+#include "EventBuffer.h"
 #include "ServerTimerManager.h"
 #include "TcpServer.h"
 #include "TcpForward.h"
@@ -27,8 +28,6 @@
 #ifdef _WIN32
 #include "EventTracer.h"
 #else
-struct EventTracer{ void Start(){}; void Stop(){}; };
-EventTracer GEventTracer;
 std::shared_ptr<Pdb> GPdbDbg;
 #endif
 

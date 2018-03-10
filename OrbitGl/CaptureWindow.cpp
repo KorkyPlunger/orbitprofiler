@@ -532,7 +532,7 @@ void CaptureWindow::Draw()
         ZoomAll();
     }
 
-   // m_TimeGraph.Draw( m_Picking );
+    m_TimeGraph.Draw( m_Picking );
 
     if( m_IsSelecting )
     {
